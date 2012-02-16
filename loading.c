@@ -36,3 +36,5 @@ void Loading_Load(struct Game *game) {
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 	al_destroy_bitmap(game->loading.image);
 }
+
+int Loading_Keydown(struct Game *game, ALLEGRO_EVENT *ev) { return 0; }

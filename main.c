@@ -122,8 +122,16 @@ int main(int argc, char **argv){
       if(ev.type == ALLEGRO_EVENT_TIMER) {
          redraw = true;
       }
-      else if((ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) || (ev.type == ALLEGRO_EVENT_KEY_DOWN && ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE)) {
+      else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
          break;
+      }
+      else if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
+	 if (game.gamestate==GAMESTATE_LOADING) {
+		if (Loading_Keydown(&game, &ev)) break;
+	 }
+	 else if (game.gamestate==GAMESTATE_MENU) {
+		if (Menu_Keydown(&game, &ev)) break;
+	 }
       }
       
       if(redraw && al_is_event_queue_empty(game.event_queue)) {

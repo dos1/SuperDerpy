@@ -21,7 +21,8 @@ struct Menu {
 	float cloud_position, cloud2_position;
 	int mountain_position;
 	ALLEGRO_SAMPLE *sample, *rain_sample;
-	ALLEGRO_FONT *font_title, *font_subtitle;
+	ALLEGRO_FONT *font_title, *font_subtitle, *font, *font_selected;
+	int selected;
 };
 
 struct Loading {

@@ -33,6 +33,17 @@ void Menu_Draw(struct Game *game) {
 
 	al_draw_text(game->menu.font_title, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.1, ALLEGRO_ALIGN_CENTRE, "Super Derpy");
 	al_draw_text(game->menu.font_subtitle, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.275, ALLEGRO_ALIGN_CENTRE, "Muffin Attack");
+
+	ALLEGRO_FONT *font;
+	font = game->menu.font; if (game->menu.selected==0) font = game->menu.font_selected;
+	al_draw_text(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.5, ALLEGRO_ALIGN_CENTRE, "Start game");
+	font = game->menu.font; if (game->menu.selected==1) font = game->menu.font_selected;
+	al_draw_text(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.6, ALLEGRO_ALIGN_CENTRE, "Options");
+	font = game->menu.font; if (game->menu.selected==2) font = game->menu.font_selected;
+	al_draw_text(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.7, ALLEGRO_ALIGN_CENTRE, "About");
+	font = game->menu.font; if (game->menu.selected==3) font = game->menu.font_selected;
+	al_draw_text(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.8, ALLEGRO_ALIGN_CENTRE, "Exit");
+
 	game->menu.cloud_position-=0.1;
 	game->menu.cloud2_position-=0.025;
 	if (game->menu.cloud_position<-80) game->menu.cloud_position=100;
@@ -58,6 +69,8 @@ void Menu_Preload(struct Game *game) {
 
 	game->menu.font_title = al_load_ttf_font("ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.16,0 );
 	game->menu.font_subtitle = al_load_ttf_font("ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.08,0 );
+	game->menu.font = al_load_ttf_font("ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.05,0 );
+	game->menu.font_selected = al_load_ttf_font("ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.065,0 );
 	
 	if (!game->menu.sample){
 		fprintf(stderr, "Audio clip sample not loaded!\n" );
@@ -113,6 +126,12 @@ void Menu_Preload(struct Game *game) {
 	al_draw_text(game->menu.font_title, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.1, ALLEGRO_ALIGN_CENTRE, "Super Derpy");
 	al_draw_text(game->menu.font_subtitle, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.275, ALLEGRO_ALIGN_CENTRE, "Muffin Attack");
 
+	game->menu.selected = 0;
+	al_draw_text(game->menu.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.5, ALLEGRO_ALIGN_CENTRE, "Start game");
+	al_draw_text(game->menu.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.6, ALLEGRO_ALIGN_CENTRE, "Options");
+	al_draw_text(game->menu.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.7, ALLEGRO_ALIGN_CENTRE, "About");
+	al_draw_text(game->menu.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.8, ALLEGRO_ALIGN_CENTRE, "Exit");
+
 	al_set_target_bitmap(al_get_backbuffer(game->display));	
 }
 
@@ -136,6 +155,8 @@ void Menu_Unload(struct Game *game) {
 	al_destroy_bitmap(game->menu.pie_bitmap);
 	al_destroy_font(game->menu.font_title);
 	al_destroy_font(game->menu.font_subtitle);
+	al_destroy_font(game->menu.font);
+	al_destroy_font(game->menu.font_selected);
 }
 
 void Menu_Load(struct Game *game) {
@@ -147,4 +168,17 @@ void Menu_Load(struct Game *game) {
 		al_draw_tinted_bitmap(game->menu.menu_fade_bitmap,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
 		al_flip_display();
 	}	
+}
+
+int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
+	if (ev->keyboard.keycode==ALLEGRO_KEY_UP) {
+		game->menu.selected--;
+	} else if (ev->keyboard.keycode==ALLEGRO_KEY_DOWN) {
+		game->menu.selected++;
+	} else if ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) || (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE)) {
+		return 1;
+	}
+	if (game->menu.selected==-1) game->menu.selected=3;
+	if (game->menu.selected==4) game->menu.selected=0;
+	return 0;
 }
