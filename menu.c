@@ -45,6 +45,7 @@ void Menu_Preload(struct Game *game) {
 	game->menu.image = al_load_bitmap( "menu.png" );
 	game->menu.mountain = al_load_bitmap( "mountain.png" );
 	game->menu.sample = al_load_sample( "menu.wav" );
+	game->menu.rain_sample = al_load_sample( "rain.wav" );
 	game->menu.cloud = al_load_bitmap( "cloud.png" );
 	game->menu.cloud2 = al_load_bitmap( "cloud2.png" );
 	game->menu.pinkcloud = al_load_bitmap( "pinkcloud.png" );
@@ -56,6 +57,11 @@ void Menu_Preload(struct Game *game) {
 	
 	if (!game->menu.sample){
 		fprintf(stderr, "Audio clip sample not loaded!\n" );
+		exit(-1);
+	}
+
+	if (!game->menu.rain_sample){
+		fprintf(stderr, "Audio clip sample#2 not loaded!\n" );
 		exit(-1);
 	}
 
@@ -102,6 +108,7 @@ void Menu_Preload(struct Game *game) {
 
 void Menu_Unload(struct Game *game) {
 	al_destroy_sample(game->menu.sample);
+	al_destroy_sample(game->menu.rain_sample);
 	ALLEGRO_EVENT ev;
 	for(int fadeloop=255; fadeloop>=0; fadeloop-=10){
 		al_wait_for_event(game->event_queue, &ev);
@@ -122,6 +129,7 @@ void Menu_Unload(struct Game *game) {
 
 void Menu_Load(struct Game *game) {
 	al_play_sample(game->menu.sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
+	al_play_sample(game->menu.rain_sample, 0.4, -0.3, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 	ALLEGRO_EVENT ev;
 	for(int fadeloop=0; fadeloop<256; fadeloop+=10){
 		al_wait_for_event(game->event_queue, &ev);

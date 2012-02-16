@@ -72,7 +72,7 @@ int main(int argc, char **argv){
       return -1;
    }
 
-   if (!al_reserve_samples(1)){
+   if (!al_reserve_samples(2)){
       fprintf(stderr, "failed to reserve samples!\n");
       return -1;
    }

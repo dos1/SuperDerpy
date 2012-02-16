@@ -20,7 +20,7 @@ struct Menu {
 	ALLEGRO_BITMAP *mountain_bitmap, *mountain;
 	float cloud_position, cloud2_position;
 	int mountain_position;
-	ALLEGRO_SAMPLE *sample;
+	ALLEGRO_SAMPLE *sample, *rain_sample;
 	ALLEGRO_FONT *font_title, *font_subtitle;
 };
 
