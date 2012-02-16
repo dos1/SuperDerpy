@@ -7,6 +7,9 @@
 
 void Menu_Draw(struct Game *game) {
 	al_clear_to_color(al_map_rgb(183,234,193));
+	float tint = (sin((game->menu.cloud_position-30)/15)+1)/2;
+	if (tint < 0.0001) game->menu.mountain_position = al_get_display_width(game->display)*(rand()/(float)RAND_MAX);
+	al_draw_tinted_bitmap(game->menu.mountain_bitmap,al_map_rgba_f(tint,tint,tint,tint),game->menu.mountain_position, 0,0);
 	al_draw_scaled_bitmap(game->menu.cloud_bitmap,0,0,al_get_bitmap_width(game->menu.cloud_bitmap), al_get_bitmap_height(game->menu.cloud_bitmap), al_get_display_width(game->display)*(game->menu.cloud_position-20)/(-75), al_get_display_height(game->display)*0.15, al_get_bitmap_width(game->menu.cloud_bitmap)/2, al_get_bitmap_height(game->menu.cloud_bitmap)/2,0);
 	al_draw_bitmap(game->menu.menu_bitmap,0, 0,0);
 	al_draw_bitmap(game->menu.pinkcloud_bitmap,(al_get_display_width(game->display)*0.132) + (cos((game->menu.cloud_position/50+80)*1.74444))*20, 0,0);
@@ -21,10 +24,11 @@ void Menu_Preload(struct Game *game) {
 	game->menu.cloud_position = 100;
 	game->menu.image = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));  //FIXME: WHYYYYYYY?
 	game->menu.image = al_load_bitmap( "menu.png" );
-	
+	game->menu.mountain = al_load_bitmap( "mountain.png" );
 	game->menu.sample = al_load_sample( "menu.wav" );
 	game->menu.cloud = al_load_bitmap( "cloud.png" );
 	game->menu.pinkcloud = al_load_bitmap( "pinkcloud.png" );
+	game->menu.mountain_position = al_get_display_width(game->display)*0.7;
 	
 	if (!game->menu.sample){
 		fprintf(stderr, "Audio clip sample not loaded!\n" );
@@ -52,6 +56,11 @@ void Menu_Preload(struct Game *game) {
 	al_set_target_bitmap(game->menu.pinkcloud_bitmap);
 	al_draw_scaled_bitmap(game->menu.pinkcloud,0, 0, al_get_bitmap_width(game->menu.pinkcloud), al_get_bitmap_height(game->menu.pinkcloud), 0, 0, al_get_bitmap_width(game->menu.pinkcloud_bitmap), al_get_bitmap_height(game->menu.pinkcloud_bitmap),0); 
 	al_destroy_bitmap(game->menu.pinkcloud);
+
+	game->menu.mountain_bitmap = al_create_bitmap(al_get_display_width(game->display)*0.055, al_get_display_height(game->display)/9);
+	al_set_target_bitmap(game->menu.mountain_bitmap);
+	al_draw_scaled_bitmap(game->menu.mountain,0, 0, al_get_bitmap_width(game->menu.mountain), al_get_bitmap_height(game->menu.mountain), 0, 0, al_get_bitmap_width(game->menu.mountain_bitmap), al_get_bitmap_height(game->menu.mountain_bitmap),0);
+	al_destroy_bitmap(game->menu.mountain);
 
 	al_set_target_bitmap(game->menu.menu_fade_bitmap);
 	al_draw_bitmap(game->menu.pinkcloud_bitmap,(al_get_display_width(game->display)*0.132) + (cos((82)*1.74444))*20, 0,0);

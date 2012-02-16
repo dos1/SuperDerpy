@@ -31,6 +31,7 @@ void LoadGameState(struct Game *game) {
 }
 
 int main(int argc, char **argv){
+   srand(time(NULL));
    ALLEGRO_DISPLAY_MODE disp_data;
    bool redraw = true;
 
