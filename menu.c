@@ -106,12 +106,14 @@ void Menu_Preload(struct Game *game) {
 	
 	game->menu.pinkcloud_bitmap = al_create_bitmap(al_get_display_width(game->display)*0.33125, al_get_display_height(game->display)); //*0.8122);
 	al_set_target_bitmap(game->menu.pinkcloud_bitmap);
+	al_clear_to_color(al_map_rgba(0,0,0,0));
 	al_draw_scaled_bitmap(game->menu.rain, 0, 0, al_get_bitmap_width(game->menu.rain), al_get_bitmap_height(game->menu.rain), al_get_bitmap_width(game->menu.pinkcloud_bitmap)/2.2, al_get_bitmap_height(game->menu.pinkcloud_bitmap)*0.68, al_get_bitmap_width(game->menu.pinkcloud_bitmap)*0.5, al_get_bitmap_height(game->menu.pinkcloud_bitmap)*0.1, 0);
 	al_draw_scaled_bitmap(game->menu.rain, 0, 0, al_get_bitmap_width(game->menu.rain), al_get_bitmap_height(game->menu.rain), al_get_bitmap_width(game->menu.pinkcloud_bitmap)/3.2, al_get_bitmap_height(game->menu.pinkcloud_bitmap)*0.78, al_get_bitmap_width(game->menu.pinkcloud_bitmap)*0.5, al_get_bitmap_height(game->menu.pinkcloud_bitmap)*0.1, 0);
 	al_draw_scaled_bitmap(game->menu.pinkcloud,0, 0, al_get_bitmap_width(game->menu.pinkcloud), al_get_bitmap_height(game->menu.pinkcloud), 0, 0, al_get_bitmap_width(game->menu.pinkcloud_bitmap), al_get_bitmap_height(game->menu.pinkcloud_bitmap)*0.8122,0);
 
 	game->menu.pie_bitmap = al_create_bitmap(al_get_display_width(game->display)/2, al_get_display_height(game->display)); //*0.8122);
 	al_set_target_bitmap(game->menu.pie_bitmap);
+	al_clear_to_color(al_map_rgba(0,0,0,0));
 	al_draw_scaled_bitmap(game->menu.pie, 0, 0, al_get_bitmap_width(game->menu.pie), al_get_bitmap_height(game->menu.pie), al_get_bitmap_width(game->menu.pie_bitmap)*0.5, 0, al_get_display_width(game->display)*0.11875, al_get_display_height(game->display)*0.0825, 0);
 	al_draw_scaled_bitmap(game->menu.pie, 0, 0, al_get_bitmap_width(game->menu.pie), al_get_bitmap_height(game->menu.pie), al_get_bitmap_width(game->menu.pie_bitmap)*0.1, al_get_bitmap_height(game->menu.pie_bitmap)*0.3, al_get_display_width(game->display)*0.09, al_get_display_height(game->display)*0.06, ALLEGRO_FLIP_HORIZONTAL);
 	al_draw_scaled_bitmap(game->menu.pie, 0, 0, al_get_bitmap_width(game->menu.pie), al_get_bitmap_height(game->menu.pie), al_get_bitmap_width(game->menu.pie_bitmap)*0.3, al_get_bitmap_height(game->menu.pie_bitmap)*0.6, al_get_display_width(game->display)*0.13, al_get_display_height(game->display)*0.1, 0);
@@ -175,8 +177,12 @@ int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 		game->menu.selected--;
 	} else if (ev->keyboard.keycode==ALLEGRO_KEY_DOWN) {
 		game->menu.selected++;
-	} else if ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) || (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE)) {
+	} else if (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3)) || (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE)) {
 		return 1;
+	} else if (ev->keyboard.keycode==ALLEGRO_KEY_ENTER) {
+		UnloadGameState(game);
+		game->gamestate = GAMESTATE_LOADING;
+		game->loadstate = GAMESTATE_MENU;
 	}
 	if (game->menu.selected==-1) game->menu.selected=3;
 	if (game->menu.selected==4) game->menu.selected=0;
