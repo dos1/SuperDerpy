@@ -92,7 +92,7 @@ int main(int argc, char **argv){
    }
    al_set_window_title(game.display, "Super Derpy: Muffin Attack");
    al_hide_mouse_cursor(game.display);
-   game.font = al_load_ttf_font("ShadowsIntoLight.ttf",72,0 );
+   game.font = al_load_ttf_font("ShadowsIntoLight.ttf",al_get_display_height(game.display)*0.09,0 );
    
    game.event_queue = al_create_event_queue();
    if(!game.event_queue) {
