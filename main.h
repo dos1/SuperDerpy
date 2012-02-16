@@ -23,6 +23,7 @@ struct Menu {
 	ALLEGRO_SAMPLE *sample, *rain_sample;
 	ALLEGRO_FONT *font_title, *font_subtitle, *font, *font_selected;
 	int selected;
+	bool options;
 };
 
 struct Loading {

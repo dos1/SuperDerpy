@@ -35,14 +35,19 @@ void Menu_Draw(struct Game *game) {
 	al_draw_text(game->menu.font_subtitle, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.275, ALLEGRO_ALIGN_CENTRE, "Muffin Attack");
 
 	ALLEGRO_FONT *font;
+	char* text;
 	font = game->menu.font; if (game->menu.selected==0) font = game->menu.font_selected;
-	al_draw_text(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.5, ALLEGRO_ALIGN_CENTRE, "Start game");
+	text = "Start game"; if (game->menu.options) text="Fullscreen: on";
+	al_draw_text(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.5, ALLEGRO_ALIGN_CENTRE, text);
 	font = game->menu.font; if (game->menu.selected==1) font = game->menu.font_selected;
-	al_draw_text(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.6, ALLEGRO_ALIGN_CENTRE, "Options");
+	text = "Options"; if (game->menu.options) text="Music: on";
+	al_draw_text(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.6, ALLEGRO_ALIGN_CENTRE, text);
 	font = game->menu.font; if (game->menu.selected==2) font = game->menu.font_selected;
-	al_draw_text(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.7, ALLEGRO_ALIGN_CENTRE, "About");
+	text = "About"; if (game->menu.options) text="Sounds: on";
+	al_draw_text(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.7, ALLEGRO_ALIGN_CENTRE, text);
 	font = game->menu.font; if (game->menu.selected==3) font = game->menu.font_selected;
-	al_draw_text(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.8, ALLEGRO_ALIGN_CENTRE, "Exit");
+	text = "Exit"; if (game->menu.options) text="Back";
+	al_draw_text(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.8, ALLEGRO_ALIGN_CENTRE, text);
 
 	game->menu.cloud_position-=0.1;
 	game->menu.cloud2_position-=0.025;
@@ -54,6 +59,7 @@ void Menu_Draw(struct Game *game) {
 void Menu_Preload(struct Game *game) {
 	game->menu.cloud_position = 100;
 	game->menu.cloud2_position = 100;
+	game->menu.options = false;
 	//game->menu.image = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 	//al_destroy_bitmap(game->menu.image); // ugh...
 	game->menu.image = al_load_bitmap( "menu.png" );
@@ -86,6 +92,7 @@ void Menu_Preload(struct Game *game) {
 	game->menu.menu_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 	game->menu.menu_fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 	al_set_target_bitmap(game->menu.menu_bitmap);
+	al_clear_to_color(al_map_rgba(0,0,0,0));
 	al_draw_scaled_bitmap(game->menu.image,0, 0, al_get_bitmap_width(game->menu.image), al_get_bitmap_height(game->menu.image), 0, 0, al_get_display_width(game->display), al_get_display_height(game->display),0);
 	al_destroy_bitmap(game->menu.image);
 
@@ -96,11 +103,13 @@ void Menu_Preload(struct Game *game) {
 	// Cloud menu bitmap
 	game->menu.cloud_bitmap = al_create_bitmap(al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.25);
 	al_set_target_bitmap(game->menu.cloud_bitmap);
+	al_clear_to_color(al_map_rgba(0,0,0,0));
 	al_draw_scaled_bitmap(game->menu.cloud,0, 0, al_get_bitmap_width(game->menu.cloud), al_get_bitmap_height(game->menu.cloud), 0, 0, al_get_bitmap_width(game->menu.cloud_bitmap), al_get_bitmap_height(game->menu.cloud_bitmap),0);
 	al_destroy_bitmap(game->menu.cloud);
 
 	game->menu.cloud2_bitmap = al_create_bitmap(al_get_display_width(game->display)*0.2, al_get_display_height(game->display)*0.1);
 	al_set_target_bitmap(game->menu.cloud2_bitmap);
+	al_clear_to_color(al_map_rgba(0,0,0,0));
 	al_draw_scaled_bitmap(game->menu.cloud2,0, 0, al_get_bitmap_width(game->menu.cloud2), al_get_bitmap_height(game->menu.cloud2), 0, 0, al_get_bitmap_width(game->menu.cloud2_bitmap), al_get_bitmap_height(game->menu.cloud2_bitmap),0);
 	al_destroy_bitmap(game->menu.cloud2);
 	
@@ -120,6 +129,7 @@ void Menu_Preload(struct Game *game) {
 
 	game->menu.mountain_bitmap = al_create_bitmap(al_get_display_width(game->display)*0.055, al_get_display_height(game->display)/9);
 	al_set_target_bitmap(game->menu.mountain_bitmap);
+	al_clear_to_color(al_map_rgba(0,0,0,0));
 	al_draw_scaled_bitmap(game->menu.mountain,0, 0, al_get_bitmap_width(game->menu.mountain), al_get_bitmap_height(game->menu.mountain), 0, 0, al_get_bitmap_width(game->menu.mountain_bitmap), al_get_bitmap_height(game->menu.mountain_bitmap),0);
 	al_destroy_bitmap(game->menu.mountain);
 
@@ -177,12 +187,15 @@ int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 		game->menu.selected--;
 	} else if (ev->keyboard.keycode==ALLEGRO_KEY_DOWN) {
 		game->menu.selected++;
-	} else if (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3)) || (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE)) {
+	} else if ((!game->menu.options) && (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3)) || (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE))) {
 		return 1;
-	} else if (ev->keyboard.keycode==ALLEGRO_KEY_ENTER) {
+	} else if ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (!game->menu.options) && (game->menu.selected!=1)) {
 		UnloadGameState(game);
 		game->gamestate = GAMESTATE_LOADING;
 		game->loadstate = GAMESTATE_MENU;
+	} else if (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (!game->menu.options) && (game->menu.selected==1)) || ((game->menu.options) && ((ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE)) || ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3)))) {
+		game->menu.options=!game->menu.options;
+		game->menu.selected=0;
 	}
 	if (game->menu.selected==-1) game->menu.selected=3;
 	if (game->menu.selected==4) game->menu.selected=0;
