@@ -16,11 +16,12 @@ enum gamestate_enum {
 struct Menu {
 	ALLEGRO_BITMAP *menu_bitmap, *menu_fade_bitmap, *image;
 	ALLEGRO_BITMAP *cloud_bitmap, *cloud, *cloud2_bitmap, *cloud2;
-	ALLEGRO_BITMAP *pinkcloud_bitmap, *pinkcloud;
+	ALLEGRO_BITMAP *pinkcloud_bitmap, *pinkcloud, *rain;
 	ALLEGRO_BITMAP *mountain_bitmap, *mountain;
 	float cloud_position, cloud2_position;
 	int mountain_position;
 	ALLEGRO_SAMPLE *sample;
+	ALLEGRO_FONT *font_title, *font_subtitle;
 };
 
 struct Loading {
