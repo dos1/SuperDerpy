@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "menu.h"
 #include "loading.h"
+#include "about.h"
 
 float FPS = 60;
 int DISPLAY_WIDTH = 800;
@@ -11,11 +12,23 @@ void PreloadGameState(struct Game *game) {
 	if (game->loadstate==GAMESTATE_MENU) {
 		Menu_Preload(game);
 	}
+	else if (game->loadstate==GAMESTATE_LOADING) {
+		Loading_Preload(game);
+	}
+	else if (game->loadstate==GAMESTATE_ABOUT) {
+		About_Preload(game);
+	}
 }
 
 void UnloadGameState(struct Game *game) {
 	if (game->gamestate==GAMESTATE_MENU) {
 		Menu_Unload(game);
+	}
+	else if (game->gamestate==GAMESTATE_LOADING) {
+		Loading_Unload(game);
+	}
+	else if (game->gamestate==GAMESTATE_ABOUT) {
+		About_Unload(game);
 	}
 }
 
@@ -25,6 +38,9 @@ void LoadGameState(struct Game *game) {
 	}
 	else if (game->loadstate==GAMESTATE_LOADING) {
 		Loading_Load(game);
+	}
+	else if (game->loadstate==GAMESTATE_ABOUT) {
+		About_Load(game);
 	}
 	game->gamestate = game->loadstate;
 	game->loadstate = -1;
@@ -132,6 +148,9 @@ int main(int argc, char **argv){
 	 else if (game.gamestate==GAMESTATE_MENU) {
 		if (Menu_Keydown(&game, &ev)) break;
 	 }
+	 else if (game.gamestate==GAMESTATE_ABOUT) {
+		if (About_Keydown(&game, &ev)) break;
+	 }
       }
       
       if(redraw && al_is_event_queue_empty(game.event_queue)) {
@@ -141,6 +160,9 @@ int main(int argc, char **argv){
 	 }
 	 else if (game.gamestate==GAMESTATE_MENU) {
 		Menu_Draw(&game);
+	}
+	 else if (game.gamestate==GAMESTATE_ABOUT) {
+		About_Draw(&game);
 	}
       }
    }

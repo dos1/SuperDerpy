@@ -10,7 +10,9 @@
 
 enum gamestate_enum {
 	GAMESTATE_LOADING,
-	GAMESTATE_MENU
+	GAMESTATE_MENU,
+	GAMESTATE_ABOUT,
+	GAMESTATE_INTRO
 };
 
 struct Menu {

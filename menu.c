@@ -189,10 +189,14 @@ int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 		game->menu.selected++;
 	} else if ((!game->menu.options) && (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3)) || (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE))) {
 		return 1;
-	} else if ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (!game->menu.options) && (game->menu.selected!=1)) {
+	} else if ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (!game->menu.options) && (game->menu.selected==0)) {
 		UnloadGameState(game);
 		game->gamestate = GAMESTATE_LOADING;
 		game->loadstate = GAMESTATE_MENU;
+	} else if ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (!game->menu.options) && (game->menu.selected==2)) {
+		UnloadGameState(game);
+		game->gamestate = GAMESTATE_LOADING;
+		game->loadstate = GAMESTATE_ABOUT;
 	} else if (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (!game->menu.options) && (game->menu.selected==1)) || ((game->menu.options) && ((ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE)) || ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3)))) {
 		game->menu.options=!game->menu.options;
 		game->menu.selected=0;

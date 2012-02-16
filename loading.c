@@ -38,3 +38,5 @@ void Loading_Load(struct Game *game) {
 }
 
 int Loading_Keydown(struct Game *game, ALLEGRO_EVENT *ev) { return 0; }
+void Loading_Preload(struct Game *game) {}
+void Loading_Unload(struct Game *game) {}
