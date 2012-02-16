@@ -62,7 +62,9 @@ void Menu_Preload(struct Game *game) {
 
 void Menu_Unload(struct Game *game) {
 	al_destroy_sample(game->menu.sample);
+	ALLEGRO_EVENT ev;
 	for(int fadeloop=255; fadeloop>=0; fadeloop-=10){
+		al_wait_for_event(game->event_queue, &ev);
 		al_draw_tinted_bitmap(game->menu.menu_fade_bitmap,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
 		al_flip_display();
 	}
@@ -71,7 +73,9 @@ void Menu_Unload(struct Game *game) {
 
 void Menu_Load(struct Game *game) {
 	al_play_sample(game->menu.sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
+	ALLEGRO_EVENT ev;
 	for(int fadeloop=0; fadeloop<256; fadeloop+=10){
+		al_wait_for_event(game->event_queue, &ev);
 		al_draw_tinted_bitmap(game->menu.menu_fade_bitmap,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
 		al_flip_display();
 	}	
