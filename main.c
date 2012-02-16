@@ -142,5 +142,6 @@ int main(int argc, char **argv){
    al_destroy_display(game.display);
    al_destroy_bitmap(game.loading.loading_bitmap);
    al_destroy_event_queue(game.event_queue);
+   al_destroy_font(game.font);
    return 0;
 }
