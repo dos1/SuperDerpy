@@ -2,7 +2,7 @@
 #include "menu.h"
 #include "loading.h"
 
-float FPS = 40;
+float FPS = 60;
 int DISPLAY_WIDTH = 800;
 int DISPLAY_HEIGHT = 500;
 bool FULLSCREEN = true;
