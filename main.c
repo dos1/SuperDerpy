@@ -10,7 +10,7 @@ bool FULLSCREEN = true;
 bool DEBUG = false;
 
 void PrintConsole(struct Game *game, char* text) {
-	printf("%s\n", text);
+	if (DEBUG) printf("%s\n", text);
 	ALLEGRO_BITMAP *con = al_create_bitmap(al_get_bitmap_width(game->console), al_get_bitmap_height(game->console)*1.0);
 	al_set_target_bitmap(con);
 	al_clear_to_color(al_map_rgba(0,0,0,80));
@@ -24,7 +24,7 @@ void PrintConsole(struct Game *game, char* text) {
 }
 
 void DrawConsole(struct Game *game) {
-	if (DEBUG) al_draw_bitmap(game->console, 0, 0, 0);
+	if (game->showconsole) al_draw_bitmap(game->console, 0, 0, 0);
 }
 
 void PreloadGameState(struct Game *game) {
@@ -159,6 +159,7 @@ int main(int argc, char **argv){
    al_register_event_source(game.event_queue, al_get_timer_event_source(game.timer));
    al_register_event_source(game.event_queue, al_get_keyboard_event_source());
 
+   game.showconsole = DEBUG;
    game.console = al_create_bitmap(al_get_display_width(game.display), al_get_display_height(game.display)*0.12);
    al_set_target_bitmap(game.console);
    al_clear_to_color(al_map_rgba(0,0,0,80));
@@ -186,7 +187,7 @@ int main(int argc, char **argv){
       }
       else if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
 	 if ((ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_TILDE)) {
-		 DEBUG = !DEBUG;
+		 game.showconsole = !game.showconsole;
 	 }
 	 if (game.gamestate==GAMESTATE_LOADING) {
 		if (Loading_Keydown(&game, &ev)) break;
