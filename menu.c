@@ -21,7 +21,7 @@ void Menu_Draw(struct Game *game) {
 
 	al_clear_to_color(al_map_rgb(183,234,193));
 	float tint = (sin((game->menu.cloud_position-30)/15)+1)/2;
-	if (tint < 0.0001) game->menu.mountain_position = (al_get_display_width(game->display)*(rand()/(float)RAND_MAX)/2)+al_get_display_width(game->display)/2;
+	if (tint < 0.0001) { PrintConsole(game, "random tint"); game->menu.mountain_position = (al_get_display_width(game->display)*(rand()/(float)RAND_MAX)/2)+al_get_display_width(game->display)/2; }
 	al_draw_tinted_bitmap(game->menu.mountain_bitmap,al_map_rgba_f(tint,tint,tint,tint),game->menu.mountain_position, 0,0);
 	al_draw_scaled_bitmap(game->menu.cloud_bitmap,0,0,al_get_bitmap_width(game->menu.cloud_bitmap), al_get_bitmap_height(game->menu.cloud_bitmap), al_get_display_width(game->display)*(sin((game->menu.cloud_position/40)-4.5)-0.3), al_get_display_height(game->display)*0.35, al_get_bitmap_width(game->menu.cloud_bitmap)/2, al_get_bitmap_height(game->menu.cloud_bitmap)/2,0);
 	al_draw_bitmap(game->menu.cloud2_bitmap,al_get_display_width(game->display)*(game->menu.cloud2_position/100.0), al_get_display_height(game->display)/1.5,0);
@@ -51,8 +51,8 @@ void Menu_Draw(struct Game *game) {
 
 	game->menu.cloud_position-=0.1;
 	game->menu.cloud2_position-=0.025;
-	if (game->menu.cloud_position<-80) game->menu.cloud_position=100;
-	if (game->menu.cloud2_position<0) game->menu.cloud2_position=100;
+	if (game->menu.cloud_position<-80) { game->menu.cloud_position=100; PrintConsole(game, "cloud_position"); }
+	if (game->menu.cloud2_position<0) { game->menu.cloud2_position=100; PrintConsole(game, "cloud2_position"); }
 }
 
 void Menu_Preload(struct Game *game) {
@@ -201,6 +201,7 @@ int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	} else if (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (!game->menu.options) && (game->menu.selected==1)) || ((game->menu.options) && ((ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE)) || ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3)))) {
 		game->menu.options=!game->menu.options;
 		game->menu.selected=0;
+		PrintConsole(game, "options state changed");
 	}
 	if (game->menu.selected==-1) game->menu.selected=3;
 	if (game->menu.selected==4) game->menu.selected=0;
