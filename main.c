@@ -2,6 +2,7 @@
 #include "menu.h"
 #include "loading.h"
 #include "about.h"
+#include "intro.h"
 
 float FPS = 60;
 int DISPLAY_WIDTH = 800;
@@ -31,54 +32,66 @@ void PreloadGameState(struct Game *game) {
 	if (game->loadstate==GAMESTATE_MENU) {
 		PrintConsole(game, "Preload GAMESTATE_MENU...");
 		Menu_Preload(game);
-		PrintConsole(game, "finished");
 	}
 	else if (game->loadstate==GAMESTATE_LOADING) {
 		PrintConsole(game, "Preload GAMESTATE_LOADING...");
 		Loading_Preload(game);
-		PrintConsole(game, "finished");
 	}
 	else if (game->loadstate==GAMESTATE_ABOUT) {
 		PrintConsole(game, "Preload GAMESTATE_ABOUT...");
 		About_Preload(game);
-		PrintConsole(game, "finished");
 	}
+	else if (game->loadstate==GAMESTATE_INTRO) {
+		PrintConsole(game, "Preload GAMESTATE_INTRO...");
+		Intro_Preload(game);
+	} else {
+		PrintConsole(game, "ERROR: Attempted to preload unknown gamestate!");
+	}
+	PrintConsole(game, "finished");
 }
 
 void UnloadGameState(struct Game *game) {
 	if (game->gamestate==GAMESTATE_MENU) {
 		PrintConsole(game, "Unload GAMESTATE_MENU...");
 		Menu_Unload(game);
-		PrintConsole(game, "finished");
 	}
 	else if (game->gamestate==GAMESTATE_LOADING) {
 		PrintConsole(game, "Unload GAMESTATE_LOADING...");
 		Loading_Unload(game);
-		PrintConsole(game, "finished");
 	}
 	else if (game->gamestate==GAMESTATE_ABOUT) {
 		PrintConsole(game, "Unload GAMESTATE_ABOUT...");
 		About_Unload(game);
-		PrintConsole(game, "finished");
 	}
+	else if (game->gamestate==GAMESTATE_INTRO) {
+		PrintConsole(game, "Unload GAMESTATE_INTRO...");
+		Intro_Unload(game);
+	} else {
+		PrintConsole(game, "ERROR: Attempted to unload unknown gamestate!");
+	}
+	PrintConsole(game, "finished");
 }
 
 void LoadGameState(struct Game *game) {
 	if (game->loadstate==GAMESTATE_MENU) {
 		PrintConsole(game, "Load GAMESTATE_MENU...");
 		Menu_Load(game);
-		PrintConsole(game, "finished");
 	}
 	else if (game->loadstate==GAMESTATE_LOADING) {
 		PrintConsole(game, "Load GAMESTATE_LOADING...");
 		Loading_Load(game);
-		PrintConsole(game, "finished");
 	}
 	else if (game->loadstate==GAMESTATE_ABOUT) {
 		PrintConsole(game, "Load GAMESTATE_ABOUT...");
 		About_Load(game);
-		PrintConsole(game, "finished");
 	}
+	else if (game->loadstate==GAMESTATE_INTRO) {
+		PrintConsole(game, "Load GAMESTATE_INTRO...");
+		Intro_Load(game);
+	} else {
+		PrintConsole(game, "ERROR: Attempted to load unknown gamestate!");
+	}
+	PrintConsole(game, "finished");
 	game->gamestate = game->loadstate;
 	game->loadstate = -1;
 }
@@ -210,6 +223,19 @@ int main(int argc, char **argv){
 	}
 	 else if (game.gamestate==GAMESTATE_ABOUT) {
 		About_Draw(&game);
+	}
+	 else if (game.gamestate==GAMESTATE_INTRO) {
+		Intro_Draw(&game);
+	}
+	else {
+		game.showconsole = true;
+		PrintConsole(&game, "ERROR: Unknown gamestate reached! (5 sec sleep)");
+		DrawConsole(&game);
+		al_flip_display();
+		al_rest(5.0);
+		PrintConsole(&game, "Returning to menu...");
+		game.gamestate = GAMESTATE_LOADING;
+		game.loadstate = GAMESTATE_MENU;
 	}
 	DrawConsole(&game);
 	al_flip_display();
