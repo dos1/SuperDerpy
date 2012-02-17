@@ -53,7 +53,6 @@ void Menu_Draw(struct Game *game) {
 	game->menu.cloud2_position-=0.025;
 	if (game->menu.cloud_position<-80) game->menu.cloud_position=100;
 	if (game->menu.cloud2_position<0) game->menu.cloud2_position=100;
-	al_flip_display();
 }
 
 void Menu_Preload(struct Game *game) {
@@ -144,7 +143,7 @@ void Menu_Preload(struct Game *game) {
 	al_draw_text(game->menu.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.7, ALLEGRO_ALIGN_CENTRE, "About");
 	al_draw_text(game->menu.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.8, ALLEGRO_ALIGN_CENTRE, "Exit");
 
-	al_set_target_bitmap(al_get_backbuffer(game->display));	
+	al_set_target_bitmap(al_get_backbuffer(game->display));
 }
 
 void Menu_Unload(struct Game *game) {
@@ -154,6 +153,7 @@ void Menu_Unload(struct Game *game) {
 	for(int fadeloop=255; fadeloop>=0; fadeloop-=10){
 		al_wait_for_event(game->event_queue, &ev);
 		al_draw_tinted_bitmap(game->menu.menu_fade_bitmap,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
+		DrawConsole(game);
 		al_flip_display();
 	}
 	al_destroy_bitmap(game->menu.menu_fade_bitmap);
@@ -178,6 +178,7 @@ void Menu_Load(struct Game *game) {
 	for(int fadeloop=0; fadeloop<256; fadeloop+=10){
 		al_wait_for_event(game->event_queue, &ev);
 		al_draw_tinted_bitmap(game->menu.menu_fade_bitmap,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
+		DrawConsole(game);
 		al_flip_display();
 	}	
 }

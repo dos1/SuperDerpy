@@ -34,11 +34,12 @@ struct Loading {
 
 struct Game {
 	ALLEGRO_DISPLAY *display;
-	ALLEGRO_FONT *font;
+	ALLEGRO_FONT *font, *font_console;
 	enum gamestate_enum gamestate;
 	enum gamestate_enum loadstate;
 	ALLEGRO_EVENT_QUEUE *event_queue;
 	ALLEGRO_TIMER *timer;
+	ALLEGRO_BITMAP *console;
 	struct Menu menu;
 	struct Loading loading;
 };
@@ -46,5 +47,7 @@ struct Game {
 void PreloadGameState(struct Game *game);
 void UnloadGameState(struct Game *game);
 void LoadGameState(struct Game *game);
+void PrintConsole(struct Game *game, char* text);
+void DrawConsole(struct Game *game);
 
 #endif
