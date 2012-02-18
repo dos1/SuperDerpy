@@ -4,14 +4,6 @@
 #include "map.h"
 
 void Map_Draw(struct Game *game) {
-	//al_clear_to_color(al_map_rgb(0,0,0));
-	//al_draw_text(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)/2, ALLEGRO_ALIGN_CENTRE, "Not implemented yet!");
-	//DrawConsole(game);
-	//al_flip_display();
-	//al_rest(3.0);
-	//UnloadGameState(game);
-	//game->gamestate = GAMESTATE_LOADING;
-	//game->loadstate = GAMESTATE_MENU;
 	al_draw_bitmap(game->map.map, 0, 0, 0);
 }
 
@@ -36,14 +28,12 @@ int Map_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 void Map_Preload(struct Game *game) {
 	game->map.available = 6;
 	game->map.selected = game->map.available;
-//	ALLEGRO_BITMAP *map, *background, *map_bg, *highlight;
 	game->map.map = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 	game->map.background = al_load_bitmap( "table.png" );
 	game->map.map_bg = al_load_bitmap( "map/background.png" );
-	//char* filename = "map/highlight1.png";
-	//sprintf(filename, "map/highlight%d.png", game->map.available);
-	//printf("%s\n", filename);
-	game->map.highlight = al_load_bitmap( "map/highlight6.png" );
+	char filename[20] = { };
+	sprintf(filename, "map/highlight%d.png", game->map.available);
+	game->map.highlight = al_load_bitmap( filename );
 	al_set_target_bitmap(game->map.map);
 	al_draw_scaled_bitmap(game->map.background,0,0,al_get_bitmap_width(game->map.background),al_get_bitmap_height(game->map.background),0,0,al_get_display_width(game->display), al_get_display_height(game->display),0);
 	al_draw_scaled_bitmap(game->map.map_bg,0,0,al_get_bitmap_width(game->map.map_bg),al_get_bitmap_height(game->map.map_bg),0,0,al_get_display_width(game->display), al_get_display_height(game->display),0);
