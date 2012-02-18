@@ -33,6 +33,10 @@ struct Loading {
 	ALLEGRO_BITMAP *loading_bitmap, *image;
 };
 
+struct About {
+	ALLEGRO_BITMAP *fade_bitmap, *image;
+};
+
 struct Intro {
 	int position;
 	int page;
@@ -53,6 +57,7 @@ struct Game {
 	struct Menu menu;
 	struct Loading loading;
 	struct Intro intro;
+	struct About about;
 };
 
 void PreloadGameState(struct Game *game);
