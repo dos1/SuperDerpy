@@ -127,8 +127,6 @@ void Menu_Preload(struct Game *game) {
 }
 
 void Menu_Unload(struct Game *game) {
-	al_destroy_sample(game->menu.sample);
-	al_destroy_sample(game->menu.rain_sample);
 
 	game->menu.menu_fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 
@@ -156,6 +154,8 @@ void Menu_Unload(struct Game *game) {
 	al_destroy_font(game->menu.font_subtitle);
 	al_destroy_font(game->menu.font);
 	al_destroy_font(game->menu.font_selected);
+	al_destroy_sample(game->menu.sample);
+	al_destroy_sample(game->menu.rain_sample);
 }
 
 void Menu_Load(struct Game *game) {
