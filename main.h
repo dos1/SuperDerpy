@@ -12,7 +12,8 @@ enum gamestate_enum {
 	GAMESTATE_LOADING,
 	GAMESTATE_MENU,
 	GAMESTATE_ABOUT,
-	GAMESTATE_INTRO
+	GAMESTATE_INTRO,
+	GAMESTATE_MAP
 };
 
 struct Menu {
@@ -37,6 +38,7 @@ struct Intro {
 	int page;
 	bool in_animation;
 	ALLEGRO_BITMAP *table, *table_bitmap;
+	ALLEGRO_FONT *font;
 };
 
 struct Game {

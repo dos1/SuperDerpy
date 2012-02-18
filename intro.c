@@ -11,6 +11,7 @@ void Intro_Draw(struct Game *game) {
 	else
 		al_draw_bitmap(game->intro.table, -1*(game->intro.page)*al_get_display_width(game->display), 0, 0); //al_get_display_height(game->display)*((game->intro.position/3.0)/(float)al_get_display_width(game->display)), 0);
 	al_draw_text(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)/2, ALLEGRO_ALIGN_CENTRE, "Not implemented yet!");
+	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)*0.90, ALLEGRO_ALIGN_CENTRE, "Press any key to continue or escape to skip...");
 	//PrintConsole(game, "drawing");
 	if (game->intro.in_animation) {
 		//PrintConsole(game, "animating");
@@ -23,7 +24,7 @@ void Intro_Draw(struct Game *game) {
 			PrintConsole(game, "This was the last page.");
 			UnloadGameState(game);
 			game->gamestate = GAMESTATE_LOADING;
-			game->loadstate = GAMESTATE_MENU;
+			game->loadstate = GAMESTATE_MAP;
 		}
 	}
 }
@@ -41,7 +42,7 @@ int Intro_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
 		UnloadGameState(game);
 		game->gamestate = GAMESTATE_LOADING;
-		game->loadstate = GAMESTATE_MENU;
+		game->loadstate = GAMESTATE_MAP;
 		return 0;
 	}
 	if (!game->intro.in_animation) {
@@ -57,6 +58,7 @@ void Intro_Preload(struct Game *game) {
 	game->intro.in_animation = false;
 	game->intro.table_bitmap = al_load_bitmap( "table.png" );
 	game->intro.table = al_create_bitmap(al_get_display_width(game->display)*4, al_get_display_height(game->display));
+	game->intro.font = al_load_ttf_font("ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.045,0 );
 	al_set_target_bitmap(game->intro.table);
 	al_draw_bitmap(game->intro.table_bitmap, 0, 0, 0);
 	//game->intro.table_bitmap = al_load_bitmap( "loading.png" );
@@ -83,4 +85,5 @@ void Intro_Unload(struct Game *game) {
 	}
 	al_destroy_bitmap(game->intro.table_bitmap);
 	al_destroy_bitmap(game->intro.table);
+	al_destroy_font(game->intro.font);
 }
