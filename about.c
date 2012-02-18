@@ -19,12 +19,12 @@ void About_Load(struct Game *game) {
 	al_destroy_bitmap(game->about.fade_bitmap);
 }
 int About_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
-	if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
+	//if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
 		UnloadGameState(game);
 		game->gamestate = GAMESTATE_LOADING;
 		game->loadstate = GAMESTATE_MENU;
 		return 0;
-	}
+	//}
 }
 void About_Preload(struct Game *game) {
 	game->about.image = al_load_bitmap( "table.png" );
