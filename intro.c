@@ -60,13 +60,13 @@ void Intro_Preload(struct Game *game) {
 	game->intro.table = al_create_bitmap(al_get_display_width(game->display)*4, al_get_display_height(game->display));
 	game->intro.font = al_load_ttf_font("ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.045,0 );
 	al_set_target_bitmap(game->intro.table);
-	al_draw_bitmap(game->intro.table_bitmap, 0, 0, 0);
+	al_draw_scaled_bitmap(game->intro.table_bitmap, 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), 0, 0, al_get_display_width(game->display), al_get_display_height(game->display), 0);
 	//game->intro.table_bitmap = al_load_bitmap( "table.png" );
-	al_draw_bitmap(game->intro.table_bitmap, al_get_display_width(game->display), 0, ALLEGRO_FLIP_HORIZONTAL);
+	al_draw_scaled_bitmap(game->intro.table_bitmap, 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display), 0, al_get_display_width(game->display), al_get_display_height(game->display), ALLEGRO_FLIP_HORIZONTAL);
 	//game->intro.table_bitmap = al_load_bitmap( "menu.png" );
-	al_draw_bitmap(game->intro.table_bitmap, al_get_display_width(game->display)*2, 0, 0);
+	al_draw_scaled_bitmap(game->intro.table_bitmap, 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*2, 0, al_get_display_width(game->display), al_get_display_height(game->display), 0);
 	//game->intro.table_bitmap = al_load_bitmap( "table.png" );
-	al_draw_bitmap(game->intro.table_bitmap, al_get_display_width(game->display)*3, 0, ALLEGRO_FLIP_HORIZONTAL);
+	al_draw_scaled_bitmap(game->intro.table_bitmap, 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*3, 0, al_get_display_width(game->display), al_get_display_height(game->display), ALLEGRO_FLIP_HORIZONTAL);
 
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 }

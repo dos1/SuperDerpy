@@ -4,7 +4,7 @@
 
 void About_Draw(struct Game *game) {
 	al_clear_to_color(al_map_rgb(0,0,0));
-	al_draw_bitmap(game->about.image, 0, 0, 0);
+	al_draw_scaled_bitmap(game->about.image,0,0,al_get_bitmap_width(game->about.image),al_get_bitmap_height(game->about.image),0,0,al_get_display_width(game->display), al_get_display_height(game->display),0);
 	al_draw_text(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)/2, ALLEGRO_ALIGN_CENTRE, "Not implemented yet!");
 }
 
@@ -30,7 +30,7 @@ void About_Preload(struct Game *game) {
 	game->about.image = al_load_bitmap( "table.png" );
 	game->about.fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 	al_set_target_bitmap(game->about.fade_bitmap);
-	al_draw_bitmap(game->about.image,0,0,0);
+	al_draw_scaled_bitmap(game->about.image,0,0,al_get_bitmap_width(game->about.image),al_get_bitmap_height(game->about.image),0,0,al_get_display_width(game->display), al_get_display_height(game->display),0);
 	al_draw_text(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)/2, ALLEGRO_ALIGN_CENTRE, "Not implemented yet!");	
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 }
@@ -38,7 +38,7 @@ void About_Unload(struct Game *game) {
 	ALLEGRO_EVENT ev;
 	game->about.fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 	al_set_target_bitmap(game->about.fade_bitmap);
-	al_draw_bitmap(game->about.image,0,0,0);
+	al_draw_scaled_bitmap(game->about.image,0,0,al_get_bitmap_width(game->about.image),al_get_bitmap_height(game->about.image),0,0,al_get_display_width(game->display), al_get_display_height(game->display),0);
 	al_draw_text(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)/2, ALLEGRO_ALIGN_CENTRE, "Not implemented yet!");	
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 	for(int fadeloop=255; fadeloop>=0; fadeloop-=10){
