@@ -28,7 +28,15 @@ void Intro_Draw(struct Game *game) {
 	}
 }
 
-void Intro_Load(struct Game *game) {}
+void Intro_Load(struct Game *game) {
+	ALLEGRO_EVENT ev;
+	for(int fadeloop=0; fadeloop<256; fadeloop+=10){
+		al_wait_for_event(game->event_queue, &ev);
+		al_draw_tinted_bitmap(game->intro.table_bitmap,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
+		DrawConsole(game);
+		al_flip_display();
+	}
+}
 int Intro_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
 		UnloadGameState(game);
@@ -70,6 +78,18 @@ void Intro_Preload(struct Game *game) {
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 }
 void Intro_Unload(struct Game *game) {
+	ALLEGRO_EVENT ev;
+	for(int fadeloop=255; fadeloop>=0; fadeloop-=10){
+		al_wait_for_event(game->event_queue, &ev);
+		if (game->intro.in_animation)
+			al_draw_tinted_bitmap(game->intro.table, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), -1*(game->intro.page)*al_get_display_width(game->display) + cos(((-1*((game->intro.position)%al_get_display_width(game->display)))/(float)al_get_display_width(game->display))*(3.1415/2))*al_get_display_width(game->display), al_get_display_height(game->display)*((game->intro.position/3.0)/(float)al_get_display_width(game->display)), 0);
+		else
+			al_draw_tinted_bitmap(game->intro.table, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), -1*(game->intro.page)*al_get_display_width(game->display), al_get_display_height(game->display)*((game->intro.position/3.0)/(float)al_get_display_width(game->display)), 0);
+
+		//al_draw_tinted_bitmap(game->intro.table_bitmap,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),-1*(game->intro.page)*al_get_display_width(game->display), al_get_display_height(game->display)*((game->intro.position/3.0)/(float)al_get_display_width(game->display)),0);
+		DrawConsole(game);
+		al_flip_display();
+	}
 	al_destroy_bitmap(game->intro.table_bitmap);
 	al_destroy_bitmap(game->intro.table);
 }

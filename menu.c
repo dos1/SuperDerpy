@@ -133,7 +133,7 @@ void Menu_Preload(struct Game *game) {
 	al_destroy_bitmap(game->menu.mountain);
 
 	al_set_target_bitmap(game->menu.menu_fade_bitmap);
-	al_draw_bitmap(game->menu.pinkcloud_bitmap,(al_get_display_width(game->display)*0.132) + (cos((82)*1.74444))*20, 0,0);
+	al_draw_bitmap(game->menu.pinkcloud_bitmap,(al_get_display_width(game->display)*0.12) + (cos((game->menu.cloud_position/25+80)*1.74444))*40, 0,0);
 	al_draw_text(game->menu.font_title, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.1, ALLEGRO_ALIGN_CENTRE, "Super Derpy");
 	al_draw_text(game->menu.font_subtitle, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.275, ALLEGRO_ALIGN_CENTRE, "Muffin Attack");
 
