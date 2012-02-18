@@ -32,6 +32,13 @@ struct Loading {
 	ALLEGRO_BITMAP *loading_bitmap, *image;
 };
 
+struct Intro {
+	int position;
+	int page;
+	bool in_animation;
+	ALLEGRO_BITMAP *table, *table_bitmap;
+};
+
 struct Game {
 	ALLEGRO_DISPLAY *display;
 	ALLEGRO_FONT *font, *font_console;
@@ -43,6 +50,7 @@ struct Game {
 	bool showconsole;
 	struct Menu menu;
 	struct Loading loading;
+	struct Intro intro;
 };
 
 void PreloadGameState(struct Game *game);

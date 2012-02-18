@@ -22,6 +22,7 @@ void PrintConsole(struct Game *game, char* text) {
 	//al_draw_bitmap_region(game->console, 0, al_get_bitmap_height(game->console)*0.2, al_get_bitmap_width(game->console), al_get_bitmap_height(game->console)*0.8, 0, 0, 0);
 	al_draw_bitmap(con, 0, 0, 0);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
+	al_destroy_bitmap(con);
 }
 
 void DrawConsole(struct Game *game) {
@@ -211,6 +212,19 @@ int main(int argc, char **argv){
 	 else if (game.gamestate==GAMESTATE_ABOUT) {
 		if (About_Keydown(&game, &ev)) break;
 	 }
+	 else if (game.gamestate==GAMESTATE_INTRO) {
+		if (Intro_Keydown(&game, &ev)) break;
+	 }
+	else {
+		game.showconsole = true;
+		PrintConsole(&game, "ERROR: Keystroke in unknown gamestate! (5 sec sleep)");
+		DrawConsole(&game);
+		al_flip_display();
+		al_rest(5.0);
+		PrintConsole(&game, "Returning to menu...");
+		game.gamestate = GAMESTATE_LOADING;
+		game.loadstate = GAMESTATE_MENU;
+	}
       }
       
       if(redraw && al_is_event_queue_empty(game.event_queue)) {
