@@ -216,7 +216,7 @@ int main(int argc, char **argv){
 	 if ((ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_TILDE)) {
 		 game.showconsole = !game.showconsole;
 	 }
-	 if (game.gamestate==GAMESTATE_LOADING) {
+	 else if (game.gamestate==GAMESTATE_LOADING) {
 		if (Loading_Keydown(&game, &ev)) break;
 	 }
 	 else if (game.gamestate==GAMESTATE_MENU) {
