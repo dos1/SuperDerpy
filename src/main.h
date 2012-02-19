@@ -72,7 +72,7 @@ struct Game {
 void PreloadGameState(struct Game *game);
 void UnloadGameState(struct Game *game);
 void LoadGameState(struct Game *game);
-void PrintConsole(struct Game *game, char* text);
+void PrintConsole(struct Game *game, char* format, ...);
 void DrawConsole(struct Game *game);
 
 #endif

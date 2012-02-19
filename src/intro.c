@@ -49,9 +49,8 @@ int Intro_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 		return 0;
 	}
 	if (!game->intro.in_animation) {
-		PrintConsole(game, "Animate page...");
+		PrintConsole(game, "Animate page (was on %d)...", ++game->intro.page);
 		game->intro.in_animation = true;
-		game->intro.page++;
 	}
 	return 0;
 }
@@ -73,9 +72,9 @@ void Intro_Preload(struct Game *game) {
 	//game->intro.table_bitmap = al_load_bitmap( "table.png" );
 	al_draw_scaled_bitmap(game->intro.table_bitmap, 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display), 0, al_get_display_width(game->display), al_get_display_height(game->display), ALLEGRO_FLIP_HORIZONTAL);
 	//game->intro.table_bitmap = al_load_bitmap( "menu.png" );
-	al_draw_scaled_bitmap(game->intro.table_bitmap, 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*2, 0, al_get_display_width(game->display), al_get_display_height(game->display), 0);
+	al_draw_scaled_bitmap(game->intro.table_bitmap, 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*2, 0, al_get_display_width(game->display), al_get_display_height(game->display), ALLEGRO_FLIP_VERTICAL);
 	//game->intro.table_bitmap = al_load_bitmap( "table.png" );
-	al_draw_scaled_bitmap(game->intro.table_bitmap, 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*3, 0, al_get_display_width(game->display), al_get_display_height(game->display), ALLEGRO_FLIP_HORIZONTAL);
+	al_draw_scaled_bitmap(game->intro.table_bitmap, 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*3, 0, al_get_display_width(game->display), al_get_display_height(game->display), ALLEGRO_FLIP_HORIZONTAL^ALLEGRO_FLIP_VERTICAL);
 
 	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_bitmap_width(game->intro.table_bitmap)*0.5, al_get_bitmap_height(game->intro.table_bitmap)*0.3, ALLEGRO_ALIGN_LEFT, "Tekst.");
 	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_bitmap_width(game->intro.table_bitmap)*0.5, al_get_bitmap_height(game->intro.table_bitmap)*0.37, ALLEGRO_ALIGN_LEFT, "Drugi tekst.");

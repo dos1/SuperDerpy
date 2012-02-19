@@ -21,8 +21,8 @@ void Menu_Draw(struct Game *game) {
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 
 	al_clear_to_color(al_map_rgb(183,234,193));
-	float tint = (sin((game->menu.cloud_position-30)/15)+1)/2;
-	if (tint < 0.0001) { PrintConsole(game, "random tint"); game->menu.mountain_position = (al_get_display_width(game->display)*(rand()/(float)RAND_MAX)/2)+al_get_display_width(game->display)/2; }
+	float tint = (sin((game->menu.cloud_position-80)/15)+1)/2;
+	if (tint < 0.000004) { PrintConsole(game, "random tint %f", tint); game->menu.mountain_position = (al_get_display_width(game->display)*(rand()/(float)RAND_MAX)/2)+al_get_display_width(game->display)/2; }
 	al_draw_tinted_bitmap(game->menu.mountain_bitmap,al_map_rgba_f(tint,tint,tint,tint),game->menu.mountain_position, 0,0);
 	al_draw_scaled_bitmap(game->menu.cloud_bitmap,0,0,al_get_bitmap_width(game->menu.cloud_bitmap), al_get_bitmap_height(game->menu.cloud_bitmap), al_get_display_width(game->display)*(sin((game->menu.cloud_position/40)-4.5)-0.3), al_get_display_height(game->display)*0.35, al_get_bitmap_width(game->menu.cloud_bitmap)/2, al_get_bitmap_height(game->menu.cloud_bitmap)/2,0);
 	al_draw_bitmap(game->menu.cloud2_bitmap,al_get_display_width(game->display)*(game->menu.cloud2_position/100.0), al_get_display_height(game->display)/1.5,0);
@@ -211,7 +211,7 @@ int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 		al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 		game->menu.options=!game->menu.options;
 		game->menu.selected=0;
-		PrintConsole(game, "options state changed");
+		PrintConsole(game, "options state changed %d", game->menu.options);
 	}
 	if (game->menu.selected==-1) game->menu.selected=3;
 	if (game->menu.selected==4) game->menu.selected=0;

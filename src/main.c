@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdarg.h>
 #include "menu.h"
 #include "loading.h"
 #include "about.h"
@@ -11,7 +12,12 @@ int DISPLAY_HEIGHT = 500;
 bool FULLSCREEN = true;
 bool DEBUG_MODE = true;
 
-void PrintConsole(struct Game *game, char* text) {
+void PrintConsole(struct Game *game, char* format, ...) {
+	va_list vl;
+	va_start(vl, format);
+	char text[255] = {};
+	vsprintf(text, format, vl);
+	va_end(vl);
 	if (DEBUG_MODE) printf("%s\n", text);
 	ALLEGRO_BITMAP *con = al_create_bitmap(al_get_bitmap_width(game->console), al_get_bitmap_height(game->console)*1.0);
 	al_set_target_bitmap(con);
@@ -61,7 +67,7 @@ void PreloadGameState(struct Game *game) {
 		al_flip_display();
 		Map_Preload(game);
 	} else {
-		PrintConsole(game, "ERROR: Attempted to preload unknown gamestate!");
+		PrintConsole(game, "ERROR: Attempted to preload unknown gamestate %d!", game->gamestate);
 	}
 	PrintConsole(game, "finished");
 }
@@ -87,7 +93,7 @@ void UnloadGameState(struct Game *game) {
 		PrintConsole(game, "Unload GAMESTATE_MAP...");
 		Map_Unload(game);
 	} else {
-		PrintConsole(game, "ERROR: Attempted to unload unknown gamestate!");
+		PrintConsole(game, "ERROR: Attempted to unload unknown gamestate %d!", game->gamestate);
 	}
 	PrintConsole(game, "finished");
 }
@@ -113,7 +119,7 @@ void LoadGameState(struct Game *game) {
 		PrintConsole(game, "Load GAMESTATE_MAP...");
 		Map_Load(game);
 	} else {
-		PrintConsole(game, "ERROR: Attempted to load unknown gamestate!");
+		PrintConsole(game, "ERROR: Attempted to load unknown gamestate %d!", game->gamestate);
 	}
 	PrintConsole(game, "finished");
 	game->gamestate = game->loadstate;
@@ -181,7 +187,7 @@ int main(int argc, char **argv){
       return -1;
    }
    al_set_window_title(game.display, "Super Derpy: Muffin Attack");
-   al_hide_mouse_cursor(game.display);
+   if (FULLSCREEN) al_hide_mouse_cursor(game.display);
    game.font = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game.display)*0.09,0 );
    game.font_console = al_load_ttf_font("data/DejaVuSansMono.ttf",al_get_display_height(game.display)*0.018,0 );
    
@@ -243,7 +249,7 @@ int main(int argc, char **argv){
 	 }
 	else {
 		game.showconsole = true;
-		PrintConsole(&game, "ERROR: Keystroke in unknown gamestate! (5 sec sleep)");
+		PrintConsole(&game, "ERROR: Keystroke in unknown (%d) gamestate! (5 sec sleep)", game.gamestate);
 		DrawConsole(&game);
 		al_flip_display();
 		al_rest(5.0);
@@ -272,7 +278,7 @@ int main(int argc, char **argv){
 	}
 	else {
 		game.showconsole = true;
-		PrintConsole(&game, "ERROR: Unknown gamestate reached! (5 sec sleep)");
+		PrintConsole(&game, "ERROR: Unknown gamestate %d reached! (5 sec sleep)", game.gamestate);
 		DrawConsole(&game);
 		al_flip_display();
 		al_rest(5.0);
