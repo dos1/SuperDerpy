@@ -9,7 +9,7 @@ float FPS = 60;
 int DISPLAY_WIDTH = 800;
 int DISPLAY_HEIGHT = 500;
 bool FULLSCREEN = true;
-bool DEBUG = false;
+bool DEBUG = true;
 
 void PrintConsole(struct Game *game, char* text) {
 	if (DEBUG) printf("%s\n", text);
