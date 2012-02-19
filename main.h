@@ -23,7 +23,7 @@ struct Menu {
 	ALLEGRO_BITMAP *mountain_bitmap, *mountain;
 	float cloud_position, cloud2_position;
 	int mountain_position;
-	ALLEGRO_SAMPLE *sample, *rain_sample;
+	ALLEGRO_SAMPLE *sample, *rain_sample, *click_sample;
 	ALLEGRO_FONT *font_title, *font_subtitle, *font, *font_selected;
 	int selected;
 	bool options;
@@ -35,11 +35,13 @@ struct Loading {
 
 struct About {
 	ALLEGRO_BITMAP *fade_bitmap, *image;
+	ALLEGRO_SAMPLE *sample;
 };
 
 struct Map {
 	ALLEGRO_BITMAP *map, *background, *map_bg, *highlight;
 	int selected, available;
+	ALLEGRO_SAMPLE *sample;
 };
 
 struct Intro {
@@ -48,6 +50,7 @@ struct Intro {
 	bool in_animation;
 	ALLEGRO_BITMAP *table, *table_bitmap;
 	ALLEGRO_FONT *font;
+	ALLEGRO_SAMPLE *sample;
 };
 
 struct Game {

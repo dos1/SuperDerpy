@@ -65,6 +65,7 @@ void Menu_Preload(struct Game *game) {
 	game->menu.mountain = al_load_bitmap( "data/mountain.png" );
 	game->menu.sample = al_load_sample( "data/menu.flac" );
 	game->menu.rain_sample = al_load_sample( "data/rain.flac" );
+	game->menu.click_sample = al_load_sample( "data/click.flac" );
 	game->menu.cloud = al_load_bitmap( "data/cloud.png" );
 	game->menu.cloud2 = al_load_bitmap( "data/cloud2.png" );
 	game->menu.pinkcloud = al_load_bitmap( "data/pinkcloud.png" );
@@ -84,6 +85,11 @@ void Menu_Preload(struct Game *game) {
 
 	if (!game->menu.rain_sample){
 		fprintf(stderr, "Audio clip sample#2 not loaded!\n" );
+		exit(-1);
+	}
+
+	if (!game->menu.click_sample){
+		fprintf(stderr, "Audio clip sample#3 not loaded!\n" );
 		exit(-1);
 	}
 
@@ -156,10 +162,11 @@ void Menu_Unload(struct Game *game) {
 	al_destroy_font(game->menu.font_selected);
 	al_destroy_sample(game->menu.sample);
 	al_destroy_sample(game->menu.rain_sample);
+	al_destroy_sample(game->menu.click_sample);
 }
 
 void Menu_Load(struct Game *game) {
-	al_play_sample(game->menu.sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
+	al_play_sample(game->menu.sample, 0.8, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 	al_play_sample(game->menu.rain_sample, 0.7, -0.3, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 	game->menu.menu_fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 
@@ -181,19 +188,25 @@ void Menu_Load(struct Game *game) {
 int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	if (ev->keyboard.keycode==ALLEGRO_KEY_UP) {
 		game->menu.selected--;
+		al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 	} else if (ev->keyboard.keycode==ALLEGRO_KEY_DOWN) {
 		game->menu.selected++;
+		al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 	} else if ((!game->menu.options) && (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3)) || (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE))) {
+		al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 		return 1;
 	} else if ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (!game->menu.options) && (game->menu.selected==0)) {
+		al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 		UnloadGameState(game);
 		game->gamestate = GAMESTATE_LOADING;
 		game->loadstate = GAMESTATE_INTRO;
 	} else if ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (!game->menu.options) && (game->menu.selected==2)) {
+		al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 		UnloadGameState(game);
 		game->gamestate = GAMESTATE_LOADING;
 		game->loadstate = GAMESTATE_ABOUT;
-	} else if (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (!game->menu.options) && (game->menu.selected==1)) || ((game->menu.options) && ((ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE)) || ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3)))) {
+	} else if (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (!game->menu.options) && (game->menu.selected==1)) || (((game->menu.options) && ((ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE))) || (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3))))) {
+		al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 		game->menu.options=!game->menu.options;
 		game->menu.selected=0;
 		PrintConsole(game, "options state changed");

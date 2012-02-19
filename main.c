@@ -112,7 +112,7 @@ void LoadGameState(struct Game *game) {
 
 int main(int argc, char **argv){
    srand(time(NULL));
-   ALLEGRO_DISPLAY_MODE disp_data;
+   //ALLEGRO_DISPLAY_MODE disp_data;
    bool redraw = true;
 
    struct Game game;
@@ -152,7 +152,7 @@ int main(int argc, char **argv){
       return -1;
    }
 
-   if (!al_reserve_samples(2)){
+   if (!al_reserve_samples(10)){
       fprintf(stderr, "failed to reserve samples!\n");
       return -1;
    }

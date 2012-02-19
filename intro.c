@@ -1,6 +1,7 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
 #include <math.h>
+#include <stdio.h>
 #include "intro.h"
 
 void Intro_Draw(struct Game *game) {
@@ -30,6 +31,7 @@ void Intro_Draw(struct Game *game) {
 }
 
 void Intro_Load(struct Game *game) {
+	al_play_sample(game->intro.sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 	ALLEGRO_EVENT ev;
 	for(int fadeloop=0; fadeloop<256; fadeloop+=10){
 		al_wait_for_event(game->event_queue, &ev);
@@ -57,6 +59,12 @@ void Intro_Preload(struct Game *game) {
 	game->intro.page = 0;
 	game->intro.in_animation = false;
 	game->intro.table_bitmap = al_load_bitmap( "data/discord.png" );
+	game->intro.sample = al_load_sample( "data/intro.flac" );
+	
+	if (!game->intro.sample){
+		fprintf(stderr, "Audio clip sample not loaded!\n" );
+		exit(-1);
+	}
 	game->intro.table = al_create_bitmap(al_get_display_width(game->display)*4, al_get_display_height(game->display));
 	game->intro.font = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.045,0 );
 	al_set_target_bitmap(game->intro.table);
@@ -98,4 +106,5 @@ void Intro_Unload(struct Game *game) {
 	al_destroy_bitmap(game->intro.table_bitmap);
 	al_destroy_bitmap(game->intro.table);
 	al_destroy_font(game->intro.font);
+	al_destroy_sample(game->intro.sample);
 }
