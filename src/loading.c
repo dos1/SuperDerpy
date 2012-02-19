@@ -12,8 +12,6 @@ void Loading_Draw(struct Game *game) {
 		}
 
 		al_draw_bitmap(game->loading.loading_bitmap,0,0,0);
-		DrawConsole(game);
-		al_flip_display();
 
 		PreloadGameState(game);
 
@@ -24,6 +22,7 @@ void Loading_Draw(struct Game *game) {
 			al_flip_display();
 		}
 		al_clear_to_color(al_map_rgb(0,0,0));
+		DrawConsole(game);
 		al_flip_display();
 		//al_rest(0.2);
 		LoadGameState(game);

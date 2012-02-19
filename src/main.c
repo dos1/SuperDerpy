@@ -33,22 +33,32 @@ void DrawConsole(struct Game *game) {
 void PreloadGameState(struct Game *game) {
 	if (game->loadstate==GAMESTATE_MENU) {
 		PrintConsole(game, "Preload GAMESTATE_MENU...");
+		DrawConsole(game);
+		al_flip_display();
 		Menu_Preload(game);
 	}
 	else if (game->loadstate==GAMESTATE_LOADING) {
 		PrintConsole(game, "Preload GAMESTATE_LOADING...");
+		DrawConsole(game);
+		al_flip_display();
 		Loading_Preload(game);
 	}
 	else if (game->loadstate==GAMESTATE_ABOUT) {
 		PrintConsole(game, "Preload GAMESTATE_ABOUT...");
+		DrawConsole(game);
+		al_flip_display();
 		About_Preload(game);
 	}
 	else if (game->loadstate==GAMESTATE_INTRO) {
 		PrintConsole(game, "Preload GAMESTATE_INTRO...");
+		DrawConsole(game);
+		al_flip_display();
 		Intro_Preload(game);
 	}
 	else if (game->loadstate==GAMESTATE_MAP) {
 		PrintConsole(game, "Preload GAMESTATE_MAP...");
+		DrawConsole(game);
+		al_flip_display();
 		Map_Preload(game);
 	} else {
 		PrintConsole(game, "ERROR: Attempted to preload unknown gamestate!");

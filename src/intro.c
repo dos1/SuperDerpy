@@ -39,6 +39,7 @@ void Intro_Load(struct Game *game) {
 		DrawConsole(game);
 		al_flip_display();
 	}
+	Intro_Draw(game);
 }
 int Intro_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {

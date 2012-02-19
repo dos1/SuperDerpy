@@ -16,6 +16,7 @@ void Map_Load(struct Game *game) {
 		DrawConsole(game);
 		al_flip_display();
 	}
+	Map_Draw(game);
 }
 int Map_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	//if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
