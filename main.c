@@ -9,10 +9,10 @@ float FPS = 60;
 int DISPLAY_WIDTH = 800;
 int DISPLAY_HEIGHT = 500;
 bool FULLSCREEN = true;
-bool DEBUG = true;
+bool DEBUG_MODE = true;
 
 void PrintConsole(struct Game *game, char* text) {
-	if (DEBUG) printf("%s\n", text);
+	if (DEBUG_MODE) printf("%s\n", text);
 	ALLEGRO_BITMAP *con = al_create_bitmap(al_get_bitmap_width(game->console), al_get_bitmap_height(game->console)*1.0);
 	al_set_target_bitmap(con);
 	al_clear_to_color(al_map_rgba(0,0,0,80));
@@ -137,6 +137,11 @@ int main(int argc, char **argv){
       return 0;
    }
 
+   if(!al_init_acodec_addon()){
+      fprintf(stderr, "failed to initialize audio codecs!\n");
+      return -1;
+   }
+
    if(!al_install_audio()){
       fprintf(stderr, "failed to initialize audio!\n");
       return -1;
@@ -144,11 +149,6 @@ int main(int argc, char **argv){
 
    if(!al_install_keyboard()){
       fprintf(stderr, "failed to initialize keyboard!\n");
-      return -1;
-   }
-   
-   if(!al_init_acodec_addon()){
-      fprintf(stderr, "failed to initialize audio codecs!\n");
       return -1;
    }
 
@@ -186,7 +186,7 @@ int main(int argc, char **argv){
    al_register_event_source(game.event_queue, al_get_timer_event_source(game.timer));
    al_register_event_source(game.event_queue, al_get_keyboard_event_source());
 
-   game.showconsole = DEBUG;
+   game.showconsole = DEBUG_MODE;
    game.console = al_create_bitmap(al_get_display_width(game.display), al_get_display_height(game.display)*0.12);
    al_set_target_bitmap(game.console);
    al_clear_to_color(al_map_rgba(0,0,0,80));

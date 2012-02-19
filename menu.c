@@ -63,8 +63,8 @@ void Menu_Preload(struct Game *game) {
 	//al_destroy_bitmap(game->menu.image); // ugh...
 	game->menu.image = al_load_bitmap( "data/menu.png" );
 	game->menu.mountain = al_load_bitmap( "data/mountain.png" );
-	game->menu.sample = al_load_sample( "data/menu.wav" );
-	game->menu.rain_sample = al_load_sample( "data/rain.wav" );
+	game->menu.sample = al_load_sample( "data/menu.flac" );
+	game->menu.rain_sample = al_load_sample( "data/rain.flac" );
 	game->menu.cloud = al_load_bitmap( "data/cloud.png" );
 	game->menu.cloud2 = al_load_bitmap( "data/cloud2.png" );
 	game->menu.pinkcloud = al_load_bitmap( "data/pinkcloud.png" );
