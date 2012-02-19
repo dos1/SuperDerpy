@@ -138,7 +138,7 @@ int main(int argc, char **argv){
       return -1;
    }
 
-   al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR);
+   al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR^ALLEGRO_MAG_LINEAR);
    
    game.timer = al_create_timer(1.0 / FPS);
    if(!game.timer) {
