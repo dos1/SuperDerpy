@@ -76,17 +76,17 @@ void Intro_Preload(struct Game *game) {
 	//game->intro.table_bitmap = al_load_bitmap( "table.png" );
 	al_draw_scaled_bitmap(game->intro.table_bitmap, 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*3, 0, al_get_display_width(game->display), al_get_display_height(game->display), ALLEGRO_FLIP_HORIZONTAL^ALLEGRO_FLIP_VERTICAL);
 
-	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_bitmap_width(game->intro.table_bitmap)*0.5, al_get_bitmap_height(game->intro.table_bitmap)*0.3, ALLEGRO_ALIGN_LEFT, "Tekst.");
-	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_bitmap_width(game->intro.table_bitmap)*0.5, al_get_bitmap_height(game->intro.table_bitmap)*0.37, ALLEGRO_ALIGN_LEFT, "Drugi tekst.");
+	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.3, ALLEGRO_ALIGN_LEFT, "Tekst.");
+	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.37, ALLEGRO_ALIGN_LEFT, "Drugi tekst.");
 
-	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_bitmap_width(game->intro.table_bitmap)*1.5, al_get_bitmap_height(game->intro.table_bitmap)*0.3, ALLEGRO_ALIGN_LEFT, "Drugi tekst.");
-	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_bitmap_width(game->intro.table_bitmap)*1.5, al_get_bitmap_height(game->intro.table_bitmap)*0.37, ALLEGRO_ALIGN_LEFT, "Drugi drugi tekst.");
+	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*1.5, al_get_display_height(game->display)*0.3, ALLEGRO_ALIGN_LEFT, "Drugi tekst.");
+	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*1.5, al_get_display_height(game->display)*0.37, ALLEGRO_ALIGN_LEFT, "Drugi drugi tekst.");
 
-	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_bitmap_width(game->intro.table_bitmap)*2.5, al_get_bitmap_height(game->intro.table_bitmap)*0.3, ALLEGRO_ALIGN_LEFT, "Trzeci tekst.");
-	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_bitmap_width(game->intro.table_bitmap)*2.5, al_get_bitmap_height(game->intro.table_bitmap)*0.37, ALLEGRO_ALIGN_LEFT, "Drugi trzeci tekst.");
+	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*2.5, al_get_display_height(game->display)*0.3, ALLEGRO_ALIGN_LEFT, "Trzeci tekst.");
+	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*2.5, al_get_display_height(game->display)*0.37, ALLEGRO_ALIGN_LEFT, "Drugi trzeci tekst.");
 
-	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_bitmap_width(game->intro.table_bitmap)*3.5, al_get_bitmap_height(game->intro.table_bitmap)*0.3, ALLEGRO_ALIGN_LEFT, "Czwarty tekst.");
-	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_bitmap_width(game->intro.table_bitmap)*3.5, al_get_bitmap_height(game->intro.table_bitmap)*0.37, ALLEGRO_ALIGN_LEFT, "Drugi czwarty tekst.");
+	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*3.5, al_get_display_height(game->display)*0.3, ALLEGRO_ALIGN_LEFT, "Czwarty tekst.");
+	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*3.5, al_get_display_height(game->display)*0.37, ALLEGRO_ALIGN_LEFT, "Drugi czwarty tekst.");
 
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 }
