@@ -9,13 +9,15 @@ LIBS=-lallegro -lallegro_audio-debug -lallegro_acodec-debug -lallegro_image-debu
 _OBJ = main.o about.o intro.o loading.o map.o menu.o 
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
+OUTPUTDIR = bin
+
 $(ODIR)/%.o: $(SRCDIR)/%.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-bin/superderpy: $(OBJ)
+$(OUTPUTDIR)/superderpy: $(OBJ)
 	gcc -o $@ $^ $(CFLAGS) $(LIBS)
 
 .PHONY: clean
 
 clean:
-	rm -f $(ODIR)/*.o *~ allegro.log $(SRCDIR)/*~ 
+	rm -f $(ODIR)/*.o *~ allegro.log $(SRCDIR)/*~ $(OUTPUTDIR)/*
