@@ -56,9 +56,9 @@ void Intro_Preload(struct Game *game) {
 	game->intro.position = 0;
 	game->intro.page = 0;
 	game->intro.in_animation = false;
-	game->intro.table_bitmap = al_load_bitmap( "discord.png" );
+	game->intro.table_bitmap = al_load_bitmap( "data/discord.png" );
 	game->intro.table = al_create_bitmap(al_get_display_width(game->display)*4, al_get_display_height(game->display));
-	game->intro.font = al_load_ttf_font("ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.045,0 );
+	game->intro.font = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.045,0 );
 	al_set_target_bitmap(game->intro.table);
 	al_draw_scaled_bitmap(game->intro.table_bitmap, 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), 0, 0, al_get_display_width(game->display), al_get_display_height(game->display), 0);
 	//game->intro.table_bitmap = al_load_bitmap( "table.png" );

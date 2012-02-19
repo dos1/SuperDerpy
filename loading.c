@@ -30,7 +30,7 @@ void Loading_Draw(struct Game *game) {
 }
 
 void Loading_Load(struct Game *game) {
-	game->loading.image = al_load_bitmap( "loading.png" );
+	game->loading.image = al_load_bitmap( "data/loading.png" );
 
 	// Scale "Loading" bitmap
 	game->loading.loading_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));

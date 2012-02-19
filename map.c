@@ -29,10 +29,10 @@ void Map_Preload(struct Game *game) {
 	game->map.available = 6;
 	game->map.selected = game->map.available;
 	game->map.map = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
-	game->map.background = al_load_bitmap( "table.png" );
-	game->map.map_bg = al_load_bitmap( "map/background.png" );
-	char filename[20] = { };
-	sprintf(filename, "map/highlight%d.png", game->map.available);
+	game->map.background = al_load_bitmap( "data/table.png" );
+	game->map.map_bg = al_load_bitmap( "data/map/background.png" );
+	char filename[30] = { };
+	sprintf(filename, "data/map/highlight%d.png", game->map.available);
 	game->map.highlight = al_load_bitmap( filename );
 	al_set_target_bitmap(game->map.map);
 	al_draw_scaled_bitmap(game->map.background,0,0,al_get_bitmap_width(game->map.background),al_get_bitmap_height(game->map.background),0,0,al_get_display_width(game->display), al_get_display_height(game->display),0);

@@ -27,7 +27,7 @@ int About_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	//}
 }
 void About_Preload(struct Game *game) {
-	game->about.image = al_load_bitmap( "table.png" );
+	game->about.image = al_load_bitmap( "data/table.png" );
 	game->about.fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 	al_set_target_bitmap(game->about.fade_bitmap);
 	al_draw_scaled_bitmap(game->about.image,0,0,al_get_bitmap_width(game->about.image),al_get_bitmap_height(game->about.image),0,0,al_get_display_width(game->display), al_get_display_height(game->display),0);

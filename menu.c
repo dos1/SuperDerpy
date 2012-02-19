@@ -61,21 +61,21 @@ void Menu_Preload(struct Game *game) {
 	game->menu.options = false;
 	//game->menu.image = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 	//al_destroy_bitmap(game->menu.image); // ugh...
-	game->menu.image = al_load_bitmap( "menu.png" );
-	game->menu.mountain = al_load_bitmap( "mountain.png" );
-	game->menu.sample = al_load_sample( "menu.wav" );
-	game->menu.rain_sample = al_load_sample( "rain.wav" );
-	game->menu.cloud = al_load_bitmap( "cloud.png" );
-	game->menu.cloud2 = al_load_bitmap( "cloud2.png" );
-	game->menu.pinkcloud = al_load_bitmap( "pinkcloud.png" );
-	game->menu.pie = al_load_bitmap( "pie.png" );
-	game->menu.rain = al_load_bitmap( "rain.png" );
+	game->menu.image = al_load_bitmap( "data/menu.png" );
+	game->menu.mountain = al_load_bitmap( "data/mountain.png" );
+	game->menu.sample = al_load_sample( "data/menu.wav" );
+	game->menu.rain_sample = al_load_sample( "data/rain.wav" );
+	game->menu.cloud = al_load_bitmap( "data/cloud.png" );
+	game->menu.cloud2 = al_load_bitmap( "data/cloud2.png" );
+	game->menu.pinkcloud = al_load_bitmap( "data/pinkcloud.png" );
+	game->menu.pie = al_load_bitmap( "data/pie.png" );
+	game->menu.rain = al_load_bitmap( "data/rain.png" );
 	game->menu.mountain_position = al_get_display_width(game->display)*0.7;
 
-	game->menu.font_title = al_load_ttf_font("ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.16,0 );
-	game->menu.font_subtitle = al_load_ttf_font("ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.08,0 );
-	game->menu.font = al_load_ttf_font("ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.05,0 );
-	game->menu.font_selected = al_load_ttf_font("ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.065,0 );
+	game->menu.font_title = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.16,0 );
+	game->menu.font_subtitle = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.08,0 );
+	game->menu.font = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.05,0 );
+	game->menu.font_selected = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.065,0 );
 	
 	if (!game->menu.sample){
 		fprintf(stderr, "Audio clip sample not loaded!\n" );
