@@ -19,11 +19,11 @@ void PrintConsole(struct Game *game, char* format, ...) {
 	vsprintf(text, format, vl);
 	va_end(vl);
 	if (DEBUG_MODE) printf("%s\n", text);
-	ALLEGRO_BITMAP *con = al_create_bitmap(al_get_bitmap_width(game->console), al_get_bitmap_height(game->console)*1.0);
+	ALLEGRO_BITMAP *con = al_create_bitmap(al_get_bitmap_width(game->console), al_get_bitmap_height(game->console));
 	al_set_target_bitmap(con);
 	al_clear_to_color(al_map_rgba(0,0,0,80));
 	al_draw_bitmap_region(game->console, 0, al_get_bitmap_height(game->console)*0.2, al_get_bitmap_width(game->console), al_get_bitmap_height(game->console)*0.8, 0, 0, 0);
-	al_draw_text(game->font_console, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.005, al_get_bitmap_height(game->console)*0.8, ALLEGRO_ALIGN_LEFT, text);
+	al_draw_text(game->font_console, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.005, al_get_bitmap_height(game->console)*0.81, ALLEGRO_ALIGN_LEFT, text);
 	al_set_target_bitmap(game->console);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 	//al_draw_bitmap_region(game->console, 0, al_get_bitmap_height(game->console)*0.2, al_get_bitmap_width(game->console), al_get_bitmap_height(game->console)*0.8, 0, 0, 0);
@@ -292,6 +292,7 @@ int main(int argc, char **argv){
    }
 
    UnloadGameState(&game);
+   PrintConsole(&game, "Shutting down...");
    al_rest(0.1);
    al_destroy_timer(game.timer);
    al_destroy_display(game.display);
