@@ -13,7 +13,11 @@ void Loading_Draw(struct Game *game) {
 
 		al_draw_bitmap(game->loading.loading_bitmap,0,0,0);
 
+		al_stop_timer(game->timer);
+
 		PreloadGameState(game);
+
+		al_start_timer(game->timer);
 
 		for(int fadeloop=255; fadeloop>0; fadeloop-=10){
 			al_wait_for_event(game->event_queue, &ev);
