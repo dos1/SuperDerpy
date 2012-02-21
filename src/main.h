@@ -13,7 +13,8 @@ enum gamestate_enum {
 	GAMESTATE_MENU,
 	GAMESTATE_ABOUT,
 	GAMESTATE_INTRO,
-	GAMESTATE_MAP
+	GAMESTATE_MAP,
+	GAMESTATE_LEVEL
 };
 
 struct Menu {
@@ -39,9 +40,10 @@ struct About {
 };
 
 struct Map {
-	ALLEGRO_BITMAP *map, *background, *map_bg, *highlight;
+	ALLEGRO_BITMAP *map, *background, *map_bg, *highlight, *arrow;
 	int selected, available;
-	ALLEGRO_SAMPLE *sample;
+	float arrowpos;
+	ALLEGRO_SAMPLE *sample, *click_sample;
 };
 
 struct Intro {

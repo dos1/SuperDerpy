@@ -67,7 +67,7 @@ void PreloadGameState(struct Game *game) {
 		al_flip_display();
 		Map_Preload(game);
 	} else {
-		PrintConsole(game, "ERROR: Attempted to preload unknown gamestate %d!", game->gamestate);
+		PrintConsole(game, "ERROR: Attempted to preload unknown gamestate %d!", game->loadstate);
 	}
 	PrintConsole(game, "finished");
 }
@@ -119,7 +119,7 @@ void LoadGameState(struct Game *game) {
 		PrintConsole(game, "Load GAMESTATE_MAP...");
 		Map_Load(game);
 	} else {
-		PrintConsole(game, "ERROR: Attempted to load unknown gamestate %d!", game->gamestate);
+		PrintConsole(game, "ERROR: Attempted to load unknown gamestate %d!", game->loadstate);
 	}
 	PrintConsole(game, "finished");
 	game->gamestate = game->loadstate;
