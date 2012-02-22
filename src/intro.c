@@ -22,7 +22,7 @@ void Intro_Draw(struct Game *game) {
 			game->intro.in_animation = false;
 			PrintConsole(game, "Animation finished.");
 		}
-		else if (game->intro.position<=-3*al_get_display_width(game->display)) {
+		else if (game->intro.position<=-4*al_get_display_width(game->display)) {
 			PrintConsole(game, "This was the last page.");
 			UnloadGameState(game);
 			game->gamestate = GAMESTATE_LOADING;
@@ -67,7 +67,7 @@ void Intro_Preload(struct Game *game) {
 		fprintf(stderr, "Audio clip sample not loaded!\n" );
 		exit(-1);
 	}
-	game->intro.table = al_create_bitmap(al_get_display_width(game->display)*4, al_get_display_height(game->display));
+	game->intro.table = al_create_bitmap(al_get_display_width(game->display)*5, al_get_display_height(game->display));
 	game->intro.font = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.045,0 );
 	al_set_target_bitmap(game->intro.table);
 	al_draw_scaled_bitmap(game->intro.table_bitmap, 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), 0, 0, al_get_display_width(game->display), al_get_display_height(game->display), 0);
@@ -77,6 +77,7 @@ void Intro_Preload(struct Game *game) {
 	al_draw_scaled_bitmap(game->intro.table_bitmap, 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*2, 0, al_get_display_width(game->display), al_get_display_height(game->display), ALLEGRO_FLIP_VERTICAL);
 	//game->intro.table_bitmap = al_load_bitmap( "table.png" );
 	al_draw_scaled_bitmap(game->intro.table_bitmap, 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*3, 0, al_get_display_width(game->display), al_get_display_height(game->display), ALLEGRO_FLIP_HORIZONTAL^ALLEGRO_FLIP_VERTICAL);
+	al_draw_scaled_bitmap(game->intro.table_bitmap, 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*4, 0, al_get_display_width(game->display), al_get_display_height(game->display), 0);
 
 	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.3, ALLEGRO_ALIGN_LEFT, "Tekst.");
 	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.37, ALLEGRO_ALIGN_LEFT, "Drugi tekst.");
