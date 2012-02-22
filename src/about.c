@@ -34,8 +34,8 @@ int About_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 		UnloadGameState(game);
 		game->gamestate = GAMESTATE_LOADING;
 		game->loadstate = GAMESTATE_MENU;
-		return 0;
 	}
+	return 0;
 }
 void About_Preload(struct Game *game) {
 	game->about.image = al_load_bitmap( "data/table.png" );

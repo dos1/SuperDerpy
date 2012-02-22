@@ -21,12 +21,12 @@ void Level_Load(struct Game *game) {
 	Level_Draw(game);
 }
 int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
-	//if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
+	if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
 		UnloadGameState(game);
 		game->gamestate = GAMESTATE_LOADING;
 		game->loadstate = GAMESTATE_MENU;
-		return 0;
-	//}
+	}
+	return 0;
 }
 void Level_Preload(struct Game *game) {
 	PrintConsole(game, "Initializing level %d...", game->level.current_level);
