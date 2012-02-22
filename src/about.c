@@ -49,7 +49,7 @@ void About_Preload(struct Game *game) {
 	}
 	game->about.text_bitmap = al_create_bitmap(al_get_display_width(game->display)*0.4, al_get_display_height(game->display)*2.3);
 	al_set_target_bitmap(game->about.text_bitmap);
-	//al_clear_to_color(al_map_rgba(255,0,0,0.5));
+	al_clear_to_color(al_map_rgba(0,0,0,0));
 	al_draw_text(game->about.font, al_map_rgb(255,255,255), 0.5*al_get_bitmap_width(game->about.text_bitmap), 0.02*al_get_bitmap_height(game->about.text_bitmap), ALLEGRO_ALIGN_CENTRE, "Super Derpy: Muffin Attack");
 	al_draw_text(game->about.font, al_map_rgb(255,255,255), 0.5*al_get_bitmap_width(game->about.text_bitmap), 0.05*al_get_bitmap_height(game->about.text_bitmap), ALLEGRO_ALIGN_CENTRE, "Version 0.1");
 	
