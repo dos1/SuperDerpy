@@ -5,6 +5,7 @@
 #include "about.h"
 #include "intro.h"
 #include "map.h"
+#include "level.h"
 
 float FPS = 60;
 int DISPLAY_WIDTH = 800;
@@ -66,6 +67,12 @@ void PreloadGameState(struct Game *game) {
 		DrawConsole(game);
 		al_flip_display();
 		Map_Preload(game);
+	}
+	else if (game->loadstate==GAMESTATE_LEVEL) {
+		PrintConsole(game, "Preload GAMESTATE_LEVEL...");
+		DrawConsole(game);
+		al_flip_display();
+		Level_Preload(game);
 	} else {
 		PrintConsole(game, "ERROR: Attempted to preload unknown gamestate %d!", game->loadstate);
 	}
@@ -92,6 +99,10 @@ void UnloadGameState(struct Game *game) {
 	else if (game->gamestate==GAMESTATE_MAP) {
 		PrintConsole(game, "Unload GAMESTATE_MAP...");
 		Map_Unload(game);
+	}
+	else if (game->gamestate==GAMESTATE_LEVEL) {
+		PrintConsole(game, "Unload GAMESTATE_LEVEL...");
+		Level_Unload(game);
 	} else {
 		PrintConsole(game, "ERROR: Attempted to unload unknown gamestate %d!", game->gamestate);
 	}
@@ -118,6 +129,10 @@ void LoadGameState(struct Game *game) {
 	else if (game->loadstate==GAMESTATE_MAP) {
 		PrintConsole(game, "Load GAMESTATE_MAP...");
 		Map_Load(game);
+	} 
+	else if (game->loadstate==GAMESTATE_LEVEL) {
+		PrintConsole(game, "Load GAMESTATE_LEVEL...");
+		Level_Load(game);
 	} else {
 		PrintConsole(game, "ERROR: Attempted to load unknown gamestate %d!", game->loadstate);
 	}
@@ -247,6 +262,9 @@ int main(int argc, char **argv){
 	 else if (game.gamestate==GAMESTATE_MAP) {
 		if (Map_Keydown(&game, &ev)) break;
 	 }
+	 else if (game.gamestate==GAMESTATE_LEVEL) {
+		if (Level_Keydown(&game, &ev)) break;
+	 }
 	else {
 		game.showconsole = true;
 		PrintConsole(&game, "ERROR: Keystroke in unknown (%d) gamestate! (5 sec sleep)", game.gamestate);
@@ -275,6 +293,9 @@ int main(int argc, char **argv){
 	}
 	 else if (game.gamestate==GAMESTATE_MAP) {
 		Map_Draw(&game);
+	}
+	 else if (game.gamestate==GAMESTATE_LEVEL) {
+		Level_Draw(&game);
 	}
 	else {
 		game.showconsole = true;

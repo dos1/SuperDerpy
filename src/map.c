@@ -59,6 +59,7 @@ int Map_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 		al_play_sample(game->map.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 	} else if (ev->keyboard.keycode==ALLEGRO_KEY_ENTER) {
 		PrintConsole(game, "Selecting level %d...", game->map.selected);
+		game->level.current_level = game->map.selected;
 		UnloadGameState(game);
 		game->gamestate = GAMESTATE_LOADING;
 		game->loadstate = GAMESTATE_LEVEL;

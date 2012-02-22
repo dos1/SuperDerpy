@@ -17,6 +17,12 @@ enum gamestate_enum {
 	GAMESTATE_LEVEL
 };
 
+struct Level {
+	ALLEGRO_BITMAP *fade_bitmap, *image;
+	ALLEGRO_SAMPLE *sample;
+	int current_level;
+};
+
 struct Menu {
 	ALLEGRO_BITMAP *menu_bitmap, *menu_fade_bitmap, *image;
 	ALLEGRO_BITMAP *cloud_bitmap, *cloud, *cloud2_bitmap, *cloud2, *pie, *pie_bitmap;
@@ -69,6 +75,7 @@ struct Game {
 	struct Intro intro;
 	struct About about;
 	struct Map map;
+	struct Level level;
 };
 
 void PreloadGameState(struct Game *game);
