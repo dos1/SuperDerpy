@@ -313,6 +313,10 @@ int main(int argc, char **argv){
    }
 
    UnloadGameState(&game);
+   if (game.gamestate != GAMESTATE_LOADING) {
+     game.gamestate = GAMESTATE_LOADING;
+     UnloadGameState(&game);
+   }
    PrintConsole(&game, "Shutting down...");
    al_rest(0.1);
    al_destroy_timer(game.timer);
