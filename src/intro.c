@@ -25,8 +25,9 @@ void Intro_Draw(struct Game *game) {
 		else if (game->intro.position<=-4*al_get_display_width(game->display)) {
 			PrintConsole(game, "This was the last page.");
 			UnloadGameState(game);
-			game->gamestate = GAMESTATE_LOADING;
 			game->loadstate = GAMESTATE_MAP;
+			PrintConsole(game, "Chainloading GAMESTATE_MAP...");
+			LoadGameState(game);
 		}
 	}
 }
