@@ -3,6 +3,7 @@
 #include <math.h>
 #include <stdio.h>
 #include "intro.h"
+#include "map.h"
 
 void Intro_Draw(struct Game *game) {
 	al_clear_to_color(al_map_rgb(0,0,0));
@@ -44,8 +45,9 @@ void Intro_Load(struct Game *game) {
 int Intro_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
 		UnloadGameState(game);
-		game->gamestate = GAMESTATE_LOADING;
 		game->loadstate = GAMESTATE_MAP;
+		PrintConsole(game, "Chainloading GAMESTATE_MAP...");
+		LoadGameState(game);
 		return 0;
 	}
 	if (!game->intro.in_animation) {
@@ -89,6 +91,8 @@ void Intro_Preload(struct Game *game) {
 	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*3.5, al_get_display_height(game->display)*0.37, ALLEGRO_ALIGN_LEFT, "Drugi czwarty tekst.");
 
 	al_set_target_bitmap(al_get_backbuffer(game->display));
+	PrintConsole(game, "Chainpreloading GAMESTATE_MAP...");
+	Map_Preload(game);
 }
 void Intro_Unload(struct Game *game) {
 	ALLEGRO_EVENT ev;
@@ -107,4 +111,5 @@ void Intro_Unload(struct Game *game) {
 	al_destroy_bitmap(game->intro.table);
 	al_destroy_font(game->intro.font);
 	al_destroy_sample(game->intro.sample);
+
 }
