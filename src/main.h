@@ -41,8 +41,10 @@ struct Loading {
 };
 
 struct About {
-	ALLEGRO_BITMAP *fade_bitmap, *image;
+	ALLEGRO_BITMAP *fade_bitmap, *image, *text_bitmap;
 	ALLEGRO_SAMPLE *sample;
+	ALLEGRO_FONT *font;
+	float x;
 };
 
 struct Map {

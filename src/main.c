@@ -231,7 +231,7 @@ int main(int argc, char **argv){
    game.loadstate = GAMESTATE_LOADING;
    PreloadGameState(&game);
    LoadGameState(&game);
-   game.loadstate = GAMESTATE_MENU;
+   game.loadstate = GAMESTATE_ABOUT;
    while(1)
    {
       ALLEGRO_EVENT ev;
