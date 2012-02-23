@@ -89,8 +89,8 @@ void About_Preload(struct Game *game) {
 	draw_text("For more information, see the file");
 	draw_text("named COPYING.");
 	draw_text("");
-	draw_text("Super Derpy: Muffin Attack is");
-	draw_text("a fan-game, with no-profit intended.");
+	draw_text("Super Derpy: Muffin Attack is a");
+	draw_text("fan-made game with no profit intended.");
 	draw_text("Its author is unpaid volunteer and");
 	draw_text("doesn't receive any economical profit");
 	draw_text("from it.");
