@@ -71,26 +71,54 @@ void Intro_Preload(struct Game *game) {
 	game->intro.table = al_create_bitmap(al_get_display_width(game->display)*5, al_get_display_height(game->display));
 	game->intro.font = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.045,0 );
 	al_set_target_bitmap(game->intro.table);
-	al_draw_scaled_bitmap(game->intro.table_bitmap, 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), 0, 0, al_get_display_width(game->display), al_get_display_height(game->display), 0);
+	al_draw_tinted_scaled_bitmap(game->intro.table_bitmap, al_map_rgba_f(0.5, 0.5, 0.5, 1), 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), 0, 0, al_get_display_width(game->display), al_get_display_height(game->display), 0);
 	//game->intro.table_bitmap = al_load_bitmap( "table.png" );
-	al_draw_scaled_bitmap(game->intro.table_bitmap, 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display), 0, al_get_display_width(game->display), al_get_display_height(game->display), ALLEGRO_FLIP_HORIZONTAL);
+	al_draw_tinted_scaled_bitmap(game->intro.table_bitmap, al_map_rgba_f(0.5, 0.5, 0.5, 1), 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display), 0, al_get_display_width(game->display), al_get_display_height(game->display), ALLEGRO_FLIP_HORIZONTAL);
 	//game->intro.table_bitmap = al_load_bitmap( "menu.png" );
-	al_draw_scaled_bitmap(game->intro.table_bitmap, 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*2, 0, al_get_display_width(game->display), al_get_display_height(game->display), ALLEGRO_FLIP_VERTICAL);
+	al_draw_tinted_scaled_bitmap(game->intro.table_bitmap, al_map_rgba_f(0.5, 0.5, 0.5, 1), 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*2, 0, al_get_display_width(game->display), al_get_display_height(game->display), ALLEGRO_FLIP_VERTICAL);
 	//game->intro.table_bitmap = al_load_bitmap( "table.png" );
-	al_draw_scaled_bitmap(game->intro.table_bitmap, 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*3, 0, al_get_display_width(game->display), al_get_display_height(game->display), ALLEGRO_FLIP_HORIZONTAL^ALLEGRO_FLIP_VERTICAL);
-	al_draw_scaled_bitmap(game->intro.table_bitmap, 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*4, 0, al_get_display_width(game->display), al_get_display_height(game->display), 0);
+	al_draw_tinted_scaled_bitmap(game->intro.table_bitmap, al_map_rgba_f(0.5, 0.5, 0.5, 1), 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*3, 0, al_get_display_width(game->display), al_get_display_height(game->display), ALLEGRO_FLIP_HORIZONTAL^ALLEGRO_FLIP_VERTICAL);
+	al_draw_tinted_scaled_bitmap(game->intro.table_bitmap, al_map_rgba_f(0.5, 0.5, 0.5, 1), 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*4, 0, al_get_display_width(game->display), al_get_display_height(game->display), 0);
 
-	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.3, ALLEGRO_ALIGN_LEFT, "Tekst.");
-	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.37, ALLEGRO_ALIGN_LEFT, "Drugi tekst.");
+	float y;
+	float oldx = -1;
+	void draw_text(int page, char* text) {
+		float x = page - 1 + 0.45;
+		if (x!=oldx) { y=0.2; oldx=x; }
+		al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*x, al_get_display_height(game->display)*y, ALLEGRO_ALIGN_LEFT, text);
+		y+=0.07;
+	}
 
-	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*1.5, al_get_display_height(game->display)*0.3, ALLEGRO_ALIGN_LEFT, "Drugi tekst.");
-	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*1.5, al_get_display_height(game->display)*0.37, ALLEGRO_ALIGN_LEFT, "Drugi drugi tekst.");
+	draw_text(1, "Since Twilight Sparkle and her five best");
+	draw_text(1, "friends defeated Discord and imprisoned");
+	draw_text(1, "him in a stone using the Elements of");
+	draw_text(1, "Harmony, Equestia has been a peaceful");
+	draw_text(1, "place for a quite long time.");
 
-	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*2.5, al_get_display_height(game->display)*0.3, ALLEGRO_ALIGN_LEFT, "Trzeci tekst.");
-	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*2.5, al_get_display_height(game->display)*0.37, ALLEGRO_ALIGN_LEFT, "Drugi trzeci tekst.");
+	draw_text(2, "Suddenly, one day some reckless pony");
+	draw_text(2, "accidentally introduced a tiny little");
+	draw_text(2, "bit of chaos near Discords figure.");
 
-	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*3.5, al_get_display_height(game->display)*0.3, ALLEGRO_ALIGN_LEFT, "Czwarty tekst.");
-	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*3.5, al_get_display_height(game->display)*0.37, ALLEGRO_ALIGN_LEFT, "Drugi czwarty tekst.");
+	draw_text(3, "A tiny little bit of chaos turned not to");
+	draw_text(3, "be enough for Discord to escape from rock,");
+	draw_text(3, "but enough to turn nearly dropped muffins");
+	draw_text(3, "into muffinzombies, with aim to destroy all");
+	draw_text(3, "the harmony in Equestria.");
+
+	draw_text(4, "Discord, who has learned his lession after");
+	draw_text(4, "last failure, turned his muffinzombie-gang");
+	draw_text(4, "against the same mares who previously");
+	draw_text(4, "defeated him, prisoning them in their own");
+	draw_text(4, "houses. Thanks to that, he's now able to");
+	draw_text(4, "wait until until the world is again chaotic");
+	draw_text(4, "enough for him to escape and rule Equestria");
+	draw_text(4, "once again.");
+
+	draw_text(5, "Who is able to defeat Discord when the");
+	draw_text(5, "Elements of Harmony are unavailable?");
+	draw_text(5, "");
+	draw_text(5, "Well... There is somepony who knows");
+	draw_text(5, "everything about muffins...");
 
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 	PrintConsole(game, "Chainpreloading GAMESTATE_MAP...");
