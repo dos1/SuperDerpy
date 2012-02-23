@@ -110,8 +110,8 @@ void Intro_Preload(struct Game *game) {
 	draw_text(4, "against the same mares who previously");
 	draw_text(4, "defeated him, prisoning them in their own");
 	draw_text(4, "houses. Thanks to that, he's now able to");
-	draw_text(4, "wait until until the world is again chaotic");
-	draw_text(4, "enough for him to escape and rule Equestria");
+	draw_text(4, "wait until the world is again chaotic enough");
+	draw_text(4, "for him to escape and rule Equestria");
 	draw_text(4, "once again.");
 
 	draw_text(5, "Who is able to defeat Discord when the");
