@@ -32,23 +32,23 @@ void Menu_Draw(struct Game *game) {
 
 	al_draw_bitmap(game->menu.pie_bitmap, al_get_display_width(game->display)/2, al_get_display_height(game->display)*(game->menu.cloud_position)/10,0);
 
-	al_draw_text(game->menu.font_title, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.1, ALLEGRO_ALIGN_CENTRE, "Super Derpy");
-	al_draw_text(game->menu.font_subtitle, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.275, ALLEGRO_ALIGN_CENTRE, "Muffin Attack");
+	al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.1, ALLEGRO_ALIGN_CENTRE, "Super Derpy");
+	al_draw_text_with_shadow(game->menu.font_subtitle, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.275, ALLEGRO_ALIGN_CENTRE, "Muffin Attack");
 
 	ALLEGRO_FONT *font;
 	char* text;
 	font = game->menu.font; if (game->menu.selected==0) font = game->menu.font_selected;
 	text = "Start game"; if (game->menu.options) text="Fullscreen: on";
-	al_draw_text(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.5, ALLEGRO_ALIGN_CENTRE, text);
+	al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.5, ALLEGRO_ALIGN_CENTRE, text);
 	font = game->menu.font; if (game->menu.selected==1) font = game->menu.font_selected;
 	text = "Options"; if (game->menu.options) text="Music: on";
-	al_draw_text(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.6, ALLEGRO_ALIGN_CENTRE, text);
+	al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.6, ALLEGRO_ALIGN_CENTRE, text);
 	font = game->menu.font; if (game->menu.selected==2) font = game->menu.font_selected;
 	text = "About"; if (game->menu.options) text="Sounds: on";
-	al_draw_text(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.7, ALLEGRO_ALIGN_CENTRE, text);
+	al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.7, ALLEGRO_ALIGN_CENTRE, text);
 	font = game->menu.font; if (game->menu.selected==3) font = game->menu.font_selected;
 	text = "Exit"; if (game->menu.options) text="Back";
-	al_draw_text(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.8, ALLEGRO_ALIGN_CENTRE, text);
+	al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.8, ALLEGRO_ALIGN_CENTRE, text);
 
 	game->menu.cloud_position-=0.1;
 	game->menu.cloud2_position-=0.025;

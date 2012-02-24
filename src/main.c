@@ -14,6 +14,11 @@ int DISPLAY_HEIGHT = 500;
 bool FULLSCREEN = true;
 bool DEBUG_MODE = true;
 
+void al_draw_text_with_shadow(ALLEGRO_FONT *font, ALLEGRO_COLOR color, float x, float y, int flags, char const *text) {
+	al_draw_text(font, al_map_rgba(0,0,0,128), x+1, y+1, flags, text);
+	al_draw_text(font, color, x, y, flags, text);
+}
+
 void PrintConsole(struct Game *game, char* format, ...) {
 	va_list vl;
 	va_start(vl, format);
@@ -329,6 +334,7 @@ int main(int argc, char **argv){
    al_destroy_event_queue(game.event_queue);
    al_destroy_font(game.font);
    al_destroy_font(game.font_console);
+   al_uninstall_audio();
    DeinitConfig();
    return 0;
 }

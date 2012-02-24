@@ -13,7 +13,7 @@ void Intro_Draw(struct Game *game) {
 	else
 		al_draw_bitmap(game->intro.table, -1*(game->intro.page)*al_get_display_width(game->display), 0, 0); //al_get_display_height(game->display)*((game->intro.position/3.0)/(float)al_get_display_width(game->display)), 0);
 	//al_draw_text(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)/2, ALLEGRO_ALIGN_CENTRE, "Not implemented yet!");
-	al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)*0.90, ALLEGRO_ALIGN_CENTRE, "Press any key to continue or escape to skip...");
+	al_draw_text_with_shadow(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)*0.90, ALLEGRO_ALIGN_CENTRE, "Press any key to continue or escape to skip...");
 	//PrintConsole(game, "drawing");
 	if (game->intro.in_animation) {
 		//PrintConsole(game, "animating");
@@ -61,7 +61,7 @@ void Intro_Preload(struct Game *game) {
 	game->intro.position = 0;
 	game->intro.page = 0;
 	game->intro.in_animation = false;
-	game->intro.table_bitmap = al_load_bitmap( "data/discord.png" );
+	game->intro.table_bitmap = al_load_bitmap( "data/paper.png" );
 	game->intro.sample = al_load_sample( "data/intro.flac" );
 	
 	if (!game->intro.sample){
@@ -71,21 +71,22 @@ void Intro_Preload(struct Game *game) {
 	game->intro.table = al_create_bitmap(al_get_display_width(game->display)*5, al_get_display_height(game->display));
 	game->intro.font = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.045,0 );
 	al_set_target_bitmap(game->intro.table);
-	al_draw_tinted_scaled_bitmap(game->intro.table_bitmap, al_map_rgba_f(0.5, 0.5, 0.5, 1), 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), 0, 0, al_get_display_width(game->display), al_get_display_height(game->display), 0);
-	//game->intro.table_bitmap = al_load_bitmap( "table.png" );
-	al_draw_tinted_scaled_bitmap(game->intro.table_bitmap, al_map_rgba_f(0.5, 0.5, 0.5, 1), 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display), 0, al_get_display_width(game->display), al_get_display_height(game->display), ALLEGRO_FLIP_HORIZONTAL);
-	//game->intro.table_bitmap = al_load_bitmap( "menu.png" );
-	al_draw_tinted_scaled_bitmap(game->intro.table_bitmap, al_map_rgba_f(0.5, 0.5, 0.5, 1), 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*2, 0, al_get_display_width(game->display), al_get_display_height(game->display), ALLEGRO_FLIP_VERTICAL);
-	//game->intro.table_bitmap = al_load_bitmap( "table.png" );
-	al_draw_tinted_scaled_bitmap(game->intro.table_bitmap, al_map_rgba_f(0.5, 0.5, 0.5, 1), 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*3, 0, al_get_display_width(game->display), al_get_display_height(game->display), ALLEGRO_FLIP_HORIZONTAL^ALLEGRO_FLIP_VERTICAL);
-	al_draw_tinted_scaled_bitmap(game->intro.table_bitmap, al_map_rgba_f(0.5, 0.5, 0.5, 1), 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*4, 0, al_get_display_width(game->display), al_get_display_height(game->display), 0);
+	al_draw_scaled_bitmap(game->intro.table_bitmap, 0, 0, al_get_bitmap_width(game->intro.table_bitmap), al_get_bitmap_height(game->intro.table_bitmap), 0, 0, al_get_display_width(game->display), al_get_display_height(game->display), 0);
+	al_draw_scaled_bitmap(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*1, 0, al_get_display_width(game->display)/2, al_get_display_height(game->display), 0);
+	al_draw_scaled_bitmap(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*1.5, 0, al_get_display_width(game->display)/2, al_get_display_height(game->display), 0);
+	al_draw_scaled_bitmap(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*2, 0, al_get_display_width(game->display)/2, al_get_display_height(game->display), 0);
+	al_draw_scaled_bitmap(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*2.5, 0, al_get_display_width(game->display)/2, al_get_display_height(game->display), 0);
+	al_draw_scaled_bitmap(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*3, 0, al_get_display_width(game->display)/2, al_get_display_height(game->display), 0);
+	al_draw_scaled_bitmap(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*3.5, 0, al_get_display_width(game->display)/2, al_get_display_height(game->display), 0);
+	al_draw_scaled_bitmap(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*4, 0, al_get_display_width(game->display)/2, al_get_display_height(game->display), 0);
+	al_draw_scaled_bitmap(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*4.5, 0, al_get_display_width(game->display)/2, al_get_display_height(game->display), 0);
 
 	float y;
 	float oldx = -1;
 	void draw_text(int page, char* text) {
 		float x = page - 1 + 0.45;
 		if (x!=oldx) { y=0.2; oldx=x; }
-		al_draw_text(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*x, al_get_display_height(game->display)*y, ALLEGRO_ALIGN_LEFT, text);
+		al_draw_text_with_shadow(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)*x, al_get_display_height(game->display)*y, ALLEGRO_ALIGN_LEFT, text);
 		y+=0.07;
 	}
 

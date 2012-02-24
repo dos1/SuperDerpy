@@ -80,6 +80,7 @@ struct Game {
 	struct Level level;
 };
 
+void al_draw_text_with_shadow(ALLEGRO_FONT *font, ALLEGRO_COLOR color, float x, float y, int flags, char const *text);
 void PreloadGameState(struct Game *game);
 void UnloadGameState(struct Game *game);
 void LoadGameState(struct Game *game);
