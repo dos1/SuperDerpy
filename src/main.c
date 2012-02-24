@@ -6,6 +6,7 @@
 #include "intro.h"
 #include "map.h"
 #include "level.h"
+#include "config.h"
 
 float FPS = 60;
 int DISPLAY_WIDTH = 800;
@@ -143,6 +144,9 @@ void LoadGameState(struct Game *game) {
 
 int main(int argc, char **argv){
    srand(time(NULL));
+   
+   InitConfig();
+   
    //ALLEGRO_DISPLAY_MODE disp_data;
    bool redraw = true;
 
@@ -227,7 +231,7 @@ int main(int argc, char **argv){
    al_flip_display();
 
    al_start_timer(game.timer);
-   
+   printf("%s\n", ReadConfigOption("[MuffinAttack]", "lol"));
    game.loadstate = GAMESTATE_LOADING;
    PreloadGameState(&game);
    LoadGameState(&game);
@@ -325,5 +329,6 @@ int main(int argc, char **argv){
    al_destroy_event_queue(game.event_queue);
    al_destroy_font(game.font);
    al_destroy_font(game.font_console);
+   DeinitConfig();
    return 0;
 }
