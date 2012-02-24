@@ -10,27 +10,22 @@ struct ConfigOption {
 	struct ConfigOption *next;
 };
 
-struct Config {
-	FILE *file;
-	struct ConfigOption *list;
-};
-
-struct Config config;
+struct ConfigOption *config;
 
 void InitConfig() {
-	config.file = fopen("SuperDerpy.ini","r+");
-	if (! config.file) { fopen("SuperDerpy.ini","w+"); return; }
+	FILE *file = fopen("SuperDerpy.ini","r+");
+	if (! file) { fopen("SuperDerpy.ini","w+"); return; }
 	char string[255];
 	char section[255] = "[MuffinAttack]";
 	struct ConfigOption *old = NULL;
-	while ( fgets (string , 255 , config.file) != NULL ) {
+	while ( fgets (string , 255 , file) != NULL ) {
 		if (string[0]=='#') { continue; } 
 		if (string[strlen(string)-1]=='\n') string[strlen(string)-1]='\0';
 		if (string[0]=='[') { strcpy(section, string); continue; } 
 		bool before=true;
 		struct ConfigOption *new = malloc(sizeof(struct ConfigOption));
 		if (old==NULL) {
-			config.list = new;
+			config = new;
 			old = new;
 		} else { old->next = new; old = new; }
 		new->section = malloc(sizeof(char)*255);
@@ -49,7 +44,7 @@ void InitConfig() {
 			//printf("%s", temp);
 		}
 	}
-	fclose(config.file);
+	fclose(file);
 	
 /*	old = config.list;
 	while (old!=NULL) {
@@ -59,7 +54,7 @@ void InitConfig() {
 }
 
 char* ReadConfigOption(char* section, char* name) {
-	struct ConfigOption *old = config.list;
+	struct ConfigOption *old = config;
 	char *ret = malloc(sizeof(char)*255);
 	while (old!=NULL) {
 		if (!strcmp(section, old->section) && !strcmp(name, old->name)) {
@@ -73,7 +68,8 @@ char* ReadConfigOption(char* section, char* name) {
 }
 
 void DeinitConfig() {
-	struct ConfigOption *old = config.list;
+	//store memory state to file here
+	struct ConfigOption *old = config;
 	while (old!=NULL) {
 		struct ConfigOption *prev = old;
 		old=old->next;

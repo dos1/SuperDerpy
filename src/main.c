@@ -231,7 +231,7 @@ int main(int argc, char **argv){
    al_flip_display();
 
    al_start_timer(game.timer);
-   printf("%s\n", ReadConfigOption("[MuffinAttack]", "lol"));
+
    game.loadstate = GAMESTATE_LOADING;
    PreloadGameState(&game);
    LoadGameState(&game);
