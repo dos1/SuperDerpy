@@ -21,6 +21,8 @@
    Keys CANNOT be repeated in the same section.
 
    Rewriting config file removes all comments from it.
+
+   If config file is not following this guides, it may be handled incorrectly.
 */
 
 struct ConfigOption {
@@ -31,6 +33,26 @@ struct ConfigOption {
 };
 
 struct ConfigOption *config;
+
+void AppendToConfig(char* section, char* name, char* value) {
+	struct ConfigOption *new = malloc(sizeof(struct ConfigOption));
+	new->next = NULL;
+	strcpy(new->section, section);
+	strcpy(new->name, name);
+	strcpy(new->value, value);
+	if (config==NULL) config = new;
+	struct ConfigOption *old = config;
+	while (old->next != NULL) {
+		if (!strcmp(old->section, section)) break;
+		old=old->next;
+	}
+	if (old->next) {
+		new->next = old->next;
+		old->next = new;
+	} else {
+		old->next = new;
+	}
+}
 
 void InitConfig() {
 	FILE *file = fopen("SuperDerpy.ini","r+");
@@ -67,7 +89,19 @@ void InitConfig() {
 	fclose(file);
 }
 
-char* ReadConfigOption(char* section, char* name) {
+void SetConfigOption(char* section, char* name, char* value) {
+	struct ConfigOption *old = config;
+	while (old!=NULL) {
+		if (!strcmp(section, old->section) && !strcmp(name, old->name)) {
+			strcpy(old->value, value);
+			return;
+		}
+		old=old->next;
+	}
+	AppendToConfig(section, name, value);
+}
+
+char* GetConfigOption(char* section, char* name) {
 	struct ConfigOption *old = config;
 	char *ret = malloc(sizeof(char)*255);
 	while (old!=NULL) {
@@ -81,11 +115,21 @@ char* ReadConfigOption(char* section, char* name) {
 	return NULL;
 }
 
+char* GetConfigOptionDefault(char* section, char* name, char* def) {
+	char* ret = GetConfigOption(section, name);
+	if (!ret) return def; else return ret;
+}
+
 void DeinitConfig() {
-	FILE *file = fopen("SuperDerpy.ini","w+");
-	//char* section[255] = {};
+	FILE *file = fopen("SuperDerpy.ini","w");
+	char section[255] = {};
 	struct ConfigOption *old = config;
 	while (old!=NULL) {
+		if (strcmp(section, old->section)) {
+			strcpy(section, old->section);
+			fprintf(file, "%s\n", section);
+		}
+		fprintf(file, "%s=%s\n", old->name, old->value);
 		struct ConfigOption *prev = old;
 		old=old->next;
 		free(prev->name);

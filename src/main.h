@@ -72,7 +72,7 @@ struct Game {
 	ALLEGRO_EVENT_QUEUE *event_queue;
 	ALLEGRO_TIMER *timer;
 	ALLEGRO_BITMAP *console;
-	bool showconsole;
+	bool showconsole, fx, music, fullscreen;
 	struct Menu menu;
 	struct Loading loading;
 	struct Intro intro;

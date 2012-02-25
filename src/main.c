@@ -100,7 +100,7 @@ void LoadGameState(struct Game *game) {
 
 int main(int argc, char **argv){
 	srand(time(NULL));
-   
+
 	InitConfig();
    
 	bool redraw = true;
