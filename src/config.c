@@ -3,6 +3,26 @@
 #include <string.h>
 #include <stdbool.h>
 
+/* Configuration manager code.
+
+   Please keep in mind that config file has to be well-formed in order to function properly.
+
+   Lines starting with '[' contain section name. No additional whitespace
+   between braces and name is allowed.
+
+   Section CANNOT be declared multiple times.
+
+   Lines starting with '#' are ignored.
+   All other lines have to look like this one:
+     key=value
+   All whitespace at beginning, end or around '=' char will belong to key or value.
+   If multiple '=' are present, the first one is used to split line into key and value.
+
+   Keys CANNOT be repeated in the same section.
+
+   Rewriting config file removes all comments from it.
+*/
+
 struct ConfigOption {
 	char* name;
 	char* value;
@@ -14,7 +34,7 @@ struct ConfigOption *config;
 
 void InitConfig() {
 	FILE *file = fopen("SuperDerpy.ini","r+");
-	if (! file) { fopen("SuperDerpy.ini","w+"); return; }
+	if (! file) { return; }
 	char string[255];
 	char section[255] = "[MuffinAttack]";
 	struct ConfigOption *old = NULL;
@@ -45,12 +65,6 @@ void InitConfig() {
 		}
 	}
 	fclose(file);
-	
-/*	old = config.list;
-	while (old!=NULL) {
-		printf("Section: %s, name: %s, value: %s\n", old->section, old->name, old->value);
-		old=old->next;
-	}*/
 }
 
 char* ReadConfigOption(char* section, char* name) {
@@ -68,7 +82,8 @@ char* ReadConfigOption(char* section, char* name) {
 }
 
 void DeinitConfig() {
-	//store memory state to file here
+	FILE *file = fopen("SuperDerpy.ini","w+");
+	//char* section[255] = {};
 	struct ConfigOption *old = config;
 	while (old!=NULL) {
 		struct ConfigOption *prev = old;
@@ -78,4 +93,5 @@ void DeinitConfig() {
 		free(prev->section);
 		free(prev);
 	}
+	fclose(file);
 }
