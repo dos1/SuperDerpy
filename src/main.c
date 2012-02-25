@@ -14,6 +14,9 @@
 	PrintConsole(game, "Unload %s...", #state); name ## _Unload(game); break;
 #define LOAD_STATE(state, name) case state:\
 	PrintConsole(game, "Load %s...", #state); name ## _Load(game); break;
+#define KEYDOWN_STATE(state, name) else if (game.gamestate==state) { if (name ## _Keydown(&game, &ev)) break; }
+#define DRAW_STATE(state, name) case state:\
+	name ## _Draw(&game); break;
 
 float FPS = 60;
 int DISPLAY_WIDTH = 800;
@@ -206,24 +209,12 @@ int main(int argc, char **argv){
 	 if ((ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_TILDE)) {
 		 game.showconsole = !game.showconsole;
 	 }
-	 else if (game.gamestate==GAMESTATE_LOADING) {
-		if (Loading_Keydown(&game, &ev)) break;
-	 }
-	 else if (game.gamestate==GAMESTATE_MENU) {
-		if (Menu_Keydown(&game, &ev)) break;
-	 }
-	 else if (game.gamestate==GAMESTATE_ABOUT) {
-		if (About_Keydown(&game, &ev)) break;
-	 }
-	 else if (game.gamestate==GAMESTATE_INTRO) {
-		if (Intro_Keydown(&game, &ev)) break;
-	 }
-	 else if (game.gamestate==GAMESTATE_MAP) {
-		if (Map_Keydown(&game, &ev)) break;
-	 }
-	 else if (game.gamestate==GAMESTATE_LEVEL) {
-		if (Level_Keydown(&game, &ev)) break;
-	 }
+	KEYDOWN_STATE(GAMESTATE_MENU, Menu)
+	KEYDOWN_STATE(GAMESTATE_LOADING, Loading)
+	KEYDOWN_STATE(GAMESTATE_ABOUT, About)
+	KEYDOWN_STATE(GAMESTATE_INTRO, Intro)
+	KEYDOWN_STATE(GAMESTATE_MAP, Map)
+	KEYDOWN_STATE(GAMESTATE_LEVEL, Level)
 	else {
 		game.showconsole = true;
 		PrintConsole(&game, "ERROR: Keystroke in unknown (%d) gamestate! (5 sec sleep)", game.gamestate);
@@ -238,33 +229,23 @@ int main(int argc, char **argv){
       
       if(redraw && al_is_event_queue_empty(game.event_queue)) {
          redraw = false;
-	 if (game.gamestate==GAMESTATE_LOADING) {
-		Loading_Draw(&game);
-	 }
-	 else if (game.gamestate==GAMESTATE_MENU) {
-		Menu_Draw(&game);
-	}
-	 else if (game.gamestate==GAMESTATE_ABOUT) {
-		About_Draw(&game);
-	}
-	 else if (game.gamestate==GAMESTATE_INTRO) {
-		Intro_Draw(&game);
-	}
-	 else if (game.gamestate==GAMESTATE_MAP) {
-		Map_Draw(&game);
-	}
-	 else if (game.gamestate==GAMESTATE_LEVEL) {
-		Level_Draw(&game);
-	}
-	else {
-		game.showconsole = true;
-		PrintConsole(&game, "ERROR: Unknown gamestate %d reached! (5 sec sleep)", game.gamestate);
-		DrawConsole(&game);
-		al_flip_display();
-		al_rest(5.0);
-		PrintConsole(&game, "Returning to menu...");
-		game.gamestate = GAMESTATE_LOADING;
-		game.loadstate = GAMESTATE_MENU;
+	 switch (game.gamestate) {
+		DRAW_STATE(GAMESTATE_MENU, Menu)
+		DRAW_STATE(GAMESTATE_LOADING, Loading)
+		DRAW_STATE(GAMESTATE_ABOUT, About)
+		DRAW_STATE(GAMESTATE_INTRO, Intro)
+		DRAW_STATE(GAMESTATE_MAP, Map)
+		DRAW_STATE(GAMESTATE_LEVEL, Level)
+		default:
+			game.showconsole = true;
+			PrintConsole(&game, "ERROR: Unknown gamestate %d reached! (5 sec sleep)", game.gamestate);
+			DrawConsole(&game);
+			al_flip_display();
+			al_rest(5.0);
+			PrintConsole(&game, "Returning to menu...");
+			game.gamestate = GAMESTATE_LOADING;
+			game.loadstate = GAMESTATE_MENU;
+			break;
 	}
 	DrawConsole(&game);
 	al_flip_display();
