@@ -320,13 +320,15 @@ int main(int argc, char **argv){
 	al_flip_display();
       }
    }
-
    UnloadGameState(&game);
    if (game.gamestate != GAMESTATE_LOADING) {
      game.gamestate = GAMESTATE_LOADING;
      UnloadGameState(&game);
    }
+   al_clear_to_color(al_map_rgb(0,0,0));
    PrintConsole(&game, "Shutting down...");
+   DrawConsole(&game);
+   al_flip_display();
    al_rest(0.1);
    al_destroy_timer(game.timer);
    al_destroy_display(game.display);
