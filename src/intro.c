@@ -43,6 +43,7 @@ void Intro_Load(struct Game *game) {
 	}
 	Intro_Draw(game);
 }
+
 int Intro_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
 		UnloadGameState(game);
@@ -57,6 +58,7 @@ int Intro_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	}
 	return 0;
 }
+
 void Intro_Preload(struct Game *game) {
 	game->intro.position = 0;
 	game->intro.page = 0;
@@ -125,6 +127,7 @@ void Intro_Preload(struct Game *game) {
 	PrintConsole(game, "Chainpreloading GAMESTATE_MAP...");
 	Map_Preload(game);
 }
+
 void Intro_Unload(struct Game *game) {
 	ALLEGRO_EVENT ev;
 	for(int fadeloop=255; fadeloop>=0; fadeloop-=10){

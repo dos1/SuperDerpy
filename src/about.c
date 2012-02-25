@@ -10,7 +10,7 @@ void About_Draw(struct Game *game) {
 	if (x<0) x=0;
 	al_draw_bitmap_region(game->about.text_bitmap, 0, x*al_get_bitmap_height(game->about.text_bitmap), al_get_bitmap_width(game->about.text_bitmap), al_get_display_height(game->display)*0.8, al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.1, 0);
 	game->about.x+=0.00025;
-	if (game->about.x>1) { 
+	if (game->about.x>1) {
 		UnloadGameState(game);
 		game->gamestate = GAMESTATE_LOADING;
 		game->loadstate = GAMESTATE_MENU;
@@ -29,6 +29,7 @@ void About_Load(struct Game *game) {
 	al_destroy_bitmap(game->about.fade_bitmap);
 	About_Draw(game);
 }
+
 int About_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
 		UnloadGameState(game);
@@ -37,6 +38,7 @@ int About_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	}
 	return 0;
 }
+
 void About_Preload(struct Game *game) {
 	game->about.image = al_load_bitmap( "data/table.png" );
 	game->about.letter = al_load_bitmap( "data/letter.png" );
@@ -111,6 +113,7 @@ void About_Preload(struct Game *game) {
 
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 }
+
 void About_Unload(struct Game *game) {
 	if (game->about.x<0) game->about.x=0;
 	ALLEGRO_EVENT ev;

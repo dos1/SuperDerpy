@@ -36,6 +36,7 @@ void Level_Load(struct Game *game) {
 	al_destroy_bitmap(game->level.fade_bitmap);
 	Level_Draw(game);
 }
+
 int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
 		UnloadGameState(game);
@@ -44,6 +45,7 @@ int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	}
 	return 0;
 }
+
 void Level_Preload(struct Game *game) {
 	game->level.derpy_frame = 0;
 	game->level.derpy_frame_tmp = 0;
@@ -66,6 +68,7 @@ void Level_Preload(struct Game *game) {
 	al_draw_textf(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)/2, ALLEGRO_ALIGN_CENTRE, "Level %d: Not implemented yet!", game->level.current_level);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 }
+
 void Level_Unload(struct Game *game) {
 	ALLEGRO_EVENT ev;
 	game->level.fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));

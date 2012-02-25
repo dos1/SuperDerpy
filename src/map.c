@@ -48,6 +48,7 @@ void Map_Load(struct Game *game) {
 	}
 	Map_Draw(game);
 }
+
 int Map_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	if ((((game->map.selected<4) || (game->map.selected==6)) && (ev->keyboard.keycode==ALLEGRO_KEY_LEFT)) || ((game->map.selected>4) && (game->map.selected!=6) && (ev->keyboard.keycode==ALLEGRO_KEY_RIGHT)) || ((game->map.selected==4) && (ev->keyboard.keycode==ALLEGRO_KEY_UP)) || ((game->map.selected==6) && (ev->keyboard.keycode==ALLEGRO_KEY_DOWN))) {
 		game->map.selected--;
@@ -104,6 +105,7 @@ void Map_Preload(struct Game *game) {
 	al_draw_scaled_bitmap(game->map.highlight,0,0,al_get_bitmap_width(game->map.highlight),al_get_bitmap_height(game->map.highlight),0,0,al_get_display_width(game->display), al_get_display_height(game->display),0);
 	al_set_target_bitmap(al_get_backbuffer(game->display));	
 }
+
 void Map_Unload(struct Game *game) {
 	game->level.current_level = game->map.selected;
 	ALLEGRO_EVENT ev;
