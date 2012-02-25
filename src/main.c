@@ -8,6 +8,13 @@
 #include "level.h"
 #include "config.h"
 
+#define PRELOAD_STATE(state, name) case state:\
+	PrintConsole(game, "Preload %s...", #state); DrawConsole(game); al_flip_display(); name ## _Preload(game); break;
+#define UNLOAD_STATE(state, name) case state:\
+	PrintConsole(game, "Unload %s...", #state); name ## _Unload(game); break;
+#define LOAD_STATE(state, name) case state:\
+	PrintConsole(game, "Load %s...", #state); name ## _Load(game); break;
+
 float FPS = 60;
 int DISPLAY_WIDTH = 800;
 int DISPLAY_HEIGHT = 500;
@@ -44,103 +51,45 @@ void DrawConsole(struct Game *game) {
 }
 
 void PreloadGameState(struct Game *game) {
-	if (game->loadstate==GAMESTATE_MENU) {
-		PrintConsole(game, "Preload GAMESTATE_MENU...");
-		DrawConsole(game);
-		al_flip_display();
-		Menu_Preload(game);
-	}
-	else if (game->loadstate==GAMESTATE_LOADING) {
-		PrintConsole(game, "Preload GAMESTATE_LOADING...");
-		DrawConsole(game);
-		al_flip_display();
-		Loading_Preload(game);
-	}
-	else if (game->loadstate==GAMESTATE_ABOUT) {
-		PrintConsole(game, "Preload GAMESTATE_ABOUT...");
-		DrawConsole(game);
-		al_flip_display();
-		About_Preload(game);
-	}
-	else if (game->loadstate==GAMESTATE_INTRO) {
-		PrintConsole(game, "Preload GAMESTATE_INTRO...");
-		DrawConsole(game);
-		al_flip_display();
-		Intro_Preload(game);
-	}
-	else if (game->loadstate==GAMESTATE_MAP) {
-		PrintConsole(game, "Preload GAMESTATE_MAP...");
-		DrawConsole(game);
-		al_flip_display();
-		Map_Preload(game);
-	}
-	else if (game->loadstate==GAMESTATE_LEVEL) {
-		PrintConsole(game, "Preload GAMESTATE_LEVEL...");
-		DrawConsole(game);
-		al_flip_display();
-		Level_Preload(game);
-	} else {
-		PrintConsole(game, "ERROR: Attempted to preload unknown gamestate %d!", game->loadstate);
+	switch (game->loadstate) {
+		PRELOAD_STATE(GAMESTATE_MENU, Menu)
+		PRELOAD_STATE(GAMESTATE_LOADING, Loading)
+		PRELOAD_STATE(GAMESTATE_ABOUT, About)
+		PRELOAD_STATE(GAMESTATE_INTRO, Intro)
+		PRELOAD_STATE(GAMESTATE_MAP, Map)
+		PRELOAD_STATE(GAMESTATE_LEVEL, Level)
+		default:
+			PrintConsole(game, "ERROR: Attempted to preload unknown gamestate %d!", game->loadstate);
+			break;
 	}
 	PrintConsole(game, "finished");
 }
 
 void UnloadGameState(struct Game *game) {
-	if (game->gamestate==GAMESTATE_MENU) {
-		PrintConsole(game, "Unload GAMESTATE_MENU...");
-		Menu_Unload(game);
-	}
-	else if (game->gamestate==GAMESTATE_LOADING) {
-		PrintConsole(game, "Unload GAMESTATE_LOADING...");
-		Loading_Unload(game);
-	}
-	else if (game->gamestate==GAMESTATE_ABOUT) {
-		PrintConsole(game, "Unload GAMESTATE_ABOUT...");
-		About_Unload(game);
-	}
-	else if (game->gamestate==GAMESTATE_INTRO) {
-		PrintConsole(game, "Unload GAMESTATE_INTRO...");
-		Intro_Unload(game);
-	}
-	else if (game->gamestate==GAMESTATE_MAP) {
-		PrintConsole(game, "Unload GAMESTATE_MAP...");
-		Map_Unload(game);
-	}
-	else if (game->gamestate==GAMESTATE_LEVEL) {
-		PrintConsole(game, "Unload GAMESTATE_LEVEL...");
-		Level_Unload(game);
-	} else {
-		PrintConsole(game, "ERROR: Attempted to unload unknown gamestate %d!", game->gamestate);
+	switch (game->gamestate) {
+		UNLOAD_STATE(GAMESTATE_MENU, Menu)
+		UNLOAD_STATE(GAMESTATE_LOADING, Loading)
+		UNLOAD_STATE(GAMESTATE_ABOUT, About)
+		UNLOAD_STATE(GAMESTATE_INTRO, Intro)
+		UNLOAD_STATE(GAMESTATE_MAP, Map)
+		UNLOAD_STATE(GAMESTATE_LEVEL, Level)
+		default:
+			PrintConsole(game, "ERROR: Attempted to unload unknown gamestate %d!", game->gamestate);
+			break;
 	}
 	PrintConsole(game, "finished");
 }
 
 void LoadGameState(struct Game *game) {
-	if (game->loadstate==GAMESTATE_MENU) {
-		PrintConsole(game, "Load GAMESTATE_MENU...");
-		Menu_Load(game);
-	}
-	else if (game->loadstate==GAMESTATE_LOADING) {
-		PrintConsole(game, "Load GAMESTATE_LOADING...");
-		Loading_Load(game);
-	}
-	else if (game->loadstate==GAMESTATE_ABOUT) {
-		PrintConsole(game, "Load GAMESTATE_ABOUT...");
-		About_Load(game);
-	}
-	else if (game->loadstate==GAMESTATE_INTRO) {
-		PrintConsole(game, "Load GAMESTATE_INTRO...");
-		Intro_Load(game);
-	}
-	else if (game->loadstate==GAMESTATE_MAP) {
-		PrintConsole(game, "Load GAMESTATE_MAP...");
-		Map_Load(game);
-	} 
-	else if (game->loadstate==GAMESTATE_LEVEL) {
-		PrintConsole(game, "Load GAMESTATE_LEVEL...");
-		Level_Load(game);
-	} else {
-		PrintConsole(game, "ERROR: Attempted to load unknown gamestate %d!", game->loadstate);
+	switch (game->loadstate) {
+		LOAD_STATE(GAMESTATE_MENU, Menu)
+		LOAD_STATE(GAMESTATE_LOADING, Loading)
+		LOAD_STATE(GAMESTATE_ABOUT, About)
+		LOAD_STATE(GAMESTATE_INTRO, Intro)
+		LOAD_STATE(GAMESTATE_MAP, Map)
+		LOAD_STATE(GAMESTATE_LEVEL, Level)
+		default:
+			PrintConsole(game, "ERROR: Attempted to load unknown gamestate %d!", game->loadstate);
 	}
 	PrintConsole(game, "finished");
 	game->gamestate = game->loadstate;
