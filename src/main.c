@@ -164,7 +164,7 @@ int main(int argc, char **argv){
 
    al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR^ALLEGRO_MAG_LINEAR);
    
-   game.timer = al_create_timer(1.0 / FPS);
+   game.timer = al_create_timer(ALLEGRO_BPS_TO_SECS(FPS));
    if(!game.timer) {
       fprintf(stderr, "failed to create timer!\n");
       return -1;
@@ -205,6 +205,7 @@ int main(int argc, char **argv){
    }
 
    if (FULLSCREEN) al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
+   al_set_new_display_option(ALLEGRO_VSYNC, 1, ALLEGRO_SUGGEST);
    game.display = al_create_display(DISPLAY_WIDTH, DISPLAY_HEIGHT);
    if(!game.display) {
       fprintf(stderr, "failed to create display!\n");
