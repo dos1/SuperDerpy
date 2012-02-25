@@ -18,9 +18,10 @@ enum gamestate_enum {
 };
 
 struct Level {
-	ALLEGRO_BITMAP *fade_bitmap, *image;
+	ALLEGRO_BITMAP *fade_bitmap, *image, *derpy_walkcycle, *derpy, *derpytmp;
 	ALLEGRO_SAMPLE *sample;
-	int current_level;
+	int current_level, derpy_frame, derpy_frame_tmp;
+	double derpy_pos;
 };
 
 struct Menu {

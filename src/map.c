@@ -59,7 +59,6 @@ int Map_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 		al_play_sample(game->map.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 	} else if (ev->keyboard.keycode==ALLEGRO_KEY_ENTER) {
 		PrintConsole(game, "Selecting level %d...", game->map.selected);
-		game->level.current_level = game->map.selected;
 		UnloadGameState(game);
 		game->gamestate = GAMESTATE_LOADING;
 		game->loadstate = GAMESTATE_LEVEL;
@@ -106,6 +105,7 @@ void Map_Preload(struct Game *game) {
 	al_set_target_bitmap(al_get_backbuffer(game->display));	
 }
 void Map_Unload(struct Game *game) {
+	game->level.current_level = game->map.selected;
 	ALLEGRO_EVENT ev;
 	for(int fadeloop=255; fadeloop>=0; fadeloop-=10){
 		al_wait_for_event(game->event_queue, &ev);
