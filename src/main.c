@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdarg.h>
 #include "menu.h"
 #include "loading.h"
 #include "about.h"
