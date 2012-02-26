@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#include "config.h"
 #include "map.h"
 
 void Map_Draw(struct Game *game) {
@@ -74,7 +75,8 @@ int Map_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 }
 
 void Map_Preload(struct Game *game) {
-	game->map.available = 6;
+	game->map.available = atoi(GetConfigOptionDefault("[MuffinAttack]", "level", "1"));
+	if ((game->map.available<1) || (game->map.available>6)) game->map.available=1;
 	game->map.selected = game->map.available;
 	PrintConsole(game, "Last level available: %d", game->map.selected);
 	game->map.arrowpos = 0;
@@ -101,7 +103,7 @@ void Map_Preload(struct Game *game) {
 	al_draw_scaled_bitmap(game->map.background,0,0,al_get_bitmap_width(game->map.background),al_get_bitmap_height(game->map.background),0,0,al_get_display_width(game->display), al_get_display_height(game->display),0);
 	al_draw_scaled_bitmap(game->map.map_bg,0,0,al_get_bitmap_width(game->map.map_bg),al_get_bitmap_height(game->map.map_bg),0,0,al_get_display_width(game->display), al_get_display_height(game->display),0);
 	al_draw_scaled_bitmap(game->map.highlight,0,0,al_get_bitmap_width(game->map.highlight),al_get_bitmap_height(game->map.highlight),0,0,al_get_display_width(game->display), al_get_display_height(game->display),0);
-	al_set_target_bitmap(al_get_backbuffer(game->display));	
+	al_set_target_bitmap(al_get_backbuffer(game->display));
 }
 
 void Map_Unload(struct Game *game) {

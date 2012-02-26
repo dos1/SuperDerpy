@@ -58,12 +58,12 @@ void InitConfig() {
 	FILE *file = fopen("SuperDerpy.ini","r+");
 	if (! file) { return; }
 	char string[255];
-	char section[255] = "[MuffinAttack]";
+	char section[255] = "[SuperDerpy]";
 	struct ConfigOption *old = NULL;
 	while ( fgets (string , 255 , file) != NULL ) {
-		if (string[0]=='#') { continue; } 
+		if ((string[0]=='#') || (string[0]=='\n')) { continue; }
 		if (string[strlen(string)-1]=='\n') string[strlen(string)-1]='\0';
-		if (string[0]=='[') { strcpy(section, string); continue; } 
+		if (string[0]=='[') { strcpy(section, string); continue; }
 		bool before=true;
 		struct ConfigOption *new = malloc(sizeof(struct ConfigOption));
 		if (old==NULL) {

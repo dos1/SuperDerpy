@@ -17,12 +17,6 @@
 #define DRAW_STATE(state, name) case state:\
 	name ## _Draw(&game); break;
 
-float FPS = 60;
-int DISPLAY_WIDTH = 800;
-int DISPLAY_HEIGHT = 500;
-bool FULLSCREEN = true;
-bool DEBUG_MODE = true;
-
 void al_draw_text_with_shadow(ALLEGRO_FONT *font, ALLEGRO_COLOR color, float x, float y, int flags, char const *text) {
 	al_draw_text(font, al_map_rgba(0,0,0,128), x+1, y+1, flags, text);
 	al_draw_text(font, color, x, y, flags, text);
@@ -34,7 +28,7 @@ void PrintConsole(struct Game *game, char* format, ...) {
 	char text[255] = {};
 	vsprintf(text, format, vl);
 	va_end(vl);
-	if (DEBUG_MODE) printf("%s\n", text);
+	if (game->debug) printf("%s\n", text);
 	ALLEGRO_BITMAP *con = al_create_bitmap(al_get_bitmap_width(game->console), al_get_bitmap_height(game->console));
 	al_set_target_bitmap(con);
 	al_clear_to_color(al_map_rgba(0,0,0,80));
@@ -107,6 +101,17 @@ int main(int argc, char **argv){
 
 	struct Game game;
 
+	game.fullscreen = atoi(GetConfigOptionDefault("[SuperDerpy]", "fullscreen", "1"));
+	game.music = atoi(GetConfigOptionDefault("[SuperDerpy]", "music", "1"));
+	game.fx = atoi(GetConfigOptionDefault("[SuperDerpy]", "fx", "1"));
+	game.fps = atoi(GetConfigOptionDefault("[SuperDerpy]", "fps", "60"));
+	if (game.fps<1) game.fps=60;
+	game.debug = atoi(GetConfigOptionDefault("[SuperDerpy]", "debug", "0"));
+	game.width = atoi(GetConfigOptionDefault("[SuperDerpy]", "width", "800"));
+	if (game.width<320) game.width=320;
+	game.height = atoi(GetConfigOptionDefault("[SuperDerpy]", "height", "500"));
+	if (game.height<200) game.height=200;
+
 	if(!al_init()) {
 		fprintf(stderr, "failed to initialize allegro!\n");
 		return -1;
@@ -114,7 +119,7 @@ int main(int argc, char **argv){
 
 	al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR^ALLEGRO_MAG_LINEAR);
    
-	game.timer = al_create_timer(ALLEGRO_BPS_TO_SECS(FPS));
+	game.timer = al_create_timer(ALLEGRO_BPS_TO_SECS(game.fps));
 	if(!game.timer) {
 		fprintf(stderr, "failed to create timer!\n");
 		return -1;
@@ -154,15 +159,15 @@ int main(int argc, char **argv){
 		return -1;
 	}
 
-	if (FULLSCREEN) al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
+	if (game.fullscreen) al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
 	al_set_new_display_option(ALLEGRO_VSYNC, 1, ALLEGRO_SUGGEST);
-	game.display = al_create_display(DISPLAY_WIDTH, DISPLAY_HEIGHT);
+	game.display = al_create_display(game.width, game.height);
 	if(!game.display) {
 		fprintf(stderr, "failed to create display!\n");
 		return -1;
 	}
 	al_set_window_title(game.display, "Super Derpy: Muffin Attack");
-	if (FULLSCREEN) al_hide_mouse_cursor(game.display);
+	if (game.fullscreen) al_hide_mouse_cursor(game.display);
 	game.font = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game.display)*0.09,0 );
 	game.font_console = al_load_ttf_font("data/DejaVuSansMono.ttf",al_get_display_height(game.display)*0.018,0 );
    
@@ -177,7 +182,7 @@ int main(int argc, char **argv){
 	al_register_event_source(game.event_queue, al_get_timer_event_source(game.timer));
 	al_register_event_source(game.event_queue, al_get_keyboard_event_source());
 
-	game.showconsole = DEBUG_MODE;
+	game.showconsole = game.debug;
 	game.console = al_create_bitmap(al_get_display_width(game.display), al_get_display_height(game.display)*0.12);
 	al_set_target_bitmap(game.console);
 	al_clear_to_color(al_map_rgba(0,0,0,80));
@@ -260,7 +265,6 @@ int main(int argc, char **argv){
 	al_rest(0.1);
 	al_destroy_timer(game.timer);
 	al_destroy_display(game.display);
-	al_destroy_bitmap(game.loading.loading_bitmap);
 	al_destroy_event_queue(game.event_queue);
 	al_destroy_font(game.font);
 	al_destroy_font(game.font_console);
