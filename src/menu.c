@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#include "config.h"
 #include "menu.h"
 
 void Menu_Draw(struct Game *game) {
@@ -35,13 +36,22 @@ void Menu_Draw(struct Game *game) {
 	ALLEGRO_FONT *font;
 	char* text;
 	font = game->menu.font; if (game->menu.selected==0) font = game->menu.font_selected;
-	text = "Start game"; if (game->menu.options) text="Fullscreen: on";
+	text = "Start game"; if (game->menu.options) text="Control settings";
 	al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.5, ALLEGRO_ALIGN_CENTRE, text);
 	font = game->menu.font; if (game->menu.selected==1) font = game->menu.font_selected;
-	text = "Options"; if (game->menu.options) text="Music: on";
+	text = "Options"; if (game->menu.options) text="Video settings";
 	al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.6, ALLEGRO_ALIGN_CENTRE, text);
 	font = game->menu.font; if (game->menu.selected==2) font = game->menu.font_selected;
-	text = "About"; if (game->menu.options) text="Sounds: on";
+	text = "About"; if (game->menu.options) {
+		if ((game->music) && (game->fx))
+			text="Sounds: all";
+		else if (game->music)
+			text="Sounds: music only";
+		else if (game->fx)
+			text="Sounds: fx only";
+		else
+			text="Sounds: none";
+	}
 	al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.7, ALLEGRO_ALIGN_CENTRE, text);
 	font = game->menu.font; if (game->menu.selected==3) font = game->menu.font_selected;
 	text = "Exit"; if (game->menu.options) text="Back";
@@ -163,9 +173,13 @@ void Menu_Unload(struct Game *game) {
 	al_destroy_sample(game->menu.click_sample);
 }
 
+void play_samples(struct Game *game) {
+	if (game->music) al_play_sample(game->menu.sample, 0.8, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
+	if (game->fx) al_play_sample(game->menu.rain_sample, 0.7, -0.3, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
+}
+
 void Menu_Load(struct Game *game) {
-	al_play_sample(game->menu.sample, 0.8, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
-	al_play_sample(game->menu.rain_sample, 0.7, -0.3, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
+	play_samples(game);
 	game->menu.menu_fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 
 	ALLEGRO_EVENT ev;
@@ -187,28 +201,36 @@ void Menu_Load(struct Game *game) {
 int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	if (ev->keyboard.keycode==ALLEGRO_KEY_UP) {
 		game->menu.selected--;
-		al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		if (game->fx) al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 	} else if (ev->keyboard.keycode==ALLEGRO_KEY_DOWN) {
 		game->menu.selected++;
-		al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		if (game->fx) al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 	} else if ((!game->menu.options) && (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3)) || (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE))) {
-		al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		if (game->fx) al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 		return 1;
 	} else if ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (!game->menu.options) && (game->menu.selected==0)) {
-		al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		if (game->fx) al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 		UnloadGameState(game);
 		game->gamestate = GAMESTATE_LOADING;
 		game->loadstate = GAMESTATE_INTRO;
 	} else if ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (!game->menu.options) && (game->menu.selected==2)) {
-		al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		if (game->fx) al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 		UnloadGameState(game);
 		game->gamestate = GAMESTATE_LOADING;
 		game->loadstate = GAMESTATE_ABOUT;
 	} else if (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (!game->menu.options) && (game->menu.selected==1)) || (((game->menu.options) && ((ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE))) || (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3))))) {
-		al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		if (game->fx) al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 		game->menu.options=!game->menu.options;
 		game->menu.selected=0;
 		PrintConsole(game, "options state changed %d", game->menu.options);
+	} else if ((game->menu.options) && (game->menu.selected==2)) {
+		al_stop_samples();
+		if ((game->music) && (game->fx)) { game->music=0; SetConfigOption("[SuperDerpy]", "music", "0"); }
+		else if (game->fx) { game->music=1; game->fx=0; SetConfigOption("[SuperDerpy]", "music", "1"); SetConfigOption("[SuperDerpy]", "fx", "0"); }
+		else if (game->music) { game->music=0; SetConfigOption("[SuperDerpy]", "music", "0"); }
+		else { game->music=1; game->fx=1; SetConfigOption("[SuperDerpy]", "music", "1"); SetConfigOption("[SuperDerpy]", "fx", "1"); }
+		if (game->fx) al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		play_samples(game);
 	}
 	if (game->menu.selected==-1) game->menu.selected=3;
 	if (game->menu.selected==4) game->menu.selected=0;
