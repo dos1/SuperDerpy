@@ -41,22 +41,22 @@ void About_Preload(struct Game *game) {
 	game->about.image = al_load_bitmap( "data/table.png" );
 	game->about.letter = al_load_bitmap( "data/letter.png" );
 	game->about.sample = al_load_sample( "data/about.flac" );
-	game->about.font = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.04,0 );
+	game->about.font = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.035,0 );
 	game->about.x = -0.1;
 	if (!game->about.sample){
 		fprintf(stderr, "Audio clip sample not loaded!\n" );
 		exit(-1);
 	}
-	game->about.text_bitmap = al_create_bitmap(al_get_display_width(game->display)*0.4, al_get_display_height(game->display)*2.3);
+	game->about.text_bitmap = al_create_bitmap(al_get_display_width(game->display)*0.4, al_get_display_height(game->display)*2.35);
 	al_set_target_bitmap(game->about.text_bitmap);
-	al_clear_to_color(al_map_rgba(0,0,0,0));
-	al_draw_text(game->about.font, al_map_rgb(255,255,255), 0.5*al_get_bitmap_width(game->about.text_bitmap), 0.02*al_get_bitmap_height(game->about.text_bitmap), ALLEGRO_ALIGN_CENTRE, "Super Derpy: Muffin Attack");
-	al_draw_text(game->about.font, al_map_rgb(255,255,255), 0.5*al_get_bitmap_width(game->about.text_bitmap), 0.05*al_get_bitmap_height(game->about.text_bitmap), ALLEGRO_ALIGN_CENTRE, "Version 0.1");
+	al_clear_to_color(al_map_rgba(255,0,0,0));
+	al_draw_text(game->about.font, al_map_rgb(255,255,255), 0.5*al_get_bitmap_width(game->about.text_bitmap), 0.015*al_get_bitmap_height(game->about.text_bitmap), ALLEGRO_ALIGN_CENTRE, "Super Derpy: Muffin Attack");
+	al_draw_text(game->about.font, al_map_rgb(255,255,255), 0.5*al_get_bitmap_width(game->about.text_bitmap), 0.035*al_get_bitmap_height(game->about.text_bitmap), ALLEGRO_ALIGN_CENTRE, "Version 0.1");
 	
 	float y=0.07;
 	void draw_text(char* text) {
 		al_draw_text(game->about.font, al_map_rgb(255,255,255), 0, y*al_get_bitmap_height(game->about.text_bitmap), ALLEGRO_ALIGN_LEFT, text);
-		y+=0.022;
+		y+=0.021;
 	}
 	
 	draw_text("Written by:");
@@ -89,18 +89,19 @@ void About_Preload(struct Game *game) {
 	draw_text("For more information, see the file");
 	draw_text("named COPYING.");
 	draw_text("");
-	draw_text("Super Derpy: Muffin Attack is a");
-	draw_text("fan-made game with no profit intended.");
-	draw_text("Its author is unpaid volunteer and");
-	draw_text("doesn't receive any economical profit");
-	draw_text("from it.");
+	draw_text("Super Derpy: Muffin Attack is");
+	draw_text("a fan-made game with no profit");
+	draw_text("intended. Its author is unpaid");
+	draw_text("volunteer and doesn't receive");
+	draw_text("any economical profit from it.");
 	draw_text("");
-	draw_text("My Little Pony: Friendship is Magic™");
+	draw_text("My Little Pony: Friendship is Magic");
 	draw_text("is copyrighted trademark owned");
 	draw_text("by Hasbro.");
 	draw_text("");
-	draw_text("Author of Super Derpy is not affiliated");
-	draw_text("to Hasbro, The Hub or its associates.");
+	draw_text("Author of Super Derpy is not");
+	draw_text("affiliated to Hasbro, The Hub");
+	draw_text("or its associates.");
 
 	game->about.fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 
