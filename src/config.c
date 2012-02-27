@@ -37,6 +37,9 @@ struct ConfigOption *config;
 void AppendToConfig(char* section, char* name, char* value) {
 	struct ConfigOption *new = malloc(sizeof(struct ConfigOption));
 	new->next = NULL;
+	new->section = malloc(sizeof(char)*255);
+	new->name = malloc(sizeof(char)*255);
+	new->value = malloc(sizeof(char)*255);
 	strcpy(new->section, section);
 	strcpy(new->name, name);
 	strcpy(new->value, value);
