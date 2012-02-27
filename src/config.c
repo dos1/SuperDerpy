@@ -76,6 +76,7 @@ void InitConfig() {
 		new->name[0] = '\0';
 		new->value = malloc(sizeof(char)*255);
 		new->value[0] = '\0';
+		new->next = NULL;
 		for (int i=0; i<strlen(string); i++) {
 			if (string[i]=='=') { before=false; continue; }
 			char temp[2];
