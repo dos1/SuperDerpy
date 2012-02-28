@@ -1,3 +1,7 @@
+/*! \file loading.c
+ *  \brief Loading screen.
+ */
+
 #include "loading.h"
 
 void Loading_Draw(struct Game *game) {

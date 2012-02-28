@@ -1,3 +1,7 @@
+/*! \file loading.h
+ *  \brief Loading screen headers.
+ */
+
 #include "main.h"
 
 void Loading_Draw(struct Game *game);

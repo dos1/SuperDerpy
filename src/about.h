@@ -1,3 +1,7 @@
+/*! \file about.h
+ *  \brief About screen headers.
+ */
+
 #include "main.h"
 
 void About_Draw(struct Game *game);

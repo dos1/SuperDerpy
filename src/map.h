@@ -1,3 +1,7 @@
+/*! \file map.h
+ *  \brief Map view headers.
+ */
+
 #include "main.h"
 
 void Map_Draw(struct Game *game);

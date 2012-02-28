@@ -1,29 +1,31 @@
+/*! \file config.c
+ *  \brief Configuration manager code.
+ *
+ *  Please keep in mind that config file has to be well-formed in order to function properly.
+ *
+ *  Lines starting with '[' contain section name. No additional whitespace
+ *  between braces and name is allowed.
+ *
+ *  Section CANNOT be declared multiple times.
+ *
+ *  Lines starting with '#' are ignored.
+ *  All other lines have to look like this one:
+ *    key=value
+ * 
+ *  All whitespace at beginning, end or around '=' char will belong to key or value.
+ *  If multiple '=' are present, the first one is used to split line into key and value.
+ *
+ *  Keys CANNOT be repeated in the same section.
+ *
+ *  Rewriting config file removes all comments from it.
+ *
+ *  If config file is not following this guides, it may be handled incorrectly.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-
-/* Configuration manager code.
-
-   Please keep in mind that config file has to be well-formed in order to function properly.
-
-   Lines starting with '[' contain section name. No additional whitespace
-   between braces and name is allowed.
-
-   Section CANNOT be declared multiple times.
-
-   Lines starting with '#' are ignored.
-   All other lines have to look like this one:
-     key=value
-   All whitespace at beginning, end or around '=' char will belong to key or value.
-   If multiple '=' are present, the first one is used to split line into key and value.
-
-   Keys CANNOT be repeated in the same section.
-
-   Rewriting config file removes all comments from it.
-
-   If config file is not following this guides, it may be handled incorrectly.
-*/
 
 struct ConfigOption {
 	char* name;

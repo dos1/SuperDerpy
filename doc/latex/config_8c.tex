@@ -1,0 +1,62 @@
+\hypertarget{config_8c}{\section{src/config.c \-File \-Reference}
+\label{config_8c}\index{src/config.\-c@{src/config.\-c}}
+}
+
+
+\-Configuration manager code.  
+
+
+{\ttfamily \#include $<$stdio.\-h$>$}\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\*
+{\ttfamily \#include $<$string.\-h$>$}\*
+{\ttfamily \#include $<$stdbool.\-h$>$}\*
+\subsection*{\-Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structConfigOption}{\-Config\-Option}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{config_8c_a4855b5733bbd77d914f02b8280f01ec2}{void {\bfseries \-Append\-To\-Config} (char $\ast$section, char $\ast$name, char $\ast$value)}\label{config_8c_a4855b5733bbd77d914f02b8280f01ec2}
+
+\item 
+\hypertarget{config_8c_a88ce61c06b65baa2f67f43eb7c8e6379}{void {\bfseries \-Init\-Config} ()}\label{config_8c_a88ce61c06b65baa2f67f43eb7c8e6379}
+
+\item 
+\hypertarget{config_8c_a68a5d186325286714ab452ad9eaaad84}{void {\bfseries \-Set\-Config\-Option} (char $\ast$section, char $\ast$name, char $\ast$value)}\label{config_8c_a68a5d186325286714ab452ad9eaaad84}
+
+\item 
+\hypertarget{config_8c_ac2bded9fdf04d859de3c79bcd96e3970}{char $\ast$ {\bfseries \-Get\-Config\-Option} (char $\ast$section, char $\ast$name)}\label{config_8c_ac2bded9fdf04d859de3c79bcd96e3970}
+
+\item 
+\hypertarget{config_8c_a51719250e83494651459d90d2105cef6}{char $\ast$ {\bfseries \-Get\-Config\-Option\-Default} (char $\ast$section, char $\ast$name, char $\ast$def)}\label{config_8c_a51719250e83494651459d90d2105cef6}
+
+\item 
+\hypertarget{config_8c_a771b6ee4b4a43e5c5ceacd9620921c39}{void {\bfseries \-Deinit\-Config} ()}\label{config_8c_a771b6ee4b4a43e5c5ceacd9620921c39}
+
+\end{DoxyCompactItemize}
+\subsection*{\-Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{config_8c_a7cd5397c713eb53c8409cdc4807a51dd}{struct \hyperlink{structConfigOption}{\-Config\-Option} $\ast$ {\bfseries config}}\label{config_8c_a7cd5397c713eb53c8409cdc4807a51dd}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Configuration manager code. \-Please keep in mind that config file has to be well-\/formed in order to function properly.
+
+\-Lines starting with '\mbox{[}' contain section name. \-No additional whitespace between braces and name is allowed.
+
+\-Section \-C\-A\-N\-N\-O\-T be declared multiple times.
+
+\-Lines starting with '\#' are ignored. \-All other lines have to look like this one\-: key=value
+
+\-All whitespace at beginning, end or around '=' char will belong to key or value. \-If multiple '=' are present, the first one is used to split line into key and value.
+
+\-Keys \-C\-A\-N\-N\-O\-T be repeated in the same section.
+
+\-Rewriting config file removes all comments from it.
+
+\-If config file is not following this guides, it may be handled incorrectly. 

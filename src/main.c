@@ -1,3 +1,9 @@
+/*! \file main.c
+ *  \brief Main file of SuperDerpy engine.
+ *
+ *   Contains basic functions shared by all views.
+ */
+
 #include <stdio.h>
 #include "menu.h"
 #include "loading.h"
@@ -7,13 +13,27 @@
 #include "level.h"
 #include "config.h"
 
+/*! \brief Macro for preloading gamestate.
+ * 
+ *  Preloading of state happens when loading screen is displayed.
+ */
 #define PRELOAD_STATE(state, name) case state:\
 	PrintConsole(game, "Preload %s...", #state); DrawConsole(game); al_flip_display(); name ## _Preload(game); break;
+/*! \brief Macro for unloading gamestate.
+ * 
+ *  Unloading of state happens after it's fadeout.
+ */
 #define UNLOAD_STATE(state, name) case state:\
 	PrintConsole(game, "Unload %s...", #state); name ## _Unload(game); break;
+/*! \brief Macro for loading gamestate.
+ * 
+ *  Loading of state means setting it as active and running it.
+ */
 #define LOAD_STATE(state, name) case state:\
 	PrintConsole(game, "Load %s...", #state); name ## _Load(game); break;
+/*! \brief Macro for sending keydown events to gamestate. */
 #define KEYDOWN_STATE(state, name) else if (game.gamestate==state) { if (name ## _Keydown(&game, &ev)) break; }
+/*! \brief Macro for drawing active gamestate. */
 #define DRAW_STATE(state, name) case state:\
 	name ## _Draw(&game); break;
 

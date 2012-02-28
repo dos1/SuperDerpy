@@ -1,3 +1,7 @@
+/*! \file menu.h
+ *  \brief Main Menu view headers.
+ */
+
 #include "main.h"
 
 void Menu_Draw(struct Game *game);

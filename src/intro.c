@@ -1,3 +1,7 @@
+/*! \file intro.c
+ *  \brief Intro view with plot description.
+ */
+
 #include <math.h>
 #include <stdio.h>
 #include "intro.h"

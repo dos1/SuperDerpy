@@ -1,3 +1,7 @@
+/*! \file intro.h
+ *  \brief Intro view headers.
+ */
+
 #include "main.h"
 
 void Intro_Draw(struct Game *game);

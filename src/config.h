@@ -1,3 +1,7 @@
+/*! \file config.h
+ *  \brief Configuration manager headers.
+ */
+
 void InitConfig();
 char* GetConfigOption(char* section, char* name);
 char* GetConfigOptionDefault(char* section, char* name, char* def);

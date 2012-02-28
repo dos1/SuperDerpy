@@ -1,3 +1,7 @@
+/*! \file map.c
+ *  \brief View with Map of levels.
+ */
+
 #include <stdio.h>
 #include <math.h>
 #include "config.h"

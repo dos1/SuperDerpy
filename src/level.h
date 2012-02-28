@@ -1,3 +1,7 @@
+/*! \file level.h
+ *  \brief Playable Level headers.
+ */
+
 #include "main.h"
 
 void Level_Draw(struct Game *game);

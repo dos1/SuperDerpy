@@ -1,3 +1,7 @@
+/*! \file menu.c
+ *  \brief Main Menu view.
+ */
+
 #include <stdio.h>
 #include <math.h>
 #include "config.h"

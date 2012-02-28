@@ -1,3 +1,7 @@
+/*! \file level.c
+ *  \brief Playable Level code.
+ */
+
 #include <stdio.h>
 #include "level.h"
 

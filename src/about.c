@@ -1,3 +1,7 @@
+/*! \file about.c
+ *  \brief About screen.
+ */
+
 #include <stdio.h>
 #include "about.h"
 

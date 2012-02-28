@@ -1,0 +1,99 @@
+\hypertarget{main_8h}{\section{src/main.h \-File \-Reference}
+\label{main_8h}\index{src/main.\-h@{src/main.\-h}}
+}
+
+
+\-Headers of main file of \-Super\-Derpy engine.  
+
+
+{\ttfamily \#include $<$allegro5/allegro.\-h$>$}\*
+{\ttfamily \#include $<$allegro5/allegro\-\_\-audio.\-h$>$}\*
+{\ttfamily \#include $<$allegro5/allegro\-\_\-acodec.\-h$>$}\*
+{\ttfamily \#include $<$allegro5/allegro\-\_\-image.\-h$>$}\*
+{\ttfamily \#include $<$allegro5/allegro\-\_\-font.\-h$>$}\*
+{\ttfamily \#include $<$allegro5/allegro\-\_\-ttf.\-h$>$}\*
+\subsection*{\-Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structLevel}{\-Level}
+\begin{DoxyCompactList}\small\item\em \-Resources used by \hyperlink{structLevel}{\-Level} state. \end{DoxyCompactList}\item 
+struct \hyperlink{structMenu}{\-Menu}
+\begin{DoxyCompactList}\small\item\em \-Resources used by \hyperlink{structMenu}{\-Menu} state. \end{DoxyCompactList}\item 
+struct \hyperlink{structLoading}{\-Loading}
+\begin{DoxyCompactList}\small\item\em \-Resources used by \hyperlink{structLoading}{\-Loading} state. \end{DoxyCompactList}\item 
+struct \hyperlink{structAbout}{\-About}
+\begin{DoxyCompactList}\small\item\em \-Resources used by \hyperlink{structAbout}{\-About} state. \end{DoxyCompactList}\item 
+struct \hyperlink{structMap}{\-Map}
+\begin{DoxyCompactList}\small\item\em \-Resources used by \hyperlink{structMap}{\-Map} state. \end{DoxyCompactList}\item 
+struct \hyperlink{structIntro}{\-Intro}
+\begin{DoxyCompactList}\small\item\em \-Resources used by \hyperlink{structIntro}{\-Intro} state. \end{DoxyCompactList}\item 
+struct \hyperlink{structGame}{\-Game}
+\begin{DoxyCompactList}\small\item\em \-Resources used by \hyperlink{structGame}{\-Game} state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{main_8h_ae1e9f94402d151ae1adc212237a6d153}{gamestate\-\_\-enum} \{ \*
+{\bfseries \-G\-A\-M\-E\-S\-T\-A\-T\-E\-\_\-\-L\-O\-A\-D\-I\-N\-G}, 
+{\bfseries \-G\-A\-M\-E\-S\-T\-A\-T\-E\-\_\-\-M\-E\-N\-U}, 
+{\bfseries \-G\-A\-M\-E\-S\-T\-A\-T\-E\-\_\-\-A\-B\-O\-U\-T}, 
+{\bfseries \-G\-A\-M\-E\-S\-T\-A\-T\-E\-\_\-\-I\-N\-T\-R\-O}, 
+\*
+{\bfseries \-G\-A\-M\-E\-S\-T\-A\-T\-E\-\_\-\-M\-A\-P}, 
+{\bfseries \-G\-A\-M\-E\-S\-T\-A\-T\-E\-\_\-\-L\-E\-V\-E\-L}
+ \}
+\begin{DoxyCompactList}\small\item\em \-Enum of all available gamestates. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{main_8h_a37ff4b9f7c61255aaaba68d349398974}{al\-\_\-draw\-\_\-text\-\_\-with\-\_\-shadow} (\-A\-L\-L\-E\-G\-R\-O\-\_\-\-F\-O\-N\-T $\ast$font, \-A\-L\-L\-E\-G\-R\-O\-\_\-\-C\-O\-L\-O\-R color, float x, float y, int flags, char const $\ast$text)
+\begin{DoxyCompactList}\small\item\em \-Draws text with shadow. \end{DoxyCompactList}\item 
+\hypertarget{main_8h_a26e3725246efa2aa75508247a84fbfa9}{void \hyperlink{main_8h_a26e3725246efa2aa75508247a84fbfa9}{\-Preload\-Game\-State} (struct \hyperlink{structGame}{\-Game} $\ast$game)}\label{main_8h_a26e3725246efa2aa75508247a84fbfa9}
+
+\begin{DoxyCompactList}\small\item\em \-Preloads gamestate set in game-\/$>$loadstate. \end{DoxyCompactList}\item 
+\hypertarget{main_8h_afbbdeccc0adc5c3a0c84461f51a45a5b}{void \hyperlink{main_8h_afbbdeccc0adc5c3a0c84461f51a45a5b}{\-Unload\-Game\-State} (struct \hyperlink{structGame}{\-Game} $\ast$game)}\label{main_8h_afbbdeccc0adc5c3a0c84461f51a45a5b}
+
+\begin{DoxyCompactList}\small\item\em \-Unloads gamestate set in game-\/$>$gamestate. \end{DoxyCompactList}\item 
+\hypertarget{main_8h_afe84ca1b0107fe689f9d2987d83caea0}{void \hyperlink{main_8h_afe84ca1b0107fe689f9d2987d83caea0}{\-Load\-Game\-State} (struct \hyperlink{structGame}{\-Game} $\ast$game)}\label{main_8h_afe84ca1b0107fe689f9d2987d83caea0}
+
+\begin{DoxyCompactList}\small\item\em \-Loads gamestate set in game-\/$>$loadstate. \end{DoxyCompactList}\item 
+void \hyperlink{main_8h_a83e9560a39a8b6beea953f69553dd28b}{\-Print\-Console} (struct \hyperlink{structGame}{\-Game} $\ast$game, char $\ast$format,...)
+\begin{DoxyCompactList}\small\item\em \-Print some message on game console. \end{DoxyCompactList}\item 
+\hypertarget{main_8h_a3a03870a3158c22e10b22d60822c190a}{void \hyperlink{main_8h_a3a03870a3158c22e10b22d60822c190a}{\-Draw\-Console} (struct \hyperlink{structGame}{\-Game} $\ast$game)}\label{main_8h_a3a03870a3158c22e10b22d60822c190a}
+
+\begin{DoxyCompactList}\small\item\em \-Draws console bitmap on screen. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Headers of main file of \-Super\-Derpy engine. \-Contains basic functions shared by all views. 
+
+\subsection{\-Function \-Documentation}
+\hypertarget{main_8h_a37ff4b9f7c61255aaaba68d349398974}{\index{main.\-h@{main.\-h}!al\-\_\-draw\-\_\-text\-\_\-with\-\_\-shadow@{al\-\_\-draw\-\_\-text\-\_\-with\-\_\-shadow}}
+\index{al\-\_\-draw\-\_\-text\-\_\-with\-\_\-shadow@{al\-\_\-draw\-\_\-text\-\_\-with\-\_\-shadow}!main.h@{main.\-h}}
+\subsubsection[{al\-\_\-draw\-\_\-text\-\_\-with\-\_\-shadow}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf al\-\_\-draw\-\_\-text\-\_\-with\-\_\-shadow} (
+\begin{DoxyParamCaption}
+\item[{\-A\-L\-L\-E\-G\-R\-O\-\_\-\-F\-O\-N\-T $\ast$}]{font, }
+\item[{\-A\-L\-L\-E\-G\-R\-O\-\_\-\-C\-O\-L\-O\-R}]{color, }
+\item[{float}]{x, }
+\item[{float}]{y, }
+\item[{int}]{flags, }
+\item[{char const $\ast$}]{text}
+\end{DoxyParamCaption}
+)}}\label{main_8h_a37ff4b9f7c61255aaaba68d349398974}
+
+
+\-Draws text with shadow. 
+
+\-Draws given text two times\-: once with color (0,0,0,128) and 1px off in both x and y axis, and second time with actual given color and position. \hypertarget{main_8h_a83e9560a39a8b6beea953f69553dd28b}{\index{main.\-h@{main.\-h}!\-Print\-Console@{\-Print\-Console}}
+\index{\-Print\-Console@{\-Print\-Console}!main.h@{main.\-h}}
+\subsubsection[{\-Print\-Console}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Print\-Console} (
+\begin{DoxyParamCaption}
+\item[{struct {\bf \-Game} $\ast$}]{game, }
+\item[{char $\ast$}]{format, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}}\label{main_8h_a83e9560a39a8b6beea953f69553dd28b}
+
+
+\-Print some message on game console. 
+
+\-Draws message on console bitmap, so it'll be displayed when calling \-Draw\-Console. \-If game-\/$>$debug is true, then it also prints given message on stdout. \-It needs to be called in printf style. 
