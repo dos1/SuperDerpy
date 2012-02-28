@@ -66,6 +66,7 @@ struct Menu {
 	ALLEGRO_FONT *font_selected;
 	int selected;
 	bool options;
+	bool draw_while_fading;
 };
 
 /*! \brief Resources used by Loading state. */

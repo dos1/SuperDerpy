@@ -68,6 +68,7 @@ void Menu_Draw(struct Game *game) {
 }
 
 void Menu_Preload(struct Game *game) {
+	game->menu.draw_while_fading = atoi(GetConfigOptionDefault("[MuffinAttack]", "menu_draw_while_fading", "1"));
 	game->menu.cloud_position = 100;
 	game->menu.cloud2_position = 100;
 	game->menu.options = false;
@@ -150,10 +151,12 @@ void Menu_Unload(struct Game *game) {
 
 	ALLEGRO_EVENT ev;
 	for(int fadeloop=255; fadeloop>=0; fadeloop-=10){
-		Menu_Draw(game);
-		al_set_target_bitmap(game->menu.menu_fade_bitmap);
-		al_draw_bitmap(al_get_backbuffer(game->display), 0, 0, 0);
-		al_set_target_bitmap(al_get_backbuffer(game->display));
+		if ((game->menu.draw_while_fading) || (fadeloop==255)) {
+			Menu_Draw(game);
+			al_set_target_bitmap(game->menu.menu_fade_bitmap);
+			al_draw_bitmap(al_get_backbuffer(game->display), 0, 0, 0);
+			al_set_target_bitmap(al_get_backbuffer(game->display));
+		}
 		al_wait_for_event(game->event_queue, &ev);
 		al_draw_tinted_bitmap(game->menu.menu_fade_bitmap,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
 		DrawConsole(game);
@@ -188,11 +191,12 @@ void Menu_Load(struct Game *game) {
 
 	ALLEGRO_EVENT ev;
 	for(int fadeloop=0; fadeloop<256; fadeloop+=10){
-		Menu_Draw(game);
-		al_set_target_bitmap(game->menu.menu_fade_bitmap);
-		al_draw_bitmap(al_get_backbuffer(game->display), 0, 0, 0);
-		al_set_target_bitmap(al_get_backbuffer(game->display));
-
+		if ((game->menu.draw_while_fading) || (fadeloop==0)) {
+			Menu_Draw(game);
+			al_set_target_bitmap(game->menu.menu_fade_bitmap);
+			al_draw_bitmap(al_get_backbuffer(game->display), 0, 0, 0);
+			al_set_target_bitmap(al_get_backbuffer(game->display));
+		}
 		al_wait_for_event(game->event_queue, &ev);
 		al_draw_tinted_bitmap(game->menu.menu_fade_bitmap,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
 		DrawConsole(game);
