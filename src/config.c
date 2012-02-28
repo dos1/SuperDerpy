@@ -9,7 +9,9 @@
  *  Section CANNOT be declared multiple times.
  *
  *  Lines starting with '#' are ignored.
+ * 
  *  All other lines have to look like this one:
+ * 
  *    key=value
  * 
  *  All whitespace at beginning, end or around '=' char will belong to key or value.
@@ -27,15 +29,17 @@
 #include <string.h>
 #include <stdbool.h>
 
+/*! \brief One config option in list of options. */
 struct ConfigOption {
-	char* name;
-	char* value;
-	char* section;
-	struct ConfigOption *next;
+	char* name; /*!< Name of the config entry. */
+	char* value; /*!< Value of the config entry. */
+	char* section; /*!< Section of the config entry (including braces). */
+	struct ConfigOption *next; /*!< Pointer to next option in list, or NULL if there is no more. */
 };
 
-struct ConfigOption *config;
+struct ConfigOption *config; /*!< Pointer to first config entry in list. */
 
+/*! \brief Adds new config entry. */
 void AppendToConfig(char* section, char* name, char* value) {
 	struct ConfigOption *new = malloc(sizeof(struct ConfigOption));
 	new->next = NULL;

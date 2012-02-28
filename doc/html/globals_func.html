@@ -77,6 +77,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="globals.html"><span>All</span></a></li>
       <li class="current"><a href="globals_func.html"><span>Functions</span></a></li>
+      <li><a href="globals_vars.html"><span>Variables</span></a></li>
       <li><a href="globals_enum.html"><span>Enumerations</span></a></li>
       <li><a href="globals_defs.html"><span>Defines</span></a></li>
     </ul>
@@ -88,9 +89,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="main_8c.html#a37ff4b9f7c61255aaaba68d349398974">main.c</a>
 , <a class="el" href="main_8h.html#a37ff4b9f7c61255aaaba68d349398974">main.h</a>
 </li>
+<li>AppendToConfig()
+: <a class="el" href="config_8c.html#a4855b5733bbd77d914f02b8280f01ec2">config.c</a>
+</li>
+<li>DeinitConfig()
+: <a class="el" href="config_8c.html#a771b6ee4b4a43e5c5ceacd9620921c39">config.c</a>
+, <a class="el" href="config_8h.html#a771b6ee4b4a43e5c5ceacd9620921c39">config.h</a>
+</li>
 <li>DrawConsole()
 : <a class="el" href="main_8c.html#a3a03870a3158c22e10b22d60822c190a">main.c</a>
 , <a class="el" href="main_8h.html#a3a03870a3158c22e10b22d60822c190a">main.h</a>
+</li>
+<li>GetConfigOption()
+: <a class="el" href="config_8c.html#ac2bded9fdf04d859de3c79bcd96e3970">config.c</a>
+, <a class="el" href="config_8h.html#ac2bded9fdf04d859de3c79bcd96e3970">config.h</a>
+</li>
+<li>GetConfigOptionDefault()
+: <a class="el" href="config_8c.html#a51719250e83494651459d90d2105cef6">config.c</a>
+, <a class="el" href="config_8h.html#a51719250e83494651459d90d2105cef6">config.h</a>
+</li>
+<li>InitConfig()
+: <a class="el" href="config_8c.html#a88ce61c06b65baa2f67f43eb7c8e6379">config.c</a>
+, <a class="el" href="config_8h.html#a88ce61c06b65baa2f67f43eb7c8e6379">config.h</a>
 </li>
 <li>LoadGameState()
 : <a class="el" href="main_8c.html#afe84ca1b0107fe689f9d2987d83caea0">main.c</a>
@@ -104,6 +124,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="main_8c.html#a83e9560a39a8b6beea953f69553dd28b">main.c</a>
 , <a class="el" href="main_8h.html#a83e9560a39a8b6beea953f69553dd28b">main.h</a>
 </li>
+<li>SetConfigOption()
+: <a class="el" href="config_8c.html#a68a5d186325286714ab452ad9eaaad84">config.c</a>
+, <a class="el" href="config_8h.html#a68a5d186325286714ab452ad9eaaad84">config.h</a>
+</li>
 <li>UnloadGameState()
 : <a class="el" href="main_8c.html#afbbdeccc0adc5c3a0c84461f51a45a5b">main.c</a>
 , <a class="el" href="main_8h.html#afbbdeccc0adc5c3a0c84461f51a45a5b">main.h</a>
@@ -115,7 +139,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -127,7 +151,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Feb 28 2012 14:13:30 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Feb 28 2012 23:16:27 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

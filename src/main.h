@@ -26,16 +26,16 @@ enum gamestate_enum {
 
 /*! \brief Resources used by Level state. */
 struct Level {
-	ALLEGRO_BITMAP *fade_bitmap;
-	ALLEGRO_BITMAP *image;
-	ALLEGRO_BITMAP *derpy_walkcycle;
-	ALLEGRO_BITMAP *derpy;
-	ALLEGRO_BITMAP *derpytmp;
-	ALLEGRO_SAMPLE *sample;
-	int current_level;
-	int derpy_frame;
-	int derpy_frame_tmp;
-	double derpy_pos;
+	ALLEGRO_BITMAP *fade_bitmap; /*!< Bitmap used on fade-in and fade-out animations. */
+	ALLEGRO_BITMAP *image; /*!< Background texture. */
+	ALLEGRO_BITMAP *derpy_walkcycle; /*!< Derpy walk cycle spritesheet. */
+	ALLEGRO_BITMAP *derpy; /*!< Derpy sprite. */
+	ALLEGRO_BITMAP *derpytmp; /*!< Unscaled Derpy sprite. */
+	ALLEGRO_SAMPLE *sample; /*!< Sample with background music. */
+	int current_level; /*!< Level number. */
+	int derpy_frame; /*!< Current frame of Derpy animation. */ 
+	int derpy_frame_tmp; /*!< Counter used to slow down Derpy animation. */
+	double derpy_pos; /*!< Position of Derpy on screen. */
 };
 
 /*! \brief Resources used by Menu state. */
