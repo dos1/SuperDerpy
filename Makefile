@@ -1,6 +1,6 @@
 IDIR =.
 CC=gcc
-CFLAGS=-I$(IDIR) -std=gnu99 -Wall -DDEBUG -g
+CFLAGS=-I$(IDIR) -Wall -g
 
 SRCDIR=src
 ODIR=obj

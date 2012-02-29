@@ -5,33 +5,34 @@
 #include "loading.h"
 
 void Loading_Draw(struct Game *game) {
-		ALLEGRO_EVENT ev;
-		for(int fadeloop=0; fadeloop<256; fadeloop+=10){
-			al_wait_for_event(game->event_queue, &ev);
-			al_draw_tinted_bitmap(game->loading.loading_bitmap,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
-			DrawConsole(game);
-			al_flip_display();
-		}
-
-		al_draw_bitmap(game->loading.loading_bitmap,0,0,0);
-
-		al_stop_timer(game->timer);
-
-		PreloadGameState(game);
-
-		al_start_timer(game->timer);
-
-		for(int fadeloop=255; fadeloop>0; fadeloop-=10){
-			al_wait_for_event(game->event_queue, &ev);
-			al_draw_tinted_bitmap(game->loading.loading_bitmap,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
-			DrawConsole(game);
-			al_flip_display();
-		}
-		al_clear_to_color(al_map_rgb(0,0,0));
+	ALLEGRO_EVENT ev;
+	int fadeloop;
+	for(fadeloop=0; fadeloop<256; fadeloop+=10){
+		al_wait_for_event(game->event_queue, &ev);
+		al_draw_tinted_bitmap(game->loading.loading_bitmap,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
 		DrawConsole(game);
 		al_flip_display();
-		//al_rest(0.2);
-		LoadGameState(game);
+	}
+
+	al_draw_bitmap(game->loading.loading_bitmap,0,0,0);
+
+	al_stop_timer(game->timer);
+
+	PreloadGameState(game);
+
+	al_start_timer(game->timer);
+
+	for(fadeloop=255; fadeloop>0; fadeloop-=10){
+		al_wait_for_event(game->event_queue, &ev);
+		al_draw_tinted_bitmap(game->loading.loading_bitmap,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
+		DrawConsole(game);
+		al_flip_display();
+	}
+	al_clear_to_color(al_map_rgb(0,0,0));
+	DrawConsole(game);
+	al_flip_display();
+	//al_rest(0.2);
+	LoadGameState(game);
 }
 
 void Loading_Load(struct Game *game) {

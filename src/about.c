@@ -22,7 +22,8 @@ void About_Draw(struct Game *game) {
 void About_Load(struct Game *game) {
 	if (game->music) al_play_sample(game->about.sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 	ALLEGRO_EVENT ev;
-	for(int fadeloop=0; fadeloop<256; fadeloop+=10){
+	int fadeloop;
+	for(fadeloop=0; fadeloop<256; fadeloop+=10){
 		al_wait_for_event(game->event_queue, &ev);
 		al_draw_tinted_bitmap(game->about.fade_bitmap,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
 		DrawConsole(game);
@@ -126,7 +127,8 @@ void About_Unload(struct Game *game) {
 	al_draw_scaled_bitmap(game->about.letter,0,0,al_get_bitmap_width(game->about.letter),al_get_bitmap_height(game->about.letter),0,0,al_get_display_width(game->display), al_get_display_height(game->display),0);
 	al_draw_bitmap_region(game->about.text_bitmap, 0, game->about.x*al_get_bitmap_height(game->about.text_bitmap), al_get_bitmap_width(game->about.text_bitmap), al_get_display_height(game->display)*0.8, al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.1, 0);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
-	for(int fadeloop=255; fadeloop>=0; fadeloop-=10){
+	int fadeloop;
+	for(fadeloop=255; fadeloop>=0; fadeloop-=10){
 		al_wait_for_event(game->event_queue, &ev);
 		al_draw_tinted_bitmap(game->about.fade_bitmap, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), 0, 0, 0);
 		DrawConsole(game);

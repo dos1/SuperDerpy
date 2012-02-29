@@ -150,7 +150,8 @@ void Menu_Unload(struct Game *game) {
 	game->menu.menu_fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 
 	ALLEGRO_EVENT ev;
-	for(int fadeloop=255; fadeloop>=0; fadeloop-=10){
+	int fadeloop;
+	for(fadeloop=255; fadeloop>=0; fadeloop-=10){
 		if ((game->menu.draw_while_fading) || (fadeloop==255)) {
 			Menu_Draw(game);
 			al_set_target_bitmap(game->menu.menu_fade_bitmap);
@@ -190,7 +191,8 @@ void Menu_Load(struct Game *game) {
 	game->menu.menu_fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 
 	ALLEGRO_EVENT ev;
-	for(int fadeloop=0; fadeloop<256; fadeloop+=10){
+	int fadeloop;
+	for(fadeloop=0; fadeloop<256; fadeloop+=10){
 		if ((game->menu.draw_while_fading) || (fadeloop==0)) {
 			Menu_Draw(game);
 			al_set_target_bitmap(game->menu.menu_fade_bitmap);

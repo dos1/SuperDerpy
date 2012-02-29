@@ -28,6 +28,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include "config.h"
 
 /*! \brief One config option in list of options. */
 struct ConfigOption {
@@ -86,7 +87,8 @@ void InitConfig() {
 		new->value = malloc(sizeof(char)*255);
 		new->value[0] = '\0';
 		new->next = NULL;
-		for (int i=0; i<strlen(string); i++) {
+		int i;
+		for (i=0; i<strlen(string); i++) {
 			if (string[i]=='=') { before=false; continue; }
 			char temp[2];
 			temp[0]=string[i];

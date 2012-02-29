@@ -43,7 +43,8 @@ void Map_Draw(struct Game *game) {
 void Map_Load(struct Game *game) {
 	if (game->music) al_play_sample(game->map.sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 	ALLEGRO_EVENT ev;
-	for(int fadeloop=0; fadeloop<256; fadeloop+=10){
+	int fadeloop;
+	for(fadeloop=0; fadeloop<256; fadeloop+=10){
 		al_wait_for_event(game->event_queue, &ev);
 		al_draw_tinted_bitmap(game->map.map,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
 		DrawConsole(game);
@@ -114,7 +115,8 @@ void Map_Preload(struct Game *game) {
 void Map_Unload(struct Game *game) {
 	game->level.current_level = game->map.selected;
 	ALLEGRO_EVENT ev;
-	for(int fadeloop=255; fadeloop>=0; fadeloop-=10){
+	int fadeloop;
+	for(fadeloop=255; fadeloop>=0; fadeloop-=10){
 		al_wait_for_event(game->event_queue, &ev);
 		al_draw_tinted_bitmap(game->map.map, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), 0, 0, 0);
 		DrawConsole(game);
