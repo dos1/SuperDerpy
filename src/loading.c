@@ -42,9 +42,8 @@ void Loading_Load(struct Game *game) {
 	al_flip_display();
 
 	game->loading.loading_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
-	al_set_target_bitmap(game->loading.loading_bitmap);
 
-	void GenerateLoadingBitmap() {
+/*	void GenerateLoadingBitmap() {
 		al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
 		game->loading.image = al_load_bitmap( "data/loading.png" );
 		al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR | ALLEGRO_MIN_LINEAR);
@@ -79,9 +78,12 @@ void Loading_Load(struct Game *game) {
 			GenerateLoadingBitmap();
 		else al_draw_bitmap(game->loading.image, 0, 0, 0);
 	} else GenerateLoadingBitmap();
+	*/
+	game->loading.image = LoadFromCache(game, "loading.png", al_get_display_width(game->display), al_get_display_height(game->display));
 	
 	// Scale "Loading" bitmap
 	al_set_target_bitmap(game->loading.loading_bitmap);
+	al_draw_bitmap(game->loading.image, 0, 0, 0);
 	//al_draw_scaled_bitmap(game->loading.image,0, 0, al_get_bitmap_width(game->loading.image), al_get_bitmap_height(game->loading.image), 0, 0, al_get_display_width(game->display), al_get_display_height(game->display),0);
 	al_draw_text_with_shadow(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.0234, al_get_display_height(game->display)*0.85, ALLEGRO_ALIGN_LEFT, "Loading...");
 	al_set_target_bitmap(al_get_backbuffer(game->display));

@@ -28,7 +28,7 @@ void Menu_Draw(struct Game *game) {
 	al_draw_tinted_bitmap(game->menu.mountain_bitmap,al_map_rgba_f(tint,tint,tint,tint),game->menu.mountain_position, 0,0);
 	al_draw_scaled_bitmap(game->menu.cloud_bitmap,0,0,al_get_bitmap_width(game->menu.cloud_bitmap), al_get_bitmap_height(game->menu.cloud_bitmap), al_get_display_width(game->display)*(sin((game->menu.cloud_position/40)-4.5)-0.3), al_get_display_height(game->display)*0.35, al_get_bitmap_width(game->menu.cloud_bitmap)/2, al_get_bitmap_height(game->menu.cloud_bitmap)/2,0);
 	al_draw_bitmap(game->menu.cloud2_bitmap,al_get_display_width(game->display)*(game->menu.cloud2_position/100.0), al_get_display_height(game->display)/1.5,0);
-	al_draw_bitmap(game->menu.menu_bitmap,0, 0,0);
+	al_draw_bitmap(game->menu.menu_bitmap,0, al_get_display_height(game->display)*0.55,0);
 	al_draw_bitmap(game->menu.pinkcloud_bitmap,(al_get_display_width(game->display)*0.12) + (cos((game->menu.cloud_position/25+80)*1.74444))*40, 0,0);
 	al_draw_bitmap(game->menu.cloud_bitmap,al_get_display_width(game->display)*game->menu.cloud_position/100, 30,0);
 
@@ -71,7 +71,7 @@ void Menu_Preload(struct Game *game) {
 	game->menu.loaded = true;
 	//game->menu.image = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 	//al_destroy_bitmap(game->menu.image); // ugh...
-	al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR | ALLEGRO_MEMORY_BITMAP);
+	al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
 	game->menu.image = al_load_bitmap( "data/menu.png" );
 	game->menu.mountain = al_load_bitmap( "data/mountain.png" );
 	game->menu.cloud = al_load_bitmap( "data/cloud.png" );
@@ -79,7 +79,9 @@ void Menu_Preload(struct Game *game) {
 	game->menu.rain = al_load_bitmap( "data/rain.png" );
 	game->menu.pie = al_load_bitmap( "data/pie.png" );
 	game->menu.pinkcloud = al_load_bitmap( "data/pinkcloud.png" );
-	al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR);
+	al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR | ALLEGRO_MIN_LINEAR);
+
+	//game->menu.menu_bitmap = LoadFromCache(game, "menu.png", al_get_display_width(game->display), al_get_display_height(game->display));
 
 	game->menu.sample = al_load_sample( "data/menu.flac" );
 	game->menu.rain_sample = al_load_sample( "data/rain.flac" );
@@ -107,29 +109,33 @@ void Menu_Preload(struct Game *game) {
 	}
 
 	// Scale menu bitmap
-	game->menu.menu_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
+	game->menu.menu_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display)*0.45);
 	al_set_target_bitmap(game->menu.menu_bitmap);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
-	al_draw_scaled_bitmap(game->menu.image,0, 0, al_get_bitmap_width(game->menu.image), al_get_bitmap_height(game->menu.image), 0, 0, al_get_display_width(game->display), al_get_display_height(game->display),0);
+	ScaleBitmap(game->menu.image, al_get_display_width(game->display), al_get_display_height(game->display)*0.45);
+	//al_draw_scaled_bitmap(game->menu.image,0, 0, al_get_bitmap_width(game->menu.image), al_get_bitmap_height(game->menu.image), 0, 0, al_get_display_width(game->display), al_get_display_height(game->display),0);
 	al_destroy_bitmap(game->menu.image);
 
 	// Cloud menu bitmap
 	game->menu.cloud_bitmap = al_create_bitmap(al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.25);
 	al_set_target_bitmap(game->menu.cloud_bitmap);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
-	al_draw_scaled_bitmap(game->menu.cloud,0, 0, al_get_bitmap_width(game->menu.cloud), al_get_bitmap_height(game->menu.cloud), 0, 0, al_get_bitmap_width(game->menu.cloud_bitmap), al_get_bitmap_height(game->menu.cloud_bitmap),0);
+	ScaleBitmap(game->menu.cloud, al_get_bitmap_width(game->menu.cloud_bitmap), al_get_bitmap_height(game->menu.cloud_bitmap));
+	//al_draw_scaled_bitmap(game->menu.cloud,0, 0, al_get_bitmap_width(game->menu.cloud), al_get_bitmap_height(game->menu.cloud), 0, 0, al_get_bitmap_width(game->menu.cloud_bitmap), al_get_bitmap_height(game->menu.cloud_bitmap),0);
 	al_destroy_bitmap(game->menu.cloud);
 
 	game->menu.cloud2_bitmap = al_create_bitmap(al_get_display_width(game->display)*0.2, al_get_display_height(game->display)*0.1);
 	al_set_target_bitmap(game->menu.cloud2_bitmap);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
-	al_draw_scaled_bitmap(game->menu.cloud2,0, 0, al_get_bitmap_width(game->menu.cloud2), al_get_bitmap_height(game->menu.cloud2), 0, 0, al_get_bitmap_width(game->menu.cloud2_bitmap), al_get_bitmap_height(game->menu.cloud2_bitmap),0);
+	ScaleBitmap(game->menu.cloud2, al_get_bitmap_width(game->menu.cloud2_bitmap), al_get_bitmap_height(game->menu.cloud2_bitmap));
+	//al_draw_scaled_bitmap(game->menu.cloud2,0, 0, al_get_bitmap_width(game->menu.cloud2), al_get_bitmap_height(game->menu.cloud2), 0, 0, al_get_bitmap_width(game->menu.cloud2_bitmap), al_get_bitmap_height(game->menu.cloud2_bitmap),0);
 	al_destroy_bitmap(game->menu.cloud2);
 	
 	game->menu.pinkcloud_bitmap = al_create_bitmap(al_get_display_width(game->display)*0.33125, al_get_display_height(game->display)); //*0.8122);
 	game->menu.pinkcloud_scaled = al_create_bitmap(al_get_bitmap_width(game->menu.pinkcloud_bitmap), al_get_bitmap_height(game->menu.pinkcloud_bitmap)*0.8122);
 	al_set_target_bitmap(game->menu.pinkcloud_scaled);
-	al_draw_scaled_bitmap(game->menu.pinkcloud,0, 0, al_get_bitmap_width(game->menu.pinkcloud), al_get_bitmap_height(game->menu.pinkcloud), 0, 0, al_get_bitmap_width(game->menu.pinkcloud_scaled), al_get_bitmap_height(game->menu.pinkcloud_scaled),0);
+	ScaleBitmap(game->menu.pinkcloud, al_get_bitmap_width(game->menu.pinkcloud_scaled), al_get_bitmap_height(game->menu.pinkcloud_scaled));
+	//al_draw_scaled_bitmap(game->menu.pinkcloud,0, 0, al_get_bitmap_width(game->menu.pinkcloud), al_get_bitmap_height(game->menu.pinkcloud), 0, 0, al_get_bitmap_width(game->menu.pinkcloud_scaled), al_get_bitmap_height(game->menu.pinkcloud_scaled),0);
 	al_destroy_bitmap(game->menu.pinkcloud);
 
 	game->menu.pie_bitmap = al_create_bitmap(al_get_display_width(game->display)/2, al_get_display_height(game->display)); //*0.8122);

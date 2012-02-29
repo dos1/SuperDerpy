@@ -122,6 +122,58 @@ void LoadGameState(struct Game *game) {
 	game->loadstate = -1;
 }
 
+void ScaleBitmap(ALLEGRO_BITMAP* source, int width, int height) {
+	int x, y;
+	for (y = 0; y < height; y++) {
+		float pixy = ((float)y / height) * al_get_bitmap_height(source);
+		for (x = 0; x < width; x++) {
+			float pixx = ((float)x / width) * al_get_bitmap_width(source);
+			ALLEGRO_COLOR a = al_get_pixel(source, pixx-0.25, pixy-0.25);
+			ALLEGRO_COLOR b = al_get_pixel(source, pixx+0.25, pixy-0.25);
+			ALLEGRO_COLOR c = al_get_pixel(source, pixx-0.25, pixy+0.25);
+			ALLEGRO_COLOR d = al_get_pixel(source, pixx+0.25, pixy+0.25);
+			ALLEGRO_COLOR result = al_map_rgba_f(
+				(a.r+b.r+c.r+d.r) / 4,
+				(a.g+b.b+c.g+d.g) / 4,
+				(a.b+b.g+c.b+d.b) / 4,
+				(a.a+b.a+c.a+d.a) / 4
+			);
+			al_draw_pixel(x, y, result);
+		}
+	}	
+}
+
+ALLEGRO_BITMAP* LoadFromCache(struct Game *game, char* filename, int width, int height) {
+	ALLEGRO_BITMAP *source, *target = al_create_bitmap(width, height);
+	al_set_target_bitmap(target);
+	al_clear_to_color(al_map_rgba(0,0,0,0));
+	char origfn[255] = "data/";
+	char cachefn[255] = "data/cache/";
+	strcat(origfn, filename);
+	strcat(cachefn, filename);
+	void GenerateBitmap() {
+		al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
+		
+		source = al_load_bitmap( origfn );
+		al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR | ALLEGRO_MIN_LINEAR);
+
+		ScaleBitmap(source, width, height);
+		al_save_bitmap(cachefn, target);
+		PrintConsole(game, "Cache bitmap %s generated.", filename);
+	}
+	
+	source = al_load_bitmap( cachefn );
+	if (source) {
+		if ((al_get_bitmap_width(source)!=width) || (al_get_bitmap_height(source)!=height)) {
+			al_destroy_bitmap(source);
+			GenerateBitmap();
+			return target;
+		}
+		return source;
+	} else GenerateBitmap();
+	return target;
+}
+
 int main(int argc, char **argv){
 	srand(time(NULL));
 
@@ -199,6 +251,7 @@ int main(int argc, char **argv){
 	if (game.fullscreen) al_hide_mouse_cursor(game.display);
 
 	al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR | ALLEGRO_MIN_LINEAR);
+	al_set_new_bitmap_format(ALLEGRO_PIXEL_FORMAT_ANY_32_WITH_ALPHA);
 
 	game.font = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game.display)*0.09,0 );
 	game.font_console = al_load_ttf_font("data/DejaVuSansMono.ttf",al_get_display_height(game.display)*0.018,0 );
