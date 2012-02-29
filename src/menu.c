@@ -69,10 +69,6 @@ void Menu_Draw(struct Game *game) {
 
 void Menu_Preload(struct Game *game) {
 	game->menu.loaded = true;
-	game->menu.draw_while_fading = atoi(GetConfigOptionDefault("[MuffinAttack]", "menu_draw_while_fading", "1"));
-	game->menu.cloud_position = 100;
-	game->menu.cloud2_position = 100;
-	game->menu.options = false;
 	//game->menu.image = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 	//al_destroy_bitmap(game->menu.image); // ugh...
 	al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR | ALLEGRO_MEMORY_BITMAP);
@@ -157,8 +153,6 @@ void Menu_Preload(struct Game *game) {
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 	al_draw_scaled_bitmap(game->menu.rain,0, 0, al_get_bitmap_width(game->menu.rain), al_get_bitmap_height(game->menu.rain), 0, 0, al_get_bitmap_width(game->menu.rain_bitmap), al_get_bitmap_height(game->menu.rain_bitmap),0);
 	al_destroy_bitmap(game->menu.rain);
-
-	game->menu.selected = 0;
 }
 
 void Menu_Stop(struct Game* game) {
@@ -207,6 +201,12 @@ void play_samples(struct Game *game) {
 }
 
 void Menu_Load(struct Game *game) {
+	game->menu.draw_while_fading = atoi(GetConfigOptionDefault("[MuffinAttack]", "menu_draw_while_fading", "1"));
+	game->menu.cloud_position = 100;
+	game->menu.cloud2_position = 100;
+	game->menu.options = false;
+	game->menu.selected = 0;
+
 	play_samples(game);
 	game->menu.menu_fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 
