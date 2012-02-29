@@ -50,8 +50,10 @@ struct Menu {
 	ALLEGRO_BITMAP *pie;
 	ALLEGRO_BITMAP *pie_bitmap;
 	ALLEGRO_BITMAP *pinkcloud_bitmap;
+	ALLEGRO_BITMAP *pinkcloud_scaled;
 	ALLEGRO_BITMAP *pinkcloud;
 	ALLEGRO_BITMAP *rain;
+	ALLEGRO_BITMAP *rain_bitmap;
 	ALLEGRO_BITMAP *mountain_bitmap;
 	ALLEGRO_BITMAP *mountain;
 	float cloud_position;
@@ -67,6 +69,7 @@ struct Menu {
 	int selected;
 	bool options;
 	bool draw_while_fading;
+	bool loaded;
 };
 
 /*! \brief Resources used by Loading state. */
@@ -129,6 +132,7 @@ struct Game {
 	int fps;
 	int width;
 	int height;
+	bool shuttingdown;
 	struct Menu menu;
 	struct Loading loading;
 	struct Intro intro;

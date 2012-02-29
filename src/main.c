@@ -67,6 +67,10 @@ void DrawConsole(struct Game *game) {
 }
 
 void PreloadGameState(struct Game *game) {
+	if ((game->loadstate==GAMESTATE_MENU) && (game->menu.loaded)) {
+		PrintConsole(game, "GAMESTATE_MENU already loaded, skipping...");
+		return;
+	}
 	switch (game->loadstate) {
 		PRELOAD_STATE(GAMESTATE_MENU, Menu)
 		PRELOAD_STATE(GAMESTATE_LOADING, Loading)
@@ -83,7 +87,13 @@ void PreloadGameState(struct Game *game) {
 
 void UnloadGameState(struct Game *game) {
 	switch (game->gamestate) {
-		UNLOAD_STATE(GAMESTATE_MENU, Menu)
+		case GAMESTATE_MENU:
+			if (game->shuttingdown) { 
+				PrintConsole(game, "Unload GAMESTATE_MENU..."); Menu_Unload(game);
+			} else {
+				PrintConsole(game, "Just stopping GAMESTATE_MENU..."); Menu_Stop(game);
+			}
+			break;
 		UNLOAD_STATE(GAMESTATE_LOADING, Loading)
 		UNLOAD_STATE(GAMESTATE_ABOUT, About)
 		UNLOAD_STATE(GAMESTATE_INTRO, Intro)
@@ -136,8 +146,6 @@ int main(int argc, char **argv){
 		fprintf(stderr, "failed to initialize allegro!\n");
 		return -1;
 	}
-
-	al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR^ALLEGRO_MAG_LINEAR);
    
 	game.timer = al_create_timer(ALLEGRO_BPS_TO_SECS(game.fps));
 	if(!game.timer) {
@@ -181,6 +189,7 @@ int main(int argc, char **argv){
 
 	if (game.fullscreen) al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
 	al_set_new_display_option(ALLEGRO_VSYNC, 1, ALLEGRO_SUGGEST);
+	al_set_new_display_option(ALLEGRO_OPENGL, 1, ALLEGRO_SUGGEST);
 	game.display = al_create_display(game.width, game.height);
 	if(!game.display) {
 		fprintf(stderr, "failed to create display!\n");
@@ -188,6 +197,9 @@ int main(int argc, char **argv){
 	}
 	al_set_window_title(game.display, "Super Derpy: Muffin Attack");
 	if (game.fullscreen) al_hide_mouse_cursor(game.display);
+
+	al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR | ALLEGRO_MIN_LINEAR);
+
 	game.font = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game.display)*0.09,0 );
 	game.font_console = al_load_ttf_font("data/DejaVuSansMono.ttf",al_get_display_height(game.display)*0.018,0 );
    
@@ -213,6 +225,8 @@ int main(int argc, char **argv){
 
 	al_start_timer(game.timer);
 
+	game.shuttingdown = false;
+	game.menu.loaded = false;
 	game.loadstate = GAMESTATE_LOADING;
 	PreloadGameState(&game);
 	LoadGameState(&game);
@@ -273,6 +287,7 @@ int main(int argc, char **argv){
 			al_flip_display();
 		}
 	}
+	game.shuttingdown = true;
 	UnloadGameState(&game);
 	if (game.gamestate != GAMESTATE_LOADING) {
 		game.gamestate = GAMESTATE_LOADING;

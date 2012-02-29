@@ -71,8 +71,8 @@ int Map_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 		return 0;
 	} else if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
 		UnloadGameState(game);
-		game->gamestate = GAMESTATE_LOADING;
 		game->loadstate = GAMESTATE_MENU;
+		LoadGameState(game);
 		return 0;
 	} else { return 0; }
 	if (game->map.selected<1) game->map.selected=1;

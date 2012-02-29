@@ -36,8 +36,8 @@ void About_Load(struct Game *game) {
 int About_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
 		UnloadGameState(game);
-		game->gamestate = GAMESTATE_LOADING;
 		game->loadstate = GAMESTATE_MENU;
+		LoadGameState(game);
 	}
 	return 0;
 }

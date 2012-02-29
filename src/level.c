@@ -16,8 +16,8 @@ void Level_Draw(struct Game *game) {
 
 	game->level.derpy_pos=game->level.derpy_pos+0.00092;
 	if (game->level.derpy_pos>1) { UnloadGameState(game);
-		game->gamestate = GAMESTATE_LOADING;
-		game->loadstate = GAMESTATE_MENU; return; }
+		game->loadstate = GAMESTATE_MENU;
+		LoadGameState(game); return; }
 	game->level.derpy_frame_tmp++;
 	if (game->level.derpy_frame_tmp%3==0) {
 		if (game->level.derpy_frame_tmp%5==0) game->level.derpy_frame++;
@@ -47,8 +47,8 @@ void Level_Load(struct Game *game) {
 int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
 		UnloadGameState(game);
-		game->gamestate = GAMESTATE_LOADING;
 		game->loadstate = GAMESTATE_MENU;
+		LoadGameState(game);
 	}
 	return 0;
 }
