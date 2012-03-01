@@ -128,9 +128,11 @@ void ScaleBitmap(ALLEGRO_BITMAP* source, int width, int height, float val) {
 		return;
 	}
 	int x, y;
-	for (y = 0; y <= height; y++) {
+	al_lock_bitmap(al_get_target_bitmap(), ALLEGRO_PIXEL_FORMAT_ANY, ALLEGRO_LOCK_WRITEONLY);
+	al_lock_bitmap(source, ALLEGRO_PIXEL_FORMAT_ANY, ALLEGRO_LOCK_READONLY);
+	for (y = 0; y < height; y++) {
 		float pixy = ((float)y / height) * al_get_bitmap_height(source);
-		for (x = 0; x <= width; x++) {
+		for (x = 0; x < width; x++) {
 			float pixx = ((float)x / width) * al_get_bitmap_width(source);
 			ALLEGRO_COLOR a = al_get_pixel(source, pixx-val, pixy-val);
 			ALLEGRO_COLOR b = al_get_pixel(source, pixx+val, pixy-val);
@@ -142,9 +144,11 @@ void ScaleBitmap(ALLEGRO_BITMAP* source, int width, int height, float val) {
 				(a.b+b.g+c.b+d.b) / 4,
 				(a.a+b.a+c.a+d.a) / 4
 			);
-			al_draw_pixel(x, y, result);
+			al_put_pixel(x, y, result);
 		}
 	}	
+	al_unlock_bitmap(al_get_target_bitmap());
+	al_unlock_bitmap(source);
 }
 
 ALLEGRO_BITMAP* LoadFromCache(struct Game *game, char* filename, int width, int height) {
