@@ -84,6 +84,7 @@ struct About {
 	ALLEGRO_BITMAP *image;
 	ALLEGRO_BITMAP *text_bitmap;
 	ALLEGRO_BITMAP *letter;
+	ALLEGRO_BITMAP *letter_bitmap;
 	ALLEGRO_SAMPLE *sample;
 	ALLEGRO_FONT *font;
 	float x;
