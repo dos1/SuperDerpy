@@ -60,7 +60,7 @@ void AppendToConfig(char* section, char* name, char* value) {
 		new->next = old->next;
 		old->next = new;
 	} else {
-		old->next = new;
+		if (old!=new) old->next = new;
 	}
 }
 
