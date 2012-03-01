@@ -4,7 +4,7 @@ CFLAGS=-I$(IDIR) -Wall -g
 
 SRCDIR=src
 ODIR=obj
-LIBS=-lallegro -lallegro_audio-debug -lallegro_acodec-debug -lallegro_image-debug -lallegro_font-debug -lallegro_ttf-debug -lm
+LIBS=-lallegro-debug -lallegro_audio-debug -lallegro_acodec-debug -lallegro_image-debug -lallegro_font-debug -lallegro_ttf-debug -lm
 
 _OBJ = config.o main.o about.o intro.o loading.o map.o menu.o level.o 
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
