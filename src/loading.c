@@ -37,9 +37,9 @@ void Loading_Draw(struct Game *game) {
 
 void Loading_Load(struct Game *game) {
 	al_clear_to_color(al_map_rgb(0,0,0));
-	al_draw_text_with_shadow(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.0234, al_get_display_height(game->display)*0.85, ALLEGRO_ALIGN_LEFT, "Loading...");
-	DrawConsole(game);
-	al_flip_display();
+	//al_draw_text_with_shadow(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.0234, al_get_display_height(game->display)*0.85, ALLEGRO_ALIGN_LEFT, "Loading...");
+	//DrawConsole(game);
+	//al_flip_display();
 
 	game->loading.loading_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 

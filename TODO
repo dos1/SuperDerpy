@@ -1,4 +1,4 @@
-- memory bitmaps for scaling big textures
+- memory bitmaps for scaling big textures (check if it works and if cache for loading screen is needed!)
 - FPS independent timings
 - moar documentation
 - autodetect latencies on drawing when fading in menu
