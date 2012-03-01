@@ -76,6 +76,7 @@ void FillPage(struct Game *game, int page) {
 	al_set_target_bitmap(game->intro.table);
 	al_draw_bitmap(second, al_get_display_width(game->display), 0, 0);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
+	al_destroy_bitmap(second);
 }
 
 void Intro_Draw(struct Game *game) {
