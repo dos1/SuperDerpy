@@ -1,3 +1,8 @@
-- memory bitmaps for scaling big textures (check if it works and if cache for loading screen is needed!)
+- check if every gamestate is stable on every platform
 - moar documentation
 - autodetect latencies on drawing when fading in menu
+- Derpy spritesheet loading into memory and prescaling
+- control settings
+- video settings
+
+- playable levels :D
