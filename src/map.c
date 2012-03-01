@@ -88,7 +88,7 @@ void Map_Preload(struct Game *game) {
 	game->map.arrowpos = 0;
 	game->map.map = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 	al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
-	game->map.background = al_load_bitmap( "data/table.png" );
+	//game->map.background = al_load_bitmap( "data/table.png" );
 	game->map.map_bg = al_load_bitmap( "data/map/background.png" );
 	char filename[30] = { };
 	sprintf(filename, "data/map/highlight%d.png", game->map.available);
@@ -132,7 +132,7 @@ void Map_Unload(struct Game *game) {
 		al_flip_display();
 	}
 	al_destroy_bitmap(game->map.map);
-	al_destroy_bitmap(game->map.background);
+	//al_destroy_bitmap(game->map.background);
 	al_destroy_bitmap(game->map.map_bg);
 	al_destroy_bitmap(game->map.highlight);
 	al_destroy_bitmap(game->map.arrow);
