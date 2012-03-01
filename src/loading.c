@@ -7,7 +7,7 @@
 void Loading_Draw(struct Game *game) {
 	ALLEGRO_EVENT ev;
 	int fadeloop;
-	for(fadeloop=0; fadeloop<256; fadeloop+=10){
+	for(fadeloop=0; fadeloop<256; fadeloop+=tps(game, 600)){
 		al_wait_for_event(game->event_queue, &ev);
 		al_draw_tinted_bitmap(game->loading.loading_bitmap,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
 		DrawConsole(game);
@@ -22,7 +22,7 @@ void Loading_Draw(struct Game *game) {
 
 	al_start_timer(game->timer);
 
-	for(fadeloop=255; fadeloop>0; fadeloop-=10){
+	for(fadeloop=255; fadeloop>0; fadeloop-=tps(game, 600)){
 		al_wait_for_event(game->event_queue, &ev);
 		al_draw_tinted_bitmap(game->loading.loading_bitmap,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
 		DrawConsole(game);

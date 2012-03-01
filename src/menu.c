@@ -61,8 +61,8 @@ void Menu_Draw(struct Game *game) {
 	text = "Exit"; if (game->menu.options) text="Back";
 	al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.8, ALLEGRO_ALIGN_CENTRE, text);
 
-	game->menu.cloud_position-=0.1;
-	game->menu.cloud2_position-=0.025;
+	game->menu.cloud_position-=tps(game, 0.1*60);
+	game->menu.cloud2_position-=tps(game, 0.025*60);
 	if (game->menu.cloud_position<-80) { game->menu.cloud_position=100; PrintConsole(game, "cloud_position"); }
 	if (game->menu.cloud2_position<0) { game->menu.cloud2_position=100; PrintConsole(game, "cloud2_position"); }
 }
@@ -167,7 +167,7 @@ void Menu_Stop(struct Game* game) {
 
 	ALLEGRO_EVENT ev;
 	int fadeloop;
-	for(fadeloop=255; fadeloop>=0; fadeloop-=10){
+	for(fadeloop=255; fadeloop>=0; fadeloop-=tps(game, 600)){
 		if ((game->menu.draw_while_fading) || (fadeloop==255)) {
 			Menu_Draw(game);
 			al_set_target_bitmap(game->menu.menu_fade_bitmap);
@@ -219,7 +219,7 @@ void Menu_Load(struct Game *game) {
 
 	ALLEGRO_EVENT ev;
 	int fadeloop;
-	for(fadeloop=0; fadeloop<256; fadeloop+=10){
+	for(fadeloop=0; fadeloop<256; fadeloop+=tps(game, 600)){
 		if ((game->menu.draw_while_fading) || (fadeloop==0)) {
 			Menu_Draw(game);
 			al_set_target_bitmap(game->menu.menu_fade_bitmap);

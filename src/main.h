@@ -170,5 +170,6 @@ void DrawConsole(struct Game *game);
 
 void ScaleBitmap(ALLEGRO_BITMAP* source, int width, int height, float val);
 ALLEGRO_BITMAP* LoadFromCache(struct Game *game, char* filename, int width, int height);
+float tps(struct Game *game, float t);
 
 #endif

@@ -19,7 +19,7 @@ void Intro_Draw(struct Game *game) {
 	//PrintConsole(game, "drawing");
 	if (game->intro.in_animation) {
 		//PrintConsole(game, "animating");
-		game->intro.position -= 10;
+		game->intro.position -= tps(game, 600);
 		if (game->intro.position%al_get_display_width(game->display)==0) {
 			game->intro.in_animation = false;
 			PrintConsole(game, "Animation finished.");
@@ -38,7 +38,7 @@ void Intro_Load(struct Game *game) {
 	if (game->music) al_play_sample(game->intro.sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 	ALLEGRO_EVENT ev;
 	int fadeloop;
-	for(fadeloop=0; fadeloop<256; fadeloop+=10){
+	for(fadeloop=0; fadeloop<256; fadeloop+=tps(game, 600)){
 		al_wait_for_event(game->event_queue, &ev);
 		al_draw_tinted_bitmap(game->intro.table,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
 		DrawConsole(game);
@@ -137,7 +137,7 @@ void Intro_Preload(struct Game *game) {
 void Intro_Unload(struct Game *game) {
 	ALLEGRO_EVENT ev;
 	int fadeloop;
-	for(fadeloop=255; fadeloop>=0; fadeloop-=10){
+	for(fadeloop=255; fadeloop>=0; fadeloop-=tps(game, 600)){
 		al_wait_for_event(game->event_queue, &ev);
 		if (game->intro.in_animation)
 			al_draw_tinted_bitmap(game->intro.table, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), -1*(game->intro.page)*al_get_display_width(game->display) + (cos(((-1*((game->intro.position)%al_get_display_width(game->display)))/(float)al_get_display_width(game->display))*(3.1415))/2.0)*al_get_display_width(game->display)  + al_get_display_width(game->display)/2.0, 0, 0); //al_get_display_height(game->display)*((game->intro.position/3.0)/(float)al_get_display_width(game->display)), 0);

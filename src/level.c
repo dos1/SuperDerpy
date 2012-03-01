@@ -3,6 +3,7 @@
  */
 
 #include <stdio.h>
+#include <math.h>
 #include "level.h"
 
 void Level_Draw(struct Game *game) {
@@ -14,15 +15,18 @@ void Level_Draw(struct Game *game) {
 	al_draw_scaled_bitmap(game->level.derpytmp, 0, 0, al_get_bitmap_width(game->level.derpytmp),al_get_bitmap_height(game->level.derpytmp), 0, 0, al_get_bitmap_width(game->level.derpy),al_get_bitmap_height(game->level.derpy), 0);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 
-	game->level.derpy_pos=game->level.derpy_pos+0.00092;
+	game->level.derpy_pos=game->level.derpy_pos+tps(game, 60*0.00092);
 	if (game->level.derpy_pos>1) { UnloadGameState(game);
 		game->loadstate = GAMESTATE_MENU;
 		LoadGameState(game); return; }
+	int i;
+	for (i = 0; i < tps(game, 60); i++ ) {
 	game->level.derpy_frame_tmp++;
 	if (game->level.derpy_frame_tmp%3==0) {
 		if (game->level.derpy_frame_tmp%5==0) game->level.derpy_frame++;
 		game->level.derpy_frame++;
 		if (game->level.derpy_frame>=24) game->level.derpy_frame=0;
+	}
 	}
 	al_draw_scaled_bitmap(game->level.image,0,0,al_get_bitmap_width(game->level.image),al_get_bitmap_height(game->level.image),0,0,al_get_display_width(game->display), al_get_display_height(game->display),0);
 	al_draw_bitmap(game->level.derpy, game->level.derpy_pos*al_get_display_width(game->display), al_get_display_height(game->display)-al_get_bitmap_height(game->level.derpy), ALLEGRO_FLIP_HORIZONTAL);
@@ -34,7 +38,7 @@ void Level_Load(struct Game *game) {
 	if (game->music) al_play_sample(game->level.sample, 0.75, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 	ALLEGRO_EVENT ev;
 	int fadeloop;
-	for(fadeloop=0; fadeloop<256; fadeloop+=10){
+	for(fadeloop=0; fadeloop<256; fadeloop+=tps(game, 600)){
 		al_wait_for_event(game->event_queue, &ev);
 		al_draw_tinted_bitmap(game->level.fade_bitmap,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
 		DrawConsole(game);
@@ -88,7 +92,7 @@ void Level_Unload(struct Game *game) {
 	al_draw_text(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)/1.8, ALLEGRO_ALIGN_CENTRE, "Have some moonwalk instead.");
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 	int fadeloop;
-	for(fadeloop=255; fadeloop>=0; fadeloop-=10){
+	for(fadeloop=255; fadeloop>=0; fadeloop-=tps(game, 600)){
 		al_wait_for_event(game->event_queue, &ev);
 		al_draw_tinted_bitmap(game->level.fade_bitmap, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), 0, 0, 0);
 		DrawConsole(game);

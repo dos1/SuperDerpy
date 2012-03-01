@@ -178,6 +178,10 @@ ALLEGRO_BITMAP* LoadFromCache(struct Game *game, char* filename, int width, int 
 	return target;
 }
 
+float tps(struct Game *game, float t) {
+	return t/game->fps;
+}
+
 int main(int argc, char **argv){
 	srand(time(NULL));
 
