@@ -58,7 +58,8 @@ void Level_Preload(struct Game *game) {
 	game->level.derpy_frame_tmp = 0;
 	game->level.derpy_pos = -0.2;
 	PrintConsole(game, "Initializing level %d...", game->level.current_level);
-	game->level.image = al_load_bitmap( "data/table.png" );
+	//game->level.image = al_load_bitmap( "data/table.png" );
+	game->level.image =LoadFromCache(game, "table.png", al_get_display_width(game->display), al_get_display_height(game->display));
 	game->level.sample = al_load_sample( "data/moonwalk.flac" );
 	game->level.derpy_walkcycle = al_load_bitmap( "data/derpcycle.png" );
 	
@@ -71,7 +72,7 @@ void Level_Preload(struct Game *game) {
 	
 	game->level.fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 	al_set_target_bitmap(game->level.fade_bitmap);
-	al_draw_scaled_bitmap(game->level.image,0,0,al_get_bitmap_width(game->level.image),al_get_bitmap_height(game->level.image),0,0,al_get_display_width(game->display), al_get_display_height(game->display),0);
+	al_draw_bitmap(game->level.image,0,0,0);
 	al_draw_textf(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)/2.2, ALLEGRO_ALIGN_CENTRE, "Level %d: Not implemented yet!", game->level.current_level);
 	al_draw_text(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)/1.8, ALLEGRO_ALIGN_CENTRE, "Have some moonwalk instead.");
 	al_set_target_bitmap(al_get_backbuffer(game->display));

@@ -43,7 +43,8 @@ int About_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 }
 
 void About_Preload(struct Game *game) {
-	game->about.image = al_load_bitmap( "data/table.png" );
+	game->about.image =LoadFromCache(game, "table.png", al_get_display_width(game->display), al_get_display_height(game->display));
+	//game->about.image = al_load_bitmap( "data/table.png" );
 	game->about.letter = al_load_bitmap( "data/letter.png" );
 	game->about.sample = al_load_sample( "data/about.flac" );
 	game->about.font = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.035,0 );
@@ -111,7 +112,8 @@ void About_Preload(struct Game *game) {
 	game->about.fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 
 	al_set_target_bitmap(game->about.fade_bitmap);
-	al_draw_scaled_bitmap(game->about.image,0,0,al_get_bitmap_width(game->about.image),al_get_bitmap_height(game->about.image),0,0,al_get_display_width(game->display), al_get_display_height(game->display),0);
+	al_draw_bitmap(game->about.image, 0, 0, 0);
+	//al_draw_scaled_bitmap(game->about.image,0,0,al_get_bitmap_width(game->about.image),al_get_bitmap_height(game->about.image),0,0,al_get_display_width(game->display), al_get_display_height(game->display),0);
 	al_draw_scaled_bitmap(game->about.letter,0,0,al_get_bitmap_width(game->about.letter),al_get_bitmap_height(game->about.letter),0,0,al_get_display_width(game->display), al_get_display_height(game->display),0);
 	al_draw_bitmap_region(game->about.text_bitmap, 0, 0, al_get_bitmap_width(game->about.text_bitmap), al_get_display_height(game->display)*0.8, al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.1, 0);
 
