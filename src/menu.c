@@ -166,16 +166,12 @@ void Menu_Stop(struct Game* game) {
 	game->menu.menu_fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 
 	ALLEGRO_EVENT ev;
-	int fadeloop;
-	for(fadeloop=255; fadeloop>=0; fadeloop-=tps(game, 600)){
-		if ((game->menu.draw_while_fading) || (fadeloop==255)) {
-			Menu_Draw(game);
-			al_set_target_bitmap(game->menu.menu_fade_bitmap);
-			al_draw_bitmap(al_get_backbuffer(game->display), 0, 0, 0);
-			al_set_target_bitmap(al_get_backbuffer(game->display));
-		}
+	float fadeloop;
+	for(fadeloop=0; fadeloop<256; fadeloop+=tps(game, 600)){
+		//if ((game->menu.draw_while_fading) || (fadeloop==255)) {
 		al_wait_for_event(game->event_queue, &ev);
-		al_draw_tinted_bitmap(game->menu.menu_fade_bitmap,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
+		Menu_Draw(game);
+		al_draw_tinted_bitmap(game->menu.menu_fade_bitmap,al_map_rgba_f(1,1,1,fadeloop/255.0),0,0,0);
 		DrawConsole(game);
 		al_flip_display();
 	}
@@ -208,7 +204,7 @@ void play_samples(struct Game *game) {
 }
 
 void Menu_Load(struct Game *game) {
-	game->menu.draw_while_fading = atoi(GetConfigOptionDefault("[MuffinAttack]", "menu_draw_while_fading", "1"));
+	//game->menu.draw_while_fading = atoi(GetConfigOptionDefault("[MuffinAttack]", "menu_draw_while_fading", "1"));
 	game->menu.cloud_position = 100;
 	game->menu.cloud2_position = 100;
 	game->menu.options = false;
@@ -216,18 +212,20 @@ void Menu_Load(struct Game *game) {
 
 	play_samples(game);
 	game->menu.menu_fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
-
+	al_set_target_bitmap(game->menu.menu_fade_bitmap);
+	al_clear_to_color(al_map_rgb(0,0,0));
+	al_set_target_bitmap(al_get_backbuffer(game->display));
 	ALLEGRO_EVENT ev;
-	int fadeloop;
-	for(fadeloop=0; fadeloop<256; fadeloop+=tps(game, 600)){
-		if ((game->menu.draw_while_fading) || (fadeloop==0)) {
-			Menu_Draw(game);
-			al_set_target_bitmap(game->menu.menu_fade_bitmap);
-			al_draw_bitmap(al_get_backbuffer(game->display), 0, 0, 0);
-			al_set_target_bitmap(al_get_backbuffer(game->display));
-		}
+	float fadeloop;
+	for(fadeloop=255; fadeloop>=0; fadeloop-=tps(game, 600)){
+		//if ((game->menu.draw_while_fading) || (fadeloop==0)) {
+		//	al_set_target_bitmap(game->menu.menu_fade_bitmap);
+		//	al_draw_bitmap(al_get_backbuffer(game->display), 0, 0, 0);
+		//	al_set_target_bitmap(al_get_backbuffer(game->display));
+		//}
 		al_wait_for_event(game->event_queue, &ev);
-		al_draw_tinted_bitmap(game->menu.menu_fade_bitmap,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
+		Menu_Draw(game);
+		al_draw_tinted_bitmap(game->menu.menu_fade_bitmap,al_map_rgba_f(1,1,1,fadeloop/255.0),0,0,0);
 		DrawConsole(game);
 		al_flip_display();
 	}
