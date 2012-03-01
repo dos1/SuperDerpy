@@ -249,7 +249,7 @@ int main(int argc, char **argv){
 
 	if (game.fullscreen) al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
 	al_set_new_display_option(ALLEGRO_VSYNC, 1, ALLEGRO_SUGGEST);
-	al_set_new_display_option(ALLEGRO_OPENGL, 1, ALLEGRO_SUGGEST);
+	//al_set_new_display_option(ALLEGRO_OPENGL, 1, ALLEGRO_SUGGEST);
 	game.display = al_create_display(game.width, game.height);
 	if(!game.display) {
 		fprintf(stderr, "failed to create display!\n");
