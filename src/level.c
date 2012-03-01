@@ -7,12 +7,12 @@
 #include "level.h"
 
 void Level_Draw(struct Game *game) {
-	al_set_target_bitmap(game->level.derpytmp);
-	al_clear_to_color(al_map_rgba(0,0,0,0));
-	al_draw_bitmap_region(game->level.derpy_walkcycle,500*(game->level.derpy_frame%6),400*(game->level.derpy_frame/6),500,400,0,0,0);
 	al_set_target_bitmap(game->level.derpy);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
-	al_draw_scaled_bitmap(game->level.derpytmp, 0, 0, al_get_bitmap_width(game->level.derpytmp),al_get_bitmap_height(game->level.derpytmp), 0, 0, al_get_bitmap_width(game->level.derpy),al_get_bitmap_height(game->level.derpy), 0);
+	al_draw_bitmap_region(game->level.derpy_walkcycle,al_get_bitmap_width(game->level.derpy)*(game->level.derpy_frame%6),al_get_bitmap_height(game->level.derpy)*(game->level.derpy_frame/6),al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy),0,0,0);
+	//al_set_target_bitmap(game->level.derpy);
+	//al_clear_to_color(al_map_rgba(0,0,0,0));
+	//al_draw_scaled_bitmap(game->level.derpytmp, 0, 0, al_get_bitmap_width(game->level.derpytmp),al_get_bitmap_height(game->level.derpytmp), 0, 0, al_get_bitmap_width(game->level.derpy),al_get_bitmap_height(game->level.derpy), 0);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 
 	game->level.derpy_pos=game->level.derpy_pos+tps(game, 60*0.00092);
@@ -65,14 +65,15 @@ void Level_Preload(struct Game *game) {
 	//game->level.image = al_load_bitmap( "data/table.png" );
 	game->level.image =LoadFromCache(game, "table.png", al_get_display_width(game->display), al_get_display_height(game->display));
 	game->level.sample = al_load_sample( "data/moonwalk.flac" );
-	game->level.derpy_walkcycle = al_load_bitmap( "data/derpcycle.png" );
+	//game->level.derpy_walkcycle = al_load_bitmap( "data/derpcycle.png" );
+	game->level.derpy_walkcycle =LoadFromCache(game, "derpcycle.png", al_get_display_width(game->display)*0.1953125*6, al_get_display_height(game->display)*0.25*4);
 	
 	if (!game->level.sample){
 		fprintf(stderr, "Audio clip sample not loaded!\n" );
 		exit(-1);
 	}
 	game->level.derpy = al_create_bitmap(al_get_display_width(game->display)*0.1953125, al_get_display_height(game->display)*0.25);
-	game->level.derpytmp = al_create_bitmap(500, 400);
+	//game->level.derpytmp = al_create_bitmap(500, 400);
 	
 	game->level.fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 	al_set_target_bitmap(game->level.fade_bitmap);
@@ -99,6 +100,8 @@ void Level_Unload(struct Game *game) {
 		al_flip_display();
 	}
 	al_destroy_bitmap(game->level.image);
+	al_destroy_bitmap(game->level.derpy);
+	al_destroy_bitmap(game->level.derpy_walkcycle);
 	al_destroy_bitmap(game->level.fade_bitmap);
 	al_destroy_sample(game->level.sample);
 }

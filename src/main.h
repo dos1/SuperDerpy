@@ -30,7 +30,6 @@ struct Level {
 	ALLEGRO_BITMAP *image; /*!< Background texture. */
 	ALLEGRO_BITMAP *derpy_walkcycle; /*!< Derpy walk cycle spritesheet. */
 	ALLEGRO_BITMAP *derpy; /*!< Derpy sprite. */
-	ALLEGRO_BITMAP *derpytmp; /*!< Unscaled Derpy sprite. */
 	ALLEGRO_SAMPLE *sample; /*!< Sample with background music. */
 	int current_level; /*!< Level number. */
 	int derpy_frame; /*!< Current frame of Derpy animation. */ 
