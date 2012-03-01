@@ -14,8 +14,8 @@ void About_Draw(struct Game *game) {
 	game->about.x+=0.00025;
 	if (game->about.x>1) {
 		UnloadGameState(game);
-		game->gamestate = GAMESTATE_LOADING;
 		game->loadstate = GAMESTATE_MENU;
+		LoadGameState(game);
 	}
 }
 

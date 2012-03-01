@@ -128,9 +128,9 @@ void ScaleBitmap(ALLEGRO_BITMAP* source, int width, int height, float val) {
 		return;
 	}
 	int x, y;
-	for (y = 0; y < height; y++) {
+	for (y = 0; y <= height; y++) {
 		float pixy = ((float)y / height) * al_get_bitmap_height(source);
-		for (x = 0; x < width; x++) {
+		for (x = 0; x <= width; x++) {
 			float pixx = ((float)x / width) * al_get_bitmap_width(source);
 			ALLEGRO_COLOR a = al_get_pixel(source, pixx-val, pixy-val);
 			ALLEGRO_COLOR b = al_get_pixel(source, pixx+val, pixy-val);
