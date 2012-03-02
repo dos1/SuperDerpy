@@ -8,6 +8,10 @@
 #include "level.h"
 
 void Level_Draw(struct Game *game) {
+	if (!al_get_sample_instance_playing(game->level.music) && (game->loadstate==GAMESTATE_LEVEL)) { 
+		al_set_sample_instance_playing(game->level.music, true);
+		al_set_sample_instance_position(game->level.music, game->level.music_pos);
+	}
 	al_set_target_bitmap(game->level.derpy);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 	al_draw_bitmap_region(game->level.derpy_walkcycle,al_get_bitmap_width(game->level.derpy)*(game->level.derpy_frame%6),al_get_bitmap_height(game->level.derpy)*(game->level.derpy_frame/6),al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy),0,0,0);
@@ -36,7 +40,8 @@ void Level_Draw(struct Game *game) {
 }
 
 void Level_Load(struct Game *game) {
-	if (game->music) al_play_sample(game->level.sample, 0.75, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
+	if (game->music) al_play_sample_instance(game->level.music);
+	//al_play_sample(game->level.sample, 0.75, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 	ALLEGRO_EVENT ev;
 	int fadeloop;
 	for(fadeloop=0; fadeloop<256; fadeloop+=tps(game, 600)){
@@ -55,6 +60,8 @@ int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 		game->loadstate = GAMESTATE_MENU;
 		LoadGameState(game);
 	} else if (ev->keyboard.keycode==ALLEGRO_KEY_P) {
+		game->level.music_pos = al_get_sample_instance_position(game->level.music);
+		al_set_sample_instance_playing(game->level.music, false);
 		game->gamestate = GAMESTATE_PAUSE;
 		game->loadstate = GAMESTATE_LEVEL;
 		Pause_Load(game);
@@ -77,6 +84,11 @@ void Level_Preload(struct Game *game) {
 		fprintf(stderr, "Audio clip sample not loaded!\n" );
 		exit(-1);
 	}
+	
+	game->level.music = al_create_sample_instance(game->level.sample);
+	al_attach_sample_instance_to_mixer(game->level.music, al_get_default_mixer());
+	al_set_sample_instance_playmode(game->level.music, ALLEGRO_PLAYMODE_LOOP);
+
 	game->level.derpy = al_create_bitmap(al_get_display_width(game->display)*0.1953125, al_get_display_height(game->display)*0.25);
 	//game->level.derpytmp = al_create_bitmap(500, 400);
 	

@@ -1,6 +1,8 @@
 - check if every gamestate is stable on every platform
 - moar documentation
+- rewrite music handling into mixers
 - control settings
 - video settings
+- rewrite config handling to allegro
 
 - playable levels :D

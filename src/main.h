@@ -32,6 +32,8 @@ struct Level {
 	ALLEGRO_BITMAP *derpy_walkcycle; /*!< Derpy walk cycle spritesheet. */
 	ALLEGRO_BITMAP *derpy; /*!< Derpy sprite. */
 	ALLEGRO_SAMPLE *sample; /*!< Sample with background music. */
+	ALLEGRO_SAMPLE_INSTANCE *music; /*!< Sample instance with background music. */
+	unsigned int music_pos; /*!< Position of sample instance. Used when pausing game. */
 	int current_level; /*!< Level number. */
 	int derpy_frame; /*!< Current frame of Derpy animation. */ 
 	int derpy_frame_tmp; /*!< Counter used to slow down Derpy animation. */

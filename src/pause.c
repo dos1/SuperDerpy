@@ -15,7 +15,9 @@ int Pause_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 
 void Pause_Load(struct Game* game) {
 	game->gamestate=game->loadstate;
+	game->loadstate=GAMESTATE_PAUSE;
 	DrawGameState(game);
+	game->loadstate=game->gamestate;
 	game->gamestate=GAMESTATE_PAUSE;
 	ALLEGRO_BITMAP *fade = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 	al_set_target_bitmap(fade);
