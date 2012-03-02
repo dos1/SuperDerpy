@@ -95,8 +95,10 @@ void Intro_Draw(struct Game *game) {
 	//PrintConsole(game, "drawing");
 	if (game->intro.in_animation) {
 		//PrintConsole(game, "animating");
+		int old = game->intro.position%al_get_display_width(game->display);
 		game->intro.position -= tps(game, 600);
-		if (game->intro.position%al_get_display_width(game->display)==0) {
+		//PrintConsole(game, "%d", game->intro.position%al_get_display_width(game->display));
+		if (game->intro.position%al_get_display_width(game->display)>old) {
 			//DrawConsole(game);
 			//al_flip_display();
 			game->intro.in_animation = false;
