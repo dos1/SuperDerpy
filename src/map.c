@@ -64,6 +64,7 @@ int Map_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 		if (game->fx) al_play_sample(game->map.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 	} else if (ev->keyboard.keycode==ALLEGRO_KEY_ENTER) {
 		if (game->fx) al_play_sample(game->map.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		game->level.current_level = game->map.selected;
 		PrintConsole(game, "Selecting level %d...", game->map.selected);
 		UnloadGameState(game);
 		game->gamestate = GAMESTATE_LOADING;
@@ -128,7 +129,6 @@ void Map_Preload(struct Game *game) {
 }
 
 void Map_Unload(struct Game *game) {
-	game->level.current_level = game->map.selected;
 	ALLEGRO_EVENT ev;
 	int fadeloop;
 	for(fadeloop=255; fadeloop>=0; fadeloop-=tps(game, 600)){
