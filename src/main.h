@@ -16,6 +16,7 @@
 
 /*! \brief Enum of all available gamestates. */
 enum gamestate_enum {
+	GAMESTATE_PAUSE,
 	GAMESTATE_LOADING,
 	GAMESTATE_MENU,
 	GAMESTATE_ABOUT,
@@ -75,6 +76,11 @@ struct Menu {
 struct Loading {
 	ALLEGRO_BITMAP *loading_bitmap;
 	ALLEGRO_BITMAP *image;
+};
+
+/*! \brief Resources used by Pause state. */
+struct Pause {
+	ALLEGRO_BITMAP *bitmap;
 };
 
 /*! \brief Resources used by About state. */
@@ -139,6 +145,7 @@ struct Game {
 	struct About about;
 	struct Map map;
 	struct Level level;
+	struct Pause pause;
 };
 
 /*! \brief Draws text with shadow.
@@ -171,5 +178,7 @@ void DrawConsole(struct Game *game);
 void ScaleBitmap(ALLEGRO_BITMAP* source, int width, int height, float val);
 ALLEGRO_BITMAP* LoadFromCache(struct Game *game, char* filename, int width, int height);
 float tps(struct Game *game, float t);
+
+void DrawGameState(struct Game *game);
 
 #endif

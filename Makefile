@@ -6,7 +6,7 @@ SRCDIR=src
 ODIR=obj
 LIBS=-lallegro-debug -lallegro_audio-debug -lallegro_acodec-debug -lallegro_image-debug -lallegro_font-debug -lallegro_ttf-debug -lm
 
-_OBJ = config.o main.o about.o intro.o loading.o map.o menu.o level.o 
+_OBJ = config.o main.o about.o intro.o loading.o map.o menu.o level.o pause.o 
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 OUTPUTDIR = bin

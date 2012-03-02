@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <math.h>
+#include "pause.h"
 #include "level.h"
 
 void Level_Draw(struct Game *game) {
@@ -53,6 +54,10 @@ int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 		UnloadGameState(game);
 		game->loadstate = GAMESTATE_MENU;
 		LoadGameState(game);
+	} else if (ev->keyboard.keycode==ALLEGRO_KEY_P) {
+		game->gamestate = GAMESTATE_PAUSE;
+		game->loadstate = GAMESTATE_LEVEL;
+		Pause_Load(game);
 	}
 	return 0;
 }

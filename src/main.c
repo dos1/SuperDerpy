@@ -11,6 +11,7 @@
 #include "intro.h"
 #include "map.h"
 #include "level.h"
+#include "pause.h"
 #include "config.h"
 
 /*! \brief Macro for preloading gamestate.
@@ -35,7 +36,7 @@
 #define KEYDOWN_STATE(state, name) else if (game.gamestate==state) { if (name ## _Keydown(&game, &ev)) break; }
 /*! \brief Macro for drawing active gamestate. */
 #define DRAW_STATE(state, name) case state:\
-	name ## _Draw(&game); break;
+	name ## _Draw(game); break;
 
 void al_draw_text_with_shadow(ALLEGRO_FONT *font, ALLEGRO_COLOR color, float x, float y, int flags, char const *text) {
 	al_draw_text(font, al_map_rgba(0,0,0,128), x+1, y+1, flags, text);
@@ -94,6 +95,7 @@ void UnloadGameState(struct Game *game) {
 				PrintConsole(game, "Just stopping GAMESTATE_MENU..."); Menu_Stop(game);
 			}
 			break;
+		UNLOAD_STATE(GAMESTATE_PAUSE, Pause)
 		UNLOAD_STATE(GAMESTATE_LOADING, Loading)
 		UNLOAD_STATE(GAMESTATE_ABOUT, About)
 		UNLOAD_STATE(GAMESTATE_INTRO, Intro)
@@ -120,6 +122,28 @@ void LoadGameState(struct Game *game) {
 	PrintConsole(game, "finished");
 	game->gamestate = game->loadstate;
 	game->loadstate = -1;
+}
+
+void DrawGameState(struct Game *game) {
+	switch (game->gamestate) {
+		DRAW_STATE(GAMESTATE_MENU, Menu)
+		DRAW_STATE(GAMESTATE_PAUSE, Pause)
+		DRAW_STATE(GAMESTATE_LOADING, Loading)
+		DRAW_STATE(GAMESTATE_ABOUT, About)
+		DRAW_STATE(GAMESTATE_INTRO, Intro)
+		DRAW_STATE(GAMESTATE_MAP, Map)
+		DRAW_STATE(GAMESTATE_LEVEL, Level)
+		default:
+			game->showconsole = true;
+			PrintConsole(game, "ERROR: Unknown gamestate %d reached! (5 sec sleep)", game->gamestate);
+			DrawConsole(game);
+			al_flip_display();
+			al_rest(5.0);
+			PrintConsole(game, "Returning to menu...");
+			game->gamestate = GAMESTATE_LOADING;
+			game->loadstate = GAMESTATE_MENU;
+			break;
+	}
 }
 
 void ScaleBitmap(ALLEGRO_BITMAP* source, int width, int height, float val) {
@@ -310,6 +334,7 @@ int main(int argc, char **argv){
 			if ((ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_TILDE)) {
 				game.showconsole = !game.showconsole;
 			}
+			KEYDOWN_STATE(GAMESTATE_PAUSE, Pause)
 			KEYDOWN_STATE(GAMESTATE_MENU, Menu)
 			KEYDOWN_STATE(GAMESTATE_LOADING, Loading)
 			KEYDOWN_STATE(GAMESTATE_ABOUT, About)
@@ -330,24 +355,7 @@ int main(int argc, char **argv){
 	
 		if(redraw && al_is_event_queue_empty(game.event_queue)) {
 			redraw = false;
-			switch (game.gamestate) {
-				DRAW_STATE(GAMESTATE_MENU, Menu)
-				DRAW_STATE(GAMESTATE_LOADING, Loading)
-				DRAW_STATE(GAMESTATE_ABOUT, About)
-				DRAW_STATE(GAMESTATE_INTRO, Intro)
-				DRAW_STATE(GAMESTATE_MAP, Map)
-				DRAW_STATE(GAMESTATE_LEVEL, Level)
-				default:
-					game.showconsole = true;
-					PrintConsole(&game, "ERROR: Unknown gamestate %d reached! (5 sec sleep)", game.gamestate);
-					DrawConsole(&game);
-					al_flip_display();
-					al_rest(5.0);
-					PrintConsole(&game, "Returning to menu...");
-					game.gamestate = GAMESTATE_LOADING;
-					game.loadstate = GAMESTATE_MENU;
-					break;
-			}
+			DrawGameState(&game);
 			DrawConsole(&game);
 			al_flip_display();
 		}
