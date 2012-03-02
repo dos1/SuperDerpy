@@ -1,2 +1,2 @@
 #!/bin/sh
-make && bin/superderpy
+make -j10 && bin/superderpy
