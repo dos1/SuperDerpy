@@ -164,7 +164,9 @@ void Menu_Preload(struct Game *game) {
 
 void Menu_Stop(struct Game* game) {
 	game->menu.menu_fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
+	al_set_target_bitmap(game->menu.menu_fade_bitmap);
 	al_clear_to_color(al_map_rgb(0,0,0));
+	al_set_target_bitmap(al_get_backbuffer(game->display));
 	ALLEGRO_EVENT ev;
 	float fadeloop;
 	for(fadeloop=0; fadeloop<256; fadeloop+=tps(game, 600)){
