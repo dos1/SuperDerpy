@@ -59,6 +59,7 @@ void Pause_Load(struct Game* game) {
 	al_set_target_bitmap(game->pause.bitmap);
 	al_draw_bitmap(al_get_backbuffer(game->display), 0, 0, 0);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
+	al_destroy_bitmap(fade);
 	game->pause.selected=0;
 	game->pause.options=0;
 }
