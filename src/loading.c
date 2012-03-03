@@ -79,8 +79,8 @@ void Loading_Load(struct Game *game) {
 		else al_draw_bitmap(game->loading.image, 0, 0, 0);
 	} else GenerateLoadingBitmap();
 	*/
-	game->loading.image = al_load_bitmap( "data/loading.png");
-	//game->loading.image = LoadFromCache(game, "loading.png", al_get_display_width(game->display), al_get_display_height(game->display));
+	//game->loading.image = al_load_bitmap( "data/loading.png");
+	game->loading.image = LoadFromCache(game, "loading.png", al_get_display_width(game->display), al_get_display_height(game->display));
 	
 	// Scale "Loading" bitmap
 	al_set_target_bitmap(game->loading.loading_bitmap);

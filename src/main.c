@@ -5,6 +5,7 @@
  */
 
 #include <stdio.h>
+#include <math.h>
 #include "menu.h"
 #include "loading.h"
 #include "about.h"
@@ -154,7 +155,33 @@ void ScaleBitmap(ALLEGRO_BITMAP* source, int width, int height, float val) {
 	int x, y;
 	al_lock_bitmap(al_get_target_bitmap(), ALLEGRO_PIXEL_FORMAT_ANY, ALLEGRO_LOCK_WRITEONLY);
 	al_lock_bitmap(source, ALLEGRO_PIXEL_FORMAT_ANY, ALLEGRO_LOCK_READONLY);
+
+	ALLEGRO_COLOR interpolate(ALLEGRO_COLOR c1, ALLEGRO_COLOR c2, float frac) {
+		return al_map_rgba_f(c1.r + frac * (c2.r - c1.r),
+			c1.g + frac * (c2.g - c1.g), 
+			c1.b + frac * (c2.b - c1.b), 
+			c1.a + frac * (c2.a - c1.a));
+	}
+
 	for (y = 0; y < height; y++) {
+		float pixy = ((float)y / height) * ((float)al_get_bitmap_height(source) - 1);
+		float pixy_f = floor(pixy);
+		for (x = 0; x < width; x++) {
+			float pixx = ((float)x / width) * ((float)al_get_bitmap_width(source) - 1);
+			float pixx_f = floor(pixx);
+
+			ALLEGRO_COLOR a = al_get_pixel(source, pixx_f, pixy_f);
+			ALLEGRO_COLOR b = al_get_pixel(source, pixx_f + 1, pixy_f);
+			ALLEGRO_COLOR c = al_get_pixel(source, pixx_f, pixy_f + 1);
+			ALLEGRO_COLOR d = al_get_pixel(source, pixx_f + 1, pixy_f + 1);
+			
+			ALLEGRO_COLOR ab = interpolate(a, b, pixx - pixx_f);
+			ALLEGRO_COLOR cd = interpolate(c, d, pixx - pixx_f);
+			ALLEGRO_COLOR result = interpolate(ab, cd, pixy - pixy_f);
+			
+			al_put_pixel(x, y, result);
+		}
+ /*
 		float pixy = ((float)y / height) * al_get_bitmap_height(source);
 		for (x = 0; x < width; x++) {
 			float pixx = ((float)x / width) * al_get_bitmap_width(source);
@@ -169,8 +196,8 @@ void ScaleBitmap(ALLEGRO_BITMAP* source, int width, int height, float val) {
 				(a.a+b.a+c.a+d.a) / 4
 			);
 			al_put_pixel(x, y, result);
-		}
-	}	
+		}*/
+	}
 	al_unlock_bitmap(al_get_target_bitmap());
 	al_unlock_bitmap(source);
 }
