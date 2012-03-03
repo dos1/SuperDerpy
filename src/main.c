@@ -303,7 +303,15 @@ int main(int argc, char **argv){
 	//al_set_new_bitmap_format(ALLEGRO_PIXEL_FORMAT_ANY_32_WITH_ALPHA);
 
 	game.font = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game.display)*0.09,0 );
+	if(!game.font) {
+		fprintf(stderr, "failed to load game font!\n");
+		return -1;
+	}
 	game.font_console = al_load_ttf_font("data/DejaVuSansMono.ttf",al_get_display_height(game.display)*0.018,0 );
+	if(!game.font_console) {
+		fprintf(stderr, "failed to load console font!\n");
+		return -1;
+	}
    
 	game.event_queue = al_create_event_queue();
 	if(!game.event_queue) {
