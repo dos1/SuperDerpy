@@ -83,6 +83,8 @@ struct Loading {
 /*! \brief Resources used by Pause state. */
 struct Pause {
 	ALLEGRO_BITMAP *bitmap;
+	int selected;
+	bool options;
 };
 
 /*! \brief Resources used by About state. */

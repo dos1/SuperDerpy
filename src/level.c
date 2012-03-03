@@ -55,11 +55,7 @@ void Level_Load(struct Game *game) {
 }
 
 int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
-	if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
-		UnloadGameState(game);
-		game->loadstate = GAMESTATE_MENU;
-		LoadGameState(game);
-	} else if (ev->keyboard.keycode==ALLEGRO_KEY_P) {
+	if (ev->keyboard.keycode==ALLEGRO_KEY_ESCAPE) {
 		game->level.music_pos = al_get_sample_instance_position(game->level.music);
 		al_set_sample_instance_playing(game->level.music, false);
 		game->gamestate = GAMESTATE_PAUSE;
