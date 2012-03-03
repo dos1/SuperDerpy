@@ -112,13 +112,13 @@ void Map_Preload(struct Game *game) {
 	ALLEGRO_BITMAP *scaled =LoadFromCache(game, "table.png", al_get_display_width(game->display), al_get_display_height(game->display));
 	al_set_target_bitmap(game->map.map);
 	al_draw_bitmap(scaled, 0, 0 ,0);
-	//ScaleBitmap(game->map.background, al_get_display_width(game->display), al_get_display_height(game->display), 0.5);
+	//ScaleBitmap(game->map.background, al_get_display_width(game->display), al_get_display_height(game->display));
 	al_set_target_bitmap(scaled);
-	ScaleBitmap(game->map.map_bg, al_get_display_width(game->display), al_get_display_height(game->display), 0.5);
+	ScaleBitmap(game->map.map_bg, al_get_display_width(game->display), al_get_display_height(game->display));
 	al_set_target_bitmap(game->map.map);
 	al_draw_bitmap(scaled, 0, 0 ,0);
 	al_set_target_bitmap(scaled);
-	ScaleBitmap(game->map.highlight, al_get_display_width(game->display), al_get_display_height(game->display), 0.5);
+	ScaleBitmap(game->map.highlight, al_get_display_width(game->display), al_get_display_height(game->display));
 	al_set_target_bitmap(game->map.map);
 	al_draw_bitmap(scaled, 0, 0 ,0);
 	al_destroy_bitmap(scaled);

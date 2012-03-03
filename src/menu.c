@@ -112,7 +112,7 @@ void Menu_Preload(struct Game *game) {
 	game->menu.menu_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display)*0.45);
 	al_set_target_bitmap(game->menu.menu_bitmap);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
-	ScaleBitmap(game->menu.image, al_get_display_width(game->display), al_get_display_height(game->display)*0.45, 0.75);
+	ScaleBitmap(game->menu.image, al_get_display_width(game->display), al_get_display_height(game->display)*0.45);
 	//al_draw_scaled_bitmap(game->menu.image,0, 0, al_get_bitmap_width(game->menu.image), al_get_bitmap_height(game->menu.image), 0, 0, al_get_display_width(game->display), al_get_display_height(game->display),0);
 	al_destroy_bitmap(game->menu.image);
 
@@ -120,21 +120,21 @@ void Menu_Preload(struct Game *game) {
 	game->menu.cloud_bitmap = al_create_bitmap(al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.25);
 	al_set_target_bitmap(game->menu.cloud_bitmap);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
-	ScaleBitmap(game->menu.cloud, al_get_bitmap_width(game->menu.cloud_bitmap), al_get_bitmap_height(game->menu.cloud_bitmap), 0.75);
+	ScaleBitmap(game->menu.cloud, al_get_bitmap_width(game->menu.cloud_bitmap), al_get_bitmap_height(game->menu.cloud_bitmap));
 	//al_draw_scaled_bitmap(game->menu.cloud,0, 0, al_get_bitmap_width(game->menu.cloud), al_get_bitmap_height(game->menu.cloud), 0, 0, al_get_bitmap_width(game->menu.cloud_bitmap), al_get_bitmap_height(game->menu.cloud_bitmap),0);
 	al_destroy_bitmap(game->menu.cloud);
 
 	game->menu.cloud2_bitmap = al_create_bitmap(al_get_display_width(game->display)*0.2, al_get_display_height(game->display)*0.1);
 	al_set_target_bitmap(game->menu.cloud2_bitmap);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
-	ScaleBitmap(game->menu.cloud2, al_get_bitmap_width(game->menu.cloud2_bitmap), al_get_bitmap_height(game->menu.cloud2_bitmap), 0.75);
+	ScaleBitmap(game->menu.cloud2, al_get_bitmap_width(game->menu.cloud2_bitmap), al_get_bitmap_height(game->menu.cloud2_bitmap));
 	//al_draw_scaled_bitmap(game->menu.cloud2,0, 0, al_get_bitmap_width(game->menu.cloud2), al_get_bitmap_height(game->menu.cloud2), 0, 0, al_get_bitmap_width(game->menu.cloud2_bitmap), al_get_bitmap_height(game->menu.cloud2_bitmap),0);
 	al_destroy_bitmap(game->menu.cloud2);
 	
 	game->menu.pinkcloud_bitmap = al_create_bitmap(al_get_display_width(game->display)*0.33125, al_get_display_height(game->display)); //*0.8122);
 	game->menu.pinkcloud_scaled = al_create_bitmap(al_get_bitmap_width(game->menu.pinkcloud_bitmap), al_get_bitmap_height(game->menu.pinkcloud_bitmap)*0.8122);
 	al_set_target_bitmap(game->menu.pinkcloud_scaled);
-	ScaleBitmap(game->menu.pinkcloud, al_get_bitmap_width(game->menu.pinkcloud_scaled), al_get_bitmap_height(game->menu.pinkcloud_scaled), 0.75);
+	ScaleBitmap(game->menu.pinkcloud, al_get_bitmap_width(game->menu.pinkcloud_scaled), al_get_bitmap_height(game->menu.pinkcloud_scaled));
 	//al_draw_scaled_bitmap(game->menu.pinkcloud,0, 0, al_get_bitmap_width(game->menu.pinkcloud), al_get_bitmap_height(game->menu.pinkcloud), 0, 0, al_get_bitmap_width(game->menu.pinkcloud_scaled), al_get_bitmap_height(game->menu.pinkcloud_scaled),0);
 	al_destroy_bitmap(game->menu.pinkcloud);
 
@@ -149,7 +149,7 @@ void Menu_Preload(struct Game *game) {
 	game->menu.mountain_bitmap = al_create_bitmap(al_get_display_width(game->display)*0.055, al_get_display_height(game->display)/9);
 	al_set_target_bitmap(game->menu.mountain_bitmap);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
-	ScaleBitmap(game->menu.mountain, al_get_bitmap_width(game->menu.mountain_bitmap), al_get_bitmap_height(game->menu.mountain_bitmap), 0.75);
+	ScaleBitmap(game->menu.mountain, al_get_bitmap_width(game->menu.mountain_bitmap), al_get_bitmap_height(game->menu.mountain_bitmap));
 	//al_draw_scaled_bitmap(game->menu.mountain,0, 0, al_get_bitmap_width(game->menu.mountain), al_get_bitmap_height(game->menu.mountain), 0, 0, al_get_bitmap_width(game->menu.mountain_bitmap), al_get_bitmap_height(game->menu.mountain_bitmap),0);
 	al_destroy_bitmap(game->menu.mountain);
 

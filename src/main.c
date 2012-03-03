@@ -147,7 +147,7 @@ void DrawGameState(struct Game *game) {
 	}
 }
 
-void ScaleBitmap(ALLEGRO_BITMAP* source, int width, int height, float val) {
+void ScaleBitmap(ALLEGRO_BITMAP* source, int width, int height) {
 	if ((al_get_bitmap_width(source)==width) && (al_get_bitmap_height(source)==height)) {
 		al_draw_bitmap(source, 0, 0, 0);
 		return;
@@ -155,6 +155,8 @@ void ScaleBitmap(ALLEGRO_BITMAP* source, int width, int height, float val) {
 	int x, y;
 	al_lock_bitmap(al_get_target_bitmap(), ALLEGRO_PIXEL_FORMAT_ANY, ALLEGRO_LOCK_WRITEONLY);
 	al_lock_bitmap(source, ALLEGRO_PIXEL_FORMAT_ANY, ALLEGRO_LOCK_READONLY);
+
+	//linear filtering code written by SiegeLord
 
 	ALLEGRO_COLOR interpolate(ALLEGRO_COLOR c1, ALLEGRO_COLOR c2, float frac) {
 		return al_map_rgba_f(c1.r + frac * (c2.r - c1.r),
@@ -181,22 +183,6 @@ void ScaleBitmap(ALLEGRO_BITMAP* source, int width, int height, float val) {
 			
 			al_put_pixel(x, y, result);
 		}
- /*
-		float pixy = ((float)y / height) * al_get_bitmap_height(source);
-		for (x = 0; x < width; x++) {
-			float pixx = ((float)x / width) * al_get_bitmap_width(source);
-			ALLEGRO_COLOR a = al_get_pixel(source, pixx-val, pixy-val);
-			ALLEGRO_COLOR b = al_get_pixel(source, pixx+val, pixy-val);
-			ALLEGRO_COLOR c = al_get_pixel(source, pixx-val, pixy+val);
-			ALLEGRO_COLOR d = al_get_pixel(source, pixx+val, pixy+val);
-			ALLEGRO_COLOR result = al_map_rgba_f(
-				(a.r+b.r+c.r+d.r) / 4,
-				(a.g+b.b+c.g+d.g) / 4,
-				(a.b+b.g+c.b+d.b) / 4,
-				(a.a+b.a+c.a+d.a) / 4
-			);
-			al_put_pixel(x, y, result);
-		}*/
 	}
 	al_unlock_bitmap(al_get_target_bitmap());
 	al_unlock_bitmap(source);
@@ -216,7 +202,7 @@ ALLEGRO_BITMAP* LoadFromCache(struct Game *game, char* filename, int width, int 
 		source = al_load_bitmap( origfn );
 		al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR | ALLEGRO_MIN_LINEAR);
 
-		ScaleBitmap(source, width, height, 0.35);
+		ScaleBitmap(source, width, height);
 		al_save_bitmap(cachefn, target);
 		PrintConsole(game, "Cache bitmap %s generated.", filename);
 	}

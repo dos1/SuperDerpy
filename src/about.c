@@ -116,7 +116,7 @@ void About_Preload(struct Game *game) {
 	game->about.letter_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 
 	al_set_target_bitmap(game->about.letter_bitmap);
-	ScaleBitmap(game->about.letter, al_get_display_width(game->display), al_get_display_height(game->display), 0.75);
+	ScaleBitmap(game->about.letter, al_get_display_width(game->display), al_get_display_height(game->display));
 	al_destroy_bitmap(game->about.letter);
 	
 	al_set_target_bitmap(game->about.fade_bitmap);
