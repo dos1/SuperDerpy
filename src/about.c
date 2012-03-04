@@ -81,7 +81,7 @@ void About_Preload(struct Game *game) {
 	float y=0.07;
 	void draw_text(char* text) {
 		al_draw_text(game->about.font, al_map_rgb(255,255,255), 0, y*al_get_bitmap_height(game->about.text_bitmap), ALLEGRO_ALIGN_LEFT, text);
-		y+=0.021;
+		y+=0.020;
 	}
 	
 	draw_text("Written by:");
