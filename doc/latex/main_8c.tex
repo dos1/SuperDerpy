@@ -7,12 +7,14 @@
 
 
 {\ttfamily \#include $<$stdio.\-h$>$}\*
+{\ttfamily \#include $<$math.\-h$>$}\*
 {\ttfamily \#include \char`\"{}menu.\-h\char`\"{}}\*
 {\ttfamily \#include \char`\"{}loading.\-h\char`\"{}}\*
 {\ttfamily \#include \char`\"{}about.\-h\char`\"{}}\*
 {\ttfamily \#include \char`\"{}intro.\-h\char`\"{}}\*
 {\ttfamily \#include \char`\"{}map.\-h\char`\"{}}\*
 {\ttfamily \#include \char`\"{}level.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}pause.\-h\char`\"{}}\*
 {\ttfamily \#include \char`\"{}config.\-h\char`\"{}}\*
 \subsection*{\-Defines}
 \begin{DoxyCompactItemize}
@@ -47,7 +49,10 @@ void \hyperlink{main_8c_a83e9560a39a8b6beea953f69553dd28b}{\-Print\-Console} (st
 \hypertarget{main_8c_afe84ca1b0107fe689f9d2987d83caea0}{void \hyperlink{main_8c_afe84ca1b0107fe689f9d2987d83caea0}{\-Load\-Game\-State} (struct \hyperlink{structGame}{\-Game} $\ast$game)}\label{main_8c_afe84ca1b0107fe689f9d2987d83caea0}
 
 \begin{DoxyCompactList}\small\item\em \-Loads gamestate set in game-\/$>$loadstate. \end{DoxyCompactList}\item 
-\hypertarget{main_8c_abee00caabd708d5bfe61cc54e10e14af}{void {\bfseries \-Scale\-Bitmap} (\-A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$source, int width, int height, float val)}\label{main_8c_abee00caabd708d5bfe61cc54e10e14af}
+\hypertarget{main_8c_aba8768911068b399b4118452eb3959ec}{void {\bfseries \-Draw\-Game\-State} (struct \hyperlink{structGame}{\-Game} $\ast$game)}\label{main_8c_aba8768911068b399b4118452eb3959ec}
+
+\item 
+\hypertarget{main_8c_a95f035fc3dfd7397ae24243d156c8195}{void {\bfseries \-Scale\-Bitmap} (\-A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$source, int width, int height)}\label{main_8c_a95f035fc3dfd7397ae24243d156c8195}
 
 \item 
 \hypertarget{main_8c_a666d1a6e3dda13070bce18267adcc036}{\-A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ {\bfseries \-Load\-From\-Cache} (struct \hyperlink{structGame}{\-Game} $\ast$game, char $\ast$filename, int width, int height)}\label{main_8c_a666d1a6e3dda13070bce18267adcc036}
@@ -76,7 +81,7 @@ void \hyperlink{main_8c_a83e9560a39a8b6beea953f69553dd28b}{\-Print\-Console} (st
 {\bfseries \-Value\-:}
 \begin{DoxyCode}
 case state:\
-        name ## _Draw(&game); break;
+        name ## _Draw(game); break;
 \end{DoxyCode}
 
 

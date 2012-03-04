@@ -58,21 +58,16 @@ struct Level {
 
 /*! \brief Resources used by Menu state. */
 struct Menu {
-	ALLEGRO_BITMAP *menu_bitmap;
 	ALLEGRO_BITMAP *menu_fade_bitmap;
 	ALLEGRO_BITMAP *image;
-	ALLEGRO_BITMAP *cloud_bitmap;
 	ALLEGRO_BITMAP *cloud;
-	ALLEGRO_BITMAP *cloud2_bitmap;
 	ALLEGRO_BITMAP *cloud2;
 	ALLEGRO_BITMAP *pie;
 	ALLEGRO_BITMAP *pie_bitmap;
 	ALLEGRO_BITMAP *pinkcloud_bitmap;
-	ALLEGRO_BITMAP *pinkcloud_scaled;
 	ALLEGRO_BITMAP *pinkcloud;
 	ALLEGRO_BITMAP *rain;
 	ALLEGRO_BITMAP *rain_bitmap;
-	ALLEGRO_BITMAP *mountain_bitmap;
 	ALLEGRO_BITMAP *mountain;
 	float cloud_position;
 	float cloud2_position;
@@ -110,7 +105,6 @@ struct About {
 	ALLEGRO_BITMAP *image;
 	ALLEGRO_BITMAP *text_bitmap;
 	ALLEGRO_BITMAP *letter;
-	ALLEGRO_BITMAP *letter_bitmap;
 	ALLEGRO_SAMPLE *sample;
 	ALLEGRO_FONT *font;
 	float x;
@@ -196,8 +190,8 @@ void PrintConsole(struct Game *game, char* format, ...);
 /*! \brief Draws console bitmap on screen. */
 void DrawConsole(struct Game *game);
 
-void ScaleBitmap(ALLEGRO_BITMAP* source, int width, int height);
-ALLEGRO_BITMAP* LoadFromCache(struct Game *game, char* filename, int width, int height);
+//void ScaleBitmap(ALLEGRO_BITMAP* source, int width, int height);
+ALLEGRO_BITMAP* LoadScaledBitmap(char* filename, int width, int height);
 float tps(struct Game *game, float t);
 
 void DrawGameState(struct Game *game);

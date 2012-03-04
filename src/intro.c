@@ -97,16 +97,10 @@ void FillPage(struct Game *game, int page) {
 
 void Intro_Draw(struct Game *game) {
 	al_clear_to_color(al_map_rgb(0,0,0));
-	//printf("%f\n", ((-1*((game->intro.position)%al_get_display_width(game->display)))/(float)al_get_display_width(game->display)));
-/*	if (game->intro.in_animation)
-		al_draw_bitmap(game->intro.table, -1*(game->intro.page)*al_get_display_width(game->display) + (cos(((-1*((game->intro.position)%al_get_display_width(game->display)))/(float)al_get_display_width(game->display))*(ALLEGRO_PI))/2.0)*al_get_display_width(game->display) + al_get_display_width(game->display)/2.0, 0, 0);//al_get_display_height(game->display)*((game->intro.position/3.0)/(float)al_get_display_width(game->display)), 0);
-	else
-		al_draw_bitmap(game->intro.table, -1*(game->intro.page)*al_get_display_width(game->display), 0, 0); //al_get_display_height(game->display)*((game->intro.position/3.0)/(float)al_get_display_width(game->display)), 0); */
 	if (game->intro.in_animation)
 		al_draw_bitmap(game->intro.table, -1*al_get_display_width(game->display) + (cos(((-1*((game->intro.position)%al_get_display_width(game->display)))/(float)al_get_display_width(game->display))*(ALLEGRO_PI))/2.0)*al_get_display_width(game->display) + al_get_display_width(game->display)/2.0, 0, 0);//al_get_display_height(game->display)*((game->intro.position/3.0)/(float)al_get_display_width(game->display)), 0);
 	else
 		al_draw_bitmap(game->intro.table, 0, 0, 0); //al_get_display_height(game->display)*((game->intro.position/3.0)/(float)al_get_display_width(game->display)), 0); 
-	//al_draw_text(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)/2, ALLEGRO_ALIGN_CENTRE, "Not implemented yet!");
 	al_draw_text_with_shadow(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)*0.90, ALLEGRO_ALIGN_CENTRE, "Press any key to continue or escape to skip...");
 	//PrintConsole(game, "drawing");
 	if (game->intro.in_animation) {
@@ -118,12 +112,8 @@ void Intro_Draw(struct Game *game) {
 			//DrawConsole(game);
 			//al_flip_display();
 			game->intro.in_animation = false;
-			//al_set_target_bitmap(game->intro.table);
-			//al_draw_bitmap(game->intro.table_whole, (-1)*game->intro.page*al_get_display_width(game->display), 0, 0);
-			//al_set_target_bitmap(al_get_backbuffer(game->display));
 			FillPage(game, game->intro.page+1);
 			PrintConsole(game, "Animation finished.");
-			//al_draw_bitmap(game->intro.table, 0, 0, 0);
 		}
 		else if (game->intro.position<=-4*al_get_display_width(game->display)) {
 			PrintConsole(game, "This was the last page.");
@@ -168,25 +158,19 @@ void Intro_Preload(struct Game *game) {
 	game->intro.page = 0;
 	game->intro.in_animation = false;
 
-	game->intro.table_bitmap =LoadFromCache(game, "paper.png", al_get_display_width(game->display), al_get_display_height(game->display));
+	game->intro.table_bitmap =LoadScaledBitmap("paper.png", al_get_display_width(game->display), al_get_display_height(game->display));
 
-	//game->intro.table_bitmap = al_load_bitmap( "data/paper.png" );
 	game->intro.sample = al_load_sample( "data/intro.flac" );
 	
 	if (!game->intro.sample){
 		fprintf(stderr, "Audio clip sample not loaded!\n" );
 		exit(-1);
 	}
-	//al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
-	//game->intro.table_whole = al_create_bitmap(al_get_display_width(game->display)*5, al_get_display_height(game->display));
-	//al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR | ALLEGRO_MIN_LINEAR);
 	game->intro.table = al_create_bitmap(al_get_display_width(game->display)*2, al_get_display_height(game->display));
 
 	game->intro.font = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.04,0 );
 
 	FillPage(game, 1);
-	//al_set_target_bitmap(game->intro.table);
-	//al_draw_bitmap(game->intro.table, 0, 0, 0);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 	PrintConsole(game, "Chainpreloading GAMESTATE_MAP...");
 	Map_Preload(game);
@@ -201,7 +185,6 @@ void Intro_Unload(struct Game *game) {
 			al_draw_tinted_bitmap(game->intro.table, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), -1*al_get_display_width(game->display) + (cos(((-1*((game->intro.position)%al_get_display_width(game->display)))/(float)al_get_display_width(game->display))*(3.1415))/2.0)*al_get_display_width(game->display)  + al_get_display_width(game->display)/2.0, 0, 0); //al_get_display_height(game->display)*((game->intro.position/3.0)/(float)al_get_display_width(game->display)), 0);
 		else
 			al_draw_tinted_bitmap(game->intro.table, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), 0, 0, 0); //al_get_display_height(game->display)*((game->intro.position/3.0)/(float)al_get_display_width(game->display)), 0);
-		//al_draw_tinted_bitmap(game->intro.table_bitmap,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),-1*(game->intro.page)*al_get_display_width(game->display), al_get_display_height(game->display)*((game->intro.position/3.0)/(float)al_get_display_width(game->display)),0);
 		DrawConsole(game);
 		al_flip_display();
 	}

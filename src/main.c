@@ -204,14 +204,14 @@ void ScaleBitmap(ALLEGRO_BITMAP* source, int width, int height) {
 	al_unlock_bitmap(source);
 }
 
-ALLEGRO_BITMAP* LoadFromCache(struct Game *game, char* filename, int width, int height) {
+ALLEGRO_BITMAP* LoadScaledBitmap(char* filename, int width, int height) {
 	ALLEGRO_BITMAP *source, *target = al_create_bitmap(width, height);
 	al_set_target_bitmap(target);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 	char origfn[255] = "data/";
-	char cachefn[255] = "data/cache/";
+	//char cachefn[255] = "data/cache/";
 	strcat(origfn, filename);
-	strcat(cachefn, filename);
+	//strcat(cachefn, filename);
 	void GenerateBitmap() {
 		al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
 		
@@ -219,20 +219,21 @@ ALLEGRO_BITMAP* LoadFromCache(struct Game *game, char* filename, int width, int 
 		al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR | ALLEGRO_MIN_LINEAR);
 
 		ScaleBitmap(source, width, height);
-		al_save_bitmap(cachefn, target);
-		PrintConsole(game, "Cache bitmap %s generated.", filename);
+		//al_save_bitmap(cachefn, target);
+		//PrintConsole(game, "Cache bitmap %s generated.", filename);
+		al_destroy_bitmap(source);
 	}
 	
-	source = al_load_bitmap( cachefn );
-	if (source) {
-		if ((al_get_bitmap_width(source)!=width) || (al_get_bitmap_height(source)!=height)) {
-			al_destroy_bitmap(source);
+	//source = al_load_bitmap( cachefn );
+	//if (source) {
+	//	if ((al_get_bitmap_width(source)!=width) || (al_get_bitmap_height(source)!=height)) {
+	//		al_destroy_bitmap(source);
 			GenerateBitmap();
 			return target;
-		}
-		return source;
-	} else GenerateBitmap();
-	return target;
+	//	}
+	//	return source;
+	//} else GenerateBitmap();
+	//return target;
 }
 
 float tps(struct Game *game, float t) {

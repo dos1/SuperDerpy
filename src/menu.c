@@ -25,7 +25,6 @@
 
 void Menu_Draw(struct Game *game) {
 
-	//game->menu.pinkcloud_bitmap = al_create_bitmap(al_get_display_width(game->display)*0.33125, al_get_display_height(game->display)); //*0.8122);
 	al_set_target_bitmap(game->menu.pinkcloud_bitmap);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 	float x = 1.5;//*(rand() / (float)RAND_MAX);
@@ -35,18 +34,18 @@ void Menu_Draw(struct Game *game) {
 	al_draw_bitmap(game->menu.rain_bitmap, fmod(minus*game->menu.cloud_position,3)*x*3+al_get_bitmap_width(game->menu.pinkcloud_bitmap)/3.1, al_get_bitmap_height(game->menu.pinkcloud_bitmap)*(0.78+(fmod(-2.8*(game->menu.cloud_position+80), 4))/18.0), 0);
 	al_draw_scaled_bitmap(game->menu.rain_bitmap, 0, 0, al_get_bitmap_width(game->menu.rain_bitmap), al_get_bitmap_height(game->menu.rain_bitmap), fmod(minus*game->menu.cloud_position,3)*x*6+al_get_bitmap_width(game->menu.pinkcloud_bitmap)/2.1, al_get_bitmap_height(game->menu.pinkcloud_bitmap)*(0.87+(fmod(-4.9*(game->menu.cloud_position+80), 8))/26.0), al_get_bitmap_width(game->menu.pinkcloud_bitmap)*0.4, al_get_bitmap_height(game->menu.pinkcloud_bitmap)*0.08, 0);
 	//al_draw_scaled_bitmap(game->menu.rain, 0, 0, al_get_bitmap_width(game->menu.rain), al_get_bitmap_height(game->menu.rain), fmod(minus*game->menu.cloud_position,3)*x*6+al_get_bitmap_width(game->menu.pinkcloud_bitmap)/2.4, al_get_bitmap_height(game->menu.pinkcloud_bitmap)*(0.9+(fmod(-5*(game->menu.cloud_position+86), 8))/20.0), al_get_bitmap_width(game->menu.pinkcloud_bitmap)*0.35, al_get_bitmap_height(game->menu.pinkcloud_bitmap)*0.07, 0);
-	al_draw_bitmap(game->menu.pinkcloud_scaled, 0, 0, 0);
+	al_draw_bitmap(game->menu.pinkcloud, 0, 0, 0);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 
 	al_clear_to_color(al_map_rgb(183,234,193));
 	float tint = (sin((game->menu.cloud_position-80)/15)+1)/2;
 	if (tint < 0.000004) { PrintConsole(game, "random tint %f", tint); game->menu.mountain_position = (al_get_display_width(game->display)*(rand()/(float)RAND_MAX)/2)+al_get_display_width(game->display)/2; }
-	al_draw_tinted_bitmap(game->menu.mountain_bitmap,al_map_rgba_f(tint,tint,tint,tint),game->menu.mountain_position, 0,0);
-	al_draw_scaled_bitmap(game->menu.cloud_bitmap,0,0,al_get_bitmap_width(game->menu.cloud_bitmap), al_get_bitmap_height(game->menu.cloud_bitmap), al_get_display_width(game->display)*(sin((game->menu.cloud_position/40)-4.5)-0.3), al_get_display_height(game->display)*0.35, al_get_bitmap_width(game->menu.cloud_bitmap)/2, al_get_bitmap_height(game->menu.cloud_bitmap)/2,0);
-	al_draw_bitmap(game->menu.cloud2_bitmap,al_get_display_width(game->display)*(game->menu.cloud2_position/100.0), al_get_display_height(game->display)/1.5,0);
-	al_draw_bitmap(game->menu.menu_bitmap,0, al_get_display_height(game->display)*0.55,0);
+	al_draw_tinted_bitmap(game->menu.mountain,al_map_rgba_f(tint,tint,tint,tint),game->menu.mountain_position, 0,0);
+	al_draw_scaled_bitmap(game->menu.cloud,0,0,al_get_bitmap_width(game->menu.cloud), al_get_bitmap_height(game->menu.cloud), al_get_display_width(game->display)*(sin((game->menu.cloud_position/40)-4.5)-0.3), al_get_display_height(game->display)*0.35, al_get_bitmap_width(game->menu.cloud)/2, al_get_bitmap_height(game->menu.cloud)/2,0);
+	al_draw_bitmap(game->menu.cloud2,al_get_display_width(game->display)*(game->menu.cloud2_position/100.0), al_get_display_height(game->display)/1.5,0);
+	al_draw_bitmap(game->menu.image,0, al_get_display_height(game->display)*0.55,0);
 	al_draw_bitmap(game->menu.pinkcloud_bitmap,(al_get_display_width(game->display)*0.12) + (cos((game->menu.cloud_position/25+80)*1.74444))*40, 0,0);
-	al_draw_bitmap(game->menu.cloud_bitmap,al_get_display_width(game->display)*game->menu.cloud_position/100, 30,0);
+	al_draw_bitmap(game->menu.cloud,al_get_display_width(game->display)*game->menu.cloud_position/100, 30,0);
 
 	al_draw_bitmap(game->menu.pie_bitmap, al_get_display_width(game->display)/2, al_get_display_height(game->display)*(game->menu.cloud_position)/10,0);
 
@@ -84,20 +83,17 @@ void Menu_Draw(struct Game *game) {
 }
 
 void Menu_Preload(struct Game *game) {
+	PrintConsole(game, "menu preload");
 	game->menu.loaded = true;
-	//game->menu.image = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
-	//al_destroy_bitmap(game->menu.image); // ugh...
+	game->menu.image = LoadScaledBitmap( "menu.png", al_get_display_width(game->display), al_get_display_height(game->display)*0.45);
+	game->menu.mountain = LoadScaledBitmap( "mountain.png", al_get_display_width(game->display)*0.055, al_get_display_height(game->display)/9 );
+	game->menu.cloud = LoadScaledBitmap( "cloud.png", al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.25 );
+	game->menu.cloud2 = LoadScaledBitmap( "cloud2.png", al_get_display_width(game->display)*0.2, al_get_display_height(game->display)*0.1 );
+	game->menu.pinkcloud = LoadScaledBitmap( "pinkcloud.png", al_get_display_width(game->display)*0.33125, al_get_display_height(game->display)*0.8122);
 	al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
-	game->menu.image = al_load_bitmap( "data/menu.png" );
-	game->menu.mountain = al_load_bitmap( "data/mountain.png" );
-	game->menu.cloud = al_load_bitmap( "data/cloud.png" );
-	game->menu.cloud2 = al_load_bitmap( "data/cloud2.png" );
 	game->menu.rain = al_load_bitmap( "data/rain.png" );
 	game->menu.pie = al_load_bitmap( "data/pie.png" );
-	game->menu.pinkcloud = al_load_bitmap( "data/pinkcloud.png" );
 	al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR | ALLEGRO_MIN_LINEAR);
-
-	//game->menu.menu_bitmap = LoadFromCache(game, "menu.png", al_get_display_width(game->display), al_get_display_height(game->display));
 
 	game->menu.sample = al_load_sample( "data/menu.flac" );
 	game->menu.rain_sample = al_load_sample( "data/rain.flac" );
@@ -124,35 +120,7 @@ void Menu_Preload(struct Game *game) {
 		exit(-1);
 	}
 
-	// Scale menu bitmap
-	game->menu.menu_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display)*0.45);
-	al_set_target_bitmap(game->menu.menu_bitmap);
-	al_clear_to_color(al_map_rgba(0,0,0,0));
-	ScaleBitmap(game->menu.image, al_get_display_width(game->display), al_get_display_height(game->display)*0.45);
-	//al_draw_scaled_bitmap(game->menu.image,0, 0, al_get_bitmap_width(game->menu.image), al_get_bitmap_height(game->menu.image), 0, 0, al_get_display_width(game->display), al_get_display_height(game->display),0);
-	al_destroy_bitmap(game->menu.image);
-
-	// Cloud menu bitmap
-	game->menu.cloud_bitmap = al_create_bitmap(al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.25);
-	al_set_target_bitmap(game->menu.cloud_bitmap);
-	al_clear_to_color(al_map_rgba(0,0,0,0));
-	ScaleBitmap(game->menu.cloud, al_get_bitmap_width(game->menu.cloud_bitmap), al_get_bitmap_height(game->menu.cloud_bitmap));
-	//al_draw_scaled_bitmap(game->menu.cloud,0, 0, al_get_bitmap_width(game->menu.cloud), al_get_bitmap_height(game->menu.cloud), 0, 0, al_get_bitmap_width(game->menu.cloud_bitmap), al_get_bitmap_height(game->menu.cloud_bitmap),0);
-	al_destroy_bitmap(game->menu.cloud);
-
-	game->menu.cloud2_bitmap = al_create_bitmap(al_get_display_width(game->display)*0.2, al_get_display_height(game->display)*0.1);
-	al_set_target_bitmap(game->menu.cloud2_bitmap);
-	al_clear_to_color(al_map_rgba(0,0,0,0));
-	ScaleBitmap(game->menu.cloud2, al_get_bitmap_width(game->menu.cloud2_bitmap), al_get_bitmap_height(game->menu.cloud2_bitmap));
-	//al_draw_scaled_bitmap(game->menu.cloud2,0, 0, al_get_bitmap_width(game->menu.cloud2), al_get_bitmap_height(game->menu.cloud2), 0, 0, al_get_bitmap_width(game->menu.cloud2_bitmap), al_get_bitmap_height(game->menu.cloud2_bitmap),0);
-	al_destroy_bitmap(game->menu.cloud2);
-	
-	game->menu.pinkcloud_bitmap = al_create_bitmap(al_get_display_width(game->display)*0.33125, al_get_display_height(game->display)); //*0.8122);
-	game->menu.pinkcloud_scaled = al_create_bitmap(al_get_bitmap_width(game->menu.pinkcloud_bitmap), al_get_bitmap_height(game->menu.pinkcloud_bitmap)*0.8122);
-	al_set_target_bitmap(game->menu.pinkcloud_scaled);
-	ScaleBitmap(game->menu.pinkcloud, al_get_bitmap_width(game->menu.pinkcloud_scaled), al_get_bitmap_height(game->menu.pinkcloud_scaled));
-	//al_draw_scaled_bitmap(game->menu.pinkcloud,0, 0, al_get_bitmap_width(game->menu.pinkcloud), al_get_bitmap_height(game->menu.pinkcloud), 0, 0, al_get_bitmap_width(game->menu.pinkcloud_scaled), al_get_bitmap_height(game->menu.pinkcloud_scaled),0);
-	al_destroy_bitmap(game->menu.pinkcloud);
+	game->menu.pinkcloud_bitmap = al_create_bitmap(al_get_display_width(game->display)*0.33125, al_get_display_height(game->display)); // *0.8122);
 
 	game->menu.pie_bitmap = al_create_bitmap(al_get_display_width(game->display)/2, al_get_display_height(game->display)); //*0.8122);
 	al_set_target_bitmap(game->menu.pie_bitmap);
@@ -161,13 +129,6 @@ void Menu_Preload(struct Game *game) {
 	al_draw_scaled_bitmap(game->menu.pie, 0, 0, al_get_bitmap_width(game->menu.pie), al_get_bitmap_height(game->menu.pie), al_get_bitmap_width(game->menu.pie_bitmap)*0.1, al_get_bitmap_height(game->menu.pie_bitmap)*0.3, al_get_display_width(game->display)*0.09, al_get_display_height(game->display)*0.06, ALLEGRO_FLIP_HORIZONTAL);
 	al_draw_scaled_bitmap(game->menu.pie, 0, 0, al_get_bitmap_width(game->menu.pie), al_get_bitmap_height(game->menu.pie), al_get_bitmap_width(game->menu.pie_bitmap)*0.3, al_get_bitmap_height(game->menu.pie_bitmap)*0.6, al_get_display_width(game->display)*0.13, al_get_display_height(game->display)*0.1, 0);
 	al_destroy_bitmap(game->menu.pie);
-
-	game->menu.mountain_bitmap = al_create_bitmap(al_get_display_width(game->display)*0.055, al_get_display_height(game->display)/9);
-	al_set_target_bitmap(game->menu.mountain_bitmap);
-	al_clear_to_color(al_map_rgba(0,0,0,0));
-	ScaleBitmap(game->menu.mountain, al_get_bitmap_width(game->menu.mountain_bitmap), al_get_bitmap_height(game->menu.mountain_bitmap));
-	//al_draw_scaled_bitmap(game->menu.mountain,0, 0, al_get_bitmap_width(game->menu.mountain), al_get_bitmap_height(game->menu.mountain), 0, 0, al_get_bitmap_width(game->menu.mountain_bitmap), al_get_bitmap_height(game->menu.mountain_bitmap),0);
-	al_destroy_bitmap(game->menu.mountain);
 
 	al_set_new_bitmap_flags(ALLEGRO_VIDEO_BITMAP);
 	game->menu.rain_bitmap = al_create_bitmap(al_get_bitmap_width(game->menu.pinkcloud_bitmap)*0.5, al_get_bitmap_height(game->menu.pinkcloud_bitmap)*0.1);
@@ -197,15 +158,15 @@ void Menu_Stop(struct Game* game) {
 }
 
 void Menu_Unload(struct Game *game) {
-	Menu_Stop(game);
+	if (game->gamestate==GAMESTATE_MENU) Menu_Stop(game);
 	al_destroy_bitmap(game->menu.menu_fade_bitmap);
-	al_destroy_bitmap(game->menu.pinkcloud_scaled);
-	al_destroy_bitmap(game->menu.menu_bitmap);
-	al_destroy_bitmap(game->menu.cloud_bitmap);
-	al_destroy_bitmap(game->menu.cloud2_bitmap);
+	al_destroy_bitmap(game->menu.pinkcloud);
+	al_destroy_bitmap(game->menu.image);
+	al_destroy_bitmap(game->menu.cloud);
+	al_destroy_bitmap(game->menu.cloud2);
 	al_destroy_bitmap(game->menu.pinkcloud_bitmap);
 	al_destroy_bitmap(game->menu.rain_bitmap);
-	al_destroy_bitmap(game->menu.mountain_bitmap);
+	al_destroy_bitmap(game->menu.mountain);
 	al_destroy_bitmap(game->menu.pie_bitmap);
 	al_destroy_font(game->menu.font_title);
 	al_destroy_font(game->menu.font_subtitle);
@@ -222,7 +183,6 @@ void play_samples(struct Game *game) {
 }
 
 void Menu_Load(struct Game *game) {
-	//game->menu.draw_while_fading = atoi(GetConfigOptionDefault("[MuffinAttack]", "menu_draw_while_fading", "1"));
 	game->menu.cloud_position = 100;
 	game->menu.cloud2_position = 100;
 	game->menu.options = false;
@@ -236,11 +196,6 @@ void Menu_Load(struct Game *game) {
 	ALLEGRO_EVENT ev;
 	float fadeloop;
 	for(fadeloop=255; fadeloop>=0; fadeloop-=tps(game, 600)){
-		//if ((game->menu.draw_while_fading) || (fadeloop==0)) {
-		//	al_set_target_bitmap(game->menu.menu_fade_bitmap);
-		//	al_draw_bitmap(al_get_backbuffer(game->display), 0, 0, 0);
-		//	al_set_target_bitmap(al_get_backbuffer(game->display));
-		//}
 		al_wait_for_event(game->event_queue, &ev);
 		Menu_Draw(game);
 		al_draw_tinted_bitmap(game->menu.menu_fade_bitmap,al_map_rgba_f(1,1,1,fadeloop/255.0),0,0,0);

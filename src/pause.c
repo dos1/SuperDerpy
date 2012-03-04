@@ -21,10 +21,11 @@
 #include <stdio.h>
 #include "config.h"
 #include "pause.h"
+#include "menu.h"
 
 int Pause_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	if ((ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) || ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->pause.options==0) && (game->pause.selected==0))) {
-		al_destroy_bitmap(game->pause.bitmap);
+		Pause_Unload_Real(game);
 		game->gamestate = game->loadstate;
 	}
 	else if ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->pause.options==0) && (game->pause.selected==1)) {
@@ -61,7 +62,8 @@ int Pause_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 
 void Pause_Preload(struct Game* game) {
 	game->pause.bitmap = NULL;
-	game->pause.derpy = al_create_bitmap(al_get_display_width(game->display)*0.53, al_get_display_height(game->display)*0.604);
+	game->pause.derpy = LoadScaledBitmap("derpy_pause.png", al_get_display_width(game->display)*0.53, al_get_display_height(game->display)*0.604);
+	/*(game->pause.derpy = al_create_bitmap(al_get_display_width(game->display)*0.53, al_get_display_height(game->display)*0.604);
 
 	al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
 	ALLEGRO_BITMAP *derpy = al_load_bitmap( "data/derpy_pause.png" );
@@ -71,10 +73,11 @@ void Pause_Preload(struct Game* game) {
 	ScaleBitmap(derpy, al_get_display_width(game->display)*0.53, al_get_display_height(game->display)*0.604);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 
-	al_destroy_bitmap(derpy);
+	al_destroy_bitmap(derpy);*/
 }
 
 void Pause_Load(struct Game* game) {
+	PrintConsole(game,"Pause loaded.");
 	game->gamestate=game->loadstate;
 	game->loadstate=GAMESTATE_PAUSE;
 	DrawGameState(game);
@@ -129,6 +132,7 @@ void Pause_Draw(struct Game* game) {
 }
 
 void Pause_Unload_Real(struct Game* game) {
+	PrintConsole(game,"Pause unloaded.");
 	if (game->pause.bitmap) al_destroy_bitmap(game->pause.bitmap);
 	al_destroy_bitmap(game->pause.derpy);
 }
@@ -136,4 +140,6 @@ void Pause_Unload_Real(struct Game* game) {
 void Pause_Unload(struct Game* game) {
 	game->gamestate=game->loadstate;
 	UnloadGameState(game);
+	PrintConsole(game, "Pause: Unloading GAMESTATE_MENU...");
+	Menu_Unload(game);
 }

@@ -31,9 +31,6 @@ void Level_Draw(struct Game *game) {
 	al_set_target_bitmap(game->level.derpy);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 	al_draw_bitmap_region(game->level.derpy_walkcycle,al_get_bitmap_width(game->level.derpy)*(game->level.derpy_frame%6),al_get_bitmap_height(game->level.derpy)*(game->level.derpy_frame/6),al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy),0,0,0);
-	//al_set_target_bitmap(game->level.derpy);
-	//al_clear_to_color(al_map_rgba(0,0,0,0));
-	//al_draw_scaled_bitmap(game->level.derpytmp, 0, 0, al_get_bitmap_width(game->level.derpytmp),al_get_bitmap_height(game->level.derpytmp), 0, 0, al_get_bitmap_width(game->level.derpy),al_get_bitmap_height(game->level.derpy), 0);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 
 	game->level.derpy_pos=game->level.derpy_pos+tps(game, 60*0.00092);
@@ -57,7 +54,6 @@ void Level_Draw(struct Game *game) {
 
 void Level_Load(struct Game *game) {
 	if (game->music) al_play_sample_instance(game->level.music);
-	//al_play_sample(game->level.sample, 0.75, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 	ALLEGRO_EVENT ev;
 	int fadeloop;
 	for(fadeloop=0; fadeloop<256; fadeloop+=tps(game, 600)){
@@ -86,11 +82,9 @@ void Level_Preload(struct Game *game) {
 	game->level.derpy_frame_tmp = 0;
 	game->level.derpy_pos = -0.2;
 	PrintConsole(game, "Initializing level %d...", game->level.current_level);
-	//game->level.image = al_load_bitmap( "data/table.png" );
-	game->level.image =LoadFromCache(game, "table.png", al_get_display_width(game->display), al_get_display_height(game->display));
+	game->level.image =LoadScaledBitmap("table.png", al_get_display_width(game->display), al_get_display_height(game->display));
 	game->level.sample = al_load_sample( "data/moonwalk.flac" );
-	//game->level.derpy_walkcycle = al_load_bitmap( "data/derpcycle.png" );
-	game->level.derpy_walkcycle =LoadFromCache(game, "derpcycle.png", al_get_display_width(game->display)*0.1953125*6, al_get_display_height(game->display)*0.25*4);
+	game->level.derpy_walkcycle = LoadScaledBitmap("derpcycle.png", al_get_display_width(game->display)*0.1953125*6, al_get_display_height(game->display)*0.25*4);
 	
 	if (!game->level.sample){
 		fprintf(stderr, "Audio clip sample not loaded!\n" );
@@ -102,7 +96,6 @@ void Level_Preload(struct Game *game) {
 	al_set_sample_instance_playmode(game->level.music, ALLEGRO_PLAYMODE_LOOP);
 
 	game->level.derpy = al_create_bitmap(al_get_display_width(game->display)*0.1953125, al_get_display_height(game->display)*0.25);
-	//game->level.derpytmp = al_create_bitmap(500, 400);
 	
 	game->level.fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 	al_set_target_bitmap(game->level.fade_bitmap);

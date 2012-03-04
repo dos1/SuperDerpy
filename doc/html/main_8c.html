@@ -86,12 +86,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>Main file of SuperDerpy engine.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdio.h&gt;</code><br/>
+<code>#include &lt;math.h&gt;</code><br/>
 <code>#include &quot;<a class="el" href="menu_8h_source.html">menu.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="loading_8h_source.html">loading.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="about_8h_source.html">about.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="intro_8h_source.html">intro.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="map_8h_source.html">map.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="level_8h_source.html">level.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="pause_8h_source.html">pause.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="config_8h_source.html">config.h</a>&quot;</code><br/>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h2><a name="define-members"></a>
@@ -125,8 +127,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afe84ca1b0107fe689f9d2987d83caea0"></a><!-- doxytag: member="main.c::LoadGameState" ref="afe84ca1b0107fe689f9d2987d83caea0" args="(struct Game *game)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#afe84ca1b0107fe689f9d2987d83caea0">LoadGameState</a> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads gamestate set in game-&gt;loadstate. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abee00caabd708d5bfe61cc54e10e14af"></a><!-- doxytag: member="main.c::ScaleBitmap" ref="abee00caabd708d5bfe61cc54e10e14af" args="(ALLEGRO_BITMAP *source, int width, int height, float val)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>ScaleBitmap</b> (ALLEGRO_BITMAP *source, int width, int height, float val)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aba8768911068b399b4118452eb3959ec"></a><!-- doxytag: member="main.c::DrawGameState" ref="aba8768911068b399b4118452eb3959ec" args="(struct Game *game)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>DrawGameState</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a95f035fc3dfd7397ae24243d156c8195"></a><!-- doxytag: member="main.c::ScaleBitmap" ref="a95f035fc3dfd7397ae24243d156c8195" args="(ALLEGRO_BITMAP *source, int width, int height)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ScaleBitmap</b> (ALLEGRO_BITMAP *source, int width, int height)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a666d1a6e3dda13070bce18267adcc036"></a><!-- doxytag: member="main.c::LoadFromCache" ref="a666d1a6e3dda13070bce18267adcc036" args="(struct Game *game, char *filename, int width, int height)" -->
 ALLEGRO_BITMAP *&#160;</td><td class="memItemRight" valign="bottom"><b>LoadFromCache</b> (struct <a class="el" href="structGame.html">Game</a> *game, char *filename, int width, int height)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1f39d133bfa874d55703118487a186e6"></a><!-- doxytag: member="main.c::tps" ref="a1f39d133bfa874d55703118487a186e6" args="(struct Game *game, float t)" -->
@@ -163,7 +167,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> (int argc, ch
 </div>
 <div class="memdoc">
 <b>Value:</b><div class="fragment"><pre class="fragment"><span class="keywordflow">case</span> state:\
-        name ## _Draw(&amp;game); <span class="keywordflow">break</span>;
+        name ## _Draw(game); <span class="keywordflow">break</span>;
 </pre></div>
 <p>Macro for drawing active gamestate. </p>
 
@@ -374,7 +378,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> (int argc, ch
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 1 2012 23:02:41 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Mar 4 2012 14:21:45 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
