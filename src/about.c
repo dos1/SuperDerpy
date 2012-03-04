@@ -73,10 +73,12 @@ void About_Preload(struct Game *game) {
 	draw_text("   http://dosowisko.net/");
 	draw_text("");
 	draw_text("Graphics:");
-	draw_text(" - hombre0 (menu background)");
+	draw_text(" - hombre0");
 	draw_text("   http://hombre0.deviantart.com/");
-	draw_text(" - Siobhan Brewer (cloud shapes)");
+	draw_text(" - Siobhan Brewer");
 	draw_text("   http://boxdrink.deviantart.com/");
+	draw_text(" - CptOfTheFriendship");
+	draw_text("   http://cptofthefriendship.deviantart.com/");
 	draw_text("");
 	draw_text("Music:");
 	draw_text(" - Dr Dissonance (\"Don Discord\")");

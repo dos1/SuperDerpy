@@ -43,6 +43,21 @@ int Pause_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	return 0;
 }
 
+void Pause_Preload(struct Game* game) {
+	game->pause.bitmap = NULL;
+	game->pause.derpy = al_create_bitmap(al_get_display_width(game->display)*0.53, al_get_display_height(game->display)*0.604);
+
+	al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
+	ALLEGRO_BITMAP *derpy = al_load_bitmap( "data/derpy_pause.png" );
+	al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR | ALLEGRO_MIN_LINEAR);
+
+	al_set_target_bitmap(game->pause.derpy);
+	ScaleBitmap(derpy, al_get_display_width(game->display)*0.53, al_get_display_height(game->display)*0.604);
+	al_set_target_bitmap(al_get_backbuffer(game->display));
+
+	al_destroy_bitmap(derpy);
+}
+
 void Pause_Load(struct Game* game) {
 	game->gamestate=game->loadstate;
 	game->loadstate=GAMESTATE_PAUSE;
@@ -58,6 +73,7 @@ void Pause_Load(struct Game* game) {
 	game->pause.bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 	al_set_target_bitmap(game->pause.bitmap);
 	al_draw_bitmap(al_get_backbuffer(game->display), 0, 0, 0);
+	al_draw_bitmap(game->pause.derpy, 0.47*al_get_display_width(game->display), al_get_display_height(game->display)*0.396, 0);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 	al_destroy_bitmap(fade);
 	game->pause.selected=0;
@@ -96,8 +112,12 @@ void Pause_Draw(struct Game* game) {
 	DrawConsole(game);
 }
 
+void Pause_Unload_Real(struct Game* game) {
+	if (game->pause.bitmap) al_destroy_bitmap(game->pause.bitmap);
+	al_destroy_bitmap(game->pause.derpy);
+}
+
 void Pause_Unload(struct Game* game) {
-	al_destroy_bitmap(game->pause.bitmap);
 	game->gamestate=game->loadstate;
 	UnloadGameState(game);
 }

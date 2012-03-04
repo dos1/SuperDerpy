@@ -94,9 +94,11 @@ void Level_Preload(struct Game *game) {
 	al_draw_textf(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)/2.2, ALLEGRO_ALIGN_CENTRE, "Level %d: Not implemented yet!", game->level.current_level);
 	al_draw_text(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)/1.8, ALLEGRO_ALIGN_CENTRE, "Have some moonwalk instead.");
 	al_set_target_bitmap(al_get_backbuffer(game->display));
+	Pause_Preload(game);
 }
 
 void Level_Unload(struct Game *game) {
+	Pause_Unload_Real(game);
 	ALLEGRO_EVENT ev;
 	game->level.fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 	al_set_target_bitmap(game->level.fade_bitmap);

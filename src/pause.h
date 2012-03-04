@@ -6,6 +6,7 @@
 
 void Pause_Draw(struct Game *game);
 void Pause_Preload(struct Game *game);
+void Pause_Unload_Real(struct Game* game);
 void Pause_Unload(struct Game *game);
 void Pause_Load(struct Game *game);
 int Pause_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
