@@ -42,6 +42,7 @@ void Level_Draw(struct Game *game) {
 	game->level.derpy_frame_tmp++;
 	if (game->level.derpy_frame_tmp%3==0) {
 		if (game->level.derpy_frame_tmp%5==0) game->level.derpy_frame++;
+                if (game->level.derpy_frame_tmp%22==21) game->level.derpy_frame--;
 		game->level.derpy_frame++;
 		if (game->level.derpy_frame>=24) game->level.derpy_frame=0;
 	}
