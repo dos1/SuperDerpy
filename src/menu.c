@@ -83,7 +83,6 @@ void Menu_Draw(struct Game *game) {
 }
 
 void Menu_Preload(struct Game *game) {
-	PrintConsole(game, "menu preload");
 	game->menu.loaded = true;
 	game->menu.image = LoadScaledBitmap( "menu.png", al_get_display_width(game->display), al_get_display_height(game->display)*0.45);
 	game->menu.mountain = LoadScaledBitmap( "mountain.png", al_get_display_width(game->display)*0.055, al_get_display_height(game->display)/9 );

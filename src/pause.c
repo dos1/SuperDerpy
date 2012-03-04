@@ -25,10 +25,13 @@
 
 int Pause_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	if ((ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) || ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->pause.options==0) && (game->pause.selected==0))) {
-		Pause_Unload_Real(game);
+		PrintConsole(game,"Game resumed.");
+		al_destroy_bitmap(game->pause.bitmap);
+		game->pause.bitmap = NULL;
 		game->gamestate = game->loadstate;
 	}
 	else if ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->pause.options==0) && (game->pause.selected==1)) {
+		game->gamestate=game->loadstate;
 		UnloadGameState(game);
 		game->gamestate = GAMESTATE_LOADING;
 		game->loadstate = GAMESTATE_MAP;
@@ -63,21 +66,10 @@ int Pause_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 void Pause_Preload(struct Game* game) {
 	game->pause.bitmap = NULL;
 	game->pause.derpy = LoadScaledBitmap("derpy_pause.png", al_get_display_width(game->display)*0.53, al_get_display_height(game->display)*0.604);
-	/*(game->pause.derpy = al_create_bitmap(al_get_display_width(game->display)*0.53, al_get_display_height(game->display)*0.604);
-
-	al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
-	ALLEGRO_BITMAP *derpy = al_load_bitmap( "data/derpy_pause.png" );
-	al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR | ALLEGRO_MIN_LINEAR);
-
-	al_set_target_bitmap(game->pause.derpy);
-	ScaleBitmap(derpy, al_get_display_width(game->display)*0.53, al_get_display_height(game->display)*0.604);
-	al_set_target_bitmap(al_get_backbuffer(game->display));
-
-	al_destroy_bitmap(derpy);*/
+	PrintConsole(game,"Pause preloaded.");
 }
 
 void Pause_Load(struct Game* game) {
-	PrintConsole(game,"Pause loaded.");
 	game->gamestate=game->loadstate;
 	game->loadstate=GAMESTATE_PAUSE;
 	DrawGameState(game);
@@ -97,6 +89,7 @@ void Pause_Load(struct Game* game) {
 	al_destroy_bitmap(fade);
 	game->pause.selected=0;
 	game->pause.options=0;
+	PrintConsole(game,"Game paused.");
 }
 
 void Pause_Draw(struct Game* game) {

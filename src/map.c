@@ -104,12 +104,18 @@ void Map_Preload(struct Game *game) {
 	PrintConsole(game, "Last level available: %d", game->map.selected);
 	game->map.arrowpos = 0;
 
+	PrintConsole(game, "Loading background...");
 	game->map.map_bg = LoadScaledBitmap("map/background.png", al_get_display_width(game->display), al_get_display_height(game->display));
+	PrintConsole(game, "Setting up highlight...");
 	char filename[30] = { };
 	sprintf(filename, "map/highlight%d.png", game->map.available);
+	PrintConsole(game, "Loading highlight...");
 	game->map.highlight = LoadScaledBitmap(filename, al_get_display_width(game->display), al_get_display_height(game->display));
+	PrintConsole(game, "Loading arrow...");
 
 	game->map.arrow = al_load_bitmap( "data/arrow.png" );
+
+	PrintConsole(game, "Loading samples...");
 	game->map.click_sample = al_load_sample( "data/click.flac" );
 	game->map.sample = al_load_sample( "data/map.flac" );
 	
@@ -122,7 +128,9 @@ void Map_Preload(struct Game *game) {
 		exit(-1);
 	}
 
+	PrintConsole(game, "Loading table...");
 	game->map.map = LoadScaledBitmap("table.png", al_get_display_width(game->display), al_get_display_height(game->display));
+	PrintConsole(game, "Drawing...");
 	al_set_target_bitmap(game->map.map);
 	al_draw_bitmap(game->map.map_bg, 0, 0 ,0);
 	al_draw_bitmap(game->map.highlight, 0, 0 ,0);
