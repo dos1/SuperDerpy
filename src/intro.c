@@ -24,7 +24,15 @@
 #include "map.h"
 
 void FillPage(struct Game *game, int page) {
-	
+	char filename[30] = { };
+	sprintf(filename, "data/intro/%d.flac", page);
+
+	//if (game->intro.audiostream) al_destroy_audio_stream(game->intro.audiostream);
+	game->intro.audiostream = al_load_audio_stream(filename, 4, 1024);
+	al_attach_audio_stream_to_mixer(game->intro.audiostream, al_get_default_mixer());
+	al_set_audio_stream_playing(game->intro.audiostream, false);
+	al_set_audio_stream_gain(game->intro.audiostream, 1.75);
+
 	al_set_target_bitmap(game->intro.table);
 	float y = 0.2;
 	float oldx = -1;
@@ -114,6 +122,7 @@ void Intro_Draw(struct Game *game) {
 			game->intro.in_animation = false;
 			FillPage(game, game->intro.page+1);
 			PrintConsole(game, "Animation finished.");
+			al_set_audio_stream_playing(game->intro.audiostream, true);
 		}
 		else if (game->intro.position<=-4*al_get_display_width(game->display)) {
 			PrintConsole(game, "This was the last page.");
@@ -135,6 +144,7 @@ void Intro_Load(struct Game *game) {
 		DrawConsole(game);
 		al_flip_display();
 	}
+	al_set_audio_stream_playing(game->intro.audiostream, true);
 	Intro_Draw(game);
 }
 
@@ -147,6 +157,10 @@ int Intro_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 		return 0;
 	}
 	if (!game->intro.in_animation) {
+		if (game->intro.audiostream) {
+			al_destroy_audio_stream(game->intro.audiostream);
+			game->intro.audiostream=NULL;
+		}
 		PrintConsole(game, "Animate page (was on %d)...", ++game->intro.page);
 		game->intro.in_animation = true;
 	}
@@ -154,6 +168,7 @@ int Intro_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 }
 
 void Intro_Preload(struct Game *game) {
+	game->intro.audiostream = NULL;
 	game->intro.position = 0;
 	game->intro.page = 0;
 	game->intro.in_animation = false;
@@ -177,6 +192,7 @@ void Intro_Preload(struct Game *game) {
 }
 
 void Intro_Unload(struct Game *game) {
+	if (game->intro.audiostream) al_destroy_audio_stream(game->intro.audiostream);
 	ALLEGRO_EVENT ev;
 	int fadeloop;
 	for(fadeloop=255; fadeloop>=0; fadeloop-=tps(game, 600)){

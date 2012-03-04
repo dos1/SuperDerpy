@@ -337,6 +337,9 @@ int main(int argc, char **argv){
 		return -1;
 	}
 
+	//game->voice = al_create_voice(44100, ALLEGRO_AUDIO_DEPTH_INT16, 48 ALLEGRO_CHANNEL_CONF_2);
+	//game->fxmixer = al_create_mixer(44100, ALLEGRO_AUDIO_DEPTH_FLOAT32, 57 ALLEGRO_CHANNEL_CONF_2);
+
 	al_register_event_source(game.event_queue, al_get_display_event_source(game.display));
 	al_register_event_source(game.event_queue, al_get_timer_event_source(game.timer));
 	al_register_event_source(game.event_queue, al_get_keyboard_event_source());

@@ -133,6 +133,7 @@ struct Intro {
 	ALLEGRO_BITMAP *table_bitmap;
 	ALLEGRO_FONT *font;
 	ALLEGRO_SAMPLE *sample;
+	ALLEGRO_AUDIO_STREAM *audiostream;
 };
 
 /*! \brief Resources used by Game state. */
