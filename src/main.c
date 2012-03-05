@@ -337,8 +337,11 @@ int main(int argc, char **argv){
 		return -1;
 	}
 
-	//game->voice = al_create_voice(44100, ALLEGRO_AUDIO_DEPTH_INT16, 48 ALLEGRO_CHANNEL_CONF_2);
-	//game->fxmixer = al_create_mixer(44100, ALLEGRO_AUDIO_DEPTH_FLOAT32, 57 ALLEGRO_CHANNEL_CONF_2);
+	game.audio.voice = al_create_voice(44100, ALLEGRO_AUDIO_DEPTH_INT16, ALLEGRO_CHANNEL_CONF_2);
+	game.audio.fx = al_create_mixer(44100, ALLEGRO_AUDIO_DEPTH_FLOAT32, ALLEGRO_CHANNEL_CONF_2);
+	game.audio.music = al_create_mixer(44100, ALLEGRO_AUDIO_DEPTH_FLOAT32, ALLEGRO_CHANNEL_CONF_2);
+	al_attach_mixer_to_voice(game.audio.fx, game.audio.voice);
+	al_attach_mixer_to_voice(game.audio.music, game.audio.voice);
 
 	al_register_event_source(game.event_queue, al_get_display_event_source(game.display));
 	al_register_event_source(game.event_queue, al_get_timer_event_source(game.timer));
@@ -417,6 +420,9 @@ int main(int argc, char **argv){
 	al_destroy_event_queue(game.event_queue);
 	al_destroy_font(game.font);
 	al_destroy_font(game.font_console);
+	al_destroy_mixer(game.audio.fx);
+	al_destroy_mixer(game.audio.music);
+	al_destroy_voice(game.audio.voice);
 	al_uninstall_audio();
 	DeinitConfig();
 	return 0;

@@ -162,6 +162,11 @@ struct Game {
 	struct Map map;
 	struct Level level;
 	struct Pause pause;
+	struct {
+		ALLEGRO_VOICE *voice;
+		ALLEGRO_MIXER *music;
+		ALLEGRO_MIXER *fx;
+	} audio;
 };
 
 /*! \brief Draws text with shadow.
