@@ -75,6 +75,9 @@ struct Menu {
 	ALLEGRO_SAMPLE *sample;
 	ALLEGRO_SAMPLE *rain_sample;
 	ALLEGRO_SAMPLE *click_sample;
+	ALLEGRO_SAMPLE_INSTANCE *music; /*!< Sample instance with background music. */
+	ALLEGRO_SAMPLE_INSTANCE *rain_sound; /*!< Sample instance with rain sound. */
+	ALLEGRO_SAMPLE_INSTANCE *click; /*!< Sample instance with click sound. */
 	ALLEGRO_FONT *font_title;
 	ALLEGRO_FONT *font_subtitle;
 	ALLEGRO_FONT *font;
@@ -106,6 +109,7 @@ struct About {
 	ALLEGRO_BITMAP *text_bitmap;
 	ALLEGRO_BITMAP *letter;
 	ALLEGRO_SAMPLE *sample;
+	ALLEGRO_SAMPLE_INSTANCE *music; /*!< Sample instance with background music. */
 	ALLEGRO_FONT *font;
 	float x;
 };
@@ -122,6 +126,8 @@ struct Map {
 	float arrowpos;
 	ALLEGRO_SAMPLE *sample;
 	ALLEGRO_SAMPLE *click_sample;
+	ALLEGRO_SAMPLE_INSTANCE *music; /*!< Sample instance with background music. */
+	ALLEGRO_SAMPLE_INSTANCE *click; /*!< Sample instance with click sound. */
 };
 
 /*! \brief Resources used by Intro state. */
@@ -133,6 +139,7 @@ struct Intro {
 	ALLEGRO_BITMAP *table_bitmap;
 	ALLEGRO_FONT *font;
 	ALLEGRO_SAMPLE *sample;
+	ALLEGRO_SAMPLE_INSTANCE *music; /*!< Sample instance with background music. */
 	ALLEGRO_AUDIO_STREAM *audiostream;
 };
 
@@ -164,6 +171,7 @@ struct Game {
 	struct Pause pause;
 	struct {
 		ALLEGRO_VOICE *voice;
+		ALLEGRO_MIXER *mixer;
 		ALLEGRO_MIXER *music;
 		ALLEGRO_MIXER *fx;
 	} audio;

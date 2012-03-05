@@ -99,6 +99,18 @@ void Menu_Preload(struct Game *game) {
 	game->menu.click_sample = al_load_sample( "data/click.flac" );
 	game->menu.mountain_position = al_get_display_width(game->display)*0.7;
 
+	game->menu.music = al_create_sample_instance(game->menu.sample);
+	al_attach_sample_instance_to_mixer(game->menu.music, game->audio.music);
+	al_set_sample_instance_playmode(game->menu.music, ALLEGRO_PLAYMODE_LOOP);
+
+	game->menu.rain_sound = al_create_sample_instance(game->menu.rain_sample);
+	al_attach_sample_instance_to_mixer(game->menu.rain_sound, game->audio.fx);
+	al_set_sample_instance_playmode(game->menu.rain_sound, ALLEGRO_PLAYMODE_LOOP);
+
+	game->menu.click = al_create_sample_instance(game->menu.click_sample);
+	al_attach_sample_instance_to_mixer(game->menu.click, game->audio.fx);
+	al_set_sample_instance_playmode(game->menu.click, ALLEGRO_PLAYMODE_ONCE);
+
 	game->menu.font_title = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.16,0 );
 	game->menu.font_subtitle = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.08,0 );
 	game->menu.font = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.05,0 );
@@ -153,7 +165,8 @@ void Menu_Stop(struct Game* game) {
 		DrawConsole(game);
 		al_flip_display();
 	}
-	al_stop_samples();
+	al_stop_sample_instance(game->menu.music);
+	al_stop_sample_instance(game->menu.rain_sound);
 }
 
 void Menu_Unload(struct Game *game) {
@@ -171,14 +184,12 @@ void Menu_Unload(struct Game *game) {
 	al_destroy_font(game->menu.font_subtitle);
 	al_destroy_font(game->menu.font);
 	al_destroy_font(game->menu.font_selected);
+	al_destroy_sample_instance(game->menu.music);
+	al_destroy_sample_instance(game->menu.rain_sound);
+	al_destroy_sample_instance(game->menu.click);
 	al_destroy_sample(game->menu.sample);
 	al_destroy_sample(game->menu.rain_sample);
 	al_destroy_sample(game->menu.click_sample);
-}
-
-void play_samples(struct Game *game) {
-	if (game->music) al_play_sample(game->menu.sample, 0.8, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
-	if (game->fx) al_play_sample(game->menu.rain_sample, 0.7, -0.3, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 }
 
 void Menu_Load(struct Game *game) {
@@ -187,7 +198,8 @@ void Menu_Load(struct Game *game) {
 	game->menu.options = false;
 	game->menu.selected = 0;
 
-	play_samples(game);
+	al_play_sample_instance(game->menu.music);
+	al_play_sample_instance(game->menu.rain_sound);
 	game->menu.menu_fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 	al_set_target_bitmap(game->menu.menu_fade_bitmap);
 	al_clear_to_color(al_map_rgb(0,0,0));
@@ -208,36 +220,44 @@ void Menu_Load(struct Game *game) {
 int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	if (ev->keyboard.keycode==ALLEGRO_KEY_UP) {
 		game->menu.selected--;
-		if (game->fx) al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		al_play_sample_instance(game->menu.click);
 	} else if (ev->keyboard.keycode==ALLEGRO_KEY_DOWN) {
 		game->menu.selected++;
-		if (game->fx) al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		al_play_sample_instance(game->menu.click);
 	} else if ((!game->menu.options) && (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3)) || (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE))) {
-		if (game->fx) al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		al_play_sample_instance(game->menu.click);
 		return 1;
 	} else if ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (!game->menu.options) && (game->menu.selected==0)) {
-		if (game->fx) al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		al_play_sample_instance(game->menu.click);
 		UnloadGameState(game);
 		game->gamestate = GAMESTATE_LOADING;
 		game->loadstate = GAMESTATE_INTRO;
 	} else if ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (!game->menu.options) && (game->menu.selected==2)) {
-		if (game->fx) al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		al_play_sample_instance(game->menu.click);
 		UnloadGameState(game);
 		game->gamestate = GAMESTATE_LOADING;
 		game->loadstate = GAMESTATE_ABOUT;
 	} else if (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (!game->menu.options) && (game->menu.selected==1)) || (((game->menu.options) && ((ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE))) || (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3))))) {
-		if (game->fx) al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		al_play_sample_instance(game->menu.click);
 		game->menu.options=!game->menu.options;
 		game->menu.selected=0;
 		PrintConsole(game, "options state changed %d", game->menu.options);
 	} else if ((game->menu.options) && (game->menu.selected==2)) {
-		al_stop_samples();
-		if ((game->music) && (game->fx)) { game->music=0; SetConfigOption("SuperDerpy", "music", "0"); }
-		else if (game->fx) { game->music=1; game->fx=0; SetConfigOption("SuperDerpy", "music", "1"); SetConfigOption("SuperDerpy", "fx", "0"); }
-		else if (game->music) { game->music=0; SetConfigOption("SuperDerpy", "music", "0"); }
-		else { game->music=1; game->fx=1; SetConfigOption("SuperDerpy", "music", "1"); SetConfigOption("SuperDerpy", "fx", "1"); }
-		if (game->fx) al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
-		play_samples(game);
+		if ((game->music) && (game->fx)) { game->music=0; SetConfigOption("SuperDerpy", "music", "0");
+			al_detach_mixer(game->audio.music);
+		}
+		else if (game->fx) { game->music=1; game->fx=0; SetConfigOption("SuperDerpy", "music", "1"); SetConfigOption("SuperDerpy", "fx", "0");
+			al_attach_mixer_to_mixer(game->audio.music, game->audio.mixer);
+			al_detach_mixer(game->audio.fx);
+		}
+		else if (game->music) { game->music=0; SetConfigOption("SuperDerpy", "music", "0");
+			al_detach_mixer(game->audio.music);
+		}
+		else { game->music=1; game->fx=1; SetConfigOption("SuperDerpy", "music", "1"); SetConfigOption("SuperDerpy", "fx", "1");
+			al_attach_mixer_to_mixer(game->audio.fx, game->audio.mixer);
+			al_attach_mixer_to_mixer(game->audio.music, game->audio.mixer);
+		}
+		al_play_sample_instance(game->menu.click);
 	}
 	if (game->menu.selected==-1) game->menu.selected=3;
 	if (game->menu.selected==4) game->menu.selected=0;

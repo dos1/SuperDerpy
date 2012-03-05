@@ -36,7 +36,7 @@ void About_Draw(struct Game *game) {
 }
 
 void About_Load(struct Game *game) {
-	if (game->music) al_play_sample(game->about.sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
+	al_play_sample_instance(game->about.music);
 	ALLEGRO_EVENT ev;
 	int fadeloop;
 	for(fadeloop=0; fadeloop<256; fadeloop+=tps(game, 600)){
@@ -63,6 +63,11 @@ void About_Preload(struct Game *game) {
 	game->about.letter = LoadScaledBitmap("letter.png", al_get_display_width(game->display), al_get_display_height(game->display) );
 
 	game->about.sample = al_load_sample( "data/about.flac" );
+	
+	game->about.music = al_create_sample_instance(game->about.sample);
+	al_attach_sample_instance_to_mixer(game->about.music, game->audio.music);
+	al_set_sample_instance_playmode(game->about.music, ALLEGRO_PLAYMODE_LOOP);
+
 	game->about.font = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.035,0 );
 	game->about.x = -0.1;
 	if (!game->about.sample){
@@ -157,6 +162,7 @@ void About_Unload(struct Game *game) {
 	al_destroy_bitmap(game->about.letter);
 	al_destroy_bitmap(game->about.fade_bitmap);
 	al_destroy_bitmap(game->about.text_bitmap);
+	al_destroy_sample_instance(game->about.music);
 	al_destroy_sample(game->about.sample);
 	al_destroy_font(game->about.font);
 }

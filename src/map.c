@@ -57,7 +57,7 @@ void Map_Draw(struct Game *game) {
 }
 
 void Map_Load(struct Game *game) {
-	if (game->music) al_play_sample(game->map.sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
+	al_play_sample_instance(game->map.music);
 	ALLEGRO_EVENT ev;
 	int fadeloop;
 	for(fadeloop=0; fadeloop<256; fadeloop+=tps(game, 600)){
@@ -72,14 +72,14 @@ void Map_Load(struct Game *game) {
 int Map_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	if ((((game->map.selected<4) || (game->map.selected==6)) && (ev->keyboard.keycode==ALLEGRO_KEY_LEFT)) || ((game->map.selected>4) && (game->map.selected!=6) && (ev->keyboard.keycode==ALLEGRO_KEY_RIGHT)) || ((game->map.selected==4) && (ev->keyboard.keycode==ALLEGRO_KEY_UP)) || ((game->map.selected==6) && (ev->keyboard.keycode==ALLEGRO_KEY_DOWN))) {
 		game->map.selected--;
-		if (game->fx) al_play_sample(game->map.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		al_play_sample_instance(game->map.click);
 	} else if (((game->map.selected<3) && (ev->keyboard.keycode==ALLEGRO_KEY_RIGHT)) || ((game->map.selected==4) && (ev->keyboard.keycode==ALLEGRO_KEY_LEFT)) || ((game->map.selected==3) && (ev->keyboard.keycode==ALLEGRO_KEY_DOWN)) || ((game->map.selected==5) && (ev->keyboard.keycode==ALLEGRO_KEY_UP))) {
 		game->map.selected++;
-		if (game->fx) al_play_sample(game->map.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		al_play_sample_instance(game->map.click);
 	} else if ((ev->keyboard.keycode==ALLEGRO_KEY_LEFT) || (ev->keyboard.keycode==ALLEGRO_KEY_RIGHT) || (ev->keyboard.keycode==ALLEGRO_KEY_UP) || (ev->keyboard.keycode==ALLEGRO_KEY_DOWN)) {
-		if (game->fx) al_play_sample(game->map.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		al_play_sample_instance(game->map.click);
 	} else if (ev->keyboard.keycode==ALLEGRO_KEY_ENTER) {
-		if (game->fx) al_play_sample(game->map.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		al_play_sample_instance(game->map.click);
 		game->level.current_level = game->map.selected;
 		PrintConsole(game, "Selecting level %d...", game->map.selected);
 		UnloadGameState(game);
@@ -113,7 +113,15 @@ void Map_Preload(struct Game *game) {
 
 	game->map.click_sample = al_load_sample( "data/click.flac" );
 	game->map.sample = al_load_sample( "data/map.flac" );
-	
+
+	game->map.music = al_create_sample_instance(game->map.sample);
+	al_attach_sample_instance_to_mixer(game->map.music, game->audio.music);
+	al_set_sample_instance_playmode(game->map.music, ALLEGRO_PLAYMODE_LOOP);
+
+	game->map.click = al_create_sample_instance(game->map.click_sample);
+	al_attach_sample_instance_to_mixer(game->map.click, game->audio.fx);
+	al_set_sample_instance_playmode(game->map.click, ALLEGRO_PLAYMODE_ONCE);
+
 	if (!game->map.sample){
 		fprintf(stderr, "Audio clip sample not loaded!\n" );
 		exit(-1);
@@ -144,6 +152,8 @@ void Map_Unload(struct Game *game) {
 	al_destroy_bitmap(game->map.map_bg);
 	al_destroy_bitmap(game->map.highlight);
 	al_destroy_bitmap(game->map.arrow);
+	al_destroy_sample_instance(game->map.music);
 	al_destroy_sample(game->map.sample);
+	al_destroy_sample_instance(game->map.click);
 	al_destroy_sample(game->map.click_sample);
 }

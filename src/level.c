@@ -54,7 +54,7 @@ void Level_Draw(struct Game *game) {
 }
 
 void Level_Load(struct Game *game) {
-	if (game->music) al_play_sample_instance(game->level.music);
+	al_play_sample_instance(game->level.music);
 	ALLEGRO_EVENT ev;
 	int fadeloop;
 	for(fadeloop=0; fadeloop<256; fadeloop+=tps(game, 600)){
@@ -93,7 +93,7 @@ void Level_Preload(struct Game *game) {
 	}
 	
 	game->level.music = al_create_sample_instance(game->level.sample);
-	al_attach_sample_instance_to_mixer(game->level.music, al_get_default_mixer());
+	al_attach_sample_instance_to_mixer(game->level.music, game->audio.music);
 	al_set_sample_instance_playmode(game->level.music, ALLEGRO_PLAYMODE_LOOP);
 
 	game->level.derpy = al_create_bitmap(al_get_display_width(game->display)*0.1953125, al_get_display_height(game->display)*0.25);
@@ -128,5 +128,6 @@ void Level_Unload(struct Game *game) {
 	al_destroy_bitmap(game->level.derpy);
 	al_destroy_bitmap(game->level.derpy_walkcycle);
 	al_destroy_bitmap(game->level.fade_bitmap);
+	al_destroy_sample_instance(game->level.music);
 	al_destroy_sample(game->level.sample);
 }

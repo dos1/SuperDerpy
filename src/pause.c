@@ -37,26 +37,34 @@ int Pause_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 		game->loadstate = GAMESTATE_MAP;
 	} else if (ev->keyboard.keycode==ALLEGRO_KEY_UP) {
 		game->pause.selected--;
-		if (game->fx) al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		al_play_sample_instance(game->menu.click);
 	} else if (ev->keyboard.keycode==ALLEGRO_KEY_DOWN) {
 		game->pause.selected++;
-		if (game->fx) al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		al_play_sample_instance(game->menu.click);
 	} else if ((!game->pause.options) && (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->pause.selected==3)) || (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE))) {
-		if (game->fx) al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		al_play_sample_instance(game->menu.click);
 		return 1;
 	} else if (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (!game->pause.options) && (game->pause.selected==2)) || (((game->pause.options) && ((ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE))) || (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->pause.selected==3))))) {
-		if (game->fx) al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		al_play_sample_instance(game->menu.click);
 		game->pause.options=!game->pause.options;
 		game->pause.selected=0;
 		PrintConsole(game, "options state changed %d", game->pause.options);
 	} else if ((game->pause.options) && (game->pause.selected==2)) {
-		al_stop_samples();
-		if ((game->music) && (game->fx)) { game->music=0; SetConfigOption("SuperDerpy", "music", "0"); }
-		else if (game->fx) { game->music=1; game->fx=0; SetConfigOption("SuperDerpy", "music", "1"); SetConfigOption("SuperDerpy", "fx", "0"); }
-		else if (game->music) { game->music=0; SetConfigOption("SuperDerpy", "music", "0"); }
-		else { game->music=1; game->fx=1; SetConfigOption("SuperDerpy", "music", "1"); SetConfigOption("SuperDerpy", "fx", "1"); }
-		if (game->fx) al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
-		//play_samples(game);
+		if ((game->music) && (game->fx)) { game->music=0; SetConfigOption("SuperDerpy", "music", "0");
+			al_detach_mixer(game->audio.music);
+		}
+		else if (game->fx) { game->music=1; game->fx=0; SetConfigOption("SuperDerpy", "music", "1"); SetConfigOption("SuperDerpy", "fx", "0");
+			al_attach_mixer_to_mixer(game->audio.music, game->audio.mixer);
+			al_detach_mixer(game->audio.fx);
+		}
+		else if (game->music) { game->music=0; SetConfigOption("SuperDerpy", "music", "0");
+			al_detach_mixer(game->audio.music);
+		}
+		else { game->music=1; game->fx=1; SetConfigOption("SuperDerpy", "music", "1"); SetConfigOption("SuperDerpy", "fx", "1");
+			al_attach_mixer_to_mixer(game->audio.fx, game->audio.mixer);
+			al_attach_mixer_to_mixer(game->audio.music, game->audio.mixer);
+		}
+		al_play_sample_instance(game->menu.click);
 	}
 	if (game->pause.selected==-1) game->pause.selected=3;
 	if (game->pause.selected==4) game->pause.selected=0;

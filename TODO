@@ -1,6 +1,7 @@
 - moar documentation
-- rewrite music handling into mixers
 - control settings
 - video settings
 
 - playable levels :D
+
+- get allegro 5.1 Windows build and use al_set_mixer_gain

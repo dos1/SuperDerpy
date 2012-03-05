@@ -293,11 +293,11 @@ int main(int argc, char **argv){
 		return -1;
 	}
 
-	if (!al_reserve_samples(10)){
+/*	if (!al_reserve_samples(10)){
 		fprintf(stderr, "failed to reserve samples!\n");
 		return -1;
 	}
-   
+ */  
 	al_init_font_addon();
 
 	if(!al_init_ttf_addon()){
@@ -338,10 +338,12 @@ int main(int argc, char **argv){
 	}
 
 	game.audio.voice = al_create_voice(44100, ALLEGRO_AUDIO_DEPTH_INT16, ALLEGRO_CHANNEL_CONF_2);
+	game.audio.mixer = al_create_mixer(44100, ALLEGRO_AUDIO_DEPTH_FLOAT32, ALLEGRO_CHANNEL_CONF_2);
 	game.audio.fx = al_create_mixer(44100, ALLEGRO_AUDIO_DEPTH_FLOAT32, ALLEGRO_CHANNEL_CONF_2);
 	game.audio.music = al_create_mixer(44100, ALLEGRO_AUDIO_DEPTH_FLOAT32, ALLEGRO_CHANNEL_CONF_2);
-	al_attach_mixer_to_voice(game.audio.fx, game.audio.voice);
-	al_attach_mixer_to_voice(game.audio.music, game.audio.voice);
+	al_attach_mixer_to_voice(game.audio.mixer, game.audio.voice);
+	if (game.fx) al_attach_mixer_to_mixer(game.audio.fx, game.audio.mixer);
+	if (game.music) al_attach_mixer_to_mixer(game.audio.music, game.audio.mixer);
 
 	al_register_event_source(game.event_queue, al_get_display_event_source(game.display));
 	al_register_event_source(game.event_queue, al_get_timer_event_source(game.timer));
@@ -422,6 +424,7 @@ int main(int argc, char **argv){
 	al_destroy_font(game.font_console);
 	al_destroy_mixer(game.audio.fx);
 	al_destroy_mixer(game.audio.music);
+	al_destroy_mixer(game.audio.mixer);
 	al_destroy_voice(game.audio.voice);
 	al_uninstall_audio();
 	DeinitConfig();

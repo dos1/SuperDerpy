@@ -29,7 +29,7 @@ void FillPage(struct Game *game, int page) {
 
 	//if (game->intro.audiostream) al_destroy_audio_stream(game->intro.audiostream);
 	game->intro.audiostream = al_load_audio_stream(filename, 4, 1024);
-	al_attach_audio_stream_to_mixer(game->intro.audiostream, al_get_default_mixer());
+	al_attach_audio_stream_to_mixer(game->intro.audiostream, game->audio.fx);
 	al_set_audio_stream_playing(game->intro.audiostream, false);
 	al_set_audio_stream_gain(game->intro.audiostream, 1.75);
 
@@ -135,7 +135,7 @@ void Intro_Draw(struct Game *game) {
 }
 
 void Intro_Load(struct Game *game) {
-	if (game->music) al_play_sample(game->intro.sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
+	al_play_sample_instance(game->intro.music);
 	ALLEGRO_EVENT ev;
 	int fadeloop;
 	for(fadeloop=0; fadeloop<256; fadeloop+=tps(game, 600)){
@@ -176,7 +176,11 @@ void Intro_Preload(struct Game *game) {
 	game->intro.table_bitmap =LoadScaledBitmap("paper.png", al_get_display_width(game->display), al_get_display_height(game->display));
 
 	game->intro.sample = al_load_sample( "data/intro.flac" );
-	
+
+	game->intro.music = al_create_sample_instance(game->intro.sample);
+	al_attach_sample_instance_to_mixer(game->intro.music, game->audio.music);
+	al_set_sample_instance_playmode(game->intro.music, ALLEGRO_PLAYMODE_LOOP);
+
 	if (!game->intro.sample){
 		fprintf(stderr, "Audio clip sample not loaded!\n" );
 		exit(-1);
@@ -206,6 +210,7 @@ void Intro_Unload(struct Game *game) {
 	}
 	al_destroy_bitmap(game->intro.table);
 	al_destroy_font(game->intro.font);
+	al_destroy_sample_instance(game->intro.music);
 	al_destroy_sample(game->intro.sample);
 	al_destroy_bitmap(game->intro.table_bitmap);
 }
