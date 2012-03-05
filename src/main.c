@@ -249,15 +249,15 @@ int main(int argc, char **argv){
 
 	struct Game game;
 
-	game.fullscreen = atoi(GetConfigOptionDefault("[SuperDerpy]", "fullscreen", "1"));
-	game.music = atoi(GetConfigOptionDefault("[SuperDerpy]", "music", "1"));
-	game.fx = atoi(GetConfigOptionDefault("[SuperDerpy]", "fx", "1"));
-	game.fps = atoi(GetConfigOptionDefault("[SuperDerpy]", "fps", "60"));
+	game.fullscreen = atoi(GetConfigOptionDefault("SuperDerpy", "fullscreen", "1"));
+	game.music = atoi(GetConfigOptionDefault("SuperDerpy", "music", "1"));
+	game.fx = atoi(GetConfigOptionDefault("SuperDerpy", "fx", "1"));
+	game.fps = atoi(GetConfigOptionDefault("SuperDerpy", "fps", "60"));
 	if (game.fps<1) game.fps=60;
-	game.debug = atoi(GetConfigOptionDefault("[SuperDerpy]", "debug", "0"));
-	game.width = atoi(GetConfigOptionDefault("[SuperDerpy]", "width", "800"));
+	game.debug = atoi(GetConfigOptionDefault("SuperDerpy", "debug", "0"));
+	game.width = atoi(GetConfigOptionDefault("SuperDerpy", "width", "800"));
 	if (game.width<320) game.width=320;
-	game.height = atoi(GetConfigOptionDefault("[SuperDerpy]", "height", "500"));
+	game.height = atoi(GetConfigOptionDefault("SuperDerpy", "height", "500"));
 	if (game.height<200) game.height=200;
 
 	if(!al_init()) {

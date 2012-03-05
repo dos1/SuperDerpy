@@ -232,10 +232,10 @@ int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 		PrintConsole(game, "options state changed %d", game->menu.options);
 	} else if ((game->menu.options) && (game->menu.selected==2)) {
 		al_stop_samples();
-		if ((game->music) && (game->fx)) { game->music=0; SetConfigOption("[SuperDerpy]", "music", "0"); }
-		else if (game->fx) { game->music=1; game->fx=0; SetConfigOption("[SuperDerpy]", "music", "1"); SetConfigOption("[SuperDerpy]", "fx", "0"); }
-		else if (game->music) { game->music=0; SetConfigOption("[SuperDerpy]", "music", "0"); }
-		else { game->music=1; game->fx=1; SetConfigOption("[SuperDerpy]", "music", "1"); SetConfigOption("[SuperDerpy]", "fx", "1"); }
+		if ((game->music) && (game->fx)) { game->music=0; SetConfigOption("SuperDerpy", "music", "0"); }
+		else if (game->fx) { game->music=1; game->fx=0; SetConfigOption("SuperDerpy", "music", "1"); SetConfigOption("SuperDerpy", "fx", "0"); }
+		else if (game->music) { game->music=0; SetConfigOption("SuperDerpy", "music", "0"); }
+		else { game->music=1; game->fx=1; SetConfigOption("SuperDerpy", "music", "1"); SetConfigOption("SuperDerpy", "fx", "1"); }
 		if (game->fx) al_play_sample(game->menu.click_sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 		play_samples(game);
 	}

@@ -7,31 +7,21 @@
 
 
 {\ttfamily \#include $<$stdio.\-h$>$}\*
-{\ttfamily \#include $<$stdlib.\-h$>$}\*
-{\ttfamily \#include $<$string.\-h$>$}\*
-{\ttfamily \#include $<$stdbool.\-h$>$}\*
+{\ttfamily \#include $<$allegro5/allegro.\-h$>$}\*
 {\ttfamily \#include \char`\"{}config.\-h\char`\"{}}\*
-\subsection*{\-Classes}
-\begin{DoxyCompactItemize}
-\item 
-struct \hyperlink{structConfigOption}{\-Config\-Option}
-\begin{DoxyCompactList}\small\item\em \-One config option in list of options. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{\-Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{config_8c_a4855b5733bbd77d914f02b8280f01ec2}{void \hyperlink{config_8c_a4855b5733bbd77d914f02b8280f01ec2}{\-Append\-To\-Config} (char $\ast$section, char $\ast$name, char $\ast$value)}\label{config_8c_a4855b5733bbd77d914f02b8280f01ec2}
-
-\begin{DoxyCompactList}\small\item\em \-Adds new config entry. \end{DoxyCompactList}\item 
 \hypertarget{config_8c_a88ce61c06b65baa2f67f43eb7c8e6379}{void \hyperlink{config_8c_a88ce61c06b65baa2f67f43eb7c8e6379}{\-Init\-Config} ()}\label{config_8c_a88ce61c06b65baa2f67f43eb7c8e6379}
 
 \begin{DoxyCompactList}\small\item\em \-Reads config from file into memory. \end{DoxyCompactList}\item 
 \hypertarget{config_8c_a68a5d186325286714ab452ad9eaaad84}{void \hyperlink{config_8c_a68a5d186325286714ab452ad9eaaad84}{\-Set\-Config\-Option} (char $\ast$section, char $\ast$name, char $\ast$value)}\label{config_8c_a68a5d186325286714ab452ad9eaaad84}
 
 \begin{DoxyCompactList}\small\item\em \-Sets new value of requested config entry, or created new if no such entry exists. \end{DoxyCompactList}\item 
-\hypertarget{config_8c_ac2bded9fdf04d859de3c79bcd96e3970}{char $\ast$ \hyperlink{config_8c_ac2bded9fdf04d859de3c79bcd96e3970}{\-Get\-Config\-Option} (char $\ast$section, char $\ast$name)}\label{config_8c_ac2bded9fdf04d859de3c79bcd96e3970}
+\hypertarget{config_8c_aa426843e84388898be521431b2a05200}{const char $\ast$ \hyperlink{config_8c_aa426843e84388898be521431b2a05200}{\-Get\-Config\-Option} (char $\ast$section, char $\ast$name)}\label{config_8c_aa426843e84388898be521431b2a05200}
 
 \begin{DoxyCompactList}\small\item\em \-Returns value of requested config entry. \end{DoxyCompactList}\item 
-\hypertarget{config_8c_a51719250e83494651459d90d2105cef6}{char $\ast$ \hyperlink{config_8c_a51719250e83494651459d90d2105cef6}{\-Get\-Config\-Option\-Default} (char $\ast$section, char $\ast$name, char $\ast$def)}\label{config_8c_a51719250e83494651459d90d2105cef6}
+\hypertarget{config_8c_a50db3b13fa96a690623758bf8ea165d2}{const char $\ast$ \hyperlink{config_8c_a50db3b13fa96a690623758bf8ea165d2}{\-Get\-Config\-Option\-Default} (char $\ast$section, char $\ast$name, const char $\ast$def)}\label{config_8c_a50db3b13fa96a690623758bf8ea165d2}
 
 \begin{DoxyCompactList}\small\item\em \-Returns value of requested config entry, or def if no such entry exists. \end{DoxyCompactList}\item 
 \hypertarget{config_8c_a771b6ee4b4a43e5c5ceacd9620921c39}{void \hyperlink{config_8c_a771b6ee4b4a43e5c5ceacd9620921c39}{\-Deinit\-Config} ()}\label{config_8c_a771b6ee4b4a43e5c5ceacd9620921c39}
@@ -40,33 +30,10 @@ struct \hyperlink{structConfigOption}{\-Config\-Option}
 \subsection*{\-Variables}
 \begin{DoxyCompactItemize}
 \item 
-struct \hyperlink{structConfigOption}{\-Config\-Option} $\ast$ \hyperlink{config_8c_a7cd5397c713eb53c8409cdc4807a51dd}{config}
+\hypertarget{config_8c_a204a5cf7317d30554aba26ce67b16e3d}{\-A\-L\-L\-E\-G\-R\-O\-\_\-\-C\-O\-N\-F\-I\-G $\ast$ {\bfseries config}}\label{config_8c_a204a5cf7317d30554aba26ce67b16e3d}
+
 \end{DoxyCompactItemize}
 
 
 \subsection{\-Detailed \-Description}
-\-Configuration manager code. \-Please keep in mind that config file has to be well-\/formed in order to function properly.
-
-\-Lines starting with '\mbox{[}' contain section name. \-No additional whitespace between braces and name is allowed.
-
-\-Section \-C\-A\-N\-N\-O\-T be declared multiple times.
-
-\-Lines starting with '\#' are ignored.
-
-\-All other lines have to look like this one\-:
-
-key=value
-
-\-All whitespace at beginning, end or around '=' char will belong to key or value. \-If multiple '=' are present, the first one is used to split line into key and value.
-
-\-Keys \-C\-A\-N\-N\-O\-T be repeated in the same section.
-
-\-Rewriting config file removes all comments from it.
-
-\-If config file is not following this guides, it may be handled incorrectly. 
-
-\subsection{\-Variable \-Documentation}
-\hypertarget{config_8c_a7cd5397c713eb53c8409cdc4807a51dd}{\index{config.\-c@{config.\-c}!config@{config}}
-\index{config@{config}!config.c@{config.\-c}}
-\subsubsection[{config}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf \-Config\-Option}$\ast$ {\bf config}}}\label{config_8c_a7cd5397c713eb53c8409cdc4807a51dd}
-\-Pointer to first config entry in list. 
+\-Configuration manager code. 

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['getconfigoption',['GetConfigOption',['../config_8c.html#ac2bded9fdf04d859de3c79bcd96e3970',1,'GetConfigOption(char *section, char *name):&#160;config.c'],['../config_8h.html#ac2bded9fdf04d859de3c79bcd96e3970',1,'GetConfigOption(char *section, char *name):&#160;config.c']]],
-  ['getconfigoptiondefault',['GetConfigOptionDefault',['../config_8c.html#a51719250e83494651459d90d2105cef6',1,'GetConfigOptionDefault(char *section, char *name, char *def):&#160;config.c'],['../config_8h.html#a51719250e83494651459d90d2105cef6',1,'GetConfigOptionDefault(char *section, char *name, char *def):&#160;config.c']]]
+  ['getconfigoption',['GetConfigOption',['../config_8c.html#aa426843e84388898be521431b2a05200',1,'GetConfigOption(char *section, char *name):&#160;config.c'],['../config_8h.html#aa426843e84388898be521431b2a05200',1,'GetConfigOption(char *section, char *name):&#160;config.c']]],
+  ['getconfigoptiondefault',['GetConfigOptionDefault',['../config_8c.html#a50db3b13fa96a690623758bf8ea165d2',1,'GetConfigOptionDefault(char *section, char *name, const char *def):&#160;config.c'],['../config_8h.html#a50db3b13fa96a690623758bf8ea165d2',1,'GetConfigOptionDefault(char *section, char *name, const char *def):&#160;config.c']]]
 ];

@@ -98,7 +98,7 @@ int Map_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 }
 
 void Map_Preload(struct Game *game) {
-	game->map.available = atoi(GetConfigOptionDefault("[MuffinAttack]", "level", "1"));
+	game->map.available = atoi(GetConfigOptionDefault("MuffinAttack", "level", "1"));
 	if ((game->map.available<1) || (game->map.available>6)) game->map.available=1;
 	game->map.selected = game->map.available;
 	PrintConsole(game, "Last level available: %d", game->map.selected);
