@@ -25,12 +25,14 @@
 
 int Pause_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	if ((ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) || ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->pause.options==0) && (game->pause.selected==0))) {
+		al_play_sample_instance(game->menu.click);
 		PrintConsole(game,"Game resumed.");
 		al_destroy_bitmap(game->pause.bitmap);
 		game->pause.bitmap = NULL;
 		game->gamestate = game->loadstate;
 	}
 	else if ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->pause.options==0) && (game->pause.selected==1)) {
+		al_play_sample_instance(game->menu.click);
 		game->gamestate=game->loadstate;
 		UnloadGameState(game);
 		game->gamestate = GAMESTATE_LOADING;
@@ -99,6 +101,7 @@ void Pause_Load(struct Game* game) {
 	game->pause.selected=0;
 	game->pause.options=0;
 	PrintConsole(game,"Game paused.");
+	al_play_sample_instance(game->menu.click);
 }
 
 void Pause_Draw(struct Game* game) {
