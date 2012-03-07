@@ -24,53 +24,11 @@
 #include "menu.h"
 
 int Pause_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
-	if ((ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) || ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.menustate==MENUSTATE_PAUSE) && (game->menu.selected==0))) {
-		al_play_sample_instance(game->menu.click);
-		PrintConsole(game,"Game resumed.");
-		al_destroy_bitmap(game->pause.bitmap);
-		game->pause.bitmap = NULL;
-		game->gamestate = game->loadstate;
-	}
-	else if ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.menustate==MENUSTATE_PAUSE) && (game->menu.selected==1)) {
-		al_play_sample_instance(game->menu.click);
-		game->gamestate=game->loadstate;
-		UnloadGameState(game);
-		game->gamestate = GAMESTATE_LOADING;
-		game->loadstate = GAMESTATE_MAP;
-	} else if (ev->keyboard.keycode==ALLEGRO_KEY_UP) {
-		game->menu.selected--;
-		al_play_sample_instance(game->menu.click);
-	} else if (ev->keyboard.keycode==ALLEGRO_KEY_DOWN) {
-		game->menu.selected++;
-		al_play_sample_instance(game->menu.click);
-	} else if ((game->menu.menustate==MENUSTATE_PAUSE) && (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3)) || (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE))) {
-		al_play_sample_instance(game->menu.click);
-		return 1;
-	} else if (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.menustate==MENUSTATE_PAUSE) && (game->menu.selected==2)) || (((game->menu.menustate==MENUSTATE_OPTIONS) && ((ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE))) || (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3))))) {
-		al_play_sample_instance(game->menu.click);
-		if (game->menu.menustate==MENUSTATE_PAUSE) game->menu.menustate=MENUSTATE_OPTIONS;
-		else game->menu.menustate=MENUSTATE_PAUSE;
+	if ((game->menu.menustate==MENUSTATE_OPTIONS) && ((ev->keyboard.keycode==ALLEGRO_KEY_ESCAPE) || ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3)))) {
+		game->menu.menustate=MENUSTATE_PAUSE;
 		game->menu.selected=0;
-		PrintConsole(game, "options state changed %d", game->menu.menustate);
-	} else if ((game->menu.menustate==MENUSTATE_OPTIONS) && (game->menu.selected==2)) {
-		if ((game->music) && (game->fx)) { game->music=0; SetConfigOption("SuperDerpy", "music", "0");
-			al_detach_mixer(game->audio.music);
-		}
-		else if (game->fx) { game->music=1; game->fx=0; SetConfigOption("SuperDerpy", "music", "1"); SetConfigOption("SuperDerpy", "fx", "0");
-			al_attach_mixer_to_mixer(game->audio.music, game->audio.mixer);
-			al_detach_mixer(game->audio.fx);
-		}
-		else if (game->music) { game->music=0; SetConfigOption("SuperDerpy", "music", "0");
-			al_detach_mixer(game->audio.music);
-		}
-		else { game->music=1; game->fx=1; SetConfigOption("SuperDerpy", "music", "1"); SetConfigOption("SuperDerpy", "fx", "1");
-			al_attach_mixer_to_mixer(game->audio.fx, game->audio.mixer);
-			al_attach_mixer_to_mixer(game->audio.music, game->audio.mixer);
-		}
-		al_play_sample_instance(game->menu.click);
-	}
-	if (game->menu.selected==-1) game->menu.selected=3;
-	if (game->menu.selected==4) game->menu.selected=0;
+		PrintConsole(game, "menu state changed %d", game->menu.menustate);
+	} else return Menu_Keydown(game, ev);
 	return 0;
 }
 

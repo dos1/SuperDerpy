@@ -67,6 +67,9 @@ void DrawMenuState(struct Game *game) {
 			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.8, ALLEGRO_ALIGN_CENTRE, "Exit");
 			break;
 		default:
+			game->menu.selected=0;
+			font = game->menu.font; if (game->menu.selected==0) font = game->menu.font_selected;
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.5, ALLEGRO_ALIGN_CENTRE, "Critical Error");
 			break;
 	}
 }
@@ -252,48 +255,115 @@ void Menu_Load(struct Game *game) {
 }
 
 int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
+
 	if (ev->keyboard.keycode==ALLEGRO_KEY_UP) {
 		game->menu.selected--;
 		al_play_sample_instance(game->menu.click);
 	} else if (ev->keyboard.keycode==ALLEGRO_KEY_DOWN) {
 		game->menu.selected++;
 		al_play_sample_instance(game->menu.click);
-	} else if ((game->menu.menustate==MENUSTATE_MAIN) && (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3)) || (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE))) {
-		al_play_sample_instance(game->menu.click);
-		return 1;
-	} else if ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.menustate==MENUSTATE_MAIN) && (game->menu.selected==0)) {
-		al_play_sample_instance(game->menu.click);
-		UnloadGameState(game);
-		game->gamestate = GAMESTATE_LOADING;
-		game->loadstate = GAMESTATE_INTRO;
-	} else if ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.menustate==MENUSTATE_MAIN) && (game->menu.selected==2)) {
-		al_play_sample_instance(game->menu.click);
-		UnloadGameState(game);
-		game->gamestate = GAMESTATE_LOADING;
-		game->loadstate = GAMESTATE_ABOUT;
-	} else if (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.menustate==MENUSTATE_MAIN) && (game->menu.selected==1)) || (((game->menu.menustate==MENUSTATE_OPTIONS) && ((ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE))) || (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3))))) {
-		al_play_sample_instance(game->menu.click);
-		if (game->menu.menustate==MENUSTATE_MAIN) game->menu.menustate=MENUSTATE_OPTIONS;
-		else game->menu.menustate=MENUSTATE_MAIN;
-		game->menu.selected=0;
-		PrintConsole(game, "menu state changed %d", game->menu.menustate);
-	} else if ((game->menu.menustate==MENUSTATE_OPTIONS) && (game->menu.selected==2)) {
-		if ((game->music) && (game->fx)) { game->music=0; SetConfigOption("SuperDerpy", "music", "0");
-			al_detach_mixer(game->audio.music);
-		}
-		else if (game->fx) { game->music=1; game->fx=0; SetConfigOption("SuperDerpy", "music", "1"); SetConfigOption("SuperDerpy", "fx", "0");
-			al_attach_mixer_to_mixer(game->audio.music, game->audio.mixer);
-			al_detach_mixer(game->audio.fx);
-		}
-		else if (game->music) { game->music=0; SetConfigOption("SuperDerpy", "music", "0");
-			al_detach_mixer(game->audio.music);
-		}
-		else { game->music=1; game->fx=1; SetConfigOption("SuperDerpy", "music", "1"); SetConfigOption("SuperDerpy", "fx", "1");
-			al_attach_mixer_to_mixer(game->audio.fx, game->audio.mixer);
-			al_attach_mixer_to_mixer(game->audio.music, game->audio.mixer);
-		}
-		al_play_sample_instance(game->menu.click);
 	}
+
+	if (ev->keyboard.keycode==ALLEGRO_KEY_ENTER) {
+		al_play_sample_instance(game->menu.click);
+		switch (game->menu.menustate) {
+			case MENUSTATE_MAIN:
+				switch (game->menu.selected) {
+					case 0:
+						UnloadGameState(game);
+						game->gamestate = GAMESTATE_LOADING;
+						game->loadstate = GAMESTATE_INTRO;
+						break;
+					case 1:
+						game->menu.menustate=MENUSTATE_OPTIONS;
+						game->menu.selected=0;
+						PrintConsole(game, "menu state changed %d", game->menu.menustate);
+						break;
+					case 2:
+						UnloadGameState(game);
+						game->gamestate = GAMESTATE_LOADING;
+						game->loadstate = GAMESTATE_ABOUT;
+						break;
+					case 3:
+						return 1;
+						break;
+				}
+				break;
+			case MENUSTATE_OPTIONS:
+				switch (game->menu.selected) {
+					case 2:
+						if ((game->music) && (game->fx)) { game->music=0; SetConfigOption("SuperDerpy", "music", "0");
+							al_detach_mixer(game->audio.music);
+						}
+						else if (game->fx) { game->music=1; game->fx=0; SetConfigOption("SuperDerpy", "music", "1"); SetConfigOption("SuperDerpy", "fx", "0");
+							al_attach_mixer_to_mixer(game->audio.music, game->audio.mixer);
+							al_detach_mixer(game->audio.fx);
+						}
+						else if (game->music) { game->music=0; SetConfigOption("SuperDerpy", "music", "0");
+							al_detach_mixer(game->audio.music);
+						}
+						else { game->music=1; game->fx=1; SetConfigOption("SuperDerpy", "music", "1"); SetConfigOption("SuperDerpy", "fx", "1");
+							al_attach_mixer_to_mixer(game->audio.fx, game->audio.mixer);
+							al_attach_mixer_to_mixer(game->audio.music, game->audio.mixer);
+						}
+						break;
+					case 3:
+						game->menu.menustate=MENUSTATE_MAIN;
+						game->menu.selected=0;
+						PrintConsole(game, "menu state changed %d", game->menu.menustate);
+						break;
+					default:
+						break;
+				}
+				break;
+			case MENUSTATE_PAUSE:
+				switch (game->menu.selected){
+					case 0:
+						PrintConsole(game,"Game resumed.");
+						al_destroy_bitmap(game->pause.bitmap);
+						game->pause.bitmap = NULL;
+						game->gamestate = game->loadstate;
+						break;
+					case 1:
+						game->gamestate=game->loadstate;
+						UnloadGameState(game);
+						game->gamestate = GAMESTATE_LOADING;
+						game->loadstate = GAMESTATE_MAP;
+						break;
+					case 2:
+						game->menu.menustate=MENUSTATE_OPTIONS;
+						game->menu.selected=0;
+						PrintConsole(game, "menu state changed %d", game->menu.menustate);
+						break;
+					case 3:
+						return 1;
+					default:
+						break;
+				}
+				break;
+			default:
+				return 1;
+				break;
+		}
+	} else if (ev->keyboard.keycode==ALLEGRO_KEY_ESCAPE) {
+		switch (game->menu.menustate) {
+			case MENUSTATE_OPTIONS:
+				game->menu.menustate=MENUSTATE_MAIN;
+				game->menu.selected=0;
+				PrintConsole(game, "menu state changed %d", game->menu.menustate);
+				break;
+			case MENUSTATE_PAUSE:
+				PrintConsole(game,"Game resumed.");
+				al_destroy_bitmap(game->pause.bitmap);
+				game->pause.bitmap = NULL;
+				game->gamestate = game->loadstate;
+				break;
+			default:
+				return 1;
+				break;
+		}
+	}
+
 	if (game->menu.selected==-1) game->menu.selected=3;
 	if (game->menu.selected==4) game->menu.selected=0;
 	return 0;
