@@ -20,6 +20,7 @@
  */
 #include "main.h"
 
+void DrawMenuState(struct Game *game);
 void Menu_Draw(struct Game *game);
 void Menu_Preload(struct Game *game);
 void Menu_Stop(struct Game *game);

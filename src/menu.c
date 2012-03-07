@@ -23,6 +23,54 @@
 #include "config.h"
 #include "menu.h"
 
+void DrawMenuState(struct Game *game) {
+	ALLEGRO_FONT *font;
+
+	switch (game->menu.menustate) {
+		case MENUSTATE_MAIN:
+			font = game->menu.font; if (game->menu.selected==0) font = game->menu.font_selected;
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.5, ALLEGRO_ALIGN_CENTRE, "Start game");
+			font = game->menu.font; if (game->menu.selected==1) font = game->menu.font_selected;
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.6, ALLEGRO_ALIGN_CENTRE, "Options");
+			font = game->menu.font; if (game->menu.selected==2) font = game->menu.font_selected;
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.7, ALLEGRO_ALIGN_CENTRE, "About");
+			font = game->menu.font; if (game->menu.selected==3) font = game->menu.font_selected;
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.8, ALLEGRO_ALIGN_CENTRE, "Exit");	
+			break;
+		case MENUSTATE_OPTIONS:
+			font = game->menu.font; if (game->menu.selected==0) font = game->menu.font_selected;
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.5, ALLEGRO_ALIGN_CENTRE, "Control settings");
+			font = game->menu.font; if (game->menu.selected==1) font = game->menu.font_selected;
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.6, ALLEGRO_ALIGN_CENTRE, "Video settings");
+			font = game->menu.font; if (game->menu.selected==2) font = game->menu.font_selected;
+			char* text;
+			if ((game->music) && (game->fx))
+				text="Sounds: all";
+			else if (game->music)
+				text="Sounds: music only";
+			else if (game->fx)
+				text="Sounds: fx only";
+			else
+				text="Sounds: none";
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.7, ALLEGRO_ALIGN_CENTRE, text);
+			font = game->menu.font; if (game->menu.selected==3) font = game->menu.font_selected;
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.8, ALLEGRO_ALIGN_CENTRE, "Back");	
+			break;
+		case MENUSTATE_PAUSE:
+			font = game->menu.font; if (game->menu.selected==0) font = game->menu.font_selected;
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.5, ALLEGRO_ALIGN_CENTRE, "Resume game");
+			font = game->menu.font; if (game->menu.selected==1) font = game->menu.font_selected;
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.6, ALLEGRO_ALIGN_CENTRE, "Return to map");
+			font = game->menu.font; if (game->menu.selected==2) font = game->menu.font_selected;
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.7, ALLEGRO_ALIGN_CENTRE, "Options");
+			font = game->menu.font; if (game->menu.selected==3) font = game->menu.font_selected;
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.8, ALLEGRO_ALIGN_CENTRE, "Exit");
+			break;
+		default:
+			break;
+	}
+}
+
 void Menu_Draw(struct Game *game) {
 	if (!game->menu.loaded) {
 		game->gamestate=GAMESTATE_LOADING;
@@ -57,29 +105,7 @@ void Menu_Draw(struct Game *game) {
 	al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.1, ALLEGRO_ALIGN_CENTRE, "Super Derpy");
 	al_draw_text_with_shadow(game->menu.font_subtitle, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.275, ALLEGRO_ALIGN_CENTRE, "Muffin Attack");
 
-	ALLEGRO_FONT *font;
-	char* text;
-	font = game->menu.font; if (game->menu.selected==0) font = game->menu.font_selected;
-	text = "Start game"; if (game->menu.options) text="Control settings";
-	al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.5, ALLEGRO_ALIGN_CENTRE, text);
-	font = game->menu.font; if (game->menu.selected==1) font = game->menu.font_selected;
-	text = "Options"; if (game->menu.options) text="Video settings";
-	al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.6, ALLEGRO_ALIGN_CENTRE, text);
-	font = game->menu.font; if (game->menu.selected==2) font = game->menu.font_selected;
-	text = "About"; if (game->menu.options) {
-		if ((game->music) && (game->fx))
-			text="Sounds: all";
-		else if (game->music)
-			text="Sounds: music only";
-		else if (game->fx)
-			text="Sounds: fx only";
-		else
-			text="Sounds: none";
-	}
-	al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.7, ALLEGRO_ALIGN_CENTRE, text);
-	font = game->menu.font; if (game->menu.selected==3) font = game->menu.font_selected;
-	text = "Exit"; if (game->menu.options) text="Back";
-	al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.8, ALLEGRO_ALIGN_CENTRE, text);
+	DrawMenuState(game);
 
 	game->menu.cloud_position-=tps(game, 0.1*60);
 	game->menu.cloud2_position-=tps(game, 0.025*60);
@@ -203,7 +229,7 @@ void Menu_Load(struct Game *game) {
 
 	game->menu.cloud_position = 100;
 	game->menu.cloud2_position = 100;
-	game->menu.options = false;
+	game->menu.menustate = MENUSTATE_MAIN;
 	game->menu.selected = 0;
 
 	al_play_sample_instance(game->menu.music);
@@ -232,25 +258,26 @@ int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	} else if (ev->keyboard.keycode==ALLEGRO_KEY_DOWN) {
 		game->menu.selected++;
 		al_play_sample_instance(game->menu.click);
-	} else if ((!game->menu.options) && (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3)) || (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE))) {
+	} else if ((game->menu.menustate==MENUSTATE_MAIN) && (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3)) || (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE))) {
 		al_play_sample_instance(game->menu.click);
 		return 1;
-	} else if ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (!game->menu.options) && (game->menu.selected==0)) {
+	} else if ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.menustate==MENUSTATE_MAIN) && (game->menu.selected==0)) {
 		al_play_sample_instance(game->menu.click);
 		UnloadGameState(game);
 		game->gamestate = GAMESTATE_LOADING;
 		game->loadstate = GAMESTATE_INTRO;
-	} else if ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (!game->menu.options) && (game->menu.selected==2)) {
+	} else if ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.menustate==MENUSTATE_MAIN) && (game->menu.selected==2)) {
 		al_play_sample_instance(game->menu.click);
 		UnloadGameState(game);
 		game->gamestate = GAMESTATE_LOADING;
 		game->loadstate = GAMESTATE_ABOUT;
-	} else if (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (!game->menu.options) && (game->menu.selected==1)) || (((game->menu.options) && ((ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE))) || (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3))))) {
+	} else if (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.menustate==MENUSTATE_MAIN) && (game->menu.selected==1)) || (((game->menu.menustate==MENUSTATE_OPTIONS) && ((ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE))) || (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3))))) {
 		al_play_sample_instance(game->menu.click);
-		game->menu.options=!game->menu.options;
+		if (game->menu.menustate==MENUSTATE_MAIN) game->menu.menustate=MENUSTATE_OPTIONS;
+		else game->menu.menustate=MENUSTATE_MAIN;
 		game->menu.selected=0;
-		PrintConsole(game, "options state changed %d", game->menu.options);
-	} else if ((game->menu.options) && (game->menu.selected==2)) {
+		PrintConsole(game, "menu state changed %d", game->menu.menustate);
+	} else if ((game->menu.menustate==MENUSTATE_OPTIONS) && (game->menu.selected==2)) {
 		if ((game->music) && (game->fx)) { game->music=0; SetConfigOption("SuperDerpy", "music", "0");
 			al_detach_mixer(game->audio.music);
 		}

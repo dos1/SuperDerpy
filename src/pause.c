@@ -24,34 +24,35 @@
 #include "menu.h"
 
 int Pause_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
-	if ((ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) || ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->pause.options==0) && (game->pause.selected==0))) {
+	if ((ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) || ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.menustate==MENUSTATE_PAUSE) && (game->menu.selected==0))) {
 		al_play_sample_instance(game->menu.click);
 		PrintConsole(game,"Game resumed.");
 		al_destroy_bitmap(game->pause.bitmap);
 		game->pause.bitmap = NULL;
 		game->gamestate = game->loadstate;
 	}
-	else if ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->pause.options==0) && (game->pause.selected==1)) {
+	else if ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.menustate==MENUSTATE_PAUSE) && (game->menu.selected==1)) {
 		al_play_sample_instance(game->menu.click);
 		game->gamestate=game->loadstate;
 		UnloadGameState(game);
 		game->gamestate = GAMESTATE_LOADING;
 		game->loadstate = GAMESTATE_MAP;
 	} else if (ev->keyboard.keycode==ALLEGRO_KEY_UP) {
-		game->pause.selected--;
+		game->menu.selected--;
 		al_play_sample_instance(game->menu.click);
 	} else if (ev->keyboard.keycode==ALLEGRO_KEY_DOWN) {
-		game->pause.selected++;
+		game->menu.selected++;
 		al_play_sample_instance(game->menu.click);
-	} else if ((!game->pause.options) && (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->pause.selected==3)) || (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE))) {
+	} else if ((game->menu.menustate==MENUSTATE_PAUSE) && (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3)) || (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE))) {
 		al_play_sample_instance(game->menu.click);
 		return 1;
-	} else if (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (!game->pause.options) && (game->pause.selected==2)) || (((game->pause.options) && ((ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE))) || (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->pause.selected==3))))) {
+	} else if (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.menustate==MENUSTATE_PAUSE) && (game->menu.selected==2)) || (((game->menu.menustate==MENUSTATE_OPTIONS) && ((ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE))) || (((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3))))) {
 		al_play_sample_instance(game->menu.click);
-		game->pause.options=!game->pause.options;
-		game->pause.selected=0;
-		PrintConsole(game, "options state changed %d", game->pause.options);
-	} else if ((game->pause.options) && (game->pause.selected==2)) {
+		if (game->menu.menustate==MENUSTATE_PAUSE) game->menu.menustate=MENUSTATE_OPTIONS;
+		else game->menu.menustate=MENUSTATE_PAUSE;
+		game->menu.selected=0;
+		PrintConsole(game, "options state changed %d", game->menu.menustate);
+	} else if ((game->menu.menustate==MENUSTATE_OPTIONS) && (game->menu.selected==2)) {
 		if ((game->music) && (game->fx)) { game->music=0; SetConfigOption("SuperDerpy", "music", "0");
 			al_detach_mixer(game->audio.music);
 		}
@@ -68,8 +69,8 @@ int Pause_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 		}
 		al_play_sample_instance(game->menu.click);
 	}
-	if (game->pause.selected==-1) game->pause.selected=3;
-	if (game->pause.selected==4) game->pause.selected=0;
+	if (game->menu.selected==-1) game->menu.selected=3;
+	if (game->menu.selected==4) game->menu.selected=0;
 	return 0;
 }
 
@@ -98,8 +99,8 @@ void Pause_Load(struct Game* game) {
 	al_draw_bitmap(game->pause.derpy, 0.47*al_get_display_width(game->display), al_get_display_height(game->display)*0.396, 0);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 	al_destroy_bitmap(fade);
-	game->pause.selected=0;
-	game->pause.options=0;
+	game->menu.selected=0;
+	game->menu.menustate = MENUSTATE_PAUSE;
 	PrintConsole(game,"Game paused.");
 	al_play_sample_instance(game->menu.click);
 }
@@ -109,29 +110,7 @@ void Pause_Draw(struct Game* game) {
 	al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.1, ALLEGRO_ALIGN_CENTRE, "Super Derpy");
 	al_draw_text_with_shadow(game->menu.font_subtitle, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.275, ALLEGRO_ALIGN_CENTRE, "Game paused.");
 
-	ALLEGRO_FONT *font;
-	char* text;
-	font = game->menu.font; if (game->pause.selected==0) font = game->menu.font_selected;
-	text = "Resume game"; if (game->pause.options) text="Control settings";
-	al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.5, ALLEGRO_ALIGN_CENTRE, text);
-	font = game->menu.font; if (game->pause.selected==1) font = game->menu.font_selected;
-	text = "Return to map"; if (game->pause.options) text="Video settings";
-	al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.6, ALLEGRO_ALIGN_CENTRE, text);
-	font = game->menu.font; if (game->pause.selected==2) font = game->menu.font_selected;
-	text = "Options"; if (game->pause.options) {
-		if ((game->music) && (game->fx))
-			text="Sounds: all";
-		else if (game->music)
-			text="Sounds: music only";
-		else if (game->fx)
-			text="Sounds: fx only";
-		else
-			text="Sounds: none";
-	}
-	al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.7, ALLEGRO_ALIGN_CENTRE, text);
-	font = game->menu.font; if (game->pause.selected==3) font = game->menu.font_selected;
-	text = "Exit"; if (game->pause.options) text="Back";
-	al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.8, ALLEGRO_ALIGN_CENTRE, text);
+	DrawMenuState(game);
 
 	DrawConsole(game);
 }

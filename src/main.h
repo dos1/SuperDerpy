@@ -56,6 +56,15 @@ struct Level {
 	double derpy_pos; /*!< Position of Derpy on screen. */
 };
 
+/*! \brief Enum of menu states in Menu and Pause game states. */
+enum menustate_enum {
+	MENUSTATE_MAIN,
+	MENUSTATE_OPTIONS,
+	MENUSTATE_CONTROLS,
+	MENUSTATE_VIDEO,
+	MENUSTATE_PAUSE
+};
+
 /*! \brief Resources used by Menu state. */
 struct Menu {
 	ALLEGRO_BITMAP *menu_fade_bitmap;
@@ -83,8 +92,7 @@ struct Menu {
 	ALLEGRO_FONT *font;
 	ALLEGRO_FONT *font_selected;
 	int selected;
-	bool options;
-	//bool draw_while_fading;
+	enum menustate_enum menustate;
 	bool loaded;
 };
 
@@ -98,8 +106,6 @@ struct Loading {
 struct Pause {
 	ALLEGRO_BITMAP *bitmap;
 	ALLEGRO_BITMAP *derpy;
-	int selected;
-	bool options;
 };
 
 /*! \brief Resources used by About state. */
