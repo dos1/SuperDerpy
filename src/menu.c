@@ -24,6 +24,11 @@
 #include "menu.h"
 
 void Menu_Draw(struct Game *game) {
+	if (!game->menu.loaded) {
+		game->gamestate=GAMESTATE_LOADING;
+		game->loadstate=GAMESTATE_MENU;
+		return;
+	}
 
 	al_set_target_bitmap(game->menu.pinkcloud_bitmap);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
@@ -190,9 +195,12 @@ void Menu_Unload(struct Game *game) {
 	al_destroy_sample(game->menu.sample);
 	al_destroy_sample(game->menu.rain_sample);
 	al_destroy_sample(game->menu.click_sample);
+	game->menu.loaded = false;
 }
 
 void Menu_Load(struct Game *game) {
+	if (!game->menu.loaded) return;
+
 	game->menu.cloud_position = 100;
 	game->menu.cloud2_position = 100;
 	game->menu.options = false;

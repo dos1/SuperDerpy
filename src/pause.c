@@ -75,6 +75,7 @@ void Pause_Preload(struct Game* game) {
 	game->pause.bitmap = NULL;
 	game->pause.derpy = LoadScaledBitmap("derpy_pause.png", al_get_display_width(game->display)*0.53, al_get_display_height(game->display)*0.604);
 	PrintConsole(game,"Pause preloaded.");
+	if (!game->menu.loaded) Menu_Preload(game);
 }
 
 void Pause_Load(struct Game* game) {
