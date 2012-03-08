@@ -306,6 +306,7 @@ int main(int argc, char **argv){
 	}
 
 	if (game.fullscreen) al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
+	else al_set_new_display_flags(ALLEGRO_WINDOWED);
 	al_set_new_display_option(ALLEGRO_VSYNC, 1, ALLEGRO_SUGGEST);
 	//al_set_new_display_option(ALLEGRO_OPENGL, 1, ALLEGRO_SUGGEST);
 	game.display = al_create_display(game.width, game.height);
@@ -362,6 +363,7 @@ int main(int argc, char **argv){
 
 	game.shuttingdown = false;
 	game.menu.loaded = false;
+	game.restart = false;
 	game.loadstate = GAMESTATE_LOADING;
 	PreloadGameState(&game);
 	LoadGameState(&game);
@@ -427,6 +429,9 @@ int main(int argc, char **argv){
 	al_destroy_mixer(game.audio.mixer);
 	al_destroy_voice(game.audio.voice);
 	al_uninstall_audio();
+	al_shutdown_ttf_addon();
+	al_shutdown_font_addon();
 	DeinitConfig();
+	if (game.restart) return main(argc, argv);
 	return 0;
 }

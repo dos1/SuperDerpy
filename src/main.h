@@ -94,6 +94,12 @@ struct Menu {
 	int selected;
 	enum menustate_enum menustate;
 	bool loaded;
+	struct {
+		bool fullscreen;
+		int fps;
+		int width;
+		int height;
+	} options;
 };
 
 /*! \brief Resources used by Loading state. */
@@ -168,6 +174,7 @@ struct Game {
 	int width;
 	int height;
 	bool shuttingdown;
+	bool restart;
 	struct Menu menu;
 	struct Loading loading;
 	struct Intro intro;

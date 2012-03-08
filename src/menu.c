@@ -25,7 +25,8 @@
 
 void DrawMenuState(struct Game *game) {
 	ALLEGRO_FONT *font;
-
+	char* text;
+	struct ALLEGRO_COLOR color;
 	switch (game->menu.menustate) {
 		case MENUSTATE_MAIN:
 			font = game->menu.font; if (game->menu.selected==0) font = game->menu.font_selected;
@@ -43,7 +44,6 @@ void DrawMenuState(struct Game *game) {
 			font = game->menu.font; if (game->menu.selected==1) font = game->menu.font_selected;
 			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.6, ALLEGRO_ALIGN_CENTRE, "Video settings");
 			font = game->menu.font; if (game->menu.selected==2) font = game->menu.font_selected;
-			char* text;
 			if ((game->music) && (game->fx))
 				text="Sounds: all";
 			else if (game->music)
@@ -55,6 +55,24 @@ void DrawMenuState(struct Game *game) {
 			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.7, ALLEGRO_ALIGN_CENTRE, text);
 			font = game->menu.font; if (game->menu.selected==3) font = game->menu.font_selected;
 			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.8, ALLEGRO_ALIGN_CENTRE, "Back");	
+			break;
+		case MENUSTATE_VIDEO:
+			if (game->menu.options.fullscreen) {
+				text="Fullscreen: yes";
+				color = al_map_rgba(0,0,0,128);
+			}
+			else {
+				text="Fullscreen: no";
+				color = al_map_rgba(255,255,255,255);
+			}
+			font = game->menu.font; if (game->menu.selected==0) font = game->menu.font_selected;
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.5, ALLEGRO_ALIGN_CENTRE, text);
+			font = game->menu.font; if (game->menu.selected==1) font = game->menu.font_selected;
+			al_draw_text_with_shadow(font, color, al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.6, ALLEGRO_ALIGN_CENTRE, "Resolution: 800x500");
+			font = game->menu.font; if (game->menu.selected==2) font = game->menu.font_selected;
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.7, ALLEGRO_ALIGN_CENTRE, "FPS: 60");
+			font = game->menu.font; if (game->menu.selected==3) font = game->menu.font_selected;
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.8, ALLEGRO_ALIGN_CENTRE, "Back");
 			break;
 		case MENUSTATE_PAUSE:
 			font = game->menu.font; if (game->menu.selected==0) font = game->menu.font_selected;
@@ -117,6 +135,10 @@ void Menu_Draw(struct Game *game) {
 }
 
 void Menu_Preload(struct Game *game) {
+	game->menu.options.fullscreen = game->fullscreen;
+	game->menu.options.fps = game->fps;
+	game->menu.options.width = game->width;
+	game->menu.options.height = game->height;
 	game->menu.loaded = true;
 	game->menu.image = LoadScaledBitmap( "menu.png", al_get_display_width(game->display), al_get_display_height(game->display)*0.45);
 	game->menu.mountain = LoadScaledBitmap( "mountain.png", al_get_display_width(game->display)*0.055, al_get_display_height(game->display)/9 );
@@ -258,9 +280,11 @@ int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 
 	if (ev->keyboard.keycode==ALLEGRO_KEY_UP) {
 		game->menu.selected--;
+		if ((game->menu.menustate==MENUSTATE_VIDEO) && (game->menu.selected==1) && (game->menu.options.fullscreen)) game->menu.selected--;
 		al_play_sample_instance(game->menu.click);
 	} else if (ev->keyboard.keycode==ALLEGRO_KEY_DOWN) {
 		game->menu.selected++;
+		if ((game->menu.menustate==MENUSTATE_VIDEO) && (game->menu.selected==1) && (game->menu.options.fullscreen)) game->menu.selected++;
 		al_play_sample_instance(game->menu.click);
 	}
 
@@ -291,6 +315,16 @@ int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 				break;
 			case MENUSTATE_OPTIONS:
 				switch (game->menu.selected) {
+					case 0:
+						game->menu.menustate=MENUSTATE_CONTROLS;
+						game->menu.selected=0;
+						PrintConsole(game, "menu state changed %d", game->menu.menustate);
+						break;
+					case 1:
+						game->menu.menustate=MENUSTATE_VIDEO;
+						game->menu.selected=0;
+						PrintConsole(game, "menu state changed %d", game->menu.menustate);
+						break;
 					case 2:
 						if ((game->music) && (game->fx)) { game->music=0; SetConfigOption("SuperDerpy", "music", "0");
 							al_detach_mixer(game->audio.music);
@@ -341,6 +375,41 @@ int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 						break;
 				}
 				break;
+			case MENUSTATE_CONTROLS:
+				switch (game->menu.selected) {
+					case 3:
+						game->menu.menustate=MENUSTATE_OPTIONS;
+						game->menu.selected=0;
+						PrintConsole(game, "menu state changed %d", game->menu.menustate);
+						break;
+					default:
+						break;
+				}
+				break;
+			case MENUSTATE_VIDEO:
+				switch (game->menu.selected) {
+					case 0:
+						game->menu.options.fullscreen = !game->menu.options.fullscreen;
+						if (game->menu.options.fullscreen)
+							SetConfigOption("SuperDerpy", "fullscreen", "1");
+						else
+							SetConfigOption("SuperDerpy", "fullscreen", "0");
+						break;
+					case 3:
+						if ((game->menu.options.fullscreen==game->fullscreen) && (game->menu.options.fps==game->fps) && (game->menu.options.width==game->width) && (game->menu.options.height==game->height)) {
+							game->menu.menustate=MENUSTATE_OPTIONS;
+							game->menu.selected=0;
+							PrintConsole(game, "menu state changed %d", game->menu.menustate);
+						} else {
+							PrintConsole(game, "video settings changed, restarting...");
+							game->restart = true;
+							return 1;
+						}
+						break;
+					default:
+						break;
+				}
+				break;
 			default:
 				return 1;
 				break;
@@ -349,6 +418,16 @@ int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 		switch (game->menu.menustate) {
 			case MENUSTATE_OPTIONS:
 				game->menu.menustate=MENUSTATE_MAIN;
+				game->menu.selected=0;
+				PrintConsole(game, "menu state changed %d", game->menu.menustate);
+				break;
+			case MENUSTATE_VIDEO:
+				game->menu.menustate=MENUSTATE_OPTIONS;
+				game->menu.selected=0;
+				PrintConsole(game, "menu state changed %d", game->menu.menustate);
+				break;
+			case MENUSTATE_CONTROLS:
+				game->menu.menustate=MENUSTATE_OPTIONS;
 				game->menu.selected=0;
 				PrintConsole(game, "menu state changed %d", game->menu.menustate);
 				break;
