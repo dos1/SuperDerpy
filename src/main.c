@@ -343,8 +343,10 @@ int main(int argc, char **argv){
 	game.audio.fx = al_create_mixer(44100, ALLEGRO_AUDIO_DEPTH_FLOAT32, ALLEGRO_CHANNEL_CONF_2);
 	game.audio.music = al_create_mixer(44100, ALLEGRO_AUDIO_DEPTH_FLOAT32, ALLEGRO_CHANNEL_CONF_2);
 	al_attach_mixer_to_voice(game.audio.mixer, game.audio.voice);
-	if (game.fx) al_attach_mixer_to_mixer(game.audio.fx, game.audio.mixer);
-	if (game.music) al_attach_mixer_to_mixer(game.audio.music, game.audio.mixer);
+	al_attach_mixer_to_mixer(game.audio.fx, game.audio.mixer);
+	al_attach_mixer_to_mixer(game.audio.music, game.audio.mixer);
+	if (!game.fx) al_set_mixer_gain(game.audio.fx, 0.0);
+	if (!game.music) al_set_mixer_gain(game.audio.music, 0.0);
 
 	al_register_event_source(game.event_queue, al_get_display_event_source(game.display));
 	al_register_event_source(game.event_queue, al_get_timer_event_source(game.timer));

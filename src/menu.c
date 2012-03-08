@@ -327,18 +327,18 @@ int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 						break;
 					case 2:
 						if ((game->music) && (game->fx)) { game->music=0; SetConfigOption("SuperDerpy", "music", "0");
-							al_detach_mixer(game->audio.music);
+							al_set_mixer_gain(game->audio.music, 0.0);
 						}
 						else if (game->fx) { game->music=1; game->fx=0; SetConfigOption("SuperDerpy", "music", "1"); SetConfigOption("SuperDerpy", "fx", "0");
-							al_attach_mixer_to_mixer(game->audio.music, game->audio.mixer);
-							al_detach_mixer(game->audio.fx);
+							al_set_mixer_gain(game->audio.music, 1.0);
+							al_set_mixer_gain(game->audio.fx, 0.0);
 						}
 						else if (game->music) { game->music=0; SetConfigOption("SuperDerpy", "music", "0");
-							al_detach_mixer(game->audio.music);
+							al_set_mixer_gain(game->audio.music, 0.0);
 						}
 						else { game->music=1; game->fx=1; SetConfigOption("SuperDerpy", "music", "1"); SetConfigOption("SuperDerpy", "fx", "1");
-							al_attach_mixer_to_mixer(game->audio.fx, game->audio.mixer);
-							al_attach_mixer_to_mixer(game->audio.music, game->audio.mixer);
+							al_set_mixer_gain(game->audio.music, 1.0);
+							al_set_mixer_gain(game->audio.fx, 1.0);
 						}
 						break;
 					case 3:

@@ -1,8 +1,7 @@
 - moar documentation
-- control settings
-- video settings
+- moar video settings
 - command line options
+- sound volume settings
 
 - playable levels :D
-
-- get allegro 5.1 Windows build and use al_set_mixer_gain
+- control settings
