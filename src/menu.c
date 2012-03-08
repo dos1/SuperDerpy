@@ -87,7 +87,7 @@ void DrawMenuState(struct Game *game) {
 		default:
 			game->menu.selected=0;
 			font = game->menu.font; if (game->menu.selected==0) font = game->menu.font_selected;
-			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.5, ALLEGRO_ALIGN_CENTRE, "Critical Error");
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.5, ALLEGRO_ALIGN_CENTRE, "Not implemented yet");
 			break;
 	}
 }
