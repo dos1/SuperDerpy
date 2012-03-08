@@ -316,6 +316,7 @@ int main(int argc, char **argv){
 	}
 	al_set_window_title(game.display, "Super Derpy: Muffin Attack");
 	if (game.fullscreen) al_hide_mouse_cursor(game.display);
+	al_inhibit_screensaver(true);
 
 	al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR | ALLEGRO_MIN_LINEAR);
 	//al_set_new_bitmap_format(ALLEGRO_PIXEL_FORMAT_ANY_32_WITH_ALPHA);
