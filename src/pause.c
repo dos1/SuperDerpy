@@ -25,10 +25,12 @@
 
 int Pause_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	if ((game->menu.menustate==MENUSTATE_OPTIONS) && ((ev->keyboard.keycode==ALLEGRO_KEY_ESCAPE) || ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3)))) {
+		al_play_sample_instance(game->menu.click);
 		game->menu.menustate=MENUSTATE_PAUSE;
 		game->menu.selected=0;
 		PrintConsole(game, "menu state changed %d", game->menu.menustate);
 	} else if ((game->menu.menustate==MENUSTATE_VIDEO) && ((ev->keyboard.keycode==ALLEGRO_KEY_ESCAPE) || ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3)))) {
+		al_play_sample_instance(game->menu.click);
 		game->menu.menustate=MENUSTATE_OPTIONS;
 		game->menu.selected=0;
 		PrintConsole(game, "menu state changed %d", game->menu.menustate);
