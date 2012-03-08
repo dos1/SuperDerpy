@@ -54,6 +54,9 @@ void Level_Draw(struct Game *game) {
 }
 
 void Level_Load(struct Game *game) {
+	game->level.derpy_frame = 0;
+	game->level.derpy_frame_tmp = 0;
+	game->level.derpy_pos = -0.2;
 	al_play_sample_instance(game->level.music);
 	ALLEGRO_EVENT ev;
 	int fadeloop;
@@ -79,9 +82,6 @@ int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 }
 
 void Level_Preload(struct Game *game) {
-	game->level.derpy_frame = 0;
-	game->level.derpy_frame_tmp = 0;
-	game->level.derpy_pos = -0.2;
 	PrintConsole(game, "Initializing level %d...", game->level.current_level);
 	game->level.image =LoadScaledBitmap("table.png", al_get_display_width(game->display), al_get_display_height(game->display));
 	game->level.sample = al_load_sample( "data/moonwalk.flac" );
