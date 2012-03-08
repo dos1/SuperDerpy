@@ -223,11 +223,12 @@ void Menu_Stop(struct Game* game) {
 	}
 	al_stop_sample_instance(game->menu.music);
 	al_stop_sample_instance(game->menu.rain_sound);
+	al_destroy_bitmap(game->menu.menu_fade_bitmap);
 }
 
 void Menu_Unload(struct Game *game) {
+	if (!game->menu.loaded) return;
 	if (game->gamestate==GAMESTATE_MENU) Menu_Stop(game);
-	al_destroy_bitmap(game->menu.menu_fade_bitmap);
 	al_destroy_bitmap(game->menu.pinkcloud);
 	al_destroy_bitmap(game->menu.image);
 	al_destroy_bitmap(game->menu.cloud);

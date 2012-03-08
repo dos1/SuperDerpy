@@ -240,6 +240,30 @@ float tps(struct Game *game, float t) {
 	return t/game->fps;
 }
 
+int Shared_Load(struct Game *game) {
+	game->font = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.09,0 );
+	if(!game->font) {
+		fprintf(stderr, "failed to load game font!\n");
+		return -1;
+	}
+	game->font_console = al_load_ttf_font("data/DejaVuSansMono.ttf",al_get_display_height(game->display)*0.018,0 );
+	if(!game->font_console) {
+		fprintf(stderr, "failed to load console font!\n");
+		return -1;
+	}
+	game->console = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display)*0.12);
+	al_set_target_bitmap(game->console);
+	al_clear_to_color(al_map_rgba(0,0,0,80));
+	al_set_target_bitmap(al_get_backbuffer(game->display));
+	return 0;
+}
+
+void Shared_Unload(struct Game *game) {
+	al_destroy_font(game->font);
+	al_destroy_font(game->font_console);
+	al_destroy_bitmap(game->console);
+}
+
 int main(int argc, char **argv){
 	srand(time(NULL));
 
@@ -321,17 +345,9 @@ int main(int argc, char **argv){
 	al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR | ALLEGRO_MIN_LINEAR);
 	//al_set_new_bitmap_format(ALLEGRO_PIXEL_FORMAT_ANY_32_WITH_ALPHA);
 
-	game.font = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game.display)*0.09,0 );
-	if(!game.font) {
-		fprintf(stderr, "failed to load game font!\n");
-		return -1;
-	}
-	game.font_console = al_load_ttf_font("data/DejaVuSansMono.ttf",al_get_display_height(game.display)*0.018,0 );
-	if(!game.font_console) {
-		fprintf(stderr, "failed to load console font!\n");
-		return -1;
-	}
-   
+	int ret = Shared_Load(&game);
+	if (ret!=0) return ret;
+
 	game.event_queue = al_create_event_queue();
 	if(!game.event_queue) {
 		fprintf(stderr, "failed to create event_queue!\n");
@@ -354,10 +370,6 @@ int main(int argc, char **argv){
 	al_register_event_source(game.event_queue, al_get_keyboard_event_source());
 
 	game.showconsole = game.debug;
-	game.console = al_create_bitmap(al_get_display_width(game.display), al_get_display_height(game.display)*0.12);
-	al_set_target_bitmap(game.console);
-	al_clear_to_color(al_map_rgba(0,0,0,80));
-	al_set_target_bitmap(al_get_backbuffer(game.display));
 
 	al_clear_to_color(al_map_rgb(0,0,0));
 	al_flip_display();
@@ -370,7 +382,7 @@ int main(int argc, char **argv){
 	game.loadstate = GAMESTATE_LOADING;
 	PreloadGameState(&game);
 	LoadGameState(&game);
-	game.loadstate = GAMESTATE_MENU;
+	game.loadstate = GAMESTATE_LEVEL;
 	while(1) {
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(game.event_queue, &ev);
@@ -423,18 +435,19 @@ int main(int argc, char **argv){
 	al_flip_display();
 	al_rest(0.1);
 	al_destroy_timer(game.timer);
+	Shared_Unload(&game);
 	al_destroy_display(game.display);
 	al_destroy_event_queue(game.event_queue);
-	al_destroy_font(game.font);
-	al_destroy_font(game.font_console);
 	al_destroy_mixer(game.audio.fx);
 	al_destroy_mixer(game.audio.music);
 	al_destroy_mixer(game.audio.mixer);
 	al_destroy_voice(game.audio.voice);
 	al_uninstall_audio();
-	al_shutdown_ttf_addon();
-	al_shutdown_font_addon();
 	DeinitConfig();
-	if (game.restart) return main(argc, argv);
+	if (game.restart) {
+		al_shutdown_ttf_addon();
+		al_shutdown_font_addon();
+		return main(argc, argv);
+	}
 	return 0;
 }

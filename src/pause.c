@@ -22,6 +22,8 @@
 #include "config.h"
 #include "pause.h"
 #include "menu.h"
+#include "level.h"
+#include "loading.h"
 
 int Pause_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	if ((game->menu.menustate==MENUSTATE_OPTIONS) && ((ev->keyboard.keycode==ALLEGRO_KEY_ESCAPE) || ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3)))) {
@@ -34,6 +36,25 @@ int Pause_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 		game->menu.menustate=MENUSTATE_OPTIONS;
 		game->menu.selected=0;
 		PrintConsole(game, "menu state changed %d", game->menu.menustate);
+		if (game->menu.options.fullscreen!=game->fullscreen) {
+			al_toggle_display_flag(game->display, ALLEGRO_FULLSCREEN_WINDOW, game->menu.options.fullscreen);
+			al_clear_to_color(al_map_rgb(0,0,0));
+			al_flip_display();
+			game->fullscreen = game->menu.options.fullscreen;
+			if (game->fullscreen) al_hide_mouse_cursor(game->display);
+			else al_show_mouse_cursor(game->display);
+			Shared_Unload(game);
+			Shared_Load(game);
+			Loading_Unload(game);
+			Loading_Load(game);
+			Menu_Unload(game);
+			Menu_Preload(game);
+			Level_UnloadBitmaps(game);
+			Level_PreloadBitmaps(game);
+			Pause_Unload_Real(game);
+			Pause_Preload(game);
+			Pause_Load(game);
+		}
 	} else return Menu_Keydown(game, ev);
 	return 0;
 }
@@ -42,7 +63,10 @@ void Pause_Preload(struct Game* game) {
 	game->pause.bitmap = NULL;
 	game->pause.derpy = LoadScaledBitmap("derpy_pause.png", al_get_display_width(game->display)*0.53, al_get_display_height(game->display)*0.604);
 	PrintConsole(game,"Pause preloaded.");
-	if (!game->menu.loaded) Menu_Preload(game);
+	if (!game->menu.loaded) {
+		PrintConsole(game,"Pause: Preloading GAMESTATE_MENU...");
+		Menu_Preload(game);
+	}
 }
 
 void Pause_Load(struct Game* game) {

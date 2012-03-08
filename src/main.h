@@ -223,4 +223,7 @@ float tps(struct Game *game, float t);
 
 void DrawGameState(struct Game *game);
 
+int Shared_Load(struct Game *game);
+void Shared_Unload(struct Game *game);
+
 #endif

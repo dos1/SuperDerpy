@@ -81,20 +81,9 @@ int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	return 0;
 }
 
-void Level_Preload(struct Game *game) {
-	PrintConsole(game, "Initializing level %d...", game->level.current_level);
+void Level_PreloadBitmaps(struct Game *game) {
 	game->level.image =LoadScaledBitmap("table.png", al_get_display_width(game->display), al_get_display_height(game->display));
-	game->level.sample = al_load_sample( "data/moonwalk.flac" );
 	game->level.derpy_walkcycle = LoadScaledBitmap("derpcycle.png", al_get_display_width(game->display)*0.1953125*6, al_get_display_height(game->display)*0.25*4);
-	
-	if (!game->level.sample){
-		fprintf(stderr, "Audio clip sample not loaded!\n" );
-		exit(-1);
-	}
-	
-	game->level.music = al_create_sample_instance(game->level.sample);
-	al_attach_sample_instance_to_mixer(game->level.music, game->audio.music);
-	al_set_sample_instance_playmode(game->level.music, ALLEGRO_PLAYMODE_LOOP);
 
 	game->level.derpy = al_create_bitmap(al_get_display_width(game->display)*0.1953125, al_get_display_height(game->display)*0.25);
 	
@@ -104,7 +93,28 @@ void Level_Preload(struct Game *game) {
 	al_draw_textf(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)/2.2, ALLEGRO_ALIGN_CENTRE, "Level %d: Not implemented yet!", game->level.current_level);
 	al_draw_text(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)/1.8, ALLEGRO_ALIGN_CENTRE, "Have some moonwalk instead.");
 	al_set_target_bitmap(al_get_backbuffer(game->display));
+}
+
+void Level_Preload(struct Game *game) {
+	PrintConsole(game, "Initializing level %d...", game->level.current_level);
+	game->level.sample = al_load_sample( "data/moonwalk.flac" );
+	game->level.music = al_create_sample_instance(game->level.sample);
+	al_attach_sample_instance_to_mixer(game->level.music, game->audio.music);
+	al_set_sample_instance_playmode(game->level.music, ALLEGRO_PLAYMODE_LOOP);
+
+	if (!game->level.sample){
+		fprintf(stderr, "Audio clip sample not loaded!\n" );
+		exit(-1);
+	}
+
+	Level_PreloadBitmaps(game);
 	Pause_Preload(game);
+}
+
+void Level_UnloadBitmaps(struct Game *game) {
+	al_destroy_bitmap(game->level.image);
+	al_destroy_bitmap(game->level.derpy);
+	al_destroy_bitmap(game->level.derpy_walkcycle);
 }
 
 void Level_Unload(struct Game *game) {
@@ -124,9 +134,7 @@ void Level_Unload(struct Game *game) {
 		DrawConsole(game);
 		al_flip_display();
 	}
-	al_destroy_bitmap(game->level.image);
-	al_destroy_bitmap(game->level.derpy);
-	al_destroy_bitmap(game->level.derpy_walkcycle);
+	Level_UnloadBitmaps(game);
 	al_destroy_bitmap(game->level.fade_bitmap);
 	al_destroy_sample_instance(game->level.music);
 	al_destroy_sample(game->level.sample);
