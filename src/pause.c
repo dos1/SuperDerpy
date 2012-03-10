@@ -45,6 +45,9 @@ int Pause_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 			else al_show_mouse_cursor(game->display);
 			Shared_Unload(game);
 			Shared_Load(game);
+			al_clear_to_color(al_map_rgb(0,0,0));
+			al_draw_text_with_shadow(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.0234, al_get_display_height(game->display)*0.85, ALLEGRO_ALIGN_LEFT, "Loading...");
+			al_flip_display();
 			Loading_Unload(game);
 			Loading_Load(game);
 			Menu_Unload(game);
