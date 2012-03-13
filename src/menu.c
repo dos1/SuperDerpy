@@ -235,6 +235,12 @@ void Menu_Stop(struct Game* game) {
 	al_destroy_bitmap(game->menu.menu_fade_bitmap);
 }
 
+void ChangeMenuState(struct Game *game, enum menustate_enum state) {
+	game->menu.menustate=state;
+	game->menu.selected=0;
+	PrintConsole(game, "menu state changed %d", state);
+}
+
 void Menu_Unload(struct Game *game) {
 	if (!game->menu.loaded) return;
 	if (game->gamestate==GAMESTATE_MENU) Menu_Stop(game);
@@ -264,8 +270,7 @@ void Menu_Load(struct Game *game) {
 
 	game->menu.cloud_position = 100;
 	game->menu.cloud2_position = 100;
-	game->menu.menustate = MENUSTATE_MAIN;
-	game->menu.selected = 0;
+	ChangeMenuState(game,MENUSTATE_MAIN);
 
 	al_play_sample_instance(game->menu.music);
 	al_play_sample_instance(game->menu.rain_sound);
@@ -310,9 +315,7 @@ int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 						game->loadstate = GAMESTATE_INTRO;
 						break;
 					case 1:
-						game->menu.menustate=MENUSTATE_OPTIONS;
-						game->menu.selected=0;
-						PrintConsole(game, "menu state changed %d", game->menu.menustate);
+						ChangeMenuState(game,MENUSTATE_OPTIONS);
 						break;
 					case 2:
 						UnloadGameState(game);
@@ -349,9 +352,7 @@ int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 						al_set_mixer_gain(game->audio.voice, game->voice/10.0);
 						break;
 					case 3:
-						game->menu.menustate=MENUSTATE_OPTIONS;
-						game->menu.selected=0;
-						PrintConsole(game, "menu state changed %d", game->menu.menustate);
+						ChangeMenuState(game,MENUSTATE_OPTIONS);
 						break;
 				}
 				free(text);
@@ -359,38 +360,16 @@ int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 			case MENUSTATE_OPTIONS:
 				switch (game->menu.selected) {
 					case 0:
-						game->menu.menustate=MENUSTATE_CONTROLS;
-						game->menu.selected=0;
-						PrintConsole(game, "menu state changed %d", game->menu.menustate);
+						ChangeMenuState(game,MENUSTATE_CONTROLS);
 						break;
 					case 1:
-						game->menu.menustate=MENUSTATE_VIDEO;
-						game->menu.selected=0;
-						PrintConsole(game, "menu state changed %d", game->menu.menustate);
+						ChangeMenuState(game,MENUSTATE_VIDEO);
 						break;
 					case 2:
-/*						if ((game->music) && (game->fx)) { game->music=0; SetConfigOption("SuperDerpy", "music", "0");
-							al_set_mixer_gain(game->audio.music, 0.0);
-						}
-						else if (game->fx) { game->music=1; game->fx=0; SetConfigOption("SuperDerpy", "music", "1"); SetConfigOption("SuperDerpy", "fx", "0");
-							al_set_mixer_gain(game->audio.music, 1.0);
-							al_set_mixer_gain(game->audio.fx, 0.0);
-						}
-						else if (game->music) { game->music=0; SetConfigOption("SuperDerpy", "music", "0");
-							al_set_mixer_gain(game->audio.music, 0.0);
-						}
-						else { game->music=1; game->fx=1; SetConfigOption("SuperDerpy", "music", "1"); SetConfigOption("SuperDerpy", "fx", "1");
-							al_set_mixer_gain(game->audio.music, 1.0);
-							al_set_mixer_gain(game->audio.fx, 1.0);
-						}*/
-						game->menu.menustate=MENUSTATE_AUDIO;
-						game->menu.selected=0;
-						PrintConsole(game, "menu state changed %d", game->menu.menustate);
+						ChangeMenuState(game,MENUSTATE_AUDIO);
 						break;
 					case 3:
-						game->menu.menustate=MENUSTATE_MAIN;
-						game->menu.selected=0;
-						PrintConsole(game, "menu state changed %d", game->menu.menustate);
+						ChangeMenuState(game,MENUSTATE_MAIN);
 						break;
 					default:
 						break;
@@ -411,9 +390,7 @@ int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 						game->loadstate = GAMESTATE_MAP;
 						break;
 					case 2:
-						game->menu.menustate=MENUSTATE_OPTIONS;
-						game->menu.selected=0;
-						PrintConsole(game, "menu state changed %d", game->menu.menustate);
+						ChangeMenuState(game,MENUSTATE_OPTIONS);
 						break;
 					case 3:
 						return 1;
@@ -424,9 +401,7 @@ int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 			case MENUSTATE_CONTROLS:
 				switch (game->menu.selected) {
 					case 3:
-						game->menu.menustate=MENUSTATE_OPTIONS;
-						game->menu.selected=0;
-						PrintConsole(game, "menu state changed %d", game->menu.menustate);
+						ChangeMenuState(game,MENUSTATE_OPTIONS);
 						break;
 					default:
 						break;
@@ -443,9 +418,7 @@ int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 						break;
 					case 3:
 						if ((game->menu.options.fullscreen==game->fullscreen) && (game->menu.options.fps==game->fps) && (game->menu.options.width==game->width) && (game->menu.options.height==game->height)) {
-							game->menu.menustate=MENUSTATE_OPTIONS;
-							game->menu.selected=0;
-							PrintConsole(game, "menu state changed %d", game->menu.menustate);
+							ChangeMenuState(game,MENUSTATE_OPTIONS);
 						} else {
 							PrintConsole(game, "video settings changed, restarting...");
 							game->restart = true;
@@ -463,24 +436,16 @@ int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	} else if (ev->keyboard.keycode==ALLEGRO_KEY_ESCAPE) {
 		switch (game->menu.menustate) {
 			case MENUSTATE_OPTIONS:
-				game->menu.menustate=MENUSTATE_MAIN;
-				game->menu.selected=0;
-				PrintConsole(game, "menu state changed %d", game->menu.menustate);
+				ChangeMenuState(game,MENUSTATE_MAIN);
 				break;
 			case MENUSTATE_VIDEO:
-				game->menu.menustate=MENUSTATE_OPTIONS;
-				game->menu.selected=0;
-				PrintConsole(game, "menu state changed %d", game->menu.menustate);
+				ChangeMenuState(game,MENUSTATE_OPTIONS);
 				break;
 			case MENUSTATE_AUDIO:
-				game->menu.menustate=MENUSTATE_OPTIONS;
-				game->menu.selected=0;
-				PrintConsole(game, "menu state changed %d", game->menu.menustate);
+				ChangeMenuState(game,MENUSTATE_OPTIONS);
 				break;
 			case MENUSTATE_CONTROLS:
-				game->menu.menustate=MENUSTATE_OPTIONS;
-				game->menu.selected=0;
-				PrintConsole(game, "menu state changed %d", game->menu.menustate);
+				ChangeMenuState(game,MENUSTATE_OPTIONS);
 				break;
 			case MENUSTATE_PAUSE:
 				PrintConsole(game,"Game resumed.");

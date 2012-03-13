@@ -27,3 +27,4 @@ void Menu_Stop(struct Game *game);
 void Menu_Unload(struct Game *game);
 void Menu_Load(struct Game *game);
 int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
+void ChangeMenuState(struct Game *game, enum menustate_enum state);

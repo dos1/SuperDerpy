@@ -28,14 +28,10 @@
 int Pause_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	if ((game->menu.menustate==MENUSTATE_OPTIONS) && ((ev->keyboard.keycode==ALLEGRO_KEY_ESCAPE) || ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3)))) {
 		al_play_sample_instance(game->menu.click);
-		game->menu.menustate=MENUSTATE_PAUSE;
-		game->menu.selected=0;
-		PrintConsole(game, "menu state changed %d", game->menu.menustate);
+		ChangeMenuState(game,MENUSTATE_PAUSE);
 	} else if ((game->menu.menustate==MENUSTATE_VIDEO) && ((ev->keyboard.keycode==ALLEGRO_KEY_ESCAPE) || ((ev->keyboard.keycode==ALLEGRO_KEY_ENTER) && (game->menu.selected==3)))) {
 		al_play_sample_instance(game->menu.click);
-		game->menu.menustate=MENUSTATE_OPTIONS;
-		game->menu.selected=0;
-		PrintConsole(game, "menu state changed %d", game->menu.menustate);
+		ChangeMenuState(game,MENUSTATE_OPTIONS);
 		if (game->menu.options.fullscreen!=game->fullscreen) {
 			al_toggle_display_flag(game->display, ALLEGRO_FULLSCREEN_WINDOW, game->menu.options.fullscreen);
 			al_clear_to_color(al_map_rgb(0,0,0));
@@ -90,8 +86,7 @@ void Pause_Load(struct Game* game) {
 	al_draw_bitmap(game->pause.derpy, 0.47*al_get_display_width(game->display), al_get_display_height(game->display)*0.396, 0);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 	al_destroy_bitmap(fade);
-	game->menu.selected=0;
-	game->menu.menustate = MENUSTATE_PAUSE;
+	ChangeMenuState(game,MENUSTATE_PAUSE);
 	PrintConsole(game,"Game paused.");
 	al_play_sample_instance(game->menu.click);
 }
