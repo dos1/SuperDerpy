@@ -62,7 +62,8 @@ enum menustate_enum {
 	MENUSTATE_OPTIONS,
 	MENUSTATE_CONTROLS,
 	MENUSTATE_VIDEO,
-	MENUSTATE_PAUSE
+	MENUSTATE_PAUSE,
+	MENUSTATE_AUDIO
 };
 
 /*! \brief Resources used by Menu state. */
@@ -166,8 +167,9 @@ struct Game {
 	ALLEGRO_TIMER *timer;
 	ALLEGRO_BITMAP *console;
 	bool showconsole;
-	bool fx;
-	bool music;
+	int fx;
+	int music;
+	int voice;
 	bool fullscreen;
 	bool debug;
 	int fps;
@@ -183,9 +185,10 @@ struct Game {
 	struct Level level;
 	struct Pause pause;
 	struct {
-		ALLEGRO_VOICE *voice;
+		ALLEGRO_VOICE *v;
 		ALLEGRO_MIXER *mixer;
 		ALLEGRO_MIXER *music;
+		ALLEGRO_MIXER *voice;
 		ALLEGRO_MIXER *fx;
 	} audio;
 };

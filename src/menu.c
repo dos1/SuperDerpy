@@ -25,7 +25,7 @@
 
 void DrawMenuState(struct Game *game) {
 	ALLEGRO_FONT *font;
-	char* text;
+	char* text = malloc(255*sizeof(char));
 	struct ALLEGRO_COLOR color;
 	switch (game->menu.menustate) {
 		case MENUSTATE_MAIN:
@@ -44,25 +44,33 @@ void DrawMenuState(struct Game *game) {
 			font = game->menu.font; if (game->menu.selected==1) font = game->menu.font_selected;
 			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.6, ALLEGRO_ALIGN_CENTRE, "Video settings");
 			font = game->menu.font; if (game->menu.selected==2) font = game->menu.font_selected;
-			if ((game->music) && (game->fx))
-				text="Sounds: all";
-			else if (game->music)
-				text="Sounds: music only";
-			else if (game->fx)
-				text="Sounds: fx only";
-			else
-				text="Sounds: none";
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.7, ALLEGRO_ALIGN_CENTRE, "Audio settings");
+			font = game->menu.font; if (game->menu.selected==3) font = game->menu.font_selected;
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.8, ALLEGRO_ALIGN_CENTRE, "Back");
+			break;
+		case MENUSTATE_AUDIO:
+			font = game->menu.font; if (game->menu.selected==0) font = game->menu.font_selected;
+			if (game->music) sprintf(text, "Music volume: %d0%%", game->music);
+			else sprintf(text, "Music disabled");
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.5, ALLEGRO_ALIGN_CENTRE, text);
+			font = game->menu.font; if (game->menu.selected==1) font = game->menu.font_selected;
+			if (game->fx) sprintf(text, "Effects volume: %d0%%", game->fx);
+			else sprintf(text, "Effects disabled");
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.6, ALLEGRO_ALIGN_CENTRE, text);
+			font = game->menu.font; if (game->menu.selected==2) font = game->menu.font_selected;
+			if (game->voice) sprintf(text, "Voice volume: %d0%%", game->voice);
+			else sprintf(text, "Voice disabled");
 			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.7, ALLEGRO_ALIGN_CENTRE, text);
 			font = game->menu.font; if (game->menu.selected==3) font = game->menu.font_selected;
-			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.8, ALLEGRO_ALIGN_CENTRE, "Back");	
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.8, ALLEGRO_ALIGN_CENTRE, "Back");
 			break;
 		case MENUSTATE_VIDEO:
 			if (game->menu.options.fullscreen) {
-				text="Fullscreen: yes";
+				sprintf(text, "Fullscreen: yes");
 				color = al_map_rgba(0,0,0,128);
 			}
 			else {
-				text="Fullscreen: no";
+				sprintf(text, "Fullscreen: no");
 				color = al_map_rgba(255,255,255,255);
 			}
 			font = game->menu.font; if (game->menu.selected==0) font = game->menu.font_selected;
@@ -90,6 +98,7 @@ void DrawMenuState(struct Game *game) {
 			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.5, ALLEGRO_ALIGN_CENTRE, "Not implemented yet");
 			break;
 	}
+	free(text);
 }
 
 void Menu_Draw(struct Game *game) {
@@ -290,6 +299,7 @@ int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	}
 
 	if (ev->keyboard.keycode==ALLEGRO_KEY_ENTER) {
+		char *text;
 		al_play_sample_instance(game->menu.click);
 		switch (game->menu.menustate) {
 			case MENUSTATE_MAIN:
@@ -314,6 +324,38 @@ int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 						break;
 				}
 				break;
+			case MENUSTATE_AUDIO:
+				text = malloc(255*sizeof(char));
+				switch (game->menu.selected) {
+					case 0:
+						game->music--;
+						if (game->music<0) game->music=10;
+						sprintf(text, "%d", game->music);
+						SetConfigOption("SuperDerpy", "music", text);
+						al_set_mixer_gain(game->audio.music, game->music/10.0);
+						break;
+					case 1:
+						game->fx--;
+						if (game->fx<0) game->fx=10;
+						sprintf(text, "%d", game->fx);
+						SetConfigOption("SuperDerpy", "fx", text);
+						al_set_mixer_gain(game->audio.fx, game->fx/10.0);
+						break;
+					case 2:
+						game->voice--;
+						if (game->voice<0) game->voice=10;
+						sprintf(text, "%d", game->voice);
+						SetConfigOption("SuperDerpy", "voice", text);
+						al_set_mixer_gain(game->audio.voice, game->voice/10.0);
+						break;
+					case 3:
+						game->menu.menustate=MENUSTATE_OPTIONS;
+						game->menu.selected=0;
+						PrintConsole(game, "menu state changed %d", game->menu.menustate);
+						break;
+				}
+				free(text);
+				break;
 			case MENUSTATE_OPTIONS:
 				switch (game->menu.selected) {
 					case 0:
@@ -327,7 +369,7 @@ int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 						PrintConsole(game, "menu state changed %d", game->menu.menustate);
 						break;
 					case 2:
-						if ((game->music) && (game->fx)) { game->music=0; SetConfigOption("SuperDerpy", "music", "0");
+/*						if ((game->music) && (game->fx)) { game->music=0; SetConfigOption("SuperDerpy", "music", "0");
 							al_set_mixer_gain(game->audio.music, 0.0);
 						}
 						else if (game->fx) { game->music=1; game->fx=0; SetConfigOption("SuperDerpy", "music", "1"); SetConfigOption("SuperDerpy", "fx", "0");
@@ -340,7 +382,10 @@ int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 						else { game->music=1; game->fx=1; SetConfigOption("SuperDerpy", "music", "1"); SetConfigOption("SuperDerpy", "fx", "1");
 							al_set_mixer_gain(game->audio.music, 1.0);
 							al_set_mixer_gain(game->audio.fx, 1.0);
-						}
+						}*/
+						game->menu.menustate=MENUSTATE_AUDIO;
+						game->menu.selected=0;
+						PrintConsole(game, "menu state changed %d", game->menu.menustate);
 						break;
 					case 3:
 						game->menu.menustate=MENUSTATE_MAIN;
@@ -423,6 +468,11 @@ int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 				PrintConsole(game, "menu state changed %d", game->menu.menustate);
 				break;
 			case MENUSTATE_VIDEO:
+				game->menu.menustate=MENUSTATE_OPTIONS;
+				game->menu.selected=0;
+				PrintConsole(game, "menu state changed %d", game->menu.menustate);
+				break;
+			case MENUSTATE_AUDIO:
 				game->menu.menustate=MENUSTATE_OPTIONS;
 				game->menu.selected=0;
 				PrintConsole(game, "menu state changed %d", game->menu.menustate);

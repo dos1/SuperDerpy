@@ -274,8 +274,9 @@ int main(int argc, char **argv){
 	struct Game game;
 
 	game.fullscreen = atoi(GetConfigOptionDefault("SuperDerpy", "fullscreen", "1"));
-	game.music = atoi(GetConfigOptionDefault("SuperDerpy", "music", "1"));
-	game.fx = atoi(GetConfigOptionDefault("SuperDerpy", "fx", "1"));
+	game.music = atoi(GetConfigOptionDefault("SuperDerpy", "music", "10"));
+	game.voice = atoi(GetConfigOptionDefault("SuperDerpy", "voice", "10"));
+	game.fx = atoi(GetConfigOptionDefault("SuperDerpy", "fx", "10"));
 	game.fps = atoi(GetConfigOptionDefault("SuperDerpy", "fps", "60"));
 	if (game.fps<1) game.fps=60;
 	game.debug = atoi(GetConfigOptionDefault("SuperDerpy", "debug", "0"));
@@ -355,15 +356,18 @@ int main(int argc, char **argv){
 		return -1;
 	}
 
-	game.audio.voice = al_create_voice(44100, ALLEGRO_AUDIO_DEPTH_INT16, ALLEGRO_CHANNEL_CONF_2);
+	game.audio.v = al_create_voice(44100, ALLEGRO_AUDIO_DEPTH_INT16, ALLEGRO_CHANNEL_CONF_2);
 	game.audio.mixer = al_create_mixer(44100, ALLEGRO_AUDIO_DEPTH_FLOAT32, ALLEGRO_CHANNEL_CONF_2);
 	game.audio.fx = al_create_mixer(44100, ALLEGRO_AUDIO_DEPTH_FLOAT32, ALLEGRO_CHANNEL_CONF_2);
 	game.audio.music = al_create_mixer(44100, ALLEGRO_AUDIO_DEPTH_FLOAT32, ALLEGRO_CHANNEL_CONF_2);
-	al_attach_mixer_to_voice(game.audio.mixer, game.audio.voice);
+	game.audio.voice = al_create_mixer(44100, ALLEGRO_AUDIO_DEPTH_FLOAT32, ALLEGRO_CHANNEL_CONF_2);
+	al_attach_mixer_to_voice(game.audio.mixer, game.audio.v);
 	al_attach_mixer_to_mixer(game.audio.fx, game.audio.mixer);
 	al_attach_mixer_to_mixer(game.audio.music, game.audio.mixer);
-	if (!game.fx) al_set_mixer_gain(game.audio.fx, 0.0);
-	if (!game.music) al_set_mixer_gain(game.audio.music, 0.0);
+	al_attach_mixer_to_mixer(game.audio.voice, game.audio.mixer);
+	al_set_mixer_gain(game.audio.fx, game.fx/10.0);
+	al_set_mixer_gain(game.audio.music, game.music/10.0);
+	al_set_mixer_gain(game.audio.voice, game.music/10.0);
 
 	al_register_event_source(game.event_queue, al_get_display_event_source(game.display));
 	al_register_event_source(game.event_queue, al_get_timer_event_source(game.timer));
@@ -441,7 +445,7 @@ int main(int argc, char **argv){
 	al_destroy_mixer(game.audio.fx);
 	al_destroy_mixer(game.audio.music);
 	al_destroy_mixer(game.audio.mixer);
-	al_destroy_voice(game.audio.voice);
+	al_destroy_voice(game.audio.v);
 	al_uninstall_audio();
 	DeinitConfig();
 	if (game.restart) {

@@ -29,7 +29,7 @@ void FillPage(struct Game *game, int page) {
 
 	//if (game->intro.audiostream) al_destroy_audio_stream(game->intro.audiostream);
 	game->intro.audiostream = al_load_audio_stream(filename, 4, 1024);
-	al_attach_audio_stream_to_mixer(game->intro.audiostream, game->audio.fx);
+	al_attach_audio_stream_to_mixer(game->intro.audiostream, game->audio.voice);
 	al_set_audio_stream_playing(game->intro.audiostream, false);
 	al_set_audio_stream_gain(game->intro.audiostream, 1.75);
 
