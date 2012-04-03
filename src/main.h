@@ -148,9 +148,12 @@ struct Map {
 struct Intro {
 	int position;
 	int page;
-	bool in_animation;
+	bool in_animation; /*!< Animation as in page transition animation. */
+	float anim;
 	ALLEGRO_BITMAP *table;
 	ALLEGRO_BITMAP *table_bitmap;
+	ALLEGRO_BITMAP *animation;
+	ALLEGRO_BITMAP *animsprites[5];
 	ALLEGRO_FONT *font;
 	ALLEGRO_SAMPLE *sample;
 	ALLEGRO_SAMPLE_INSTANCE *music; /*!< Sample instance with background music. */
