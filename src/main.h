@@ -125,6 +125,7 @@ struct About {
 	ALLEGRO_SAMPLE_INSTANCE *music; /*!< Sample instance with background music. */
 	ALLEGRO_FONT *font;
 	float x;
+	int fadeloop;
 };
 
 /*! \brief Resources used by Map state. */
