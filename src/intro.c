@@ -176,6 +176,7 @@ int Intro_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	}
 	if (!game->intro.in_animation) {
 		if (game->intro.audiostream) {
+			al_set_audio_stream_playing(game->intro.audiostream, false);
 			al_destroy_audio_stream(game->intro.audiostream);
 			game->intro.audiostream=NULL;
 		}
@@ -223,7 +224,10 @@ void Intro_Preload(struct Game *game) {
 }
 
 void Intro_Unload(struct Game *game) {
-	if (game->intro.audiostream) al_destroy_audio_stream(game->intro.audiostream);
+	if (game->intro.audiostream) { 
+		al_set_audio_stream_playing(game->intro.audiostream, false);
+		al_destroy_audio_stream(game->intro.audiostream);
+	}
 	ALLEGRO_EVENT ev;
 	int fadeloop;
 	for(fadeloop=255; fadeloop>=0; fadeloop-=tps(game, 600)){
