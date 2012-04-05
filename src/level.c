@@ -22,6 +22,7 @@
 #include <math.h>
 #include "pause.h"
 #include "level.h"
+#include "config.h"
 
 void Level_Draw(struct Game *game) {
 	if (!al_get_sample_instance_playing(game->level.music) && (game->loadstate==GAMESTATE_LEVEL)) { 
@@ -35,8 +36,26 @@ void Level_Draw(struct Game *game) {
 
 	game->level.derpy_pos=game->level.derpy_pos+tps(game, 60*0.00092);
 	if (game->level.derpy_pos>1) { UnloadGameState(game);
-		game->loadstate = GAMESTATE_MENU;
-		LoadGameState(game); return; }
+		if (game->level.current_level<6) {
+			
+			int available = atoi(GetConfigOptionDefault("MuffinAttack", "level", "1"));
+			available++;
+			if ((available<2) || (available>7)) available=1;
+			if (available==(game->level.current_level+1)) {
+				char* text = malloc(2*sizeof(char));
+				sprintf(text, "%d", available);
+				SetConfigOption("MuffinAttack", "level", text);
+				free(text);
+			}
+			game->gamestate = GAMESTATE_LOADING;
+			game->loadstate = GAMESTATE_MAP;
+			//LoadGameState(game);
+		} else {
+			game->gamestate = GAMESTATE_LOADING;
+			game->loadstate = GAMESTATE_ABOUT;
+			//LoadGameState(game);
+		}
+		return; }
 	int i;
 	for (i = 0; i < tps(game, 60); i++ ) {
 	game->level.derpy_frame_tmp++;
