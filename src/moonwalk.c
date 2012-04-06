@@ -20,9 +20,8 @@
  */
 #include <stdio.h>
 #include <math.h>
-#include "pause.h"
+#include "level.h"
 #include "moonwalk.h"
-#include "config.h"
 
 void Moonwalk_Draw(struct Game *game) {
 	if (!al_get_sample_instance_playing(game->level.moonwalk.music) && (game->loadstate==GAMESTATE_LEVEL)) { 
@@ -36,17 +35,8 @@ void Moonwalk_Draw(struct Game *game) {
 
 	game->level.moonwalk.derpy_pos=game->level.moonwalk.derpy_pos+tps(game, 60*0.00092);
 	if (game->level.moonwalk.derpy_pos>1) { UnloadGameState(game);
+		Level_Passed(game);
 		if (game->level.current_level<6) {
-			
-			int available = atoi(GetConfigOptionDefault("MuffinAttack", "level", "1"));
-			available++;
-			if ((available<2) || (available>7)) available=1;
-			if (available==(game->level.current_level+1)) {
-				char* text = malloc(2*sizeof(char));
-				sprintf(text, "%d", available);
-				SetConfigOption("MuffinAttack", "level", text);
-				free(text);
-			}
 			game->gamestate = GAMESTATE_LOADING;
 			game->loadstate = GAMESTATE_MAP;
 			//LoadGameState(game);
@@ -93,9 +83,6 @@ int Moonwalk_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	if (ev->keyboard.keycode==ALLEGRO_KEY_ESCAPE) {
 		game->level.moonwalk.music_pos = al_get_sample_instance_position(game->level.moonwalk.music);
 		al_set_sample_instance_playing(game->level.moonwalk.music, false);
-		game->gamestate = GAMESTATE_PAUSE;
-		game->loadstate = GAMESTATE_LEVEL;
-		Pause_Load(game);
 	}
 	return 0;
 }
@@ -127,7 +114,6 @@ void Moonwalk_Preload(struct Game *game) {
 	}
 
 	Moonwalk_PreloadBitmaps(game);
-	Pause_Preload(game);
 }
 
 void Moonwalk_UnloadBitmaps(struct Game *game) {
@@ -137,7 +123,6 @@ void Moonwalk_UnloadBitmaps(struct Game *game) {
 }
 
 void Moonwalk_Unload(struct Game *game) {
-	Pause_Unload_Real(game);
 	ALLEGRO_EVENT ev;
 	game->level.moonwalk.fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 	al_set_target_bitmap(game->level.moonwalk.fade_bitmap);

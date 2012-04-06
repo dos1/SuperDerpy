@@ -20,32 +20,62 @@
  */
 #include <stdio.h>
 #include "moonwalk.h"
+#include "config.h"
+#include "pause.h"
 #include "level.h"
 
+void Level_Passed(struct Game *game) {
+	if (game->level.current_level<6) {
+		int available = atoi(GetConfigOptionDefault("MuffinAttack", "level", "1"));
+		available++;
+		if ((available<2) || (available>7)) available=1;
+		if (available==(game->level.current_level+1)) {
+			char* text = malloc(2*sizeof(char));
+			sprintf(text, "%d", available);
+			SetConfigOption("MuffinAttack", "level", text);
+			free(text);
+		}
+	} else {
+		SetConfigOption("MuffinAttack", "completed", "1");
+	}
+}
+
 void Level_Draw(struct Game *game) {
-	Moonwalk_Draw(game);
+	if (game->level.current_level!=1) Moonwalk_Draw(game);
+	else {
+		al_clear_to_color(al_map_rgb(0,0,0));
+	}
 }
 
 void Level_Load(struct Game *game) {
-	Moonwalk_Load(game);
+	if (game->level.current_level!=1) Moonwalk_Load(game);
 }
 
 int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
-	return Moonwalk_Keydown(game, ev);
+	if (game->level.current_level!=1) Moonwalk_Keydown(game, ev);
+	if (ev->keyboard.keycode==ALLEGRO_KEY_ESCAPE) {
+		game->gamestate = GAMESTATE_PAUSE;
+		game->loadstate = GAMESTATE_LEVEL;
+		Pause_Load(game);
+	}
+	return 0;
 }
 
 void Level_Preload(struct Game *game) {
-	Moonwalk_Preload(game);
+	Pause_Preload(game);
+	if (game->level.current_level!=1) Moonwalk_Preload(game);
 }
 
 void Level_Unload(struct Game *game) {
-	Moonwalk_Unload(game);
+	Pause_Unload_Real(game);
+	if (game->level.current_level!=1) Moonwalk_Unload(game);
+	else Level_Passed(game);
 }
 
 void Level_UnloadBitmaps(struct Game *game) {
-	Moonwalk_UnloadBitmaps(game);
+	if (game->level.current_level!=1) Moonwalk_UnloadBitmaps(game);
 }
 
 void Level_PreloadBitmaps(struct Game *game) {
-	Moonwalk_PreloadBitmaps(game);
+	if (game->level.current_level!=1) Moonwalk_PreloadBitmaps(game);
 }

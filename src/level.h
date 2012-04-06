@@ -20,6 +20,7 @@
  */
 #include "main.h"
 
+void Level_Passed(struct Game *game);
 void Level_Draw(struct Game *game);
 void Level_Preload(struct Game *game);
 void Level_Unload(struct Game *game);
