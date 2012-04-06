@@ -1,5 +1,5 @@
-/*! \file level.c
- *  \brief Playable Level code.
+/*! \file level.h
+ *  \brief Playable Level headers.
  */
 /*
  * Copyright (c) Sebastian Krzyszkowiak <dos@dosowisko.net>
@@ -18,34 +18,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-#include <stdio.h>
-#include "moonwalk.h"
-#include "level.h"
+#include "main.h"
 
-void Level_Draw(struct Game *game) {
-	Moonwalk_Draw(game);
-}
-
-void Level_Load(struct Game *game) {
-	Moonwalk_Load(game);
-}
-
-int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
-	return Moonwalk_Keydown(game, ev);
-}
-
-void Level_Preload(struct Game *game) {
-	Moonwalk_Preload(game);
-}
-
-void Level_Unload(struct Game *game) {
-	Moonwalk_Unload(game);
-}
-
-void Level_UnloadBitmaps(struct Game *game) {
-	Moonwalk_UnloadBitmaps(game);
-}
-
-void Level_PreloadBitmaps(struct Game *game) {
-	Moonwalk_PreloadBitmaps(game);
-}
+void Moonwalk_Draw(struct Game *game);
+void Moonwalk_Preload(struct Game *game);
+void Moonwalk_Unload(struct Game *game);
+void Moonwalk_Load(struct Game *game);
+int Moonwalk_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
+void Moonwalk_UnloadBitmaps(struct Game *game);
+void Moonwalk_PreloadBitmaps(struct Game *game);

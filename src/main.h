@@ -41,8 +41,8 @@ enum gamestate_enum {
 	GAMESTATE_LEVEL
 };
 
-/*! \brief Resources used by Level state. */
-struct Level {
+/*! \brief Resources used by moonwalk level placeholder. */
+struct Moonwalk {
 	ALLEGRO_BITMAP *fade_bitmap; /*!< Bitmap used on fade-in and fade-out animations. */
 	ALLEGRO_BITMAP *image; /*!< Background texture. */
 	ALLEGRO_BITMAP *derpy_walkcycle; /*!< Derpy walk cycle spritesheet. */
@@ -54,6 +54,12 @@ struct Level {
 	int derpy_frame; /*!< Current frame of Derpy animation. */ 
 	int derpy_frame_tmp; /*!< Counter used to slow down Derpy animation. */
 	double derpy_pos; /*!< Position of Derpy on screen. */
+};
+
+/*! \brief Resources used by Level state. */
+struct Level {
+	int current_level;
+	struct Moonwalk moonwalk;
 };
 
 /*! \brief Enum of menu states in Menu and Pause game states. */

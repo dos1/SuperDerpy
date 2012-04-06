@@ -1,5 +1,5 @@
-/*! \file level.c
- *  \brief Playable Level code.
+/*! \file timeline.c
+ *  \brief Timeline Manager framework code.
  */
 /*
  * Copyright (c) Sebastian Krzyszkowiak <dos@dosowisko.net>
@@ -18,34 +18,39 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-#include <stdio.h>
-#include "moonwalk.h"
-#include "level.h"
+#include <allegro5/allegro.h>
+#include "timeline.h"
 
-void Level_Draw(struct Game *game) {
-	Moonwalk_Draw(game);
+int lastid;
+
+void TM_Init() {
+	
 }
 
-void Level_Load(struct Game *game) {
-	Moonwalk_Load(game);
+void TM_AddAction(void *func, struct TM_Arguments* args) {
+	
 }
 
-int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
-	return Moonwalk_Keydown(game, ev);
+void TM_AddBackgroundAction(void *func, struct TM_Arguments* args, int delay) {
+	
 }
 
-void Level_Preload(struct Game *game) {
-	Moonwalk_Preload(game);
+void TM_AddDelay(int delay) {
+	
 }
 
-void Level_Unload(struct Game *game) {
-	Moonwalk_Unload(game);
+void TM_Pause(bool pause) {
+	
 }
 
-void Level_UnloadBitmaps(struct Game *game) {
-	Moonwalk_UnloadBitmaps(game);
+void TM_Destroy() {
+	
 }
 
-void Level_PreloadBitmaps(struct Game *game) {
-	Moonwalk_PreloadBitmaps(game);
+struct TM_Arguments* TM_AddToArgs() {
+	return NULL;
+}
+
+void TM_DestroyArgs(struct TM_Arguments* args) {
+	
 }
