@@ -391,7 +391,7 @@ int main(int argc, char **argv){
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(game.event_queue, &ev);
 
-		if(ev.type == ALLEGRO_EVENT_TIMER) {
+		if ((ev.type == ALLEGRO_EVENT_TIMER) && (ev.timer.source == game.timer)) {
 			redraw = true;
 		}
 		else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
@@ -417,6 +417,10 @@ int main(int argc, char **argv){
 				PrintConsole(&game, "Returning to menu...");
 				game.gamestate = GAMESTATE_LOADING;
 				game.loadstate = GAMESTATE_MENU;
+			}
+		} else {
+			if (game.gamestate == GAMESTATE_LEVEL) {
+				Level_ProcessLogic(&game, &ev);
 			}
 		}
 	

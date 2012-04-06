@@ -23,6 +23,9 @@
 #include "config.h"
 #include "pause.h"
 #include "level.h"
+#include "timeline.h"
+
+int x = 0, x2 = 0;
 
 void Level_Passed(struct Game *game) {
 	if (game->level.current_level<6) {
@@ -44,11 +47,42 @@ void Level_Draw(struct Game *game) {
 	if (game->level.current_level!=1) Moonwalk_Draw(game);
 	else {
 		al_clear_to_color(al_map_rgb(0,0,0));
+		TM_Process();
 	}
 }
 
+bool napis(struct Game *game, struct TM_Action *lol) {
+	al_draw_text_with_shadow(game->font, al_map_rgb(255,255,255), x, 20, 0, "wat");
+	x+=10;
+	if (x>1000) { x=0; return true; }
+	return false;
+}
+
+bool napis2(struct Game *game, struct TM_Action *lol) {
+	al_draw_text_with_shadow(game->font, al_map_rgb(255,255,255), x2, 100, 0, "lol");
+	x2+=5;
+	if (x2>1000) { x2=0; return true; }
+	return false;
+}
+
+bool wyjscie(struct Game *game, struct TM_Action *lol) {
+	Level_Passed(game);
+	game->gamestate = GAMESTATE_LOADING;
+	game->loadstate = GAMESTATE_MAP;
+	return true;
+}
+
 void Level_Load(struct Game *game) {
+	al_clear_to_color(al_map_rgb(0,0,0));
 	if (game->level.current_level!=1) Moonwalk_Load(game);
+	else {
+		TM_Init(game);
+		TM_AddAction(&napis, NULL);
+		TM_AddAction(&napis, NULL);
+		TM_AddAction(&napis, NULL);
+		TM_AddBackgroundAction(&napis2, NULL, 0);
+		TM_AddAction(&wyjscie, NULL);
+	}
 }
 
 int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
@@ -61,6 +95,10 @@ int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	return 0;
 }
 
+void Level_ProcessLogic(struct Game *game, ALLEGRO_EVENT *ev) {
+	if (game->level.current_level==1) TM_HandleEvent(ev);
+}
+
 void Level_Preload(struct Game *game) {
 	Pause_Preload(game);
 	if (game->level.current_level!=1) Moonwalk_Preload(game);
@@ -69,7 +107,9 @@ void Level_Preload(struct Game *game) {
 void Level_Unload(struct Game *game) {
 	Pause_Unload_Real(game);
 	if (game->level.current_level!=1) Moonwalk_Unload(game);
-	else Level_Passed(game);
+	else {
+		TM_Destroy();
+	}
 }
 
 void Level_UnloadBitmaps(struct Game *game) {

@@ -25,6 +25,7 @@ void Level_Draw(struct Game *game);
 void Level_Preload(struct Game *game);
 void Level_Unload(struct Game *game);
 void Level_Load(struct Game *game);
+void Level_ProcessLogic(struct Game *game, ALLEGRO_EVENT *ev);
 int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
 void Level_UnloadBitmaps(struct Game *game);
 void Level_PreloadBitmaps(struct Game *game);

@@ -19,15 +19,31 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+#include "main.h"
+
 struct TM_Arguments {
-	
+	void *value;
+	struct TM_Arguments *next;
+	//*prev;
 };
 
-void TM_Init();
-void TM_AddAction(void *func, struct TM_Arguments* args);
-void TM_AddBackgroundAction(void *func, struct TM_Arguments* args, int delay);
+struct TM_Action {
+	bool (*function)(struct Game*, struct TM_Action*);
+	struct TM_Arguments *arguments;
+	ALLEGRO_TIMER *timer;
+	bool active;
+	int delay;
+	struct TM_Action *next;
+	//*prev;
+};
+
+void TM_Init(struct Game* game);
+void TM_Process();
+void TM_HandleEvent(ALLEGRO_EVENT *ev);
+void TM_AddAction(bool (*func)(struct Game*, struct TM_Action*), struct TM_Arguments* args);
+void TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Action*), struct TM_Arguments* args, int delay);
 void TM_AddDelay(int delay);
 void TM_Pause(bool pause);
 void TM_Destroy();
-struct TM_Arguments* TM_AddToArgs();
+struct TM_Arguments* TM_AddToArgs(struct TM_Arguments* args, void* arg);
 void TM_DestroyArgs(struct TM_Arguments* args);
