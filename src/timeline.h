@@ -21,6 +21,12 @@
 
 #include "main.h"
 
+enum TM_ActionState {
+	TM_ACTIONSTATE_INIT,
+	TM_ACTIONSTATE_RUNNING,
+	TM_ACTIONSTATE_DESTROY
+};
+
 struct TM_Arguments {
 	void *value;
 	struct TM_Arguments *next;
@@ -28,7 +34,7 @@ struct TM_Arguments {
 };
 
 struct TM_Action {
-	bool (*function)(struct Game*, struct TM_Action*);
+	bool (*function)(struct Game*, struct TM_Action*, enum TM_ActionState);
 	struct TM_Arguments *arguments;
 	ALLEGRO_TIMER *timer;
 	bool active;
@@ -40,8 +46,8 @@ struct TM_Action {
 void TM_Init(struct Game* game);
 void TM_Process();
 void TM_HandleEvent(ALLEGRO_EVENT *ev);
-void TM_AddAction(bool (*func)(struct Game*, struct TM_Action*), struct TM_Arguments* args);
-void TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Action*), struct TM_Arguments* args, int delay);
+void TM_AddAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args);
+void TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, int delay);
 void TM_AddDelay(int delay);
 void TM_Pause(bool pause);
 void TM_Destroy();

@@ -42,9 +42,11 @@ void TM_Process() {
 	//  if returns true, then delete it
 	if (queue) {
 		if (*queue->function) {
-			if ((*queue->function)(game, queue)) {
+			if ((*queue->function)(game, queue, TM_ACTIONSTATE_RUNNING)) {
+				(*queue->function)(game, queue, TM_ACTIONSTATE_DESTROY);
 				struct TM_Action *tmp = queue;
 				queue = queue->next;
+				if (tmp->arguments) free(tmp->arguments); // TODO: cascade destroy
 				free(tmp);
 			}
 		} else {
@@ -57,7 +59,8 @@ void TM_Process() {
 	while (pom!=NULL) {
 		if (pom->active) {
 			if (*pom->function) {
-				if ((*pom->function)(game, pom)) {
+				if ((*pom->function)(game, pom, TM_ACTIONSTATE_RUNNING)) {
+					(*pom->function)(game, pom, TM_ACTIONSTATE_DESTROY);
 					if (tmp) {
 						tmp->next = pom->next;
 					} else {
@@ -72,6 +75,7 @@ void TM_Process() {
 			tmp = pom;
 			pom = pom->next;
 		} else {
+			if (pom->arguments) free(pom->arguments); // TODO: cascade destroy
 			free(pom);
 			tmp2 = tmp;
 			if (!tmp) pom=background->next;
@@ -88,7 +92,7 @@ void TM_HandleEvent(ALLEGRO_EVENT *ev) {
 	
 }
 
-void TM_AddAction(bool (*func)(struct Game*, struct TM_Action*), struct TM_Arguments* args) {
+void TM_AddAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args) {
 	struct TM_Action *action = malloc(sizeof(struct TM_Action));
 	if (queue) {
 		struct TM_Action *pom = queue;
@@ -105,9 +109,10 @@ void TM_AddAction(bool (*func)(struct Game*, struct TM_Action*), struct TM_Argum
 	action->timer = NULL;
 	action->active = false;
 	action->delay = 0;
+	(*action->function)(game, action, TM_ACTIONSTATE_INIT);
 }
 
-void TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Action*), struct TM_Arguments* args, int delay) {
+void TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, int delay) {
 	struct TM_Action *action = malloc(sizeof(struct TM_Action));
 	if (background) {
 		struct TM_Action *pom = background;
@@ -124,6 +129,7 @@ void TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Action*), struc
 	action->timer = NULL;
 	action->active = true;
 	action->delay = 0;
+	(*action->function)(game, action, TM_ACTIONSTATE_INIT);
 }
 
 void TM_AddDelay(int delay) {

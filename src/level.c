@@ -25,8 +25,6 @@
 #include "level.h"
 #include "timeline.h"
 
-int x = 0, x2 = 0;
-
 void Level_Passed(struct Game *game) {
 	if (game->level.current_level<6) {
 		int available = atoi(GetConfigOptionDefault("MuffinAttack", "level", "1"));
@@ -51,24 +49,48 @@ void Level_Draw(struct Game *game) {
 	}
 }
 
-bool napis(struct Game *game, struct TM_Action *lol) {
-	al_draw_text_with_shadow(game->font, al_map_rgb(255,255,255), x, 20, 0, "wat");
-	x+=10;
-	if (x>1000) { x=0; return true; }
+bool napis(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
+	if (!action->arguments) { 
+		action->arguments = malloc(sizeof(struct TM_Arguments));
+		action->arguments->value = malloc(sizeof(int));
+		action->arguments->next = NULL;
+	}
+	int* tmp;
+	tmp = (int*)action->arguments->value;
+	if (state == TM_ACTIONSTATE_INIT) {
+		*tmp = 0;
+	} else if (state == TM_ACTIONSTATE_RUNNING) {
+		al_draw_text_with_shadow(game->font, al_map_rgb(255,255,255), *tmp, 20, 0, "wat");
+		*tmp+=10;
+		if (*tmp>1000) { *tmp=0; return true; }
+	}
 	return false;
 }
 
-bool napis2(struct Game *game, struct TM_Action *lol) {
-	al_draw_text_with_shadow(game->font, al_map_rgb(255,255,255), x2, 100, 0, "lol");
-	x2+=5;
-	if (x2>1000) { x2=0; return true; }
+bool napis2(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
+	if (!action->arguments) { 
+		action->arguments = malloc(sizeof(struct TM_Arguments));
+		action->arguments->value = malloc(sizeof(int));
+		action->arguments->next = NULL;
+	}
+	int* tmp;
+	tmp = (int*)action->arguments->value;
+	if (state == TM_ACTIONSTATE_INIT) {
+		*tmp = 0;
+	} else if (state == TM_ACTIONSTATE_RUNNING) {
+		al_draw_text_with_shadow(game->font, al_map_rgb(255,255,255), *tmp, 100, 0, "lol");
+		*tmp+=5;
+		if (*tmp>1000) { *tmp=0; return true; }
+	}
 	return false;
 }
 
-bool wyjscie(struct Game *game, struct TM_Action *lol) {
-	Level_Passed(game);
-	game->gamestate = GAMESTATE_LOADING;
-	game->loadstate = GAMESTATE_MAP;
+bool wyjscie(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
+	if (state == TM_ACTIONSTATE_DESTROY) {
+		Level_Passed(game);
+		game->gamestate = GAMESTATE_LOADING;
+		game->loadstate = GAMESTATE_MAP;
+	}
 	return true;
 }
 
