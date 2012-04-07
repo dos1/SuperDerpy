@@ -160,8 +160,9 @@ void Level_Load(struct Game *game) {
 		TM_Init(game);
 		TM_AddAction(&napis, NULL);
 		TM_AddAction(&napis, NULL);
+		TM_AddDelay(2000);
 		TM_AddAction(&napis, NULL);
-		TM_AddBackgroundAction(&napis2, NULL, 0);
+		TM_AddBackgroundAction(&napis2, NULL, 1125);
 		TM_AddAction(&wyjscie, NULL);
 		TM_AddBackgroundAction(&FadeIn, NULL, 0);
 	}

@@ -40,15 +40,16 @@ struct TM_Action {
 	bool active;
 	int delay;
 	struct TM_Action *next;
+	unsigned int id;
 	//*prev;
 };
 
 void TM_Init(struct Game* game);
 void TM_Process();
 void TM_HandleEvent(ALLEGRO_EVENT *ev);
-void TM_AddAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args);
-void TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, int delay);
-void TM_AddDelay(int delay);
+struct TM_Action* TM_AddAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args);
+void TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, float delay);
+void TM_AddDelay(float delay);
 void TM_Pause(bool pause);
 void TM_Destroy();
 struct TM_Arguments* TM_AddToArgs(struct TM_Arguments* args, void* arg);
