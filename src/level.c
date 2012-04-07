@@ -51,11 +51,8 @@ void Level_Draw(struct Game *game) {
 
 bool FadeIn(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (!action->arguments) { 
-		action->arguments = malloc(sizeof(struct TM_Arguments));
-		action->arguments->value = malloc(sizeof(float));
-		action->arguments->next = malloc(sizeof(struct TM_Arguments));
-		action->arguments->next->value = (void*)al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
-		action->arguments->next->next = NULL;
+		action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(float)));
+		action->arguments = TM_AddToArgs(action->arguments, (void*)al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display)));
 	}
 	float* fadeloop;
 	ALLEGRO_BITMAP* fade_bitmap;
@@ -81,11 +78,8 @@ bool FadeIn(struct Game *game, struct TM_Action *action, enum TM_ActionState sta
 
 bool FadeOut(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (!action->arguments) { 
-		action->arguments = malloc(sizeof(struct TM_Arguments));
-		action->arguments->value = malloc(sizeof(float));
-		action->arguments->next = malloc(sizeof(struct TM_Arguments));
-		action->arguments->next->value = (void*)al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
-		action->arguments->next->next = NULL;
+		action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(float)));
+		action->arguments = TM_AddToArgs(action->arguments, (void*)al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display)));
 	}
 	float* fadeloop;
 	ALLEGRO_BITMAP* fade_bitmap;
@@ -114,9 +108,7 @@ bool FadeOut(struct Game *game, struct TM_Action *action, enum TM_ActionState st
 
 bool napis2(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (!action->arguments) { 
-		action->arguments = malloc(sizeof(struct TM_Arguments));
-		action->arguments->value = malloc(sizeof(int));
-		action->arguments->next = NULL;
+		action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(int)));
 	}
 	int* tmp;
 	tmp = (int*)action->arguments->value;
@@ -135,9 +127,7 @@ bool napis2(struct Game *game, struct TM_Action *action, enum TM_ActionState sta
 
 bool napis(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (!action->arguments) { 
-		action->arguments = malloc(sizeof(struct TM_Arguments));
-		action->arguments->value = malloc(sizeof(int));
-		action->arguments->next = NULL;
+		action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(int)));
 	}
 	int* tmp;
 	tmp = (int*)action->arguments->value;

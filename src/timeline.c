@@ -128,9 +128,13 @@ void TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum T
 	action->function = func;
 	action->arguments = args;
 	action->timer = NULL; // TODO
-	action->active = true; // TODO: false here, true when delay
 	action->delay = delay;
-	(*action->function)(game, action, TM_ACTIONSTATE_INIT); // TODO: move to TM_HandleEvent
+	if (delay) {
+		action->active = false;
+	} else {
+		action->active = true;
+		(*action->function)(game, action, TM_ACTIONSTATE_INIT);
+	}
 }
 
 void TM_AddDelay(int delay) {
@@ -195,8 +199,20 @@ void TM_Destroy() {
 }
 
 struct TM_Arguments* TM_AddToArgs(struct TM_Arguments* args, void* arg) {
-	// TODO
-	return NULL;
+	struct TM_Arguments* tmp;
+	if (!args) {
+		tmp = malloc(sizeof(struct TM_Arguments));
+		tmp->value = arg;
+		tmp->next = NULL;
+		return tmp;
+	}
+	while (tmp->next) {
+		tmp = tmp->next;
+	}
+	tmp->next = malloc(sizeof(struct TM_Arguments));
+	tmp->next->value = arg;
+	tmp->next->next = NULL;
+	return args;
 }
 
 void TM_DestroyArgs(struct TM_Arguments* args) {
