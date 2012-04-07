@@ -44,25 +44,66 @@ void Level_Passed(struct Game *game) {
 void Level_Draw(struct Game *game) {
 	if (game->level.current_level!=1) Moonwalk_Draw(game);
 	else {
-		al_clear_to_color(al_map_rgb(0,0,0));
+		al_clear_to_color(al_map_rgb(128,0,0));
 		TM_Process();
 	}
 }
 
-bool napis(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
+bool FadeIn(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (!action->arguments) { 
 		action->arguments = malloc(sizeof(struct TM_Arguments));
-		action->arguments->value = malloc(sizeof(int));
-		action->arguments->next = NULL;
+		action->arguments->value = malloc(sizeof(float));
+		action->arguments->next = malloc(sizeof(struct TM_Arguments));
+		action->arguments->next->value = (void*)al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
+		action->arguments->next->next = NULL;
 	}
-	int* tmp;
-	tmp = (int*)action->arguments->value;
+	float* fadeloop;
+	ALLEGRO_BITMAP* fade_bitmap;
+	fadeloop = (float*)action->arguments->value;
+	fade_bitmap = (ALLEGRO_BITMAP*)action->arguments->next->value;
 	if (state == TM_ACTIONSTATE_INIT) {
-		*tmp = 0;
+		*fadeloop = 255;
+		al_set_target_bitmap(fade_bitmap);
+		al_clear_to_color(al_map_rgb(0,0,0));
+		al_set_target_bitmap(al_get_backbuffer(game->display));
 	} else if (state == TM_ACTIONSTATE_RUNNING) {
-		al_draw_text_with_shadow(game->font, al_map_rgb(255,255,255), *tmp, 20, 0, "wat");
-		*tmp+=10;
-		if (*tmp>1000) { *tmp=0; return true; }
+		al_draw_tinted_bitmap(fade_bitmap,al_map_rgba_f(1,1,1,*fadeloop/255.0),0,0,0);
+		*fadeloop-=tps(game, 600);
+		if (*fadeloop<=0) return true;
+	} else {
+		al_destroy_bitmap(fade_bitmap);
+		free(fadeloop);
+	}
+	return false;
+}
+
+bool FadeOut(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
+	if (!action->arguments) { 
+		action->arguments = malloc(sizeof(struct TM_Arguments));
+		action->arguments->value = malloc(sizeof(float));
+		action->arguments->next = malloc(sizeof(struct TM_Arguments));
+		action->arguments->next->value = (void*)al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
+		action->arguments->next->next = NULL;
+	}
+	float* fadeloop;
+	ALLEGRO_BITMAP* fade_bitmap;
+	fadeloop = (float*)action->arguments->value;
+	fade_bitmap = (ALLEGRO_BITMAP*)action->arguments->next->value;
+	if (state == TM_ACTIONSTATE_INIT) {
+		*fadeloop = 0;
+		al_set_target_bitmap(fade_bitmap);
+		al_clear_to_color(al_map_rgb(0,0,0));
+		al_set_target_bitmap(al_get_backbuffer(game->display));
+	} else if (state == TM_ACTIONSTATE_RUNNING) {
+		al_draw_tinted_bitmap(fade_bitmap,al_map_rgba_f(1,1,1,*fadeloop/255.0),0,0,0);
+		*fadeloop+=tps(game, 600);
+		if (*fadeloop>=256) return true;
+	} else {
+		al_destroy_bitmap(fade_bitmap);
+		free(fadeloop);
+		Level_Unload(game);
+		game->gamestate = GAMESTATE_LOADING;
+		game->loadstate = GAMESTATE_MAP;
 	}
 	return false;
 }
@@ -80,7 +121,27 @@ bool napis2(struct Game *game, struct TM_Action *action, enum TM_ActionState sta
 	} else if (state == TM_ACTIONSTATE_RUNNING) {
 		al_draw_text_with_shadow(game->font, al_map_rgb(255,255,255), *tmp, 100, 0, "lol");
 		*tmp+=5;
-		if (*tmp>1000) { *tmp=0; return true; }
+		if (*tmp>=al_get_display_width(game->display)) { *tmp=0; return true; }
+	}
+	return false;
+}
+
+bool napis(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
+	if (!action->arguments) { 
+		action->arguments = malloc(sizeof(struct TM_Arguments));
+		action->arguments->value = malloc(sizeof(int));
+		action->arguments->next = NULL;
+	}
+	int* tmp;
+	tmp = (int*)action->arguments->value;
+	if (state == TM_ACTIONSTATE_INIT) {
+		*tmp = 0;
+	} else if (state == TM_ACTIONSTATE_RUNNING) {
+		al_draw_text_with_shadow(game->font, al_map_rgb(255,255,255), *tmp, 20, 0, "wat");
+		*tmp+=10;
+		if (*tmp>=al_get_display_width(game->display)) { *tmp=0; return true; }
+	} else {
+		TM_AddBackgroundAction(&napis2, NULL, 0);
 	}
 	return false;
 }
@@ -88,8 +149,7 @@ bool napis2(struct Game *game, struct TM_Action *action, enum TM_ActionState sta
 bool wyjscie(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (state == TM_ACTIONSTATE_DESTROY) {
 		Level_Passed(game);
-		game->gamestate = GAMESTATE_LOADING;
-		game->loadstate = GAMESTATE_MAP;
+		TM_AddBackgroundAction(&FadeOut, NULL, 0);
 	}
 	return true;
 }
@@ -104,6 +164,7 @@ void Level_Load(struct Game *game) {
 		TM_AddAction(&napis, NULL);
 		TM_AddBackgroundAction(&napis2, NULL, 0);
 		TM_AddAction(&wyjscie, NULL);
+		TM_AddBackgroundAction(&FadeIn, NULL, 0);
 	}
 }
 
