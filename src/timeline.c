@@ -144,22 +144,17 @@ void TM_Pause(bool pause) {
 
 void TM_Destroy() {
 	if (!game) return;
-	// TODO: delete everything from queues
-	// maybe delete all args too?
 	struct TM_Action *tmp, *tmp2, *pom = queue;
 	tmp = NULL;
 	while (pom!=NULL) {
 		if (pom->active) {
-			if (*pom->function) {
-				(*pom->function)(game, pom, TM_ACTIONSTATE_DESTROY);
-				if (tmp) {
-					tmp->next = pom->next;
-				} else {
-					background = pom->next;
-				}
-			} else {
-			// TODO: handle delay
+			if (*pom->function) (*pom->function)(game, pom, TM_ACTIONSTATE_DESTROY);
+			else {
+				// TODO: handle delay
 			}
+		} else {
+			TM_DestroyArgs(pom->arguments);
+			pom->arguments = NULL;
 		}
 		if ((!tmp) || (tmp->next==pom)) {
 			tmp = pom;
@@ -176,16 +171,13 @@ void TM_Destroy() {
 	pom=background;
 	while (pom!=NULL) {
 		if (pom->active) {
-			if (*pom->function) {
-				(*pom->function)(game, pom, TM_ACTIONSTATE_DESTROY);
-				if (tmp) {
-					tmp->next = pom->next;
-				} else {
-					background = pom->next;
-				}
-			} else {
-			// TODO: handle delay
+			if (*pom->function) (*pom->function)(game, pom, TM_ACTIONSTATE_DESTROY);
+			else {
+				// TODO: handle delay
 			}
+		} else {
+			TM_DestroyArgs(pom->arguments);
+			pom->arguments = NULL;
 		}
 		if ((!tmp) || (tmp->next==pom)) {
 			tmp = pom;

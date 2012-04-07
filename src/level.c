@@ -74,6 +74,7 @@ bool FadeIn(struct Game *game, struct TM_Action *action, enum TM_ActionState sta
 		al_destroy_bitmap(fade_bitmap);
 		free(fadeloop);
 		TM_DestroyArgs(action->arguments);
+		action->arguments = NULL;
 	}
 	return false;
 }
@@ -106,6 +107,7 @@ bool FadeOut(struct Game *game, struct TM_Action *action, enum TM_ActionState st
 		game->gamestate = GAMESTATE_LOADING;
 		game->loadstate = GAMESTATE_MAP;
 		TM_DestroyArgs(action->arguments);
+		action->arguments = NULL;
 	}
 	return false;
 }
@@ -126,6 +128,7 @@ bool napis2(struct Game *game, struct TM_Action *action, enum TM_ActionState sta
 		if (*tmp>=al_get_display_width(game->display)) { *tmp=0; return true; }
 	} else {
 		TM_DestroyArgs(action->arguments);
+		action->arguments = NULL;
 	}
 	return false;
 }
@@ -147,6 +150,7 @@ bool napis(struct Game *game, struct TM_Action *action, enum TM_ActionState stat
 	} else {
 		TM_AddBackgroundAction(&napis2, NULL, 0);
 		TM_DestroyArgs(action->arguments);
+		action->arguments = NULL;
 	}
 	return false;
 }
