@@ -42,11 +42,12 @@ void TM_Process() {
 	//  if returns true, then delete it
 	if (queue) {
 		if (*queue->function) {
+			queue->active = true;
 			if ((*queue->function)(game, queue, TM_ACTIONSTATE_RUNNING)) {
+				queue->active=false;
 				(*queue->function)(game, queue, TM_ACTIONSTATE_DESTROY);
 				struct TM_Action *tmp = queue;
 				queue = queue->next;
-				if (tmp->arguments) free(tmp->arguments); // TODO: cascade destroy
 				free(tmp);
 			}
 		} else {
@@ -60,6 +61,7 @@ void TM_Process() {
 		if (pom->active) {
 			if (*pom->function) {
 				if ((*pom->function)(game, pom, TM_ACTIONSTATE_RUNNING)) {
+					pom->active=false;
 					(*pom->function)(game, pom, TM_ACTIONSTATE_DESTROY);
 					if (tmp) {
 						tmp->next = pom->next;
@@ -75,7 +77,6 @@ void TM_Process() {
 			tmp = pom;
 			pom = pom->next;
 		} else {
-			if (pom->arguments) free(pom->arguments); // TODO: cascade destroy
 			free(pom);
 			tmp2 = tmp;
 			if (!tmp) pom=background->next;
@@ -88,7 +89,7 @@ void TM_Process() {
 void TM_HandleEvent(ALLEGRO_EVENT *ev) {
 	if (!game) return;
 	if (paused) return;
-	// TODO: mark action as active
+	// TODO: find proper action and mark it as active
 	
 }
 
@@ -126,10 +127,10 @@ void TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum T
 	action->next = NULL;
 	action->function = func;
 	action->arguments = args;
-	action->timer = NULL;
-	action->active = true;
-	action->delay = 0;
-	(*action->function)(game, action, TM_ACTIONSTATE_INIT);
+	action->timer = NULL; // TODO
+	action->active = true; // TODO: false here, true when delay
+	action->delay = delay;
+	(*action->function)(game, action, TM_ACTIONSTATE_INIT); // TODO: move to TM_HandleEvent
 }
 
 void TM_AddDelay(int delay) {
@@ -142,15 +143,75 @@ void TM_Pause(bool pause) {
 }
 
 void TM_Destroy() {
+	if (!game) return;
 	// TODO: delete everything from queues
 	// maybe delete all args too?
+	struct TM_Action *tmp, *tmp2, *pom = queue;
+	tmp = NULL;
+	while (pom!=NULL) {
+		if (pom->active) {
+			if (*pom->function) {
+				(*pom->function)(game, pom, TM_ACTIONSTATE_DESTROY);
+				if (tmp) {
+					tmp->next = pom->next;
+				} else {
+					background = pom->next;
+				}
+			} else {
+			// TODO: handle delay
+			}
+		}
+		if ((!tmp) || (tmp->next==pom)) {
+			tmp = pom;
+			pom = pom->next;
+		} else {
+			free(pom);
+			tmp2 = tmp;
+			if (!tmp) pom=background->next;
+			else pom=tmp->next;
+			tmp = tmp2;
+		}
+	}
+	tmp = NULL;
+	pom=background;
+	while (pom!=NULL) {
+		if (pom->active) {
+			if (*pom->function) {
+				(*pom->function)(game, pom, TM_ACTIONSTATE_DESTROY);
+				if (tmp) {
+					tmp->next = pom->next;
+				} else {
+					background = pom->next;
+				}
+			} else {
+			// TODO: handle delay
+			}
+		}
+		if ((!tmp) || (tmp->next==pom)) {
+			tmp = pom;
+			pom = pom->next;
+		} else {
+			free(pom);
+			tmp2 = tmp;
+			if (!tmp) pom=background->next;
+			else pom=tmp->next;
+			tmp = tmp2;
+		}
+	}
+	
 	game = NULL;
 }
 
 struct TM_Arguments* TM_AddToArgs(struct TM_Arguments* args, void* arg) {
+	// TODO
 	return NULL;
 }
 
 void TM_DestroyArgs(struct TM_Arguments* args) {
-	
+	struct TM_Arguments *pom;
+	while (args) {
+		pom = args->next;
+		free(args);
+		args = pom;
+	}
 }
