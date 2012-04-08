@@ -160,7 +160,7 @@ struct TM_Action* TM_AddAction(bool (*func)(struct Game*, struct TM_Action*, enu
 	return action;
 }
 
-void TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, float delay) {
+struct TM_Action* TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, float delay) {
 	struct TM_Action *action = malloc(sizeof(struct TM_Action));
 	if (background) {
 		struct TM_Action *pom = background;
@@ -187,6 +187,7 @@ void TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum T
 		PrintConsole(game, "Timeline Manager: init action (background) %d", action->id);
 		(*action->function)(game, action, TM_ACTIONSTATE_INIT);
 	}
+	return action;
 }
 
 void TM_AddDelay(float delay) {
@@ -276,7 +277,7 @@ void TM_Destroy() {
 }
 
 struct TM_Arguments* TM_AddToArgs(struct TM_Arguments* args, void* arg) {
-	struct TM_Arguments* tmp;
+	struct TM_Arguments* tmp = args;
 	if (!args) {
 		tmp = malloc(sizeof(struct TM_Arguments));
 		tmp->value = arg;
@@ -300,3 +301,10 @@ void TM_DestroyArgs(struct TM_Arguments* args) {
 		args = pom;
 	}
 }
+
+bool TM_Initialized() {
+	if (game) return true;
+	return false;
+}
+
+// TODO: write TM_AddQueuedBackgroundAction

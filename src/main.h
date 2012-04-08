@@ -45,8 +45,6 @@ enum gamestate_enum {
 struct Moonwalk {
 	ALLEGRO_BITMAP *fade_bitmap; /*!< Bitmap used on fade-in and fade-out animations. */
 	ALLEGRO_BITMAP *image; /*!< Background texture. */
-	ALLEGRO_BITMAP *derpy_walkcycle; /*!< Derpy walk cycle spritesheet. */
-	ALLEGRO_BITMAP *derpy; /*!< Derpy sprite. */
 	ALLEGRO_SAMPLE *sample; /*!< Sample with background music. */
 	ALLEGRO_SAMPLE_INSTANCE *music; /*!< Sample instance with background music. */
 	unsigned int music_pos; /*!< Position of sample instance. Used when pausing game. */
@@ -61,7 +59,12 @@ struct Level {
 	int current_level;
 	float speed;
 	float bg_pos, st_pos, fg_pos, cl_pos;
+	float derpy_x, derpy_y;
+	int sheet_rows, sheet_cols, sheet_pos, sheet_tmp, sheet_speed;
 	ALLEGRO_BITMAP *background, *stage, *foreground, *clouds;
+	ALLEGRO_BITMAP *welcome;
+	ALLEGRO_BITMAP *derpy_walkcycle; /*!< Derpy walk cycle spritesheet. */
+	ALLEGRO_BITMAP *derpy; /*!< Derpy sprite. */
 	struct Moonwalk moonwalk;
 };
 
