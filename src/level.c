@@ -25,6 +25,8 @@
 #include "level.h"
 #include "timeline.h"
 
+// TODO: fix speeds to not depend on FPS
+
 void Level_Passed(struct Game *game) {
 	if (game->level.current_level<6) {
 		int available = atoi(GetConfigOptionDefault("MuffinAttack", "level", "1"));
@@ -100,6 +102,7 @@ void Level_Draw(struct Game *game) {
 		al_draw_bitmap_region(game->level.derpy_walkcycle,al_get_bitmap_width(game->level.derpy)*(game->level.sheet_pos%game->level.sheet_cols),al_get_bitmap_height(game->level.derpy)*(game->level.sheet_pos/game->level.sheet_cols),al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy),0,0,0);
 		if (game->level.sheet_speed) {
 			game->level.sheet_tmp++;
+			if (game->level.sheet_speed==1) game->level.sheet_pos++;
 			if (game->level.sheet_tmp%game->level.sheet_speed) game->level.sheet_pos++;
 			if (game->level.sheet_pos>=game->level.sheet_cols*game->level.sheet_rows) game->level.sheet_pos=0;
 		}
@@ -287,7 +290,7 @@ int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 			} else if (ev->keyboard.keycode == ALLEGRO_KEY_DOWN) {
 				game->level.derpy_y += 0.05;
 			}
-			if (game->level.derpy_y > 0.5) game->level.sheet_speed=2;
+			if (game->level.derpy_y > 0.5) game->level.sheet_speed=1;
 			else game->level.sheet_speed=0;
 		}
 	}
