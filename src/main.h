@@ -60,6 +60,7 @@ struct Level {
 	float speed;
 	float bg_pos, st_pos, fg_pos, cl_pos;
 	float derpy_x, derpy_y;
+	bool handle_input;
 	int sheet_rows, sheet_cols, sheet_pos, sheet_tmp, sheet_speed;
 	ALLEGRO_BITMAP *background, *stage, *foreground, *clouds;
 	ALLEGRO_BITMAP *welcome;

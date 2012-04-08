@@ -71,6 +71,7 @@ bool Fly(struct Game *game, struct TM_Action *action, enum TM_ActionState state)
 	}
 	game->level.derpy_y-=0.004;
 	if (game->level.derpy_y>0.2) return false;
+	game->level.handle_input=true;
 	return true;
 }
 
@@ -238,6 +239,7 @@ void Level_Load(struct Game *game) {
 	game->level.sheet_pos = 0;
 	game->level.sheet_speed = 2;
 	game->level.sheet_tmp = 0;
+	game->level.handle_input = false;
 	al_clear_to_color(al_map_rgb(0,0,0));
 	if (game->level.current_level!=1) Moonwalk_Load(game);
 	else {
@@ -278,6 +280,16 @@ int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 		game->gamestate = GAMESTATE_PAUSE;
 		game->loadstate = GAMESTATE_LEVEL;
 		Pause_Load(game);
+	} else {
+		if (game->level.handle_input) {
+			if (ev->keyboard.keycode == ALLEGRO_KEY_UP) {
+				game->level.derpy_y -= 0.05;
+			} else if (ev->keyboard.keycode == ALLEGRO_KEY_DOWN) {
+				game->level.derpy_y += 0.05;
+			}
+			if (game->level.derpy_y > 0.5) game->level.sheet_speed=2;
+			else game->level.sheet_speed=0;
+		}
 	}
 	return 0;
 }
