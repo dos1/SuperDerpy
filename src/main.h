@@ -59,6 +59,9 @@ struct Moonwalk {
 /*! \brief Resources used by Level state. */
 struct Level {
 	int current_level;
+	float speed;
+	float bg_pos, st_pos, fg_pos, cl_pos;
+	ALLEGRO_BITMAP *background, *stage, *foreground, *clouds;
 	struct Moonwalk moonwalk;
 };
 

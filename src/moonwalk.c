@@ -112,8 +112,6 @@ void Moonwalk_Preload(struct Game *game) {
 		fprintf(stderr, "Audio clip sample not loaded!\n" );
 		exit(-1);
 	}
-
-	Moonwalk_PreloadBitmaps(game);
 }
 
 void Moonwalk_UnloadBitmaps(struct Game *game) {
@@ -138,7 +136,6 @@ void Moonwalk_Unload(struct Game *game) {
 		DrawConsole(game);
 		al_flip_display();
 	}
-	Moonwalk_UnloadBitmaps(game);
 	al_destroy_bitmap(game->level.moonwalk.fade_bitmap);
 	al_destroy_sample_instance(game->level.moonwalk.music);
 	al_destroy_sample(game->level.moonwalk.sample);

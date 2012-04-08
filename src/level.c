@@ -41,10 +41,36 @@ void Level_Passed(struct Game *game) {
 	}
 }
 
+bool Accelerate(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
+	if (state != TM_ACTIONSTATE_RUNNING) return false;
+	game->level.speed+=0.000001;
+	if (game->level.speed<0.0025) return false;
+	return true;
+}
+
 void Level_Draw(struct Game *game) {
 	if (game->level.current_level!=1) Moonwalk_Draw(game);
 	else {
-		al_clear_to_color(al_map_rgb(128,0,0));
+		al_clear_to_color(al_map_rgb(0,0,0));
+		al_draw_bitmap(game->level.clouds, (-game->level.cl_pos)*al_get_bitmap_width(game->level.clouds), 0, 0);
+		al_draw_bitmap(game->level.clouds, (1+(-game->level.cl_pos))*al_get_bitmap_width(game->level.clouds), 0, 0);
+		al_draw_bitmap(game->level.background, (-game->level.bg_pos)*al_get_bitmap_width(game->level.background), 0, 0);
+		al_draw_bitmap(game->level.background, (1+(-game->level.bg_pos))*al_get_bitmap_width(game->level.background), 0, 0);
+		al_draw_bitmap(game->level.stage, (-game->level.st_pos)*al_get_bitmap_width(game->level.stage), 0 ,0);
+		al_draw_bitmap(game->level.stage, (1+(-game->level.st_pos))*al_get_bitmap_width(game->level.stage), 0 ,0);
+		al_draw_bitmap(game->level.foreground, (-game->level.fg_pos)*al_get_bitmap_width(game->level.foreground), 0 ,0);
+		al_draw_bitmap(game->level.foreground, (1+(-game->level.fg_pos))*al_get_bitmap_width(game->level.foreground), 0 ,0);
+		if (game->level.speed > 0) {
+			game->level.cl_pos += game->level.speed * 0.6;
+			game->level.bg_pos += game->level.speed * 0.6;
+			game->level.st_pos += game->level.speed * 1;
+			game->level.fg_pos += game->level.speed * 1.75;
+			if (game->level.cl_pos >= 1) game->level.cl_pos=1-game->level.cl_pos;
+			if (game->level.bg_pos >= 1) game->level.bg_pos=1-game->level.bg_pos;
+			if (game->level.st_pos >= 1) game->level.st_pos=1-game->level.st_pos;
+			if (game->level.fg_pos >= 1) game->level.fg_pos=1-game->level.fg_pos;
+		}
+		game->level.cl_pos += 0.0001;
 		TM_Process();
 	}
 }
@@ -154,13 +180,19 @@ bool wyjscie(struct Game *game, struct TM_Action *action, enum TM_ActionState st
 }
 
 void Level_Load(struct Game *game) {
+	game->level.cl_pos=0;
+	game->level.bg_pos=0;
+	game->level.fg_pos=0.2;
+	game->level.st_pos=0.1;
+	game->level.speed=0;
 	al_clear_to_color(al_map_rgb(0,0,0));
 	if (game->level.current_level!=1) Moonwalk_Load(game);
 	else {
 		TM_Init(game);
+		TM_AddBackgroundAction(&Accelerate, NULL, 5000);
 		TM_AddAction(&napis, NULL);
 		TM_AddAction(&napis, NULL);
-		TM_AddDelay(2000);
+		TM_AddDelay(60*1000);
 		TM_AddAction(&napis, NULL);
 		TM_AddBackgroundAction(&napis2, NULL, 1125);
 		TM_AddAction(&wyjscie, NULL);
@@ -185,6 +217,7 @@ void Level_ProcessLogic(struct Game *game, ALLEGRO_EVENT *ev) {
 void Level_Preload(struct Game *game) {
 	Pause_Preload(game);
 	if (game->level.current_level!=1) Moonwalk_Preload(game);
+	Level_PreloadBitmaps(game);
 }
 
 void Level_Unload(struct Game *game) {
@@ -193,12 +226,26 @@ void Level_Unload(struct Game *game) {
 	else {
 		TM_Destroy();
 	}
+	Level_UnloadBitmaps(game);
 }
 
 void Level_UnloadBitmaps(struct Game *game) {
 	if (game->level.current_level!=1) Moonwalk_UnloadBitmaps(game);
+	else {
+		al_destroy_bitmap(game->level.foreground);
+		al_destroy_bitmap(game->level.background);
+		al_destroy_bitmap(game->level.stage);
+		al_destroy_bitmap(game->level.clouds);
+	}
 }
 
 void Level_PreloadBitmaps(struct Game *game) {
 	if (game->level.current_level!=1) Moonwalk_PreloadBitmaps(game);
+	else {
+		// TODO: handle strange display aspects
+		game->level.clouds = LoadScaledBitmap("levels/1/clouds.png", al_get_display_height(game->display)*4.73307291666666666667, al_get_display_height(game->display));
+		game->level.foreground = LoadScaledBitmap("levels/1/foreground.png", al_get_display_height(game->display)*4.73307291666666666667, al_get_display_height(game->display));
+		game->level.background = LoadScaledBitmap("levels/1/background.png", al_get_display_height(game->display)*4.73307291666666666667, al_get_display_height(game->display));
+		game->level.stage = LoadScaledBitmap("levels/1/stage.png", al_get_display_height(game->display)*4.73307291666666666667, al_get_display_height(game->display));
+	}
 }
