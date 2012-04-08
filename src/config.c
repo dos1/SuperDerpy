@@ -25,6 +25,7 @@ ALLEGRO_CONFIG *config;
 
 void InitConfig() {
 	config = al_load_config_file("SuperDerpy.ini");
+	if (!config) config=al_create_config();
 }
 
 void SetConfigOption(char* section, char* name, char* value) {
