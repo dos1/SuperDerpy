@@ -25,7 +25,7 @@
 #include "level.h"
 #include "timeline.h"
 
-// TODO: fix speeds to not depend on FPS
+// TODO: fix spritesheet speed to not depend on FPS
 
 void Level_Passed(struct Game *game) {
 	if (game->level.current_level<6) {
@@ -45,28 +45,28 @@ void Level_Passed(struct Game *game) {
 
 bool Accelerate(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (state != TM_ACTIONSTATE_RUNNING) return false;
-	game->level.speed+=0.000005;
-	if (game->level.speed<0.0020) return false;
+	game->level.speed+=tps(game, 0.000005*60);
+	if (game->level.speed<tps(game, 0.0020*60)) return false;
 	return true;
 }
 
 bool Walk(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (state != TM_ACTIONSTATE_RUNNING) return false;
-	game->level.derpy_x+=0.001;
+	game->level.derpy_x+=tps(game, 60*0.001);
 	if (game->level.derpy_x<0.05) return false;
 	return true;
 }
 
 bool Move(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (state != TM_ACTIONSTATE_RUNNING) return false;
-	game->level.speed=0.00035;
+	game->level.speed=tps(game, 60*0.00035);
 	if (game->level.st_pos<0.275) return false;
 	return true;
 }
 
 bool Fly(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (state != TM_ACTIONSTATE_RUNNING) return false;
-	game->level.derpy_y-=0.004;
+	game->level.derpy_y-=tps(game, 60*0.004);
 	if (game->level.derpy_y>0.2) return false;
 	game->level.handle_input=true;
 	return true;
@@ -96,10 +96,17 @@ void Level_Draw(struct Game *game) {
 		al_clear_to_color(al_map_rgba(0,0,0,0));
 		al_draw_bitmap_region(game->level.derpy_walkcycle,al_get_bitmap_width(game->level.derpy)*(game->level.sheet_pos%game->level.sheet_cols),al_get_bitmap_height(game->level.derpy)*(game->level.sheet_pos/game->level.sheet_cols),al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy),0,0,0);
 		if (game->level.sheet_speed) {
-			game->level.sheet_tmp++;
-			if (game->level.sheet_speed==1) game->level.sheet_pos++;
-			if (game->level.sheet_tmp%game->level.sheet_speed) game->level.sheet_pos++;
-			if (game->level.sheet_pos>=game->level.sheet_cols*game->level.sheet_rows) game->level.sheet_pos=0;
+			//int i;
+			//for (i = 0; i < tps(game, 60); i++ ) {
+				game->level.sheet_tmp+=tps(game, 60);
+				//if (game->level.sheet_speed==1) game->level.sheet_pos++;
+				if (game->level.sheet_tmp >= game->level.sheet_speed) {
+					game->level.sheet_pos++;
+					game->level.sheet_tmp = 0;
+					//game->level.sheet_tmp -= game->level.sheet_speed;
+				}
+				if (game->level.sheet_pos>=game->level.sheet_cols*game->level.sheet_rows) game->level.sheet_pos=0;
+			//}
 		}
 		al_set_target_bitmap(al_get_backbuffer(game->display));
 
@@ -117,7 +124,7 @@ void Level_Draw(struct Game *game) {
 			if (game->level.st_pos >= 1) game->level.st_pos=1-game->level.st_pos;
 			if (game->level.fg_pos >= 1) game->level.fg_pos=1-game->level.fg_pos;
 		}
-		game->level.cl_pos += 0.0001;
+		game->level.cl_pos += tps(game, 60*0.0001);
 		TM_Process();
 	}
 }
@@ -234,7 +241,7 @@ void Level_Load(struct Game *game) {
 	game->level.sheet_rows = 4;
 	game->level.sheet_cols = 6;
 	game->level.sheet_pos = 0;
-	game->level.sheet_speed = 2;
+	game->level.sheet_speed = 2.5;
 	game->level.sheet_tmp = 0;
 	game->level.handle_input = false;
 	al_clear_to_color(al_map_rgb(0,0,0));

@@ -61,7 +61,8 @@ struct Level {
 	float bg_pos, st_pos, fg_pos, cl_pos;
 	float derpy_x, derpy_y;
 	bool handle_input;
-	int sheet_rows, sheet_cols, sheet_pos, sheet_tmp, sheet_speed;
+	int sheet_rows, sheet_cols, sheet_pos;
+	float sheet_tmp, sheet_speed;
 	ALLEGRO_BITMAP *background, *stage, *foreground, *clouds;
 	ALLEGRO_BITMAP *welcome;
 	ALLEGRO_BITMAP *derpy_walkcycle; /*!< Derpy walk cycle spritesheet. */
