@@ -81,6 +81,17 @@ bool Stop(struct Game *game, struct TM_Action *action, enum TM_ActionState state
 	return true;
 }
 
+bool Letter(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
+	if (state != TM_ACTIONSTATE_RUNNING) return false;
+	al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.45, ALLEGRO_ALIGN_CENTRE, "Letter from Twilight");
+	struct ALLEGRO_KEYBOARD_STATE keyboard;
+	al_get_keyboard_state(&keyboard);
+	if (al_key_down(&keyboard, ALLEGRO_KEY_ENTER)) {
+		return true;
+	}
+	return false;
+}
+
 void Level_Draw(struct Game *game) {
 	if (!al_get_sample_instance_playing(game->level.music) && (game->loadstate==GAMESTATE_LEVEL)) { 
 		al_set_sample_instance_playing(game->level.music, true);
@@ -278,7 +289,9 @@ void Level_Load(struct Game *game) {
 		TM_AddAction(&Walk, NULL);
 		TM_AddAction(&Move, NULL);
 		TM_AddAction(&Stop, NULL);
-		TM_AddDelay(5*1000);
+		TM_AddDelay(1000);
+		TM_AddAction(&Letter, NULL);
+		TM_AddDelay(500);
 		TM_AddQueuedBackgroundAction(&Accelerate, NULL, 0);
 		TM_AddAction(&Fly, NULL);
 		// Derpy walks in... (background - owl)
