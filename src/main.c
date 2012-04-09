@@ -387,6 +387,16 @@ int main(int argc, char **argv){
 	PreloadGameState(&game);
 	LoadGameState(&game);
 	game.loadstate = GAMESTATE_MENU;
+
+	int c;
+	while ((c = getopt (argc, argv, "l:")) != -1)
+		switch (c) {
+			case 'l':
+				game.level.current_level = optarg[0]-'0';
+				game.loadstate = GAMESTATE_LEVEL;
+				break;
+		}
+
 	while(1) {
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(game.event_queue, &ev);

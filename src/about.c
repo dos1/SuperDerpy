@@ -120,9 +120,9 @@ void About_Preload(struct Game *game) {
 	draw_text(" - Anna Karlik");
 	draw_text("");
 	draw_text("Music:");
-	draw_text(" - Dr Dissonance (\"Don Discord\")");
+	draw_text(" - Dr Dissonance");
 	draw_text("   http://dr-dissonance.tumblr.com/");
-	draw_text(" - Claire Anne Carr (\"A bubbles paradise\")");
+	draw_text(" - Claire Anne Carr");
 	draw_text("   http://claireannecarr.bandcamp.com/");
 	draw_text(" - Dan O'Connor");
 	draw_text("   http://www.danosongs.com/");

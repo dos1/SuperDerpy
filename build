@@ -1,4 +1,4 @@
 #!/bin/sh
-echo run > gdb.tmp
+echo run $@ > gdb.tmp
 make -j10 && gdb bin/superderpy -x gdb.tmp
 rm gdb.tmp
