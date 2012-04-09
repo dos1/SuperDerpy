@@ -22,6 +22,7 @@
  */
 #include <stdio.h>
 #include <math.h>
+#include <getopt.h>
 #include "menu.h"
 #include "loading.h"
 #include "about.h"
@@ -32,19 +33,19 @@
 #include "config.h"
 
 /*! \brief Macro for preloading gamestate.
- * 
+ *
  *  Preloading of state happens when loading screen is displayed.
  */
 #define PRELOAD_STATE(state, name) case state:\
 	PrintConsole(game, "Preload %s...", #state); DrawConsole(game); al_flip_display(); name ## _Preload(game); break;
 /*! \brief Macro for unloading gamestate.
- * 
+ *
  *  Unloading of state happens after it's fadeout.
  */
 #define UNLOAD_STATE(state, name) case state:\
 	PrintConsole(game, "Unload %s...", #state); name ## _Unload(game); break;
 /*! \brief Macro for loading gamestate.
- * 
+ *
  *  Loading of state means setting it as active and running it.
  */
 #define LOAD_STATE(state, name) case state:\
@@ -106,7 +107,7 @@ void PreloadGameState(struct Game *game) {
 void UnloadGameState(struct Game *game) {
 	switch (game->gamestate) {
 		case GAMESTATE_MENU:
-			if (game->shuttingdown) { 
+			if (game->shuttingdown) {
 				PrintConsole(game, "Unload GAMESTATE_MENU..."); Menu_Unload(game);
 			} else {
 				PrintConsole(game, "Just stopping GAMESTATE_MENU..."); Menu_Stop(game);
@@ -176,8 +177,8 @@ void ScaleBitmap(ALLEGRO_BITMAP* source, int width, int height) {
 
 	ALLEGRO_COLOR interpolate(ALLEGRO_COLOR c1, ALLEGRO_COLOR c2, float frac) {
 		return al_map_rgba_f(c1.r + frac * (c2.r - c1.r),
-			c1.g + frac * (c2.g - c1.g), 
-			c1.b + frac * (c2.b - c1.b), 
+			c1.g + frac * (c2.g - c1.g),
+			c1.b + frac * (c2.b - c1.b),
 			c1.a + frac * (c2.a - c1.a));
 	}
 
@@ -192,11 +193,11 @@ void ScaleBitmap(ALLEGRO_BITMAP* source, int width, int height) {
 			ALLEGRO_COLOR b = al_get_pixel(source, pixx_f + 1, pixy_f);
 			ALLEGRO_COLOR c = al_get_pixel(source, pixx_f, pixy_f + 1);
 			ALLEGRO_COLOR d = al_get_pixel(source, pixx_f + 1, pixy_f + 1);
-			
+
 			ALLEGRO_COLOR ab = interpolate(a, b, pixx - pixx_f);
 			ALLEGRO_COLOR cd = interpolate(c, d, pixx - pixx_f);
 			ALLEGRO_COLOR result = interpolate(ab, cd, pixy - pixy_f);
-			
+
 			al_put_pixel(x, y, result);
 		}
 	}
@@ -214,7 +215,7 @@ ALLEGRO_BITMAP* LoadScaledBitmap(char* filename, int width, int height) {
 	//strcat(cachefn, filename);
 	void GenerateBitmap() {
 		al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
-		
+
 		source = al_load_bitmap( origfn );
 		al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR | ALLEGRO_MIN_LINEAR);
 
@@ -223,7 +224,7 @@ ALLEGRO_BITMAP* LoadScaledBitmap(char* filename, int width, int height) {
 		//PrintConsole(game, "Cache bitmap %s generated.", filename);
 		al_destroy_bitmap(source);
 	}
-	
+
 	//source = al_load_bitmap( cachefn );
 	//if (source) {
 	//	if ((al_get_bitmap_width(source)!=width) || (al_get_bitmap_height(source)!=height)) {
@@ -268,7 +269,7 @@ int main(int argc, char **argv){
 	srand(time(NULL));
 
 	InitConfig();
-   
+
 	bool redraw = true;
 
 	struct Game game;
@@ -289,7 +290,7 @@ int main(int argc, char **argv){
 		fprintf(stderr, "failed to initialize allegro!\n");
 		return -1;
 	}
-   
+
 	game.timer = al_create_timer(ALLEGRO_BPS_TO_SECS(game.fps));
 	if(!game.timer) {
 		fprintf(stderr, "failed to create timer!\n");
@@ -322,7 +323,7 @@ int main(int argc, char **argv){
 		fprintf(stderr, "failed to reserve samples!\n");
 		return -1;
 	}
- */  
+ */
 	al_init_font_addon();
 
 	if(!al_init_ttf_addon()){
@@ -441,7 +442,7 @@ int main(int argc, char **argv){
 				Level_ProcessLogic(&game, &ev);
 			}
 		}
-	
+
 		if(redraw && al_is_event_queue_empty(game.event_queue)) {
 			redraw = false;
 			DrawGameState(&game);
