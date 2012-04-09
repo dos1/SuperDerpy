@@ -259,7 +259,7 @@ bool Welcome(struct Game *game, struct TM_Action *action, enum TM_ActionState st
 bool PassLevel(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (state == TM_ACTIONSTATE_DESTROY) {
 		Level_Passed(game);
-		TM_AddBackgroundAction(&FadeOut, NULL, 0);
+		TM_AddBackgroundAction(&FadeOut, NULL, 0, "fadeout");
 	}
 	return true;
 }
@@ -282,18 +282,18 @@ void Level_Load(struct Game *game) {
 	if (game->level.current_level!=1) Moonwalk_Load(game);
 	else {
 		TM_Init(game);
-		TM_AddBackgroundAction(&FadeIn, NULL, 0);
+		TM_AddBackgroundAction(&FadeIn, NULL, 0, "fadein");
 		TM_AddDelay(1000);
-		TM_AddQueuedBackgroundAction(&Welcome, NULL, 0);
+		TM_AddQueuedBackgroundAction(&Welcome, NULL, 0, "welcome");
 		TM_AddDelay(1000);
-		TM_AddAction(&Walk, NULL);
-		TM_AddAction(&Move, NULL);
-		TM_AddAction(&Stop, NULL);
+		TM_AddAction(&Walk, NULL, "walk");
+		TM_AddAction(&Move, NULL, "move");
+		TM_AddAction(&Stop, NULL, "stop");
 		TM_AddDelay(1000);
-		TM_AddAction(&Letter, NULL);
+		TM_AddAction(&Letter, NULL, "letter");
 		TM_AddDelay(500);
-		TM_AddQueuedBackgroundAction(&Accelerate, NULL, 0);
-		TM_AddAction(&Fly, NULL);
+		TM_AddQueuedBackgroundAction(&Accelerate, NULL, 0, "accelerate");
+		TM_AddAction(&Fly, NULL, "fly");
 		// Derpy walks in... (background - owl)
 		// Derpy reads a letter
 		// Letter on screen
@@ -312,7 +312,7 @@ void Level_Load(struct Game *game) {
 		// cutscene goes here
 		//
 		
-		TM_AddAction(&PassLevel, NULL);
+		TM_AddAction(&PassLevel, NULL, "passlevel");
 	}
 }
 

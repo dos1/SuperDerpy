@@ -45,19 +45,23 @@ void TM_Process() {
 		if (*queue->function) {
 			queue->active = true;
 			if ((*queue->function)(game, queue, TM_ACTIONSTATE_RUNNING)) {
-				PrintConsole(game, "Timeline Manager: destroy action (queue) %d", queue->id);
+				PrintConsole(game, "Timeline Manager: queue: destroy action (%d - %s)", queue->id, queue->name);
 				queue->active=false;
 				(*queue->function)(game, queue, TM_ACTIONSTATE_DESTROY);
 				struct TM_Action *tmp = queue;
 				queue = queue->next;
+				free(tmp->name);
 				free(tmp);
+				if (queue) PrintConsole(game, "Timeline Manager: queue: run action (%d - %s)", queue->id, queue->name);
 			}
 		} else {
 			// delay
 			if (queue->active) {
 				struct TM_Action *tmp = queue;
 				queue = queue->next;
+				free(tmp->name);
 				free(tmp);
+				if (queue) PrintConsole(game, "Timeline Manager: queue: run action (%d - %s)", queue->id, queue->name);
 			} else {
 				al_start_timer(queue->timer);
 			}
@@ -71,7 +75,7 @@ void TM_Process() {
 			if (*pom->function) {
 				if ((*pom->function)(game, pom, TM_ACTIONSTATE_RUNNING)) {
 					pom->active=false;
-					PrintConsole(game, "Timeline Manager: destroy action (background) %d", pom->id);
+					PrintConsole(game, "Timeline Manager: background: destroy action (%d - %s)", pom->id, pom->name);
 					(*pom->function)(game, pom, TM_ACTIONSTATE_DESTROY);
 					if (tmp) {
 						tmp->next = pom->next;
@@ -92,6 +96,7 @@ void TM_Process() {
 			tmp = pom;
 			pom = pom->next;
 		} else {
+			free(pom->name);
 			free(pom);
 			tmp2 = tmp;
 			if (!tmp) pom=background->next;
@@ -107,15 +112,14 @@ void TM_HandleEvent(ALLEGRO_EVENT *ev) {
 	if (paused) return;
 	if (queue) {
 		if (ev->timer.source == queue->timer) {
-			PrintConsole(game, "Timeline Manager: event matched (queue) %d", queue->id);
 			queue->active=true;
 			al_destroy_timer(queue->timer);
 			queue->timer = NULL;
 			if (queue->function) { 
-				PrintConsole(game, "Timeline Manager: init action (queue) %d", queue->id);
+				PrintConsole(game, "Timeline Manager: queue: init action (%d - %s)", queue->id, queue->name);
 				(*queue->function)(game, queue, TM_ACTIONSTATE_INIT);
 			} else {
-				PrintConsole(game, "Timeline Manager: delay reached (queue) %d", queue->id);
+				PrintConsole(game, "Timeline Manager: queue: delay reached (%d - %s)", queue->id, queue->name);
 			}
 			return;
 		}
@@ -123,11 +127,10 @@ void TM_HandleEvent(ALLEGRO_EVENT *ev) {
 	struct TM_Action *pom = background;
 	while (pom) {
 		if (ev->timer.source == pom->timer) {
-			PrintConsole(game, "Timeline Manager: event matched (background) %d", pom->id);
+			PrintConsole(game, "Timeline Manager: background: delay reached, init and run action (%d - %s)", pom->id, pom->name);
 			pom->active=true;
 			al_destroy_timer(pom->timer);
 			pom->timer = NULL;
-			PrintConsole(game, "Timeline Manager: delay reached, init action (background) %d", pom->id);
 			(*pom->function)(game, pom, TM_ACTIONSTATE_INIT);
 			return;
 		}
@@ -135,7 +138,7 @@ void TM_HandleEvent(ALLEGRO_EVENT *ev) {
 	}
 }
 
-struct TM_Action* TM_AddAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args) {
+struct TM_Action* TM_AddAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, char* name) {
 	struct TM_Action *action = malloc(sizeof(struct TM_Action));
 	if (queue) {
 		struct TM_Action *pom = queue;
@@ -149,18 +152,20 @@ struct TM_Action* TM_AddAction(bool (*func)(struct Game*, struct TM_Action*, enu
 	action->next = NULL;
 	action->function = func;
 	action->arguments = args;
+	action->name = malloc((strlen(name)+1)*sizeof(char));
+	strcpy(action->name, name);
 	action->timer = NULL;
 	action->active = false;
 	action->delay = 0;
 	action->id = ++lastid;
 	if (action->function) { 
-		PrintConsole(game, "Timeline Manager: init action (queue) %d", action->id);
+		PrintConsole(game, "Timeline Manager: queue: init action (%d - %s)", action->id, action->name);
 		(*action->function)(game, action, TM_ACTIONSTATE_INIT);
 	}
 	return action;
 }
 
-struct TM_Action* TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, float delay) {
+struct TM_Action* TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, float delay, char* name) {
 	struct TM_Action *action = malloc(sizeof(struct TM_Action));
 	if (background) {
 		struct TM_Action *pom = background;
@@ -174,6 +179,8 @@ struct TM_Action* TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Ac
 	action->next = NULL;
 	action->function = func;
 	action->arguments = args;
+	action->name = malloc((strlen(name)+1)*sizeof(char));
+	strcpy(action->name, name);
 	action->delay = delay;
 	action->id = ++lastid;
 	if (delay) {
@@ -184,7 +191,7 @@ struct TM_Action* TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Ac
 	} else {
 		action->timer = NULL;
 		action->active = true;
-		PrintConsole(game, "Timeline Manager: init action (background) %d", action->id);
+		PrintConsole(game, "Timeline Manager: background: init and run action (%d - %s)", action->id, action->name);
 		(*action->function)(game, action, TM_ACTIONSTATE_INIT);
 	}
 	return action;
@@ -193,16 +200,22 @@ struct TM_Action* TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Ac
 bool runinbackground(struct Game* game, struct TM_Action* action, enum TM_ActionState state) {
 	if (state != TM_ACTIONSTATE_RUNNING) return false;
 	float* delay = (float*) action->arguments->next->value;
-	TM_AddBackgroundAction(action->arguments->value, action->arguments->next->next, *delay);
+	char* name = (char*) action->arguments->next->next->value;
+	TM_AddBackgroundAction(action->arguments->value, action->arguments->next->next->next, *delay, name);
+	free(name);
 	return true;
 }
 
-struct TM_Action* TM_AddQueuedBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, float delay) {
+struct TM_Action* TM_AddQueuedBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, float delay, char* name) {
 	struct TM_Arguments* arguments = TM_AddToArgs(NULL, (void*) func);
 	arguments = TM_AddToArgs(arguments, malloc(sizeof(float)));
+	arguments = TM_AddToArgs(arguments, NULL);
 	*(float*)(arguments->next->value) = delay;
-	arguments->next->next = args;
-	return TM_AddAction(*runinbackground, arguments);
+	arguments->next->next->value = malloc((strlen(name)+1)*sizeof(char));
+	strcpy(arguments->next->next->value, name);
+
+	arguments->next->next->next = args;
+	return TM_AddAction(*runinbackground, arguments, "TM_BackgroundAction");
 }
 
 void TM_AddDelay(float delay) {
@@ -210,8 +223,8 @@ void TM_AddDelay(float delay) {
 	tmp = malloc(sizeof(int));
 	*tmp = delay;
 	TM_AddAction(NULL, TM_AddToArgs(NULL, tmp));*/
-	struct TM_Action* tmp = TM_AddAction(NULL, NULL);
-	PrintConsole(game, "Timeline Manager: adding delay %f ms %d", delay, tmp->id);
+	struct TM_Action* tmp = TM_AddAction(NULL, NULL, "Delay");
+	PrintConsole(game, "Timeline Manager: queue: adding delay %f ms (%d)", delay, tmp->id);
 	tmp->delay = delay;
 	tmp->timer = al_create_timer(delay/1000.0);
 	al_register_event_source(game->event_queue, al_get_timer_event_source(tmp->timer));
@@ -257,6 +270,7 @@ void TM_Destroy() {
 			tmp = pom;
 			pom = pom->next;
 		} else {
+			free(pom->name);
 			free(pom);
 			tmp2 = tmp;
 			if (!tmp) pom=background->next;
@@ -280,6 +294,7 @@ void TM_Destroy() {
 			tmp = pom;
 			pom = pom->next;
 		} else {
+			free(pom->name);
 			free(pom);
 			tmp2 = tmp;
 			if (!tmp) pom=background->next;
