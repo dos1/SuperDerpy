@@ -223,7 +223,7 @@ void TM_AddDelay(float delay) {
 	tmp = malloc(sizeof(int));
 	*tmp = delay;
 	TM_AddAction(NULL, TM_AddToArgs(NULL, tmp));*/
-	struct TM_Action* tmp = TM_AddAction(NULL, NULL, "Delay");
+	struct TM_Action* tmp = TM_AddAction(NULL, NULL, "TM_Delay");
 	PrintConsole(game, "Timeline Manager: queue: adding delay %f ms (%d)", delay, tmp->id);
 	tmp->delay = delay;
 	tmp->timer = al_create_timer(delay/1000.0);
