@@ -123,10 +123,10 @@ void Level_Draw(struct Game *game) {
 			game->level.bg_pos += game->level.speed * 0.6;
 			game->level.st_pos += game->level.speed * 1;
 			game->level.fg_pos += game->level.speed * 1.75;
-			if (game->level.cl_pos >= 1) game->level.cl_pos=1-game->level.cl_pos;
-			if (game->level.bg_pos >= 1) game->level.bg_pos=1-game->level.bg_pos;
-			if (game->level.st_pos >= 1) game->level.st_pos=1-game->level.st_pos;
-			if (game->level.fg_pos >= 1) game->level.fg_pos=1-game->level.fg_pos;
+			if (game->level.cl_pos >= 1) game->level.cl_pos=0; //1-game->level.cl_pos;
+			if (game->level.bg_pos >= 1) game->level.bg_pos=0; //1-game->level.bg_pos;
+			if (game->level.st_pos >= 1) game->level.st_pos=0; //1-game->level.st_pos;
+			if (game->level.fg_pos >= 1) game->level.fg_pos=0; //1-game->level.fg_pos;
 		}
 		game->level.cl_pos += tps(game, 60*0.0001);
 		TM_Process();

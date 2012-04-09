@@ -62,6 +62,7 @@ void Moonwalk_Load(struct Game *game) {
 	game->level.moonwalk.derpy_frame = 0;
 	game->level.moonwalk.derpy_frame_tmp = 0;
 	game->level.moonwalk.derpy_pos = -0.2;
+	al_play_sample_instance(game->level.music);
 	ALLEGRO_EVENT ev;
 	int fadeloop;
 	for(fadeloop=0; fadeloop<256; fadeloop+=tps(game, 600)){
