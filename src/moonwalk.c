@@ -24,10 +24,6 @@
 #include "moonwalk.h"
 
 void Moonwalk_Draw(struct Game *game) {
-	if (!al_get_sample_instance_playing(game->level.moonwalk.music) && (game->loadstate==GAMESTATE_LEVEL)) { 
-		al_set_sample_instance_playing(game->level.moonwalk.music, true);
-		al_set_sample_instance_position(game->level.moonwalk.music, game->level.moonwalk.music_pos);
-	}
 	al_set_target_bitmap(game->level.derpy);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 	al_draw_bitmap_region(game->level.derpy_walkcycle,al_get_bitmap_width(game->level.derpy)*(game->level.moonwalk.derpy_frame%6),al_get_bitmap_height(game->level.derpy)*(game->level.moonwalk.derpy_frame/6),al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy),0,0,0);
@@ -66,7 +62,6 @@ void Moonwalk_Load(struct Game *game) {
 	game->level.moonwalk.derpy_frame = 0;
 	game->level.moonwalk.derpy_frame_tmp = 0;
 	game->level.moonwalk.derpy_pos = -0.2;
-	al_play_sample_instance(game->level.moonwalk.music);
 	ALLEGRO_EVENT ev;
 	int fadeloop;
 	for(fadeloop=0; fadeloop<256; fadeloop+=tps(game, 600)){
@@ -80,10 +75,6 @@ void Moonwalk_Load(struct Game *game) {
 }
 
 int Moonwalk_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
-	if (ev->keyboard.keycode==ALLEGRO_KEY_ESCAPE) {
-		game->level.moonwalk.music_pos = al_get_sample_instance_position(game->level.moonwalk.music);
-		al_set_sample_instance_playing(game->level.moonwalk.music, false);
-	}
 	return 0;
 }
 
@@ -103,12 +94,12 @@ void Moonwalk_PreloadBitmaps(struct Game *game) {
 
 void Moonwalk_Preload(struct Game *game) {
 	PrintConsole(game, "Initializing level %d...", game->level.current_level);
-	game->level.moonwalk.sample = al_load_sample( "data/moonwalk.flac" );
-	game->level.moonwalk.music = al_create_sample_instance(game->level.moonwalk.sample);
-	al_attach_sample_instance_to_mixer(game->level.moonwalk.music, game->audio.music);
-	al_set_sample_instance_playmode(game->level.moonwalk.music, ALLEGRO_PLAYMODE_LOOP);
+	game->level.sample = al_load_sample( "data/moonwalk.flac" );
+	game->level.music = al_create_sample_instance(game->level.sample);
+	al_attach_sample_instance_to_mixer(game->level.music, game->audio.music);
+	al_set_sample_instance_playmode(game->level.music, ALLEGRO_PLAYMODE_LOOP);
 
-	if (!game->level.moonwalk.sample){
+	if (!game->level.sample){
 		fprintf(stderr, "Audio clip sample not loaded!\n" );
 		exit(-1);
 	}
@@ -135,6 +126,4 @@ void Moonwalk_Unload(struct Game *game) {
 		al_flip_display();
 	}
 	al_destroy_bitmap(game->level.moonwalk.fade_bitmap);
-	al_destroy_sample_instance(game->level.moonwalk.music);
-	al_destroy_sample(game->level.moonwalk.sample);
 }

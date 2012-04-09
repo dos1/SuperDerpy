@@ -82,6 +82,10 @@ bool Stop(struct Game *game, struct TM_Action *action, enum TM_ActionState state
 }
 
 void Level_Draw(struct Game *game) {
+	if (!al_get_sample_instance_playing(game->level.music) && (game->loadstate==GAMESTATE_LEVEL)) { 
+		al_set_sample_instance_playing(game->level.music, true);
+		al_set_sample_instance_position(game->level.music, game->level.music_pos);
+	}
 	if (game->level.current_level!=1) Moonwalk_Draw(game);
 	else {
 		al_clear_to_color(al_map_rgb(0,0,0));
@@ -152,6 +156,7 @@ bool FadeIn(struct Game *game, struct TM_Action *action, enum TM_ActionState sta
 		free(fadeloop);
 		TM_DestroyArgs(action->arguments);
 		action->arguments = NULL;
+		al_play_sample_instance(game->level.music);
 	}
 	return false;
 }
@@ -204,7 +209,7 @@ bool Welcome(struct Game *game, struct TM_Action *action, enum TM_ActionState st
 		//PrintConsole(game, "WELCOME RUNNING FADE=%f, IN=%d", *in);
 		int fade = *tmp;
 		if (fade>255) fade=255;
-		if (*tmp > 1500) { *tmp=255; *in=false; }
+		if (*tmp > 2048) { *tmp=255; *in=false; }
 		al_draw_tinted_bitmap(game->level.welcome, al_map_rgba_f(fade/255.0,fade/255.0,fade/255.0,fade/255.0), 0, 0, 0);
 		if (*in) {
 			*tmp+=tps(game, 600);
@@ -251,6 +256,7 @@ void Level_Load(struct Game *game) {
 		TM_AddBackgroundAction(&FadeIn, NULL, 0);
 		TM_AddDelay(1000);
 		TM_AddQueuedBackgroundAction(&Welcome, NULL, 0);
+		TM_AddDelay(1000);
 		TM_AddAction(&Walk, NULL);
 		TM_AddAction(&Move, NULL);
 		TM_AddAction(&Stop, NULL);
@@ -280,6 +286,10 @@ void Level_Load(struct Game *game) {
 }
 
 int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
+	if (ev->keyboard.keycode==ALLEGRO_KEY_ESCAPE) {
+		game->level.music_pos = al_get_sample_instance_position(game->level.music);
+		al_set_sample_instance_playing(game->level.music, false);
+	}
 	if (game->level.current_level!=1) Moonwalk_Keydown(game, ev);
 	if (ev->keyboard.keycode==ALLEGRO_KEY_ESCAPE) {
 		game->gamestate = GAMESTATE_PAUSE;
@@ -306,11 +316,24 @@ void Level_ProcessLogic(struct Game *game, ALLEGRO_EVENT *ev) {
 void Level_Preload(struct Game *game) {
 	Pause_Preload(game);
 	if (game->level.current_level!=1) Moonwalk_Preload(game);
+	else {
+		game->level.sample = al_load_sample( "data/levels/1/music.flac" );
+		game->level.music = al_create_sample_instance(game->level.sample);
+		al_attach_sample_instance_to_mixer(game->level.music, game->audio.music);
+		al_set_sample_instance_playmode(game->level.music, ALLEGRO_PLAYMODE_LOOP);
+
+		if (!game->level.sample){
+			fprintf(stderr, "Audio clip sample not loaded!\n" );
+			exit(-1);
+		}
+	}
 	Level_PreloadBitmaps(game);
 }
 
 void Level_Unload(struct Game *game) {
 	Pause_Unload_Real(game);
+	al_destroy_sample_instance(game->level.music);
+	al_destroy_sample(game->level.sample);
 	if (game->level.current_level!=1) Moonwalk_Unload(game);
 	else {
 		TM_Destroy();
