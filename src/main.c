@@ -411,6 +411,14 @@ int main(int argc, char **argv){
 			if ((ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_TILDE)) {
 				game.showconsole = !game.showconsole;
 			}
+			if ((game.debug) && (ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_F1)) {
+				int i;
+				for (i=0; i<512; i++) {
+					DrawGameState(&game);
+				}
+				game.showconsole = true;
+				PrintConsole(&game, "DEBUG: 512 frames skipped...");
+			}
 			KEYDOWN_STATE(GAMESTATE_PAUSE, Pause)
 			KEYDOWN_STATE(GAMESTATE_MENU, Menu)
 			KEYDOWN_STATE(GAMESTATE_LOADING, Loading)
