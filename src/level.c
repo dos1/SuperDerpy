@@ -94,12 +94,16 @@ void Level_Draw(struct Game *game) {
 		if (game->level.handle_input) {
 			if (al_key_down(&keyboard, ALLEGRO_KEY_UP)) {
 				game->level.derpy_y -= 0.005;
+				//PrintConsole(game, "Derpy Y position: %f", game->level.derpy_y);
 			} 
 			if (al_key_down(&keyboard, ALLEGRO_KEY_DOWN)) {
 				game->level.derpy_y += 0.005;
+				//PrintConsole(game, "Derpy Y position: %f", game->level.derpy_y);
 			}
 			if (game->level.derpy_y > 0.5) game->level.sheet_speed=1;
 			else game->level.sheet_speed=0;
+			if (game->level.derpy_y < 0) game->level.derpy_y=0;
+			else if (game->level.derpy_y > 0.75) game->level.derpy_y=0.75;
 		}
 		
 		al_clear_to_color(al_map_rgb(0,0,0));
