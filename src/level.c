@@ -88,6 +88,20 @@ void Level_Draw(struct Game *game) {
 	}
 	if (game->level.current_level!=1) Moonwalk_Draw(game);
 	else {
+		
+		struct ALLEGRO_KEYBOARD_STATE keyboard;
+		al_get_keyboard_state(&keyboard);
+		if (game->level.handle_input) {
+			if (al_key_down(&keyboard, ALLEGRO_KEY_UP)) {
+				game->level.derpy_y -= 0.005;
+			} 
+			if (al_key_down(&keyboard, ALLEGRO_KEY_DOWN)) {
+				game->level.derpy_y += 0.005;
+			}
+			if (game->level.derpy_y > 0.5) game->level.sheet_speed=1;
+			else game->level.sheet_speed=0;
+		}
+		
 		al_clear_to_color(al_map_rgb(0,0,0));
 		al_draw_bitmap(game->level.clouds, (-game->level.cl_pos)*al_get_bitmap_width(game->level.clouds), 0, 0);
 		al_draw_bitmap(game->level.clouds, (1+(-game->level.cl_pos))*al_get_bitmap_width(game->level.clouds), 0, 0);
@@ -295,22 +309,13 @@ int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 		game->gamestate = GAMESTATE_PAUSE;
 		game->loadstate = GAMESTATE_LEVEL;
 		Pause_Load(game);
-	} else {
-		if (game->level.handle_input) {
-			if (ev->keyboard.keycode == ALLEGRO_KEY_UP) {
-				game->level.derpy_y -= 0.05;
-			} else if (ev->keyboard.keycode == ALLEGRO_KEY_DOWN) {
-				game->level.derpy_y += 0.05;
-			}
-			if (game->level.derpy_y > 0.5) game->level.sheet_speed=1;
-			else game->level.sheet_speed=0;
-		}
 	}
 	return 0;
 }
 
 void Level_ProcessLogic(struct Game *game, ALLEGRO_EVENT *ev) {
 	if (game->level.current_level==1) TM_HandleEvent(ev);
+
 }
 
 void Level_Preload(struct Game *game) {
