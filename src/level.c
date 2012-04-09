@@ -65,12 +65,7 @@ bool Move(struct Game *game, struct TM_Action *action, enum TM_ActionState state
 }
 
 bool Fly(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
-	if (state == TM_ACTIONSTATE_INIT) { action->arguments=NULL; return false; }
 	if (state != TM_ACTIONSTATE_RUNNING) return false;
-	if (!action->arguments) {
-		action->arguments++;
-		TM_AddBackgroundAction(&Accelerate, NULL, 0);
-	}
 	game->level.derpy_y-=0.004;
 	if (game->level.derpy_y>0.2) return false;
 	game->level.handle_input=true;
@@ -216,7 +211,6 @@ bool Welcome(struct Game *game, struct TM_Action *action, enum TM_ActionState st
 		free(action->arguments->next->value);
 		TM_DestroyArgs(action->arguments);
 		action->arguments = NULL;
-		//TM_AddBackgroundAction(&Accelerate, NULL, 1000);
 	}
 	return false;
 }
@@ -249,11 +243,12 @@ void Level_Load(struct Game *game) {
 		TM_Init(game);
 		TM_AddBackgroundAction(&FadeIn, NULL, 0);
 		TM_AddDelay(1000);
-		TM_AddAction(&Welcome, NULL);
+		TM_AddQueuedBackgroundAction(&Welcome, NULL, 0);
 		TM_AddAction(&Walk, NULL);
 		TM_AddAction(&Move, NULL);
 		TM_AddAction(&Stop, NULL);
 		TM_AddDelay(5*1000);
+		TM_AddQueuedBackgroundAction(&Accelerate, NULL, 0);
 		TM_AddAction(&Fly, NULL);
 		// Derpy walks in... (background - owl)
 		// Derpy reads a letter

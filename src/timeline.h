@@ -55,3 +55,4 @@ void TM_Destroy();
 struct TM_Arguments* TM_AddToArgs(struct TM_Arguments* args, void* arg);
 void TM_DestroyArgs(struct TM_Arguments* args);
 bool TM_Initialized();
+struct TM_Action* TM_AddQueuedBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, float delay);

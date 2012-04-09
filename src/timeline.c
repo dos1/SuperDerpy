@@ -190,6 +190,21 @@ struct TM_Action* TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Ac
 	return action;
 }
 
+bool runinbackground(struct Game* game, struct TM_Action* action, enum TM_ActionState state) {
+	if (state != TM_ACTIONSTATE_RUNNING) return false;
+	float* delay = (float*) action->arguments->next->value;
+	TM_AddBackgroundAction(action->arguments->value, action->arguments->next->next, *delay);
+	return true;
+}
+
+struct TM_Action* TM_AddQueuedBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, float delay) {
+	struct TM_Arguments* arguments = TM_AddToArgs(NULL, (void*) func);
+	arguments = TM_AddToArgs(arguments, malloc(sizeof(float)));
+	*(float*)(arguments->next->value) = delay;
+	arguments->next->next = args;
+	return TM_AddAction(*runinbackground, arguments);
+}
+
 void TM_AddDelay(float delay) {
 	/*int *tmp;
 	tmp = malloc(sizeof(int));
@@ -306,5 +321,3 @@ bool TM_Initialized() {
 	if (game) return true;
 	return false;
 }
-
-// TODO: write TM_AddQueuedBackgroundAction
