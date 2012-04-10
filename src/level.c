@@ -111,7 +111,7 @@ void Level_Draw(struct Game *game) {
 				game->level.derpy_y += 0.005;
 				//PrintConsole(game, "Derpy Y position: %f", game->level.derpy_y);
 			}
-			if (game->level.derpy_y > 0.5) game->level.sheet_speed=1;
+			if (game->level.derpy_y > 0.5) game->level.sheet_speed = 0.0020/game->level.speed;
 			else game->level.sheet_speed=0;
 			if (game->level.derpy_y < 0) game->level.derpy_y=0;
 			else if (game->level.derpy_y > 0.75) game->level.derpy_y=0.75;
@@ -275,7 +275,7 @@ void Level_Load(struct Game *game) {
 	game->level.sheet_rows = 4;
 	game->level.sheet_cols = 6;
 	game->level.sheet_pos = 0;
-	game->level.sheet_speed = 2.5;
+	game->level.sheet_speed = 2.4;
 	game->level.sheet_tmp = 0;
 	game->level.handle_input = false;
 	al_clear_to_color(al_map_rgb(0,0,0));
