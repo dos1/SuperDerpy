@@ -148,7 +148,6 @@ void Map_Unload(struct Game *game) {
 		al_flip_display();
 	}
 	al_destroy_bitmap(game->map.map);
-	//al_destroy_bitmap(game->map.background);
 	al_destroy_bitmap(game->map.map_bg);
 	al_destroy_bitmap(game->map.highlight);
 	al_destroy_bitmap(game->map.arrow);

@@ -39,8 +39,10 @@ void TM_Init(struct Game* g) {
 void TM_Process() {
 	if (!game) return;
 	if (paused) return;
-	// process first element from queue
-	//  if returns true, then delete it
+	/*
+       process first element from queue
+	   if returns true, then delete it
+    */
 	if (queue) {
 		if (*queue->function) {
 			queue->active = true;
@@ -55,7 +57,7 @@ void TM_Process() {
 				if (queue) PrintConsole(game, "Timeline Manager: queue: run action (%d - %s)", queue->id, queue->name);
 			}
 		} else {
-			// delay
+			/* delay handling */
 			if (queue->active) {
 				struct TM_Action *tmp = queue;
 				queue = queue->next;
@@ -67,7 +69,7 @@ void TM_Process() {
 			}
 		}
 	}
-	// process all elements from background marked as active
+	/* process all elements from background marked as active */
 	struct TM_Action *tmp, *tmp2, *pom = background;
 	tmp = NULL;
 	while (pom!=NULL) {
@@ -84,7 +86,7 @@ void TM_Process() {
 					}
 				}
 			} else {
-				// delay
+				/* delay handling */
 				if (tmp) {
 					tmp->next = pom->next;
 				} else {

@@ -30,7 +30,6 @@ enum TM_ActionState {
 struct TM_Arguments {
 	void *value;
 	struct TM_Arguments *next;
-	//*prev;
 };
 
 struct TM_Action {
@@ -42,7 +41,6 @@ struct TM_Action {
 	struct TM_Action *next;
 	unsigned int id;
 	char* name;
-	//*prev;
 };
 
 void TM_Init(struct Game* game);

@@ -35,11 +35,9 @@ void Moonwalk_Draw(struct Game *game) {
 		if (game->level.current_level<6) {
 			game->gamestate = GAMESTATE_LOADING;
 			game->loadstate = GAMESTATE_MAP;
-			//LoadGameState(game);
 		} else {
 			game->gamestate = GAMESTATE_LOADING;
 			game->loadstate = GAMESTATE_ABOUT;
-			//LoadGameState(game);
 		}
 		return; }
 	int i;

@@ -75,7 +75,6 @@ void PrintConsole(struct Game *game, char* format, ...) {
 	al_draw_text(game->font_console, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.005, al_get_bitmap_height(game->console)*0.81, ALLEGRO_ALIGN_LEFT, text);
 	al_set_target_bitmap(game->console);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
-	//al_draw_bitmap_region(game->console, 0, al_get_bitmap_height(game->console)*0.2, al_get_bitmap_width(game->console), al_get_bitmap_height(game->console)*0.8, 0, 0, 0);
 	al_draw_bitmap(con, 0, 0, 0);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 	al_destroy_bitmap(con);
@@ -173,7 +172,7 @@ void ScaleBitmap(ALLEGRO_BITMAP* source, int width, int height) {
 	al_lock_bitmap(al_get_target_bitmap(), ALLEGRO_PIXEL_FORMAT_ANY, ALLEGRO_LOCK_WRITEONLY);
 	al_lock_bitmap(source, ALLEGRO_PIXEL_FORMAT_ANY, ALLEGRO_LOCK_READONLY);
 
-	//linear filtering code written by SiegeLord
+	/* linear filtering code written by SiegeLord */
 
 	ALLEGRO_COLOR interpolate(ALLEGRO_COLOR c1, ALLEGRO_COLOR c2, float frac) {
 		return al_map_rgba_f(c1.r + frac * (c2.r - c1.r),
@@ -210,9 +209,9 @@ ALLEGRO_BITMAP* LoadScaledBitmap(char* filename, int width, int height) {
 	al_set_target_bitmap(target);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 	char origfn[255] = "data/";
-	//char cachefn[255] = "data/cache/";
+	/*char cachefn[255] = "data/cache/";*/
 	strcat(origfn, filename);
-	//strcat(cachefn, filename);
+	/*strcat(cachefn, filename);*/
 	void GenerateBitmap() {
 		al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
 
@@ -220,21 +219,21 @@ ALLEGRO_BITMAP* LoadScaledBitmap(char* filename, int width, int height) {
 		al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR | ALLEGRO_MIN_LINEAR);
 
 		ScaleBitmap(source, width, height);
-		//al_save_bitmap(cachefn, target);
-		//PrintConsole(game, "Cache bitmap %s generated.", filename);
+		/*al_save_bitmap(cachefn, target);
+		PrintConsole(game, "Cache bitmap %s generated.", filename);*/
 		al_destroy_bitmap(source);
 	}
 
-	//source = al_load_bitmap( cachefn );
-	//if (source) {
-	//	if ((al_get_bitmap_width(source)!=width) || (al_get_bitmap_height(source)!=height)) {
-	//		al_destroy_bitmap(source);
+	/*source = al_load_bitmap( cachefn );
+	if (source) {
+		if ((al_get_bitmap_width(source)!=width) || (al_get_bitmap_height(source)!=height)) {
+			al_destroy_bitmap(source);*/
 			GenerateBitmap();
 			return target;
-	//	}
-	//	return source;
-	//} else GenerateBitmap();
-	//return target;
+	/*	}
+		return source;
+	} else GenerateBitmap();
+	return target;*/
 }
 
 float tps(struct Game *game, float t) {
@@ -299,8 +298,8 @@ int main(int argc, char **argv){
 
 	if(!al_init_image_addon()) {
 		fprintf(stderr, "failed to initialize image addon!\n");
-		//al_show_native_message_box(display, "Error", "Error", "Failed to initialize al_init_image_addon!",
-		//                           NULL, ALLEGRO_MESSAGEBOX_ERROR);
+		/*al_show_native_message_box(display, "Error", "Error", "Failed to initialize al_init_image_addon!",
+		                           NULL, ALLEGRO_MESSAGEBOX_ERROR);*/
 		return 0;
 	}
 
@@ -334,7 +333,7 @@ int main(int argc, char **argv){
 	if (game.fullscreen) al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
 	else al_set_new_display_flags(ALLEGRO_WINDOWED);
 	al_set_new_display_option(ALLEGRO_VSYNC, 1, ALLEGRO_SUGGEST);
-	//al_set_new_display_option(ALLEGRO_OPENGL, 1, ALLEGRO_SUGGEST);
+	/*al_set_new_display_option(ALLEGRO_OPENGL, 1, ALLEGRO_SUGGEST);*/
 	game.display = al_create_display(game.width, game.height);
 	if(!game.display) {
 		fprintf(stderr, "failed to create display!\n");
@@ -345,7 +344,6 @@ int main(int argc, char **argv){
 	al_inhibit_screensaver(true);
 
 	al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR | ALLEGRO_MIN_LINEAR);
-	//al_set_new_bitmap_format(ALLEGRO_PIXEL_FORMAT_ANY_32_WITH_ALPHA);
 
 	int ret = Shared_Load(&game);
 	if (ret!=0) return ret;

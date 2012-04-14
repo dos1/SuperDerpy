@@ -25,7 +25,7 @@
 #include "level.h"
 #include "timeline.h"
 
-// TODO: fix spritesheet speed to not depend on FPS
+/* TODO: check if spritesheet speed still depends on FPS */
 
 void Level_Passed(struct Game *game) {
 	if (game->level.current_level<6) {
@@ -77,7 +77,6 @@ bool Stop(struct Game *game, struct TM_Action *action, enum TM_ActionState state
 	if (state != TM_ACTIONSTATE_RUNNING) return false;
 	game->level.speed=0;
 	game->level.sheet_speed = 0;
-	//game->level.sheet_pos = 0;
 	return true;
 }
 
@@ -105,11 +104,11 @@ void Level_Draw(struct Game *game) {
 		if (game->level.handle_input) {
 			if (al_key_down(&keyboard, ALLEGRO_KEY_UP)) {
 				game->level.derpy_y -= 0.005;
-				//PrintConsole(game, "Derpy Y position: %f", game->level.derpy_y);
+				/*PrintConsole(game, "Derpy Y position: %f", game->level.derpy_y);*/
 			} 
 			if (al_key_down(&keyboard, ALLEGRO_KEY_DOWN)) {
 				game->level.derpy_y += 0.005;
-				//PrintConsole(game, "Derpy Y position: %f", game->level.derpy_y);
+				/*PrintConsole(game, "Derpy Y position: %f", game->level.derpy_y);*/
 			}
 			if (game->level.derpy_y > 0.5) game->level.sheet_speed = 0.0020/game->level.speed;
 			else game->level.sheet_speed=0;
@@ -129,17 +128,12 @@ void Level_Draw(struct Game *game) {
 		al_clear_to_color(al_map_rgba(0,0,0,0));
 		al_draw_bitmap_region(game->level.derpy_walkcycle,al_get_bitmap_width(game->level.derpy)*(game->level.sheet_pos%game->level.sheet_cols),al_get_bitmap_height(game->level.derpy)*(game->level.sheet_pos/game->level.sheet_cols),al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy),0,0,0);
 		if (game->level.sheet_speed) {
-			//int i;
-			//for (i = 0; i < tps(game, 60); i++ ) {
-				game->level.sheet_tmp+=tps(game, 60);
-				//if (game->level.sheet_speed==1) game->level.sheet_pos++;
-				if (game->level.sheet_tmp >= game->level.sheet_speed) {
-					game->level.sheet_pos++;
-					game->level.sheet_tmp = 0;
-					//game->level.sheet_tmp -= game->level.sheet_speed;
-				}
-				if (game->level.sheet_pos>=game->level.sheet_cols*game->level.sheet_rows) game->level.sheet_pos=0;
-			//}
+			game->level.sheet_tmp+=tps(game, 60);
+			if (game->level.sheet_tmp >= game->level.sheet_speed) {
+				game->level.sheet_pos++;
+				game->level.sheet_tmp = 0;
+			}
+			if (game->level.sheet_pos>=game->level.sheet_cols*game->level.sheet_rows) game->level.sheet_pos=0;
 		}
 		al_set_target_bitmap(al_get_backbuffer(game->display));
 
@@ -231,18 +225,16 @@ bool Welcome(struct Game *game, struct TM_Action *action, enum TM_ActionState st
 	if (state == TM_ACTIONSTATE_INIT) {
 		*tmp = 0;
 		*in = true;
-		//PrintConsole(game, "WELCOME INIT");
+		/*PrintConsole(game, "WELCOME INIT");*/
 	}
 	else if (state == TM_ACTIONSTATE_RUNNING) {
-		//al_draw_text_with_shadow(game->font, al_map_rgb(255,255,255), *tmp, 20, 0, "Level 1");
-		//PrintConsole(game, "WELCOME RUNNING FADE=%f, IN=%d", *in);
+		/*PrintConsole(game, "WELCOME RUNNING FADE=%f, IN=%d", *in); */
 		int fade = *tmp;
 		if (fade>255) fade=255;
 		if (*tmp > 2048) { *tmp=255; *in=false; }
 		al_draw_tinted_bitmap(game->level.welcome, al_map_rgba_f(fade/255.0,fade/255.0,fade/255.0,fade/255.0), 0, 0, 0);
 		if (*in) {
 			*tmp+=tps(game, 600);
-			//if (*tmp>=256) { return false; }
 		} else {
 			*tmp-=tps(game, 600);
 			if (*tmp<=0) { return true; }
@@ -294,15 +286,18 @@ void Level_Load(struct Game *game) {
 		TM_AddDelay(500);
 		TM_AddQueuedBackgroundAction(&Accelerate, NULL, 0, "accelerate");
 		TM_AddAction(&Fly, NULL, "fly");
-		// Derpy walks in... (background - owl)
+		/*
+        // Derpy walks in... (background - owl)
 		// Derpy reads a letter
 		// Letter on screen
 		// Derpy: fly! (background - accelerate)
+		*/
 
-		// first part gameplay goes here
+		/* first part gameplay goes here */
 		TM_AddDelay(60*1000);
 
-		// wings disappear, deccelerate, fall down
+		/*
+        // wings disappear, deccelerate, fall down
 		// run
 		// show Fluttershy's house
 		
@@ -311,6 +306,7 @@ void Level_Load(struct Game *game) {
 		
 		// cutscene goes here
 		//
+		*/
 		
 		TM_AddAction(&PassLevel, NULL, "passlevel");
 	}
@@ -381,7 +377,7 @@ void Level_PreloadBitmaps(struct Game *game) {
 	game->level.derpy = al_create_bitmap(al_get_display_width(game->display)*0.1953125, al_get_display_height(game->display)*0.25);
 	if (game->level.current_level!=1) Moonwalk_PreloadBitmaps(game);
 	else {
-		// TODO: handle strange display aspects
+		/* TODO: handle strange display aspects */
 		game->level.clouds = LoadScaledBitmap("levels/1/clouds.png", al_get_display_height(game->display)*4.73307291666666666667, al_get_display_height(game->display));
 		game->level.foreground = LoadScaledBitmap("levels/1/foreground.png", al_get_display_height(game->display)*4.73307291666666666667, al_get_display_height(game->display));
 		game->level.background = LoadScaledBitmap("levels/1/background.png", al_get_display_height(game->display)*4.73307291666666666667, al_get_display_height(game->display));

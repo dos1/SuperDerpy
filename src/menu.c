@@ -110,13 +110,12 @@ void Menu_Draw(struct Game *game) {
 
 	al_set_target_bitmap(game->menu.pinkcloud_bitmap);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
-	float x = 1.5;//*(rand() / (float)RAND_MAX);
+	float x = 1.5;
 	int minus;
 	if (game->menu.cloud_position>0) minus=1; else minus=-1;
 	al_draw_bitmap(game->menu.rain_bitmap, fmod(minus*game->menu.cloud_position,3)*x*5+al_get_bitmap_width(game->menu.pinkcloud_bitmap)/2.7, al_get_bitmap_height(game->menu.pinkcloud_bitmap)*(0.88+(fmod(-1.8*(game->menu.cloud_position+80), 6))/20.0), 0);
 	al_draw_bitmap(game->menu.rain_bitmap, fmod(minus*game->menu.cloud_position,3)*x*3+al_get_bitmap_width(game->menu.pinkcloud_bitmap)/3.1, al_get_bitmap_height(game->menu.pinkcloud_bitmap)*(0.78+(fmod(-2.8*(game->menu.cloud_position+80), 4))/18.0), 0);
 	al_draw_scaled_bitmap(game->menu.rain_bitmap, 0, 0, al_get_bitmap_width(game->menu.rain_bitmap), al_get_bitmap_height(game->menu.rain_bitmap), fmod(minus*game->menu.cloud_position,3)*x*6+al_get_bitmap_width(game->menu.pinkcloud_bitmap)/2.1, al_get_bitmap_height(game->menu.pinkcloud_bitmap)*(0.87+(fmod(-4.9*(game->menu.cloud_position+80), 8))/26.0), al_get_bitmap_width(game->menu.pinkcloud_bitmap)*0.4, al_get_bitmap_height(game->menu.pinkcloud_bitmap)*0.08, 0);
-	//al_draw_scaled_bitmap(game->menu.rain, 0, 0, al_get_bitmap_width(game->menu.rain), al_get_bitmap_height(game->menu.rain), fmod(minus*game->menu.cloud_position,3)*x*6+al_get_bitmap_width(game->menu.pinkcloud_bitmap)/2.4, al_get_bitmap_height(game->menu.pinkcloud_bitmap)*(0.9+(fmod(-5*(game->menu.cloud_position+86), 8))/20.0), al_get_bitmap_width(game->menu.pinkcloud_bitmap)*0.35, al_get_bitmap_height(game->menu.pinkcloud_bitmap)*0.07, 0);
 	al_draw_bitmap(game->menu.pinkcloud, 0, 0, 0);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 
@@ -196,9 +195,9 @@ void Menu_Preload(struct Game *game) {
 		exit(-1);
 	}
 
-	game->menu.pinkcloud_bitmap = al_create_bitmap(al_get_display_width(game->display)*0.33125, al_get_display_height(game->display)); // *0.8122);
+	game->menu.pinkcloud_bitmap = al_create_bitmap(al_get_display_width(game->display)*0.33125, al_get_display_height(game->display));
 
-	game->menu.pie_bitmap = al_create_bitmap(al_get_display_width(game->display)/2, al_get_display_height(game->display)); //*0.8122);
+	game->menu.pie_bitmap = al_create_bitmap(al_get_display_width(game->display)/2, al_get_display_height(game->display));
 	al_set_target_bitmap(game->menu.pie_bitmap);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 	al_draw_scaled_bitmap(game->menu.pie, 0, 0, al_get_bitmap_width(game->menu.pie), al_get_bitmap_height(game->menu.pie), al_get_bitmap_width(game->menu.pie_bitmap)*0.5, 0, al_get_display_width(game->display)*0.11875, al_get_display_height(game->display)*0.0825, 0);
@@ -223,7 +222,6 @@ void Menu_Stop(struct Game* game) {
 	ALLEGRO_EVENT ev;
 	float fadeloop;
 	for(fadeloop=0; fadeloop<256; fadeloop+=tps(game, 600)){
-		//if ((game->menu.draw_while_fading) || (fadeloop==255)) {
 		al_wait_for_event(game->event_queue, &ev);
 		Menu_Draw(game);
 		al_draw_tinted_bitmap(game->menu.menu_fade_bitmap,al_map_rgba_f(1,1,1,fadeloop/255.0),0,0,0);

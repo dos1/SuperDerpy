@@ -238,7 +238,6 @@ void PrintConsole(struct Game *game, char* format, ...);
 /*! \brief Draws console bitmap on screen. */
 void DrawConsole(struct Game *game);
 
-//void ScaleBitmap(ALLEGRO_BITMAP* source, int width, int height);
 ALLEGRO_BITMAP* LoadScaledBitmap(char* filename, int width, int height);
 float tps(struct Game *game, float t);
 

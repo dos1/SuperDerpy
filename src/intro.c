@@ -38,7 +38,6 @@ void FillPage(struct Game *game, int page) {
 	char filename[30] = { };
 	sprintf(filename, "data/intro/%d.flac", page);
 
-	//if (game->intro.audiostream) al_destroy_audio_stream(game->intro.audiostream);
 	game->intro.audiostream = al_load_audio_stream(filename, 4, 1024);
 	al_attach_audio_stream_to_mixer(game->intro.audiostream, game->audio.voice);
 	al_set_audio_stream_playing(game->intro.audiostream, false);
@@ -118,24 +117,24 @@ void Intro_Draw(struct Game *game) {
 	al_clear_to_color(al_map_rgb(0,0,0));
 	if (game->intro.in_animation) {
 		AnimPage(game, game->intro.page);
-		al_draw_bitmap(game->intro.table, -1*al_get_display_width(game->display) + (cos(((-1*((game->intro.position)%al_get_display_width(game->display)))/(float)al_get_display_width(game->display))*(ALLEGRO_PI))/2.0)*al_get_display_width(game->display) + al_get_display_width(game->display)/2.0, 0, 0);//al_get_display_height(game->display)*((game->intro.position/3.0)/(float)al_get_display_width(game->display)), 0);
-		al_draw_bitmap(game->intro.animation, -1*al_get_display_width(game->display) + (cos(((-1*((game->intro.position)%al_get_display_width(game->display)))/(float)al_get_display_width(game->display))*(ALLEGRO_PI))/2.0)*al_get_display_width(game->display) + al_get_display_width(game->display)/2.0, 0, 0);//al_get_display_height(game->display)*((game->intro.position/3.0)/(float)al_get_display_width(game->display)), 0);
+		al_draw_bitmap(game->intro.table, -1*al_get_display_width(game->display) + (cos(((-1*((game->intro.position)%al_get_display_width(game->display)))/(float)al_get_display_width(game->display))*(ALLEGRO_PI))/2.0)*al_get_display_width(game->display) + al_get_display_width(game->display)/2.0, 0, 0);
+		al_draw_bitmap(game->intro.animation, -1*al_get_display_width(game->display) + (cos(((-1*((game->intro.position)%al_get_display_width(game->display)))/(float)al_get_display_width(game->display))*(ALLEGRO_PI))/2.0)*al_get_display_width(game->display) + al_get_display_width(game->display)/2.0, 0, 0);
 	}
 	else {
 		AnimPage(game, game->intro.page+1);
-		al_draw_bitmap(game->intro.table, 0, 0, 0); //al_get_display_height(game->display)*((game->intro.position/3.0)/(float)al_get_display_width(game->display)), 0); 
-		al_draw_bitmap(game->intro.animation, 0, 0, 0); //al_get_display_height(game->display)*((game->intro.position/3.0)/(float)al_get_display_width(game->display)), 0); 
+		al_draw_bitmap(game->intro.table, 0, 0, 0);
+		al_draw_bitmap(game->intro.animation, 0, 0, 0);
 	}
 	al_draw_text_with_shadow(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)*0.90, ALLEGRO_ALIGN_CENTRE, "Press any key to continue or escape to skip...");
-	//PrintConsole(game, "drawing");
+	/*PrintConsole(game, "drawing");*/
 	if (game->intro.in_animation) {
-		//PrintConsole(game, "animating");
+		/*PrintConsole(game, "animating");*/
 		int old = game->intro.position%al_get_display_width(game->display);
 		game->intro.position -= tps(game, 600);
-		//PrintConsole(game, "%d", game->intro.position%al_get_display_width(game->display));
+		/*PrintConsole(game, "%d", game->intro.position%al_get_display_width(game->display));*/
 		if (game->intro.position%al_get_display_width(game->display)>old) {
-			//DrawConsole(game);
-			//al_flip_display();
+			/*DrawConsole(game);
+			al_flip_display();*/
 			game->intro.in_animation = false;
 			FillPage(game, game->intro.page+1);
 			PrintConsole(game, "Animation finished.");
@@ -233,12 +232,12 @@ void Intro_Unload(struct Game *game) {
 	for(fadeloop=255; fadeloop>=0; fadeloop-=tps(game, 600)){
 		al_wait_for_event(game->event_queue, &ev);
 		if (game->intro.in_animation) {
-			al_draw_tinted_bitmap(game->intro.table, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), -1*al_get_display_width(game->display) + (cos(((-1*((game->intro.position)%al_get_display_width(game->display)))/(float)al_get_display_width(game->display))*(3.1415))/2.0)*al_get_display_width(game->display)  + al_get_display_width(game->display)/2.0, 0, 0); //al_get_display_height(game->display)*((game->intro.position/3.0)/(float)al_get_display_width(game->display)), 0);
-			al_draw_tinted_bitmap(game->intro.animation, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), -1*al_get_display_width(game->display) + (cos(((-1*((game->intro.position)%al_get_display_width(game->display)))/(float)al_get_display_width(game->display))*(3.1415))/2.0)*al_get_display_width(game->display)  + al_get_display_width(game->display)/2.0, 0, 0); //al_get_display_height(game->display)*((game->intro.position/3.0)/(float)al_get_display_width(game->display)), 0);
+			al_draw_tinted_bitmap(game->intro.table, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), -1*al_get_display_width(game->display) + (cos(((-1*((game->intro.position)%al_get_display_width(game->display)))/(float)al_get_display_width(game->display))*(3.1415))/2.0)*al_get_display_width(game->display)  + al_get_display_width(game->display)/2.0, 0, 0);
+			al_draw_tinted_bitmap(game->intro.animation, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), -1*al_get_display_width(game->display) + (cos(((-1*((game->intro.position)%al_get_display_width(game->display)))/(float)al_get_display_width(game->display))*(3.1415))/2.0)*al_get_display_width(game->display)  + al_get_display_width(game->display)/2.0, 0, 0);
 		}
 		else {
-			al_draw_tinted_bitmap(game->intro.table, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), 0, 0, 0); //al_get_display_height(game->display)*((game->intro.position/3.0)/(float)al_get_display_width(game->display)), 0);
-			al_draw_tinted_bitmap(game->intro.animation, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), 0, 0, 0); //al_get_display_height(game->display)*((game->intro.position/3.0)/(float)al_get_display_width(game->display)), 0);
+			al_draw_tinted_bitmap(game->intro.table, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), 0, 0, 0);
+			al_draw_tinted_bitmap(game->intro.animation, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), 0, 0, 0);
 		}
 		DrawConsole(game);
 		al_flip_display();
