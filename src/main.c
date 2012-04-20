@@ -410,7 +410,7 @@ int main(int argc, char **argv){
 			if ((ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_TILDE)) {
 				game.showconsole = !game.showconsole;
 			}
-			if ((game.debug) && (ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_F1)) {
+			else if ((game.debug) && (ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_F1)) {
 				int i;
 				for (i=0; i<512; i++) {
 					DrawGameState(&game);
