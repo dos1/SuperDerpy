@@ -57,48 +57,46 @@ void FillPage(struct Game *game, int page) {
 		switch (p) {
 			case 1:
 				al_draw_bitmap(game->intro.table_bitmap, 0, 0, 0);
-				draw_text(1, "Since Twilight Sparkle and her five best");
-				draw_text(1, "friends defeated Discord and imprisoned");
-				draw_text(1, "him in a stone using the Elements of");
-				draw_text(1, "Harmony, Equestia has been a peaceful");
-				draw_text(1, "place for a quite long time.");
+				draw_text(1, "Ever since Twilight Sparkle and her");
+				draw_text(1, "friends imprisoned Discord in stone,");
+				draw_text(1, "Equestria had been peaceful for");
+				draw_text(1, "a long time.");
 				break;
 			case 2:
 				al_draw_bitmap_region(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*0, 0, 0);
 				al_draw_bitmap_region(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*0.5, 0, 0);
-				draw_text(2, "Suddenly, one day some reckless pony");
-				draw_text(2, "accidentally introduced a tiny little");
-				draw_text(2, "bit of chaos near Discords figure.");
+				draw_text(2, "Until one day a reckless pony caused");
+				draw_text(2, "a tiny bit of chaos near Discord’s");
+				draw_text(2, "statue.");
 				break;
 			case 3:
 				al_draw_bitmap_region(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*0, 0, 0);
 				al_draw_bitmap_region(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*0.5, 0, 0);
-				draw_text(3, "A tiny little bit of chaos turned not to");
-				draw_text(3, "be enough for Discord to escape from rock,");
-				draw_text(3, "but enough to turn nearly dropped muffins");
-				draw_text(3, "into muffinzombies, with aim to destroy all");
-				draw_text(3, "the harmony in Equestria.");
+				draw_text(3, "This small amount of chaos was not");
+				draw_text(3, "enough to free Discord, but enough");
+				draw_text(3, "to turn discarded muffins into");
+				draw_text(3, "vicious muffinzombies, with aim to");
+				draw_text(3, "destroy all harmony in Equestria.");
 				break;
 			case 4:
 				al_draw_bitmap_region(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*0, 0, 0);
 				al_draw_bitmap_region(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*0.5, 0, 0);
-				draw_text(4, "Discord, who has learned his lession after");
-				draw_text(4, "last failure, turned his muffinzombie-gang");
-				draw_text(4, "against the same mares who previously");
-				draw_text(4, "defeated him, prisoning them in their own");
-				draw_text(4, "houses. Thanks to that, he's now able to");
-				draw_text(4, "wait until the world is again chaotic enough");
-				draw_text(4, "for him to escape and rule Equestria");
-				draw_text(4, "once again.");
+				draw_text(4, "Discord, learning from his last failure,");
+				draw_text(4, "turned his muffinzombies against Twilight");
+				draw_text(4, "and her friends, trapping them in their");
+				draw_text(4, "own homes. With the bearers of the");
+				draw_text(4, "Elements out of the way, he now waits until");
+				draw_text(4, "chaos takes hold of the world, so he can");
+				draw_text(4, "rule Equestria once again.");
 				break;
 			case 5:
 				al_draw_bitmap_region(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*0, 0, 0);
 				al_draw_bitmap_region(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), al_get_display_width(game->display)*0.5, 0, 0);
-				draw_text(5, "Who is able to defeat Discord when the");
-				draw_text(5, "Elements of Harmony are unavailable?");
+				draw_text(5, "Who can defeat Discord without");
+				draw_text(5, "the Elements of Harmony?");
 				draw_text(5, "");
 				draw_text(5, "Well... There is somepony who knows");
-				draw_text(5, "everything about muffins...");
+				draw_text(5, "all about muffins...");
 				break;
 		}
 	}
@@ -204,6 +202,7 @@ void Intro_Preload(struct Game *game) {
 
 	game->intro.music = al_create_sample_instance(game->intro.sample);
 	al_attach_sample_instance_to_mixer(game->intro.music, game->audio.music);
+	al_set_sample_instance_gain(game->intro.music, 0.75);
 	al_set_sample_instance_playmode(game->intro.music, ALLEGRO_PLAYMODE_LOOP);
 
 	if (!game->intro.sample){
