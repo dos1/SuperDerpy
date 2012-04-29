@@ -64,9 +64,9 @@ int About_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 
 void About_Preload(struct Game *game) {
 	game->about.image =LoadScaledBitmap("table.png", al_get_display_width(game->display), al_get_display_height(game->display));
-	game->about.letter = LoadScaledBitmap("letter.png", al_get_display_width(game->display), al_get_display_height(game->display) );
+	game->about.letter = LoadScaledBitmap("about/letter.png", al_get_display_width(game->display), al_get_display_height(game->display) );
 
-	game->about.sample = al_load_sample( "data/about.flac" );
+	game->about.sample = al_load_sample( "data/about/about.flac" );
 	
 	game->about.music = al_create_sample_instance(game->about.sample);
 	al_attach_sample_instance_to_mixer(game->about.music, game->audio.music);

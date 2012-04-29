@@ -109,10 +109,10 @@ void Map_Preload(struct Game *game) {
 	sprintf(filename, "map/highlight%d.png", game->map.available);
 	game->map.highlight = LoadScaledBitmap(filename, al_get_display_width(game->display), al_get_display_height(game->display));
 
-	game->map.arrow = al_load_bitmap( "data/arrow.png" );
+	game->map.arrow = al_load_bitmap( "data/map/arrow.png" );
 
-	game->map.click_sample = al_load_sample( "data/click.flac" );
-	game->map.sample = al_load_sample( "data/map.flac" );
+	game->map.click_sample = al_load_sample( "data/menu/click.flac" );
+	game->map.sample = al_load_sample( "data/map/map.flac" );
 
 	game->map.music = al_create_sample_instance(game->map.sample);
 	al_attach_sample_instance_to_mixer(game->map.music, game->audio.music);

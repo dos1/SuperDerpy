@@ -148,19 +148,19 @@ void Menu_Preload(struct Game *game) {
 	game->menu.options.width = game->width;
 	game->menu.options.height = game->height;
 	game->menu.loaded = true;
-	game->menu.image = LoadScaledBitmap( "menu.png", al_get_display_width(game->display), al_get_display_height(game->display)*0.45);
-	game->menu.mountain = LoadScaledBitmap( "mountain.png", al_get_display_width(game->display)*0.055, al_get_display_height(game->display)/9 );
-	game->menu.cloud = LoadScaledBitmap( "cloud.png", al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.25 );
-	game->menu.cloud2 = LoadScaledBitmap( "cloud2.png", al_get_display_width(game->display)*0.2, al_get_display_height(game->display)*0.1 );
-	game->menu.pinkcloud = LoadScaledBitmap( "pinkcloud.png", al_get_display_width(game->display)*0.33125, al_get_display_height(game->display)*0.8122);
+	game->menu.image = LoadScaledBitmap( "menu/menu.png", al_get_display_width(game->display), al_get_display_height(game->display)*0.45);
+	game->menu.mountain = LoadScaledBitmap( "menu/mountain.png", al_get_display_width(game->display)*0.055, al_get_display_height(game->display)/9 );
+	game->menu.cloud = LoadScaledBitmap( "menu/cloud.png", al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.25 );
+	game->menu.cloud2 = LoadScaledBitmap( "menu/cloud2.png", al_get_display_width(game->display)*0.2, al_get_display_height(game->display)*0.1 );
+	game->menu.pinkcloud = LoadScaledBitmap( "menu/pinkcloud.png", al_get_display_width(game->display)*0.33125, al_get_display_height(game->display)*0.8122);
 	al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
-	game->menu.rain = al_load_bitmap( "data/rain.png" );
-	game->menu.pie = al_load_bitmap( "data/pie.png" );
+	game->menu.rain = al_load_bitmap( "data/menu/rain.png" );
+	game->menu.pie = al_load_bitmap( "data/menu/pie.png" );
 	al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR | ALLEGRO_MIN_LINEAR);
 
-	game->menu.sample = al_load_sample( "data/menu.flac" );
-	game->menu.rain_sample = al_load_sample( "data/rain.flac" );
-	game->menu.click_sample = al_load_sample( "data/click.flac" );
+	game->menu.sample = al_load_sample( "data/menu/menu.flac" );
+	game->menu.rain_sample = al_load_sample( "data/menu/rain.flac" );
+	game->menu.click_sample = al_load_sample( "data/menu/click.flac" );
 	game->menu.mountain_position = al_get_display_width(game->display)*0.7;
 
 	game->menu.music = al_create_sample_instance(game->menu.sample);

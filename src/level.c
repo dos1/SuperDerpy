@@ -286,14 +286,15 @@ void Level_Load(struct Game *game) {
 		TM_AddDelay(500);
 		TM_AddQueuedBackgroundAction(&Accelerate, NULL, 0, "accelerate");
 		TM_AddAction(&Fly, NULL, "fly");
-		/*
-        // Derpy walks in... (background - owl)
-		// Derpy reads a letter
-		// Letter on screen
-		// Derpy: fly! (background - accelerate)
-		*/
 
 		/* first part gameplay goes here */
+
+		/* actions for generating obstracles should go here
+		* probably as regular actions. When one ends, harder one
+		* begins. After last one part with muffins starts.
+		* Should obstracles themselves be handled as objects
+		* on timeline? (probably not). Hmm... */
+
 		TM_AddDelay(60*1000);
 
 		/*
@@ -373,7 +374,7 @@ void Level_UnloadBitmaps(struct Game *game) {
 }
 
 void Level_PreloadBitmaps(struct Game *game) {
-	game->level.derpy_walkcycle = LoadScaledBitmap("derpcycle.png", al_get_display_width(game->display)*0.1953125*6, al_get_display_height(game->display)*0.25*4);
+	game->level.derpy_walkcycle = LoadScaledBitmap("levels/derpcycle.png", al_get_display_width(game->display)*0.1953125*6, al_get_display_height(game->display)*0.25*4);
 	game->level.derpy = al_create_bitmap(al_get_display_width(game->display)*0.1953125, al_get_display_height(game->display)*0.25);
 	if (game->level.current_level!=1) Moonwalk_PreloadBitmaps(game);
 	else {

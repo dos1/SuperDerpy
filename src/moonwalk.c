@@ -79,7 +79,7 @@ int Moonwalk_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 
 void Moonwalk_PreloadBitmaps(struct Game *game) {
 	game->level.moonwalk.image =LoadScaledBitmap("table.png", al_get_display_width(game->display), al_get_display_height(game->display));
-	game->level.derpy_walkcycle = LoadScaledBitmap("derpcycle.png", al_get_display_width(game->display)*0.1953125*6, al_get_display_height(game->display)*0.25*4);
+	game->level.derpy_walkcycle = LoadScaledBitmap("levels/derpcycle.png", al_get_display_width(game->display)*0.1953125*6, al_get_display_height(game->display)*0.25*4);
 
 	game->level.derpy = al_create_bitmap(al_get_display_width(game->display)*0.1953125, al_get_display_height(game->display)*0.25);
 	
@@ -93,7 +93,7 @@ void Moonwalk_PreloadBitmaps(struct Game *game) {
 
 void Moonwalk_Preload(struct Game *game) {
 	PrintConsole(game, "Initializing level %d...", game->level.current_level);
-	game->level.sample = al_load_sample( "data/moonwalk.flac" );
+	game->level.sample = al_load_sample( "data/levels/moonwalk.flac" );
 	game->level.music = al_create_sample_instance(game->level.sample);
 	al_attach_sample_instance_to_mixer(game->level.music, game->audio.music);
 	al_set_sample_instance_playmode(game->level.music, ALLEGRO_PLAYMODE_LOOP);
