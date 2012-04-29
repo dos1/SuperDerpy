@@ -110,10 +110,12 @@ ALLEGRO_TIMER *&#160;</td><td class="memItemRight" valign="bottom"><b>timer</b><
 ALLEGRO_BITMAP *&#160;</td><td class="memItemRight" valign="bottom"><b>console</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab1dafa4ce0c3526439418ac24bf616d8"></a><!-- doxytag: member="Game::showconsole" ref="ab1dafa4ce0c3526439418ac24bf616d8" args="" -->
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>showconsole</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a616028b6637e4d241d8b84b838bada8a"></a><!-- doxytag: member="Game::fx" ref="a616028b6637e4d241d8b84b838bada8a" args="" -->
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>fx</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a81586f6d0c098e7a01fcdefb38f6a81c"></a><!-- doxytag: member="Game::music" ref="a81586f6d0c098e7a01fcdefb38f6a81c" args="" -->
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>music</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a10c0e81918f42e7367b4590e6885048e"></a><!-- doxytag: member="Game::fx" ref="a10c0e81918f42e7367b4590e6885048e" args="" -->
+int&#160;</td><td class="memItemRight" valign="bottom"><b>fx</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa8eff7d132a51e5ca97a376433790426"></a><!-- doxytag: member="Game::music" ref="aa8eff7d132a51e5ca97a376433790426" args="" -->
+int&#160;</td><td class="memItemRight" valign="bottom"><b>music</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5523ac4fdb8fdbd2e86b58a3fbc2e6d0"></a><!-- doxytag: member="Game::voice" ref="a5523ac4fdb8fdbd2e86b58a3fbc2e6d0" args="" -->
+int&#160;</td><td class="memItemRight" valign="bottom"><b>voice</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a026034417d95688ab99ba2e96e064b7f"></a><!-- doxytag: member="Game::fullscreen" ref="a026034417d95688ab99ba2e96e064b7f" args="" -->
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>fullscreen</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad1a3eb5c2d99f8cb9c1f7eb91689af6d"></a><!-- doxytag: member="Game::debug" ref="ad1a3eb5c2d99f8cb9c1f7eb91689af6d" args="" -->
@@ -126,6 +128,8 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>width</b></td></tr>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>height</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9a1d33be7ec00f87ede16b96bd2df312"></a><!-- doxytag: member="Game::shuttingdown" ref="a9a1d33be7ec00f87ede16b96bd2df312" args="" -->
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>shuttingdown</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aad2035c807bd99529d1a07e443e0016b"></a><!-- doxytag: member="Game::restart" ref="aad2035c807bd99529d1a07e443e0016b" args="" -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>restart</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad120de2e84e2d857dd83fc1116176f21"></a><!-- doxytag: member="Game::menu" ref="ad120de2e84e2d857dd83fc1116176f21" args="" -->
 struct <a class="el" href="structMenu.html">Menu</a>&#160;</td><td class="memItemRight" valign="bottom"><b>menu</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a496f71737460d24add0f426f7fbc90b9"></a><!-- doxytag: member="Game::loading" ref="a496f71737460d24add0f426f7fbc90b9" args="" -->
@@ -140,11 +144,12 @@ struct <a class="el" href="structMap.html">Map</a>&#160;</td><td class="memItemR
 struct <a class="el" href="structLevel.html">Level</a>&#160;</td><td class="memItemRight" valign="bottom"><b>level</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3fe420d2d9b47cbdbb26d4f68bb5a0f0"></a><!-- doxytag: member="Game::pause" ref="a3fe420d2d9b47cbdbb26d4f68bb5a0f0" args="" -->
 struct <a class="el" href="structPause.html">Pause</a>&#160;</td><td class="memItemRight" valign="bottom"><b>pause</b></td></tr>
-<tr><td class="memItemLeft" ><a class="anchor" id="a4dad33a3c0d043877fb19da84f1356dd"></a><!-- doxytag: member="Game::audio" ref="a4dad33a3c0d043877fb19da84f1356dd" args="" -->
+<tr><td class="memItemLeft" ><a class="anchor" id="a6acceebe86759cbd418fdd1f2720781f"></a><!-- doxytag: member="Game::audio" ref="a6acceebe86759cbd418fdd1f2720781f" args="" -->
 struct {</td></tr>
-<tr><td class="memItemLeft" >&#160;&#160;&#160;ALLEGRO_VOICE *&#160;&#160;&#160;<b>voice</b></td></tr>
+<tr><td class="memItemLeft" >&#160;&#160;&#160;ALLEGRO_VOICE *&#160;&#160;&#160;<b>v</b></td></tr>
 <tr><td class="memItemLeft" >&#160;&#160;&#160;ALLEGRO_MIXER *&#160;&#160;&#160;<b>mixer</b></td></tr>
 <tr><td class="memItemLeft" >&#160;&#160;&#160;ALLEGRO_MIXER *&#160;&#160;&#160;<b>music</b></td></tr>
+<tr><td class="memItemLeft" >&#160;&#160;&#160;ALLEGRO_MIXER *&#160;&#160;&#160;<b>voice</b></td></tr>
 <tr><td class="memItemLeft" >&#160;&#160;&#160;ALLEGRO_MIXER *&#160;&#160;&#160;<b>fx</b></td></tr>
 <tr><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>audio</b></td></tr>
 </table>
@@ -171,7 +176,7 @@ struct {</td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 7 2012 15:02:51 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Apr 30 2012 00:57:53 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

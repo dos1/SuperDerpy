@@ -85,22 +85,52 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>Playable <a class="el" href="structLevel.html" title="Resources used by Level state.">Level</a> code.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdio.h&gt;</code><br/>
-<code>#include &lt;math.h&gt;</code><br/>
+<code>#include &quot;moonwalk.h&quot;</code><br/>
+<code>#include &quot;<a class="el" href="config_8h_source.html">config.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="pause_8h_source.html">pause.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="level_8h_source.html">level.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="timeline_8h_source.html">timeline.h</a>&quot;</code><br/>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afd8cf0a0a99661bc2b21f5e1a695a4f3"></a><!-- doxytag: member="level.c::Level_Passed" ref="afd8cf0a0a99661bc2b21f5e1a695a4f3" args="(struct Game *game)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Level_Passed</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a30a1b6b19047767179aa1b9366b371a4"></a><!-- doxytag: member="level.c::Accelerate" ref="a30a1b6b19047767179aa1b9366b371a4" args="(struct Game *game, struct TM_Action *action, enum TM_ActionState state)" -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>Accelerate</b> (struct <a class="el" href="structGame.html">Game</a> *game, struct <a class="el" href="structTM__Action.html">TM_Action</a> *action, enum TM_ActionState state)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6c22701a9126337808a9a602a77dffc5"></a><!-- doxytag: member="level.c::Walk" ref="a6c22701a9126337808a9a602a77dffc5" args="(struct Game *game, struct TM_Action *action, enum TM_ActionState state)" -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>Walk</b> (struct <a class="el" href="structGame.html">Game</a> *game, struct <a class="el" href="structTM__Action.html">TM_Action</a> *action, enum TM_ActionState state)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa293be19929b6eb00fe52c0d7c5fc8d5"></a><!-- doxytag: member="level.c::Move" ref="aa293be19929b6eb00fe52c0d7c5fc8d5" args="(struct Game *game, struct TM_Action *action, enum TM_ActionState state)" -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>Move</b> (struct <a class="el" href="structGame.html">Game</a> *game, struct <a class="el" href="structTM__Action.html">TM_Action</a> *action, enum TM_ActionState state)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a23487051f427babc97f5bc670b2ca8d6"></a><!-- doxytag: member="level.c::Fly" ref="a23487051f427babc97f5bc670b2ca8d6" args="(struct Game *game, struct TM_Action *action, enum TM_ActionState state)" -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>Fly</b> (struct <a class="el" href="structGame.html">Game</a> *game, struct <a class="el" href="structTM__Action.html">TM_Action</a> *action, enum TM_ActionState state)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4b59af1bdb93050df607e02275920462"></a><!-- doxytag: member="level.c::Stop" ref="a4b59af1bdb93050df607e02275920462" args="(struct Game *game, struct TM_Action *action, enum TM_ActionState state)" -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>Stop</b> (struct <a class="el" href="structGame.html">Game</a> *game, struct <a class="el" href="structTM__Action.html">TM_Action</a> *action, enum TM_ActionState state)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae8e45a00c15c76ba06ab04b38f1fc7b8"></a><!-- doxytag: member="level.c::Letter" ref="ae8e45a00c15c76ba06ab04b38f1fc7b8" args="(struct Game *game, struct TM_Action *action, enum TM_ActionState state)" -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>Letter</b> (struct <a class="el" href="structGame.html">Game</a> *game, struct <a class="el" href="structTM__Action.html">TM_Action</a> *action, enum TM_ActionState state)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af880b1cc833b2e4f408c1db42b3c4b5e"></a><!-- doxytag: member="level.c::Level_Draw" ref="af880b1cc833b2e4f408c1db42b3c4b5e" args="(struct Game *game)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Level_Draw</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2b55190c74aadd3e48b3b094f3d117f5"></a><!-- doxytag: member="level.c::FadeIn" ref="a2b55190c74aadd3e48b3b094f3d117f5" args="(struct Game *game, struct TM_Action *action, enum TM_ActionState state)" -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>FadeIn</b> (struct <a class="el" href="structGame.html">Game</a> *game, struct <a class="el" href="structTM__Action.html">TM_Action</a> *action, enum TM_ActionState state)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a54e1fe675a65e73e07084aeedcca2b59"></a><!-- doxytag: member="level.c::FadeOut" ref="a54e1fe675a65e73e07084aeedcca2b59" args="(struct Game *game, struct TM_Action *action, enum TM_ActionState state)" -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>FadeOut</b> (struct <a class="el" href="structGame.html">Game</a> *game, struct <a class="el" href="structTM__Action.html">TM_Action</a> *action, enum TM_ActionState state)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8d383a4d947717a13239c94a1ed437a4"></a><!-- doxytag: member="level.c::Welcome" ref="a8d383a4d947717a13239c94a1ed437a4" args="(struct Game *game, struct TM_Action *action, enum TM_ActionState state)" -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>Welcome</b> (struct <a class="el" href="structGame.html">Game</a> *game, struct <a class="el" href="structTM__Action.html">TM_Action</a> *action, enum TM_ActionState state)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a51e9ed5b383810dfdb7508bbdc9fa045"></a><!-- doxytag: member="level.c::PassLevel" ref="a51e9ed5b383810dfdb7508bbdc9fa045" args="(struct Game *game, struct TM_Action *action, enum TM_ActionState state)" -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>PassLevel</b> (struct <a class="el" href="structGame.html">Game</a> *game, struct <a class="el" href="structTM__Action.html">TM_Action</a> *action, enum TM_ActionState state)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8dfe891f1fa1e658513ff9764d76bff4"></a><!-- doxytag: member="level.c::Level_Load" ref="a8dfe891f1fa1e658513ff9764d76bff4" args="(struct Game *game)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Level_Load</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aff79b9ce718c8b2dc7db19246a2a532d"></a><!-- doxytag: member="level.c::Level_Keydown" ref="aff79b9ce718c8b2dc7db19246a2a532d" args="(struct Game *game, ALLEGRO_EVENT *ev)" -->
 int&#160;</td><td class="memItemRight" valign="bottom"><b>Level_Keydown</b> (struct <a class="el" href="structGame.html">Game</a> *game, ALLEGRO_EVENT *ev)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abdc031ea1495aef130933bfcc21ed14b"></a><!-- doxytag: member="level.c::Level_ProcessLogic" ref="abdc031ea1495aef130933bfcc21ed14b" args="(struct Game *game, ALLEGRO_EVENT *ev)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Level_ProcessLogic</b> (struct <a class="el" href="structGame.html">Game</a> *game, ALLEGRO_EVENT *ev)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a637c6cbe83575b03f2388173e9817f3c"></a><!-- doxytag: member="level.c::Level_Preload" ref="a637c6cbe83575b03f2388173e9817f3c" args="(struct Game *game)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Level_Preload</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a90e915acd1cecf93fac834c2928f9f57"></a><!-- doxytag: member="level.c::Level_Unload" ref="a90e915acd1cecf93fac834c2928f9f57" args="(struct Game *game)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Level_Unload</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9a3a3059a7c3e0858df40898a3b3a533"></a><!-- doxytag: member="level.c::Level_UnloadBitmaps" ref="a9a3a3059a7c3e0858df40898a3b3a533" args="(struct Game *game)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Level_UnloadBitmaps</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af83bfca9a8a8f7fe84d5522009f5097d"></a><!-- doxytag: member="level.c::Level_PreloadBitmaps" ref="af83bfca9a8a8f7fe84d5522009f5097d" args="(struct Game *game)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Level_PreloadBitmaps</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Playable <a class="el" href="structLevel.html" title="Resources used by Level state.">Level</a> code. </p>
@@ -122,7 +152,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Level_Unload</b> (str
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 7 2012 15:02:51 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Apr 30 2012 00:57:53 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

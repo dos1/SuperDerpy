@@ -1,0 +1,75 @@
+\hypertarget{timeline_8c}{\section{src/timeline.c \-File \-Reference}
+\label{timeline_8c}\index{src/timeline.\-c@{src/timeline.\-c}}
+}
+
+
+\-Timeline \-Manager framework code.  
+
+
+{\ttfamily \#include $<$allegro5/allegro.\-h$>$}\*
+{\ttfamily \#include \char`\"{}main.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}timeline.\-h\char`\"{}}\*
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{timeline_8c_a2a11da6477ec30ef12dc20b530bc0946}{void {\bfseries \-T\-M\-\_\-\-Init} (struct \hyperlink{structGame}{\-Game} $\ast$g)}\label{timeline_8c_a2a11da6477ec30ef12dc20b530bc0946}
+
+\item 
+\hypertarget{timeline_8c_a75451d54b61c3ec12815790c2e33a31e}{void {\bfseries \-T\-M\-\_\-\-Process} ()}\label{timeline_8c_a75451d54b61c3ec12815790c2e33a31e}
+
+\item 
+\hypertarget{timeline_8c_a2e38ca3352eaa0cccb741f7d6c6f9bb9}{void {\bfseries \-T\-M\-\_\-\-Handle\-Event} (\-A\-L\-L\-E\-G\-R\-O\-\_\-\-E\-V\-E\-N\-T $\ast$ev)}\label{timeline_8c_a2e38ca3352eaa0cccb741f7d6c6f9bb9}
+
+\item 
+\hypertarget{timeline_8c_a6f909356f7c1e9bdade01c6bc46aa078}{struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$ {\bfseries \-T\-M\-\_\-\-Add\-Action} (bool($\ast$func)(struct \hyperlink{structGame}{\-Game} $\ast$, struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$, enum \-T\-M\-\_\-\-Action\-State), struct \hyperlink{structTM__Arguments}{\-T\-M\-\_\-\-Arguments} $\ast$args, char $\ast$name)}\label{timeline_8c_a6f909356f7c1e9bdade01c6bc46aa078}
+
+\item 
+\hypertarget{timeline_8c_a2506eb9068da955dfbe606837d57344f}{struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$ {\bfseries \-T\-M\-\_\-\-Add\-Background\-Action} (bool($\ast$func)(struct \hyperlink{structGame}{\-Game} $\ast$, struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$, enum \-T\-M\-\_\-\-Action\-State), struct \hyperlink{structTM__Arguments}{\-T\-M\-\_\-\-Arguments} $\ast$args, float delay, char $\ast$name)}\label{timeline_8c_a2506eb9068da955dfbe606837d57344f}
+
+\item 
+\hypertarget{timeline_8c_afeb0e00b3d49fdeb9d5cebfc9dad84bd}{bool {\bfseries runinbackground} (struct \hyperlink{structGame}{\-Game} $\ast$game, struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$action, enum \-T\-M\-\_\-\-Action\-State state)}\label{timeline_8c_afeb0e00b3d49fdeb9d5cebfc9dad84bd}
+
+\item 
+\hypertarget{timeline_8c_a4e5673d8b4ef973830395af22dd0bd25}{struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$ {\bfseries \-T\-M\-\_\-\-Add\-Queued\-Background\-Action} (bool($\ast$func)(struct \hyperlink{structGame}{\-Game} $\ast$, struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$, enum \-T\-M\-\_\-\-Action\-State), struct \hyperlink{structTM__Arguments}{\-T\-M\-\_\-\-Arguments} $\ast$args, float delay, char $\ast$name)}\label{timeline_8c_a4e5673d8b4ef973830395af22dd0bd25}
+
+\item 
+\hypertarget{timeline_8c_a96012953eefd9118c10f0b888b001e41}{void {\bfseries \-T\-M\-\_\-\-Add\-Delay} (float delay)}\label{timeline_8c_a96012953eefd9118c10f0b888b001e41}
+
+\item 
+\hypertarget{timeline_8c_acbfe5777a0ca67e36ba31b6e4ce55696}{void {\bfseries \-T\-M\-\_\-\-Pause} (bool pause)}\label{timeline_8c_acbfe5777a0ca67e36ba31b6e4ce55696}
+
+\item 
+\hypertarget{timeline_8c_a950cb13ffd2bf9dc9954ad6cc462075f}{void {\bfseries \-T\-M\-\_\-\-Destroy} ()}\label{timeline_8c_a950cb13ffd2bf9dc9954ad6cc462075f}
+
+\item 
+\hypertarget{timeline_8c_a05d060d4a95e97538697d90181fb298d}{struct \hyperlink{structTM__Arguments}{\-T\-M\-\_\-\-Arguments} $\ast$ {\bfseries \-T\-M\-\_\-\-Add\-To\-Args} (struct \hyperlink{structTM__Arguments}{\-T\-M\-\_\-\-Arguments} $\ast$args, void $\ast$arg)}\label{timeline_8c_a05d060d4a95e97538697d90181fb298d}
+
+\item 
+\hypertarget{timeline_8c_ae4fa0908342990aa1d3cf0654bae6808}{void {\bfseries \-T\-M\-\_\-\-Destroy\-Args} (struct \hyperlink{structTM__Arguments}{\-T\-M\-\_\-\-Arguments} $\ast$args)}\label{timeline_8c_ae4fa0908342990aa1d3cf0654bae6808}
+
+\item 
+\hypertarget{timeline_8c_a39af041908160eed75defd882e718765}{bool {\bfseries \-T\-M\-\_\-\-Initialized} ()}\label{timeline_8c_a39af041908160eed75defd882e718765}
+
+\end{DoxyCompactItemize}
+\subsection*{\-Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{timeline_8c_add314d5238beaef3d1ba375ff1ea9817}{unsigned int {\bfseries lastid}}\label{timeline_8c_add314d5238beaef3d1ba375ff1ea9817}
+
+\item 
+\hypertarget{timeline_8c_abcd66f5a5ff960ad9b26a34a702d408d}{struct \hyperlink{structGame}{\-Game} $\ast$ {\bfseries game} = \-N\-U\-L\-L}\label{timeline_8c_abcd66f5a5ff960ad9b26a34a702d408d}
+
+\item 
+\hypertarget{timeline_8c_a0e21d804349f177ea8714f3cd8a52c9f}{struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$ {\bfseries queue}}\label{timeline_8c_a0e21d804349f177ea8714f3cd8a52c9f}
+
+\item 
+\hypertarget{timeline_8c_aafe2721a3300a2464e673bb405a513da}{struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$ {\bfseries background}}\label{timeline_8c_aafe2721a3300a2464e673bb405a513da}
+
+\item 
+\hypertarget{timeline_8c_a1656129c4a4fd8809254194f08f0ac70}{bool {\bfseries paused}}\label{timeline_8c_a1656129c4a4fd8809254194f08f0ac70}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Timeline \-Manager framework code. 

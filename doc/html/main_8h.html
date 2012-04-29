@@ -97,6 +97,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMoonwalk.html">Moonwalk</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Resources used by moonwalk level placeholder.  <a href="structMoonwalk.html#details">More...</a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLevel.html">Level</a></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Resources used by <a class="el" href="structLevel.html" title="Resources used by Level state.">Level</a> state.  <a href="structLevel.html#details">More...</a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMenu.html">Menu</a></td></tr>
@@ -127,6 +129,17 @@ Enumerations</h2></td></tr>
 <br/>
  }</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum of all available gamestates. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a5b988954c565e5ff444d61085e367fae">menustate_enum</a> { <br/>
+&#160;&#160;<b>MENUSTATE_MAIN</b>, 
+<b>MENUSTATE_OPTIONS</b>, 
+<b>MENUSTATE_CONTROLS</b>, 
+<b>MENUSTATE_VIDEO</b>, 
+<br/>
+&#160;&#160;<b>MENUSTATE_PAUSE</b>, 
+<b>MENUSTATE_AUDIO</b>
+<br/>
+ }</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum of menu states in <a class="el" href="structMenu.html" title="Resources used by Menu state.">Menu</a> and <a class="el" href="structPause.html" title="Resources used by Pause state.">Pause</a> game states. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a37ff4b9f7c61255aaaba68d349398974">al_draw_text_with_shadow</a> (ALLEGRO_FONT *font, ALLEGRO_COLOR color, float x, float y, int flags, char const *text)</td></tr>
@@ -151,6 +164,10 @@ ALLEGRO_BITMAP *&#160;</td><td class="memItemRight" valign="bottom"><b>LoadScale
 float&#160;</td><td class="memItemRight" valign="bottom"><b>tps</b> (struct <a class="el" href="structGame.html">Game</a> *game, float t)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aba8768911068b399b4118452eb3959ec"></a><!-- doxytag: member="main.h::DrawGameState" ref="aba8768911068b399b4118452eb3959ec" args="(struct Game *game)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>DrawGameState</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab0af27461c4e23c088670da5e6a971ef"></a><!-- doxytag: member="main.h::Shared_Load" ref="ab0af27461c4e23c088670da5e6a971ef" args="(struct Game *game)" -->
+int&#160;</td><td class="memItemRight" valign="bottom"><b>Shared_Load</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af9010ebe7fc75fbd882a9a8bf7b32d0c"></a><!-- doxytag: member="main.h::Shared_Unload" ref="af9010ebe7fc75fbd882a9a8bf7b32d0c" args="(struct Game *game)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Shared_Unload</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Headers of main file of SuperDerpy engine. </p>
@@ -264,7 +281,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>DrawGameState</b> (st
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 7 2012 15:02:51 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Apr 30 2012 00:57:53 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
