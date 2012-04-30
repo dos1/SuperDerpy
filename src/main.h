@@ -45,15 +45,22 @@ enum gamestate_enum {
 struct Moonwalk {
 	ALLEGRO_BITMAP *fade_bitmap; /*!< Bitmap used on fade-in and fade-out animations. */
 	ALLEGRO_BITMAP *image; /*!< Background texture. */
-	int current_level; /*!< Level number. */
 	int derpy_frame; /*!< Current frame of Derpy animation. */ 
 	int derpy_frame_tmp; /*!< Counter used to slow down Derpy animation. */
 	double derpy_pos; /*!< Position of Derpy on screen. */
 };
 
+struct Obstracle {
+	ALLEGRO_BITMAP *bitmap;
+	float x, y, speed;
+	int points;
+	void *callback;
+	struct Obstracle *prev, *next;
+};
+
 /*! \brief Resources used by Level state. */
 struct Level {
-	int current_level;
+	int current_level; /*!< Level number. */
 	float speed;
 	float bg_pos, st_pos, fg_pos, cl_pos;
 	float derpy_x, derpy_y;
@@ -67,6 +74,7 @@ struct Level {
 	ALLEGRO_BITMAP *welcome;
 	ALLEGRO_BITMAP *derpy_walkcycle; /*!< Derpy walk cycle spritesheet. */
 	ALLEGRO_BITMAP *derpy; /*!< Derpy sprite. */
+	struct Obstracle *obstracles;
 	struct Moonwalk moonwalk;
 };
 

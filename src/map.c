@@ -28,28 +28,28 @@ void Map_Draw(struct Game *game) {
 	float x,y;
 	switch (game->map.selected) {
 		case 1:
-			x=0.18;
-			y=0.225;
+			x=0.2;
+			y=0.25;
 			break;
 		case 2:
 			x=0.5;
-			y=0.3125;
+			y=0.375;
 			break;
 		case 3:
 			x=0.738;
-			y=0.425;
+			y=0.4;
 			break;
 		case 4:
-			x=0.61;
+			x=0.7;
 			y=0.7625;
 			break;
 		case 5:
-			x=0.17;
-			y=0.725;
+			x=0.225;
+			y=0.75;
 			break;
 		case 6:
-			x=0.41;
-			y=0.518;
+			x=0.425;
+			y=0.65;
 			break;
 	}
 	al_draw_scaled_bitmap(game->map.arrow, 0, 0, al_get_bitmap_width(game->map.arrow), al_get_bitmap_height(game->map.arrow), al_get_display_width(game->display)*x, al_get_display_height(game->display)*y + ((sin(game->map.arrowpos)+0.5)/20.0)*al_get_display_height(game->display), al_get_display_width(game->display)*0.1, al_get_display_height(game->display)*0.16, 0);
