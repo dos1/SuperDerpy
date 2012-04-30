@@ -366,7 +366,7 @@ int main(int argc, char **argv){
 	al_attach_mixer_to_mixer(game.audio.voice, game.audio.mixer);
 	al_set_mixer_gain(game.audio.fx, game.fx/10.0);
 	al_set_mixer_gain(game.audio.music, game.music/10.0);
-	al_set_mixer_gain(game.audio.voice, game.music/10.0);
+	al_set_mixer_gain(game.audio.voice, game.voice/10.0);
 
 	al_register_event_source(game.event_queue, al_get_display_event_source(game.display));
 	al_register_event_source(game.event_queue, al_get_timer_event_source(game.timer));
