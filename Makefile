@@ -1,10 +1,10 @@
 IDIR =.
 CC=gcc
-CFLAGS=-I$(IDIR) -Wall -g -fnested-functions
+CFLAGS=-I$(IDIR) -Wall -ansi -g
 
 SRCDIR=src
 ODIR=obj
-LIBS=-lallegro -lallegro_audio -lallegro_acodec -lallegro_image -lallegro_font -lallegro_ttf -lm
+LIBS=-lallegro -lallegro_audio -lallegro_acodec -lallegro_image -lallegro_font -lallegro_main -lallegro_ttf -lm
 
 _OBJ = config.o main.o about.o intro.o loading.o map.o menu.o level.o moonwalk.o pause.o timeline.o 
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
