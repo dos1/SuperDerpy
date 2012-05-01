@@ -74,6 +74,9 @@ struct Level {
 	ALLEGRO_BITMAP *welcome;
 	ALLEGRO_BITMAP *derpy_walkcycle; /*!< Derpy walk cycle spritesheet. */
 	ALLEGRO_BITMAP *derpy; /*!< Derpy sprite. */
+	struct {
+		ALLEGRO_BITMAP *pie;
+	} obst_bmps;
 	struct Obstracle *obstracles;
 	struct Moonwalk moonwalk;
 };

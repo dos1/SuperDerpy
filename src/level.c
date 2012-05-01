@@ -72,6 +72,48 @@ bool Fly(struct Game *game, struct TM_Action *action, enum TM_ActionState state)
 	return true;
 }
 
+bool GenerateObstracles(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
+	/*float* tmp; bool* in;*/
+	int* count;
+	if (!action->arguments) {
+		action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(int)));
+		/* action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(bool))); */
+	}
+	count = (int*)action->arguments->value;
+	/*tmp = (float*)action->arguments->value;
+	in = (bool*)action->arguments->next->value;*/
+	if (state == TM_ACTIONSTATE_INIT) {
+		*count = 0;
+		/* *tmp = 0;
+		*in = true;*/
+	}
+	else if (state == TM_ACTIONSTATE_RUNNING) {
+		if (rand()%100<=2) {
+			PrintConsole(game, "OBSTRACLE %d", *count);
+			(*count)++;
+			struct Obstracle *obst = malloc(sizeof(struct Obstracle));
+			obst->prev = NULL;
+			obst->x = 100;
+			obst->y = (rand()%91)-1;
+			obst->speed = 0;
+			obst->bitmap = game->level.obst_bmps.pie;
+			obst->callback = NULL;
+			if (game->level.obstracles) {
+				game->level.obstracles->prev = obst;
+				obst->next = game->level.obstracles;
+			} else {
+				obst->next = NULL;
+			}
+			game->level.obstracles = obst;
+			if (*count > 64) return true;
+		}
+	} else {
+		free(action->arguments->value);
+		TM_DestroyArgs(action->arguments);
+		action->arguments = NULL;
+	}
+	return false;
+}
 
 bool Stop(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (state != TM_ACTIONSTATE_RUNNING) return false;
@@ -123,6 +165,18 @@ void Level_Draw(struct Game *game) {
 		al_draw_bitmap(game->level.background, (1+(-game->level.bg_pos))*al_get_bitmap_width(game->level.background), 0, 0);
 		al_draw_bitmap(game->level.stage, (-game->level.st_pos)*al_get_bitmap_width(game->level.stage), 0 ,0);
 		al_draw_bitmap(game->level.stage, (1+(-game->level.st_pos))*al_get_bitmap_width(game->level.stage), 0 ,0);
+
+		struct Obstracle *tmp = game->level.obstracles;
+		while (tmp) {
+			/*PrintConsole(game, "DRAWING %f %f", tmp->x, tmp->y);*/
+			if (tmp->x > -10) {
+				al_draw_bitmap(tmp->bitmap, (tmp->x/100.0)*al_get_display_width(game->display), (tmp->y/100.0)*al_get_display_height(game->display), 0);
+				tmp->x -= game->level.speed*310;
+			} else {
+				/* Delete from queue... */
+			}
+			tmp = tmp->next;
+		}
 
 		al_set_target_bitmap(game->level.derpy);
 		al_clear_to_color(al_map_rgba(0,0,0,0));
@@ -270,6 +324,7 @@ void Level_Load(struct Game *game) {
 	game->level.sheet_speed = 2.4;
 	game->level.sheet_tmp = 0;
 	game->level.handle_input = false;
+	game->level.obstracles = NULL;
 	al_clear_to_color(al_map_rgb(0,0,0));
 	if (game->level.current_level!=1) Moonwalk_Load(game);
 	else {
@@ -286,7 +341,7 @@ void Level_Load(struct Game *game) {
 		TM_AddDelay(500);
 		TM_AddQueuedBackgroundAction(&Accelerate, NULL, 0, "accelerate");
 		TM_AddAction(&Fly, NULL, "fly");
-
+		TM_AddDelay(5*1000);
 		/* first part gameplay goes here */
 
 		/* actions for generating obstracles should go here
@@ -294,8 +349,8 @@ void Level_Load(struct Game *game) {
 		* begins. After last one part with muffins starts.
 		* Should obstracles themselves be handled as objects
 		* on timeline? (probably not). Hmm... */
-
-		TM_AddDelay(60*1000);
+		TM_AddAction(&GenerateObstracles, NULL, "obstracles");
+		TM_AddDelay(5*1000);
 
 		/*
         // wings disappear, deccelerate, fall down
@@ -357,6 +412,13 @@ void Level_Unload(struct Game *game) {
 	else {
 		TM_Destroy();
 	}
+	struct Obstracle *tmp, *t = game->level.obstracles;
+	if (t) tmp = t->prev;
+	while (t) {
+		if (tmp) free(tmp);
+		tmp = t;
+		t = t->next;
+	}
 	Level_UnloadBitmaps(game);
 }
 
@@ -370,6 +432,7 @@ void Level_UnloadBitmaps(struct Game *game) {
 		al_destroy_bitmap(game->level.stage);
 		al_destroy_bitmap(game->level.clouds);
 		al_destroy_bitmap(game->level.welcome);
+		al_destroy_bitmap(game->level.obst_bmps.pie);
 	}
 }
 
@@ -383,6 +446,7 @@ void Level_PreloadBitmaps(struct Game *game) {
 		game->level.foreground = LoadScaledBitmap("levels/1/foreground.png", al_get_display_height(game->display)*4.73307291666666666667, al_get_display_height(game->display));
 		game->level.background = LoadScaledBitmap("levels/1/background.png", al_get_display_height(game->display)*4.73307291666666666667, al_get_display_height(game->display));
 		game->level.stage = LoadScaledBitmap("levels/1/stage.png", al_get_display_height(game->display)*4.73307291666666666667, al_get_display_height(game->display));
+		game->level.obst_bmps.pie = LoadScaledBitmap("menu/pie.png", al_get_display_width(game->display)*0.1, al_get_display_height(game->display)*0.1);
 		game->level.welcome = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 		al_set_target_bitmap(game->level.welcome);
 		al_clear_to_color(al_map_rgba(0,0,0,0));
