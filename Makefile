@@ -1,6 +1,6 @@
 IDIR =.
 CC=gcc
-CFLAGS=-I$(IDIR) -Wall -ansi -g
+CFLAGS=-I$(IDIR) -Wall -g
 
 SRCDIR=src
 ODIR=obj
