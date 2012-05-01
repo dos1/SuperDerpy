@@ -407,6 +407,7 @@ int main(int argc, char **argv){
 			break;
 		}
 		else if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
+			PrintConsole(&game, "KEYCODE: %s", al_keycode_to_name(ev.keyboard.keycode));
 			if ((ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_TILDE)) {
 				game.showconsole = !game.showconsole;
 			}
