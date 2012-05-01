@@ -407,8 +407,12 @@ int main(int argc, char **argv){
 			break;
 		}
 		else if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
-			PrintConsole(&game, "KEYCODE: %s", al_keycode_to_name(ev.keyboard.keycode));
+			/*PrintConsole(&game, "KEYCODE: %s", al_keycode_to_name(ev.keyboard.keycode));*/
+			#ifdef ALLEGRO_MACOSX
+			if ((ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == 104)) {
+			#else
 			if ((ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_TILDE)) {
+			#endif
 				game.showconsole = !game.showconsole;
 			}
 			else if ((game.debug) && (ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_F1)) {
