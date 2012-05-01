@@ -472,7 +472,11 @@ int main(int argc, char **argv){
 	if (game.restart) {
 		al_shutdown_ttf_addon();
 		al_shutdown_font_addon();
-		return main(argc, argv);
+		#ifdef ALLEGRO_MACOSX
+			return _al_mangled_main(argc, argv);
+		#else
+			return main(argc, argv);
+		#endif
 	}
 	return 0;
 }
