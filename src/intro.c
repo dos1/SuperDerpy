@@ -124,6 +124,7 @@ void Intro_Draw(struct Game *game) {
 		al_draw_bitmap(game->intro.animation, 0, 0, 0);
 	}
 	al_draw_text_with_shadow(game->intro.font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)*0.90, ALLEGRO_ALIGN_CENTRE, "Press any key to continue or escape to skip...");
+	al_draw_bitmap(game->intro.frame, 0, 0, 0);
 	/*PrintConsole(game, "drawing");*/
 	if (game->intro.in_animation) {
 		/*PrintConsole(game, "animating");*/
@@ -156,6 +157,7 @@ void Intro_Load(struct Game *game) {
 		al_wait_for_event(game->event_queue, &ev);
 		al_draw_tinted_bitmap(game->intro.table,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
 		al_draw_tinted_bitmap(game->intro.animation,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
+		al_draw_tinted_bitmap(game->intro.frame,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), 0, 0, 0);
 		DrawConsole(game);
 		al_flip_display();
 	}
@@ -197,7 +199,8 @@ void Intro_Preload(struct Game *game) {
 	game->intro.animsprites[4] = LoadScaledBitmap("about/letter.png", al_get_display_width(game->display)*0.3125*3, al_get_display_height(game->display)*0.63*3);
 
 	game->intro.table_bitmap =LoadScaledBitmap("intro/paper.png", al_get_display_width(game->display), al_get_display_height(game->display));
-
+	game->intro.frame =LoadScaledBitmap("intro/frame.png", al_get_display_width(game->display), al_get_display_height(game->display));
+	
 	game->intro.sample = al_load_sample( "data/intro/intro.flac" );
 
 	game->intro.music = al_create_sample_instance(game->intro.sample);
@@ -238,9 +241,11 @@ void Intro_Unload(struct Game *game) {
 			al_draw_tinted_bitmap(game->intro.table, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), 0, 0, 0);
 			al_draw_tinted_bitmap(game->intro.animation, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), 0, 0, 0);
 		}
+		al_draw_tinted_bitmap(game->intro.frame,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), 0, 0, 0);
 		DrawConsole(game);
 		al_flip_display();
 	}
+	al_destroy_bitmap(game->intro.frame);
 	al_destroy_bitmap(game->intro.table);
 	al_destroy_bitmap(game->intro.animation);
 	int i;

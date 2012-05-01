@@ -174,6 +174,7 @@ struct Intro {
 	float anim;
 	ALLEGRO_BITMAP *table;
 	ALLEGRO_BITMAP *table_bitmap;
+	ALLEGRO_BITMAP *frame;
 	ALLEGRO_BITMAP *animation;
 	ALLEGRO_BITMAP *animsprites[5];
 	ALLEGRO_FONT *font;
