@@ -72,6 +72,20 @@ bool Fly(struct Game *game, struct TM_Action *action, enum TM_ActionState state)
 	return true;
 }
 
+void Obst_MoveUpDown(struct Game *game, struct Obstracle *obstracle) {
+	if (obstracle->data) {
+		obstracle->y -= 0.5;
+		if (obstracle->y<=0) {
+			obstracle->data=NULL;
+		}
+	} else {
+		obstracle->y += 0.5;
+		if (obstracle->y>=100) {
+			obstracle->data++;
+		}
+	}
+}
+
 bool GenerateObstracles(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	/*float* tmp; bool* in;*/
 	int* count;
@@ -98,6 +112,8 @@ bool GenerateObstracles(struct Game *game, struct TM_Action *action, enum TM_Act
 			obst->speed = 0;
 			obst->bitmap = game->level.obst_bmps.pie;
 			obst->callback = NULL;
+			obst->data = NULL;
+			if (rand()%100<=50) obst->callback=Obst_MoveUpDown;
 			if (game->level.obstracles) {
 				game->level.obstracles->prev = obst;
 				obst->next = game->level.obstracles;
@@ -172,8 +188,9 @@ void Level_Draw(struct Game *game) {
 			if (tmp->x > -10) {
 				al_draw_bitmap(tmp->bitmap, (tmp->x/100.0)*al_get_display_width(game->display), (tmp->y/100.0)*al_get_display_height(game->display), 0);
 				tmp->x -= game->level.speed*310;
+				if (tmp->callback) tmp->callback(game, tmp);
 			} else {
-				/* Delete from queue... */
+				/* TODO: Delete from queue... */
 			}
 			tmp = tmp->next;
 		}

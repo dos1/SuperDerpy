@@ -50,13 +50,7 @@ struct Moonwalk {
 	double derpy_pos; /*!< Position of Derpy on screen. */
 };
 
-struct Obstracle {
-	ALLEGRO_BITMAP *bitmap;
-	float x, y, speed;
-	int points;
-	void *callback;
-	struct Obstracle *prev, *next;
-};
+struct Obstracle;
 
 /*! \brief Resources used by Level state. */
 struct Level {
@@ -221,6 +215,15 @@ struct Game {
 		ALLEGRO_MIXER *voice;
 		ALLEGRO_MIXER *fx;
 	} audio;
+};
+
+struct Obstracle {
+	ALLEGRO_BITMAP *bitmap;
+	float x, y, speed;
+	int points;
+	void (*callback)(struct Game*, struct Obstracle*);
+	void *data;
+	struct Obstracle *prev, *next;
 };
 
 /*! \brief Draws text with shadow.
