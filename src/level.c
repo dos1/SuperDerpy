@@ -226,7 +226,7 @@ void Level_Draw(struct Game *game) {
 		al_draw_bitmap(game->level.background, (1+(-game->level.bg_pos))*al_get_bitmap_width(game->level.background), 0, 0);
 		al_draw_bitmap(game->level.stage, (-game->level.st_pos)*al_get_bitmap_width(game->level.stage), 0 ,0);
 		al_draw_bitmap(game->level.stage, (1+(-game->level.st_pos))*al_get_bitmap_width(game->level.stage), 0 ,0);
-
+		
 		int derpyx = game->level.derpy_x*al_get_display_width(game->display);
 		int derpyy = game->level.derpy_y*al_get_display_height(game->display);
 		int derpyw = al_get_bitmap_width(game->level.derpy);
@@ -276,9 +276,10 @@ void Level_Draw(struct Game *game) {
 		al_set_target_bitmap(al_get_backbuffer(game->display));
 
 		al_draw_tinted_bitmap(game->level.derpy, al_map_rgba_f(255,255-colision*255,255-colision*255,1), derpyx, derpyy, 0);
-		
+
 		al_draw_bitmap(game->level.foreground, (-game->level.fg_pos)*al_get_bitmap_width(game->level.foreground), 0 ,0);
 		al_draw_bitmap(game->level.foreground, (1+(-game->level.fg_pos))*al_get_bitmap_width(game->level.foreground), 0 ,0);
+
 		if (game->level.speed > 0) {
 			game->level.cl_pos += game->level.speed * 0.2;
 			game->level.bg_pos += game->level.speed * 0.6;
