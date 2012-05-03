@@ -30,6 +30,8 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 
+struct Game;
+
 /*! \brief Enum of all available gamestates. */
 enum gamestate_enum {
 	GAMESTATE_PAUSE,
@@ -50,7 +52,14 @@ struct Moonwalk {
 	double derpy_pos; /*!< Position of Derpy on screen. */
 };
 
-struct Obstracle;
+struct Obstracle {
+	ALLEGRO_BITMAP **bitmap;
+	float x, y, speed;
+	int points;
+	void (*callback)(struct Game*, struct Obstracle*);
+	void *data;
+	struct Obstracle *prev, *next;
+};
 
 /*! \brief Resources used by Level state. */
 struct Level {
@@ -215,15 +224,6 @@ struct Game {
 		ALLEGRO_MIXER *voice;
 		ALLEGRO_MIXER *fx;
 	} audio;
-};
-
-struct Obstracle {
-	ALLEGRO_BITMAP *bitmap;
-	float x, y, speed;
-	int points;
-	void (*callback)(struct Game*, struct Obstracle*);
-	void *data;
-	struct Obstracle *prev, *next;
 };
 
 /*! \brief Draws text with shadow.

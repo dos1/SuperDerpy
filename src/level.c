@@ -110,7 +110,7 @@ bool GenerateObstracles(struct Game *game, struct TM_Action *action, enum TM_Act
 			obst->x = 100;
 			obst->y = (rand()%91)-1;
 			obst->speed = 0;
-			obst->bitmap = game->level.obst_bmps.pie;
+			obst->bitmap = &(game->level.obst_bmps.pie);
 			obst->callback = NULL;
 			obst->data = NULL;
 			if (rand()%100<=50) obst->callback=Obst_MoveUpDown;
@@ -194,12 +194,12 @@ void Level_Draw(struct Game *game) {
 				bool col = false;
 				int x = (tmp->x/100.0)*al_get_display_width(game->display);
 				int y = (tmp->y/100.0)*al_get_display_height(game->display);
-				int w = al_get_bitmap_width(tmp->bitmap);
-				int h = al_get_bitmap_height(tmp->bitmap);
+				int w = al_get_bitmap_width(*(tmp->bitmap));
+				int h = al_get_bitmap_height(*(tmp->bitmap));
 				if ((((x>=derpyx) && (x<=derpyx+derpyw)) || ((x+w>=derpyx) && (x+w<=derpyx+derpyw))) &&
 					(((y>=derpyy) && (y<=derpyy+derpyh)) || ((y+h>=derpyy) && (y+h<=derpyy+derpyh))))
 					  col = true;
-				al_draw_tinted_bitmap(tmp->bitmap, al_map_rgba_f(255,255-col*255,255-col*255,1), x, y, 0);
+				al_draw_tinted_bitmap(*(tmp->bitmap), al_map_rgba_f(255,255-col*255,255-col*255,1), x, y, 0);
 				if (col) colision = true;
 				tmp->x -= game->level.speed*310;
 				if (tmp->callback) tmp->callback(game, tmp);
