@@ -265,9 +265,9 @@ void Level_Draw(struct Game *game) {
 		al_set_target_bitmap(game->level.derpy);
 		al_clear_to_color(al_map_rgba(0,0,0,0));
 		al_draw_bitmap_region(*(game->level.derpy_sheet),al_get_bitmap_width(game->level.derpy)*(game->level.sheet_pos%game->level.sheet_cols),al_get_bitmap_height(game->level.derpy)*(game->level.sheet_pos/game->level.sheet_cols),al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy),0,0,0);
-		if (game->level.sheet_speed) {
+		if ((game->level.sheet_speed) && (game->level.sheet_speed_modifier)) {
 			game->level.sheet_tmp+=tps(game, 60);
-			if (game->level.sheet_tmp >= game->level.sheet_speed) {
+			if (game->level.sheet_tmp >= game->level.sheet_speed/game->level.sheet_speed_modifier) {
 				game->level.sheet_pos++;
 				game->level.sheet_tmp = 0;
 			}

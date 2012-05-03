@@ -193,7 +193,7 @@ void Intro_Preload(struct Game *game) {
 	game->intro.anim = 0;
 
 	game->intro.animsprites[0] = LoadScaledBitmap("intro/discord.png", al_get_display_width(game->display)*0.3125*3, al_get_display_height(game->display)*0.63*3);
-	game->intro.animsprites[1] = LoadScaledBitmap("levels/derpcycle.png", al_get_display_width(game->display)*0.3125*3, al_get_display_height(game->display)*0.63*3);
+	game->intro.animsprites[1] = LoadScaledBitmap("levels/derpy/walk.png", al_get_display_width(game->display)*0.3125*3, al_get_display_height(game->display)*0.63*3);
 	game->intro.animsprites[2] = LoadScaledBitmap("intro/zombie.png", al_get_display_width(game->display)*0.3125*3, al_get_display_height(game->display)*0.63*3);
 	game->intro.animsprites[3] = LoadScaledBitmap("loading.png", al_get_display_width(game->display)*0.3125*3, al_get_display_height(game->display)*0.63*3);
 	game->intro.animsprites[4] = LoadScaledBitmap("about/letter.png", al_get_display_width(game->display)*0.3125*3, al_get_display_height(game->display)*0.63*3);
