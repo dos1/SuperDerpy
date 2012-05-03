@@ -27,6 +27,44 @@
 
 /* TODO: check if spritesheet speed still depends on FPS */
 
+void SelectDerpySpritesheet(struct Game *game, char* name) {
+	struct Spritesheet *tmp = game->level.derpy_sheets;
+	if (!tmp) {
+		PrintConsole(game, "ERROR: No spritesheets registered for Derpy!");
+		return;
+	}
+	while (tmp) {
+		if (!strcmp(tmp->name, name)) {
+			PrintConsole(game, "Selecting Derpy spritesheet: %s", name);
+			game->level.derpy_sheet = &(tmp->bitmap);
+			game->level.sheet_rows = tmp->rows;
+			game->level.sheet_cols = tmp->cols;
+			game->level.sheet_speed_modifier = tmp->speed;
+			game->level.sheet_pos = 0;
+			return;
+		}
+		tmp = tmp->next;
+	}
+	PrintConsole(game, "ERROR: No spritesheets registered for Derpy with given name: %s", name);
+	return;
+}
+
+void RegisterDerpySpritesheet(struct Game *game, char* name) {
+	char filename[255] = { };
+	sprintf(filename, "data/levels/derpy/%s.ini", name);
+	ALLEGRO_CONFIG *config = al_load_config_file(filename);
+	struct Spritesheet *s = malloc(sizeof(struct Spritesheet));
+	s->name = malloc((strlen(name)+1)*sizeof(char));
+	strcpy(s->name, name);
+	s->bitmap = NULL;
+	s->cols = atoi(al_get_config_value(config, "", "cols"));
+	s->rows = atoi(al_get_config_value(config, "", "rows"));
+	s->speed = atof(al_get_config_value(config, "", "speed"));
+	s->next = game->level.derpy_sheets;
+	game->level.derpy_sheets = s;
+	al_destroy_config(config);
+}
+
 void Level_Passed(struct Game *game) {
 	if (game->level.current_level<6) {
 		int available = atoi(GetConfigOptionDefault("MuffinAttack", "level", "1"));
@@ -51,7 +89,10 @@ bool Accelerate(struct Game *game, struct TM_Action *action, enum TM_ActionState
 }
 
 bool Walk(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
+	if (state == TM_ACTIONSTATE_INIT) action->arguments = NULL;
 	if (state != TM_ACTIONSTATE_RUNNING) return false;
+	if (!(action->arguments)) SelectDerpySpritesheet(game, "walk");
+	action->arguments++;
 	game->level.derpy_x+=tps(game, 60*0.001);
 	if (game->level.derpy_x<0.05) return false;
 	return true;
@@ -65,7 +106,10 @@ bool Move(struct Game *game, struct TM_Action *action, enum TM_ActionState state
 }
 
 bool Fly(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
+	if (state == TM_ACTIONSTATE_INIT) action->arguments = NULL;
 	if (state != TM_ACTIONSTATE_RUNNING) return false;
+	if (!(action->arguments)) SelectDerpySpritesheet(game, "fly");
+	action->arguments++;
 	game->level.derpy_y-=tps(game, 60*0.004);
 	if (game->level.derpy_y>0.2) return false;
 	game->level.handle_input=true;
@@ -134,7 +178,8 @@ bool GenerateObstracles(struct Game *game, struct TM_Action *action, enum TM_Act
 bool Stop(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (state != TM_ACTIONSTATE_RUNNING) return false;
 	game->level.speed=0;
-	game->level.sheet_speed = 0;
+	SelectDerpySpritesheet(game, "stand");
+	/*game->level.sheet_speed = 0;*/
 	return true;
 }
 
@@ -168,8 +213,8 @@ void Level_Draw(struct Game *game) {
 				game->level.derpy_y += 0.005;
 				/*PrintConsole(game, "Derpy Y position: %f", game->level.derpy_y);*/
 			}
-			if (game->level.derpy_y > 0.5) game->level.sheet_speed = 0.0020/game->level.speed;
-			else game->level.sheet_speed=0;
+			if ((game->level.derpy_y > 0.5) && (!game->level.sheet_speed)) { SelectDerpySpritesheet(game, "run"); game->level.sheet_speed = 0.0020/game->level.speed; }
+			else if ((game->level.derpy_y <= 0.5) && (game->level.sheet_speed)) { SelectDerpySpritesheet(game, "fly"); game->level.sheet_speed=0; }
 			if (game->level.derpy_y < 0) game->level.derpy_y=0;
 			else if (game->level.derpy_y > 0.75) game->level.derpy_y=0.75;
 		}
@@ -219,7 +264,7 @@ void Level_Draw(struct Game *game) {
 
 		al_set_target_bitmap(game->level.derpy);
 		al_clear_to_color(al_map_rgba(0,0,0,0));
-		al_draw_bitmap_region(game->level.derpy_walkcycle,al_get_bitmap_width(game->level.derpy)*(game->level.sheet_pos%game->level.sheet_cols),al_get_bitmap_height(game->level.derpy)*(game->level.sheet_pos/game->level.sheet_cols),al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy),0,0,0);
+		al_draw_bitmap_region(*(game->level.derpy_sheet),al_get_bitmap_width(game->level.derpy)*(game->level.sheet_pos%game->level.sheet_cols),al_get_bitmap_height(game->level.derpy)*(game->level.sheet_pos/game->level.sheet_cols),al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy),0,0,0);
 		if (game->level.sheet_speed) {
 			game->level.sheet_tmp+=tps(game, 60);
 			if (game->level.sheet_tmp >= game->level.sheet_speed) {
@@ -357,9 +402,7 @@ void Level_Load(struct Game *game) {
 	game->level.speed = 0;
 	game->level.derpy_x = -0.2;
 	game->level.derpy_y = 0.6;
-	game->level.sheet_rows = 4;
-	game->level.sheet_cols = 6;
-	game->level.sheet_pos = 0;
+	SelectDerpySpritesheet(game, "stand");
 	game->level.sheet_speed = 2.4;
 	game->level.sheet_tmp = 0;
 	game->level.handle_input = false;
@@ -427,7 +470,12 @@ void Level_ProcessLogic(struct Game *game, ALLEGRO_EVENT *ev) {
 }
 
 void Level_Preload(struct Game *game) {
+	game->level.derpy_sheets = NULL;
 	Pause_Preload(game);
+	RegisterDerpySpritesheet(game, "walk");
+	RegisterDerpySpritesheet(game, "fly");
+	RegisterDerpySpritesheet(game, "run");
+	RegisterDerpySpritesheet(game, "stand");
 	if (game->level.current_level!=1) Moonwalk_Preload(game);
 	else {
 		game->level.sample = al_load_sample( "data/levels/1/music.flac" );
@@ -451,19 +499,31 @@ void Level_Unload(struct Game *game) {
 	else {
 		TM_Destroy();
 	}
-	struct Obstracle *tmp, *t = game->level.obstracles;
-	if (t) tmp = t->prev;
-	while (t) {
-		if (tmp) free(tmp);
-		tmp = t;
-		t = t->next;
+	struct Obstracle *t = game->level.obstracles;
+	if (t) {
+		while (t->next) {
+			if (t->prev) free(t->prev);
+			t = t->next;
+		}
+		free(t);
 	}
 	Level_UnloadBitmaps(game);
+	struct Spritesheet *tmp, *s = game->level.derpy_sheets;
+	tmp = s;
+	while (s) {
+		tmp = s;
+		s = s->next;
+		free(tmp);
+	}
 }
 
 void Level_UnloadBitmaps(struct Game *game) {
 	al_destroy_bitmap(game->level.derpy);
-	al_destroy_bitmap(game->level.derpy_walkcycle);
+	struct Spritesheet *tmp = game->level.derpy_sheets;
+	while (tmp) {
+		al_destroy_bitmap(tmp->bitmap);
+		tmp = tmp->next;
+	}
 	if (game->level.current_level!=1) Moonwalk_UnloadBitmaps(game);
 	else {
 		al_destroy_bitmap(game->level.foreground);
@@ -476,7 +536,14 @@ void Level_UnloadBitmaps(struct Game *game) {
 }
 
 void Level_PreloadBitmaps(struct Game *game) {
-	game->level.derpy_walkcycle = LoadScaledBitmap("levels/derpcycle.png", al_get_display_width(game->display)*0.1953125*6, al_get_display_height(game->display)*0.25*4);
+	struct Spritesheet *tmp = game->level.derpy_sheets;
+	while (tmp) {
+		char filename[255] = { };
+		sprintf(filename, "levels/derpy/%s.png", tmp->name);
+		tmp->bitmap = LoadScaledBitmap(filename, al_get_display_width(game->display)*0.1953125*tmp->cols, al_get_display_height(game->display)*0.25*tmp->rows);
+		tmp = tmp->next;
+	}
+
 	game->level.derpy = al_create_bitmap(al_get_display_width(game->display)*0.1953125, al_get_display_height(game->display)*0.25);
 	if (game->level.current_level!=1) Moonwalk_PreloadBitmaps(game);
 	else {

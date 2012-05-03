@@ -25,6 +25,7 @@ void About_Draw(struct Game *game) {
 	/*PrintConsole(game, "%d", al_get_sample_instance_position(game->about.music));*/
 	if (al_get_sample_instance_position(game->about.music)<700000) { al_clear_to_color(al_map_rgba(0,0,0,0)); return; }
 	if (game->about.fadeloop>=0) {
+		if (game->about.fadeloop==0) PrintConsole(game, "Fade in");
 		al_draw_tinted_bitmap(game->about.fade_bitmap,al_map_rgba_f(game->about.fadeloop/255.0,game->about.fadeloop/255.0,game->about.fadeloop/255.0,1),0,0,0);
 		game->about.fadeloop+=tps(game, 300);
 		if (game->about.fadeloop>=256) {

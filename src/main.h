@@ -61,6 +61,14 @@ struct Obstracle {
 	struct Obstracle *prev, *next;
 };
 
+struct Spritesheet {
+	char* name;
+	ALLEGRO_BITMAP* bitmap;
+	int rows, cols;
+	float speed;
+	struct Spritesheet* next;
+};
+
 /*! \brief Resources used by Level state. */
 struct Level {
 	int current_level; /*!< Level number. */
@@ -69,14 +77,16 @@ struct Level {
 	float derpy_x, derpy_y;
 	bool handle_input;
 	int sheet_rows, sheet_cols, sheet_pos;
-	float sheet_tmp, sheet_speed;
+	float sheet_tmp, sheet_speed, sheet_speed_modifier;
 	ALLEGRO_SAMPLE *sample; /*!< Sample with background music. */
 	ALLEGRO_SAMPLE_INSTANCE *music; /*!< Sample instance with background music. */
 	unsigned int music_pos; /*!< Position of sample instance. Used when pausing game. */
 	ALLEGRO_BITMAP *background, *stage, *foreground, *clouds;
 	ALLEGRO_BITMAP *welcome;
-	ALLEGRO_BITMAP *derpy_walkcycle; /*!< Derpy walk cycle spritesheet. */
+	ALLEGRO_BITMAP **derpy_sheet; /*!< Active Derpy sprite sheet. */
 	ALLEGRO_BITMAP *derpy; /*!< Derpy sprite. */
+	struct Spritesheet* derpy_sheets; /*!< List of sprite sheets of Derpy character. */
+	struct Spritesheet* pony_sheets; /*!< List of sprite sheets of character rescued by Derpy. */
 	struct {
 		ALLEGRO_BITMAP *pie;
 	} obst_bmps;

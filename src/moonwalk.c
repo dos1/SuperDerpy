@@ -26,7 +26,7 @@
 void Moonwalk_Draw(struct Game *game) {
 	al_set_target_bitmap(game->level.derpy);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
-	al_draw_bitmap_region(game->level.derpy_walkcycle,al_get_bitmap_width(game->level.derpy)*(game->level.moonwalk.derpy_frame%6),al_get_bitmap_height(game->level.derpy)*(game->level.moonwalk.derpy_frame/6),al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy),0,0,0);
+	al_draw_bitmap_region(*(game->level.derpy_sheet),al_get_bitmap_width(game->level.derpy)*(game->level.moonwalk.derpy_frame%6),al_get_bitmap_height(game->level.derpy)*(game->level.moonwalk.derpy_frame/6),al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy),0,0,0);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 
 	game->level.moonwalk.derpy_pos=game->level.moonwalk.derpy_pos+tps(game, 60*0.00092);
@@ -57,6 +57,7 @@ void Moonwalk_Draw(struct Game *game) {
 }
 
 void Moonwalk_Load(struct Game *game) {
+	SelectDerpySpritesheet(game, "walk");
 	game->level.moonwalk.derpy_frame = 0;
 	game->level.moonwalk.derpy_frame_tmp = 0;
 	game->level.moonwalk.derpy_pos = -0.2;
@@ -79,7 +80,7 @@ int Moonwalk_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 
 void Moonwalk_PreloadBitmaps(struct Game *game) {
 	game->level.moonwalk.image =LoadScaledBitmap("levels/disco.jpg", al_get_display_width(game->display), al_get_display_height(game->display));
-	game->level.derpy_walkcycle = LoadScaledBitmap("levels/derpcycle.png", al_get_display_width(game->display)*0.1953125*6, al_get_display_height(game->display)*0.25*4);
+	/*game->level.derpy_sheet = LoadScaledBitmap("levels/derpcycle.png", al_get_display_width(game->display)*0.1953125*6, al_get_display_height(game->display)*0.25*4);*/
 
 	game->level.derpy = al_create_bitmap(al_get_display_width(game->display)*0.1953125, al_get_display_height(game->display)*0.25);
 	
