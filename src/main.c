@@ -56,6 +56,9 @@
 #define DRAW_STATE(state, name) case state:\
 	name ## _Draw(game); break;
 
+double old_time = 0, fps;
+int frames_done = 0;
+
 void al_draw_text_with_shadow(ALLEGRO_FONT *font, ALLEGRO_COLOR color, float x, float y, int flags, char const *text) {
 	al_draw_text(font, al_map_rgba(0,0,0,128), x+1, y+1, flags, text);
 	al_draw_text(font, color, x, y, flags, text);
@@ -81,7 +84,19 @@ void PrintConsole(struct Game *game, char* format, ...) {
 }
 
 void DrawConsole(struct Game *game) {
-	if (game->showconsole) al_draw_bitmap(game->console, 0, 0, 0);
+	if (game->showconsole) {
+		al_draw_bitmap(game->console, 0, 0, 0);
+		double game_time = al_get_time();
+		if(game_time - old_time >= 1.0) {
+			fps = frames_done / (game_time - old_time);
+			frames_done = 0;
+			old_time = game_time;
+		}
+		char sfps[6] = { };
+		sprintf(sfps, "%.0f", fps);
+		al_draw_text_with_shadow(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.99, 0, ALLEGRO_ALIGN_RIGHT, sfps);
+	}
+	frames_done++;
 }
 
 void PreloadGameState(struct Game *game) {

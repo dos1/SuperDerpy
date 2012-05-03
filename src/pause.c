@@ -96,8 +96,6 @@ void Pause_Draw(struct Game* game) {
 	al_draw_text_with_shadow(game->menu.font_subtitle, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.275, ALLEGRO_ALIGN_CENTRE, "Game paused.");
 
 	DrawMenuState(game);
-
-	DrawConsole(game);
 }
 
 void Pause_Unload_Real(struct Game* game) {
