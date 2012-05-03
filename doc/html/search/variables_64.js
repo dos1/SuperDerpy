@@ -4,5 +4,6 @@ var searchData=
   ['derpy_5fframe',['derpy_frame',['../structMoonwalk.html#a4a3874c58e11745d4896b004861e1555',1,'Moonwalk']]],
   ['derpy_5fframe_5ftmp',['derpy_frame_tmp',['../structMoonwalk.html#ab087ba01cd2a107286ec8f75f58c676c',1,'Moonwalk']]],
   ['derpy_5fpos',['derpy_pos',['../structMoonwalk.html#a69689c77a64928bfb52c1dc1e1f7b33f',1,'Moonwalk']]],
-  ['derpy_5fwalkcycle',['derpy_walkcycle',['../structLevel.html#ab6a78c50cda8424f722ca249f5466f67',1,'Level']]]
+  ['derpy_5fsheet',['derpy_sheet',['../structLevel.html#a0e02f3a5674a2ad3c23de22b6a4ed044',1,'Level']]],
+  ['derpy_5fsheets',['derpy_sheets',['../structLevel.html#aad19c0af5ac43ceb72df311d89bd4297',1,'Level']]]
 ];

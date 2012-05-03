@@ -13,8 +13,7 @@
 \subsection*{\-Public \-Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{structLevel_a1ba3ee0104c912dde5d6e70fee889512}{int {\bfseries current\-\_\-level}}\label{structLevel_a1ba3ee0104c912dde5d6e70fee889512}
-
+int \hyperlink{structLevel_a1ba3ee0104c912dde5d6e70fee889512}{current\-\_\-level}
 \item 
 \hypertarget{structLevel_a936a1d131d1e056878474ca831c5e88f}{float {\bfseries speed}}\label{structLevel_a936a1d131d1e056878474ca831c5e88f}
 
@@ -55,6 +54,9 @@
 \hypertarget{structLevel_a41db1345ac158898450907010a49748f}{float {\bfseries sheet\-\_\-speed}}\label{structLevel_a41db1345ac158898450907010a49748f}
 
 \item 
+\hypertarget{structLevel_a3cae10fd441bcc14b6a47dd5fedafa59}{float {\bfseries sheet\-\_\-speed\-\_\-modifier}}\label{structLevel_a3cae10fd441bcc14b6a47dd5fedafa59}
+
+\item 
 \-A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E $\ast$ \hyperlink{structLevel_a234fa7b9ec35dd360e4e3c48a944fc7d}{sample}
 \item 
 \-A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E\-\_\-\-I\-N\-S\-T\-A\-N\-C\-E $\ast$ \hyperlink{structLevel_a41c6aae8f508e078b02c291e1d6f8e67}{music}
@@ -76,9 +78,24 @@ unsigned int \hyperlink{structLevel_a13e322deb3298846260af31324e5b492}{music\-\_
 \hypertarget{structLevel_a575fec7686bd94b5c35b15d73296c977}{\-A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ {\bfseries welcome}}\label{structLevel_a575fec7686bd94b5c35b15d73296c977}
 
 \item 
-\-A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{structLevel_ab6a78c50cda8424f722ca249f5466f67}{derpy\-\_\-walkcycle}
+\-A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$$\ast$ \hyperlink{structLevel_a0e02f3a5674a2ad3c23de22b6a4ed044}{derpy\-\_\-sheet}
 \item 
 \-A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{structLevel_ae33832497116b7a0c184959bbde21ee5}{derpy}
+\item 
+struct \hyperlink{structSpritesheet}{\-Spritesheet} $\ast$ \hyperlink{structLevel_aad19c0af5ac43ceb72df311d89bd4297}{derpy\-\_\-sheets}
+\item 
+struct \hyperlink{structSpritesheet}{\-Spritesheet} $\ast$ \hyperlink{structLevel_a591b830752cc796a306e96166f736e3b}{pony\-\_\-sheets}
+\item 
+\hypertarget{structLevel_aeb52cb0b931eae0233dd1b50f2c02bf2}{\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>ALLEGRO\_BITMAP $\ast$ {\bfseries pie}\\
+\} {\bfseries obst\_bmps}}\label{structLevel_aeb52cb0b931eae0233dd1b50f2c02bf2}
+\\
+
+\end{tabbing}\item 
+\hypertarget{structLevel_ae24f2d0e03f822f34bc9468557d1c1d5}{struct \hyperlink{structObstracle}{\-Obstracle} $\ast$ {\bfseries obstracles}}\label{structLevel_ae24f2d0e03f822f34bc9468557d1c1d5}
+
 \item 
 \hypertarget{structLevel_ab9e39b9ac0f342332e034c59d55d6a07}{struct \hyperlink{structMoonwalk}{\-Moonwalk} {\bfseries moonwalk}}\label{structLevel_ab9e39b9ac0f342332e034c59d55d6a07}
 
@@ -89,19 +106,28 @@ unsigned int \hyperlink{structLevel_a13e322deb3298846260af31324e5b492}{music\-\_
 \-Resources used by \hyperlink{structLevel}{\-Level} state. 
 
 \subsection{\-Member \-Data \-Documentation}
-\hypertarget{structLevel_ae33832497116b7a0c184959bbde21ee5}{\index{\-Level@{\-Level}!derpy@{derpy}}
+\hypertarget{structLevel_a1ba3ee0104c912dde5d6e70fee889512}{\index{\-Level@{\-Level}!current\-\_\-level@{current\-\_\-level}}
+\index{current\-\_\-level@{current\-\_\-level}!Level@{\-Level}}
+\subsubsection[{current\-\_\-level}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Level\-::current\-\_\-level}}}\label{structLevel_a1ba3ee0104c912dde5d6e70fee889512}
+\hyperlink{structLevel}{\-Level} number. \hypertarget{structLevel_ae33832497116b7a0c184959bbde21ee5}{\index{\-Level@{\-Level}!derpy@{derpy}}
 \index{derpy@{derpy}!Level@{\-Level}}
 \subsubsection[{derpy}]{\setlength{\rightskip}{0pt plus 5cm}\-A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ {\bf \-Level\-::derpy}}}\label{structLevel_ae33832497116b7a0c184959bbde21ee5}
-\-Derpy sprite. \hypertarget{structLevel_ab6a78c50cda8424f722ca249f5466f67}{\index{\-Level@{\-Level}!derpy\-\_\-walkcycle@{derpy\-\_\-walkcycle}}
-\index{derpy\-\_\-walkcycle@{derpy\-\_\-walkcycle}!Level@{\-Level}}
-\subsubsection[{derpy\-\_\-walkcycle}]{\setlength{\rightskip}{0pt plus 5cm}\-A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ {\bf \-Level\-::derpy\-\_\-walkcycle}}}\label{structLevel_ab6a78c50cda8424f722ca249f5466f67}
-\-Derpy walk cycle spritesheet. \hypertarget{structLevel_a41c6aae8f508e078b02c291e1d6f8e67}{\index{\-Level@{\-Level}!music@{music}}
+\-Derpy sprite. \hypertarget{structLevel_a0e02f3a5674a2ad3c23de22b6a4ed044}{\index{\-Level@{\-Level}!derpy\-\_\-sheet@{derpy\-\_\-sheet}}
+\index{derpy\-\_\-sheet@{derpy\-\_\-sheet}!Level@{\-Level}}
+\subsubsection[{derpy\-\_\-sheet}]{\setlength{\rightskip}{0pt plus 5cm}\-A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$$\ast$ {\bf \-Level\-::derpy\-\_\-sheet}}}\label{structLevel_a0e02f3a5674a2ad3c23de22b6a4ed044}
+\-Active \-Derpy sprite sheet. \hypertarget{structLevel_aad19c0af5ac43ceb72df311d89bd4297}{\index{\-Level@{\-Level}!derpy\-\_\-sheets@{derpy\-\_\-sheets}}
+\index{derpy\-\_\-sheets@{derpy\-\_\-sheets}!Level@{\-Level}}
+\subsubsection[{derpy\-\_\-sheets}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf \-Spritesheet}$\ast$ {\bf \-Level\-::derpy\-\_\-sheets}}}\label{structLevel_aad19c0af5ac43ceb72df311d89bd4297}
+\-List of sprite sheets of \-Derpy character. \hypertarget{structLevel_a41c6aae8f508e078b02c291e1d6f8e67}{\index{\-Level@{\-Level}!music@{music}}
 \index{music@{music}!Level@{\-Level}}
 \subsubsection[{music}]{\setlength{\rightskip}{0pt plus 5cm}\-A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E\-\_\-\-I\-N\-S\-T\-A\-N\-C\-E$\ast$ {\bf \-Level\-::music}}}\label{structLevel_a41c6aae8f508e078b02c291e1d6f8e67}
 \-Sample instance with background music. \hypertarget{structLevel_a13e322deb3298846260af31324e5b492}{\index{\-Level@{\-Level}!music\-\_\-pos@{music\-\_\-pos}}
 \index{music\-\_\-pos@{music\-\_\-pos}!Level@{\-Level}}
 \subsubsection[{music\-\_\-pos}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int {\bf \-Level\-::music\-\_\-pos}}}\label{structLevel_a13e322deb3298846260af31324e5b492}
-\-Position of sample instance. \-Used when pausing game. \hypertarget{structLevel_a234fa7b9ec35dd360e4e3c48a944fc7d}{\index{\-Level@{\-Level}!sample@{sample}}
+\-Position of sample instance. \-Used when pausing game. \hypertarget{structLevel_a591b830752cc796a306e96166f736e3b}{\index{\-Level@{\-Level}!pony\-\_\-sheets@{pony\-\_\-sheets}}
+\index{pony\-\_\-sheets@{pony\-\_\-sheets}!Level@{\-Level}}
+\subsubsection[{pony\-\_\-sheets}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf \-Spritesheet}$\ast$ {\bf \-Level\-::pony\-\_\-sheets}}}\label{structLevel_a591b830752cc796a306e96166f736e3b}
+\-List of sprite sheets of character rescued by \-Derpy. \hypertarget{structLevel_a234fa7b9ec35dd360e4e3c48a944fc7d}{\index{\-Level@{\-Level}!sample@{sample}}
 \index{sample@{sample}!Level@{\-Level}}
 \subsubsection[{sample}]{\setlength{\rightskip}{0pt plus 5cm}\-A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E$\ast$ {\bf \-Level\-::sample}}}\label{structLevel_a234fa7b9ec35dd360e4e3c48a944fc7d}
 \-Sample with background music. 
