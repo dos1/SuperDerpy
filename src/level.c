@@ -244,7 +244,7 @@ void Level_Draw(struct Game *game) {
 				if ((((x>=derpyx) && (x<=derpyx+derpyw)) || ((x+w>=derpyx) && (x+w<=derpyx+derpyw))) &&
 					(((y>=derpyy) && (y<=derpyy+derpyh)) || ((y+h>=derpyy) && (y+h<=derpyy+derpyh))))
 					  col = true;
-				al_draw_tinted_bitmap(*(tmp->bitmap), al_map_rgba_f(255,255-col*255,255-col*255,1), x, y, 0);
+				al_draw_tinted_bitmap(*(tmp->bitmap), al_map_rgba(255,255-col*255,255-col*255,255), x, y, 0);
 				if (col) colision = true;
 				tmp->x -= game->level.speed*310;
 				if (tmp->callback) tmp->callback(game, tmp);
@@ -277,7 +277,7 @@ void Level_Draw(struct Game *game) {
 		al_set_target_bitmap(al_get_backbuffer(game->display));
 		al_hold_bitmap_drawing(true);
 		
-		al_draw_tinted_bitmap(game->level.derpy, al_map_rgba_f(255,255-colision*255,255-colision*255,1), derpyx, derpyy, 0);
+		al_draw_tinted_bitmap(game->level.derpy, al_map_rgba(255,255-colision*255,255-colision*255,255), derpyx, derpyy, 0);
 
 		al_draw_bitmap(game->level.foreground, (-game->level.fg_pos)*al_get_bitmap_width(game->level.foreground), 0 ,0);
 		al_draw_bitmap(game->level.foreground, (1+(-game->level.fg_pos))*al_get_bitmap_width(game->level.foreground), 0 ,0);
