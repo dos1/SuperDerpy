@@ -252,7 +252,8 @@ ALLEGRO_BITMAP* LoadScaledBitmap(char* filename, int width, int height) {
 }
 
 float tps(struct Game *game, float t) {
-	return t/game->fps;
+	if (game->fps>0) return t/game->fps;
+	else return t/fps;
 }
 
 int Shared_Load(struct Game *game) {
@@ -391,18 +392,18 @@ int main(int argc, char **argv){
 		} else {
 			PrintConsole(&game, "Refresh rate %d lower than FPS %d, NOT lowering due to config", mode.refresh_rate, game.fps);
 		}
-	} else if (game.fps < 1) game.fps = mode.refresh_rate;
+	} else if (game.fps == 0) game.fps = mode.refresh_rate;
 	if (game.fps>600) game.fps = 600;
 	al_clear_to_color(al_map_rgb(0,0,0));
 	al_flip_display();
 
-	game.timer = al_create_timer(ALLEGRO_BPS_TO_SECS(game.fps));
+	if (game.fps>0) game.timer = al_create_timer(ALLEGRO_BPS_TO_SECS(game.fps));
+	else game.timer = al_create_timer(ALLEGRO_BPS_TO_SECS(600));
 	if(!game.timer) {
 		fprintf(stderr, "failed to create timer!\n");
 		return -1;
 	}
 	al_register_event_source(game.event_queue, al_get_timer_event_source(game.timer));
-
 	al_start_timer(game.timer);
 
 	game.shuttingdown = false;
@@ -424,9 +425,16 @@ int main(int argc, char **argv){
 
 	while(1) {
 		ALLEGRO_EVENT ev;
-		al_wait_for_event(game.event_queue, &ev);
-
-		if ((ev.type == ALLEGRO_EVENT_TIMER) && (ev.timer.source == game.timer)) {
+		bool event = false;
+		if (game.fps<0) {
+			redraw = true;
+			event=al_get_next_event(game.event_queue, &ev);
+		} else {
+			al_wait_for_event(game.event_queue, &ev);
+			event=true;
+		}
+		if (!event) {}
+		else if ((ev.type == ALLEGRO_EVENT_TIMER) && (ev.timer.source == game.timer)) {
 			redraw = true;
 		}
 		else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
