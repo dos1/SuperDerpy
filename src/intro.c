@@ -144,7 +144,8 @@ void Intro_Draw(struct Game *game) {
 	if (game->intro.in_animation) {
 		/*PrintConsole(game, "animating");*/
 		int old = game->intro.position%al_get_display_width(game->display);
-		game->intro.position -= tps(game, 600);
+		if (tps(game, 600)) game->intro.position -= tps(game, 600);
+		else game->intro.position -= 1;
 		/*PrintConsole(game, "%d", game->intro.position%al_get_display_width(game->display));*/
 		if (game->intro.position%al_get_display_width(game->display)>old) {
 			/*DrawConsole(game);
