@@ -63,7 +63,7 @@ void Moonwalk_Load(struct Game *game) {
 	game->level.moonwalk.derpy_pos = -0.2;
 	al_play_sample_instance(game->level.music);
 	ALLEGRO_EVENT ev;
-	int fadeloop;
+	float fadeloop;
 	for(fadeloop=0; fadeloop<256; fadeloop+=tps(game, 600)){
 		al_wait_for_event(game->event_queue, &ev);
 		al_draw_tinted_bitmap(game->level.moonwalk.fade_bitmap,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
@@ -118,7 +118,7 @@ void Moonwalk_Unload(struct Game *game) {
 	al_draw_textf(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)/2.2, ALLEGRO_ALIGN_CENTRE, "Level %d: Not implemented yet!", game->level.current_level);
 	al_draw_text(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)/1.8, ALLEGRO_ALIGN_CENTRE, "Have some moonwalk instead.");
 	al_set_target_bitmap(al_get_backbuffer(game->display));
-	int fadeloop;
+	float fadeloop;
 	for(fadeloop=255; fadeloop>=0; fadeloop-=tps(game, 600)){
 		al_wait_for_event(game->event_queue, &ev);
 		al_draw_tinted_bitmap(game->level.moonwalk.fade_bitmap, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), 0, 0, 0);

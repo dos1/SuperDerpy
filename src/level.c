@@ -372,7 +372,7 @@ bool Welcome(struct Game *game, struct TM_Action *action, enum TM_ActionState st
 	}
 	else if (state == TM_ACTIONSTATE_RUNNING) {
 		/*PrintConsole(game, "WELCOME RUNNING FADE=%f, IN=%d", *in); */
-		int fade = *tmp;
+		float fade = *tmp;
 		if (fade>255) fade=255;
 		if (*tmp > 2048) { *tmp=255; *in=false; }
 		al_draw_tinted_bitmap(game->level.welcome, al_map_rgba_f(fade/255.0,fade/255.0,fade/255.0,fade/255.0), 0, 0, 0);
