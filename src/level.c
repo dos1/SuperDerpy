@@ -218,8 +218,8 @@ void Level_Draw(struct Game *game) {
 			if (game->level.derpy_y < 0) game->level.derpy_y=0;
 			else if (game->level.derpy_y > 0.75) game->level.derpy_y=0.75;
 		}
+		al_hold_bitmap_drawing(true);
 		
-		al_clear_to_color(al_map_rgb(0,0,0));
 		al_draw_bitmap(game->level.clouds, (-game->level.cl_pos)*al_get_bitmap_width(game->level.clouds), 0, 0);
 		al_draw_bitmap(game->level.clouds, (1+(-game->level.cl_pos))*al_get_bitmap_width(game->level.clouds), 0, 0);
 		al_draw_bitmap(game->level.background, (-game->level.bg_pos)*al_get_bitmap_width(game->level.background), 0, 0);
@@ -261,7 +261,8 @@ void Level_Draw(struct Game *game) {
 				free(t);
 			}
 		}
-
+		al_hold_bitmap_drawing(false);
+		
 		al_set_target_bitmap(game->level.derpy);
 		al_clear_to_color(al_map_rgba(0,0,0,0));
 		al_draw_bitmap_region(*(game->level.derpy_sheet),al_get_bitmap_width(game->level.derpy)*(game->level.sheet_pos%game->level.sheet_cols),al_get_bitmap_height(game->level.derpy)*(game->level.sheet_pos/game->level.sheet_cols),al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy),0,0,0);
@@ -274,7 +275,8 @@ void Level_Draw(struct Game *game) {
 			if (game->level.sheet_pos>=game->level.sheet_cols*game->level.sheet_rows) game->level.sheet_pos=0;
 		}
 		al_set_target_bitmap(al_get_backbuffer(game->display));
-
+		al_hold_bitmap_drawing(true);
+		
 		al_draw_tinted_bitmap(game->level.derpy, al_map_rgba_f(255,255-colision*255,255-colision*255,1), derpyx, derpyy, 0);
 
 		al_draw_bitmap(game->level.foreground, (-game->level.fg_pos)*al_get_bitmap_width(game->level.foreground), 0 ,0);
@@ -291,6 +293,8 @@ void Level_Draw(struct Game *game) {
 		}
 		game->level.cl_pos += tps(game, 60*0.00005);
 		if (game->level.cl_pos >= 1) game->level.cl_pos=game->level.cl_pos-1;
+		al_hold_bitmap_drawing(false);
+		
 		TM_Process();
 	}
 }
@@ -554,7 +558,7 @@ void Level_PreloadBitmaps(struct Game *game) {
 		game->level.background = LoadScaledBitmap("levels/1/background.png", al_get_display_height(game->display)*4.73307291666666666667, al_get_display_height(game->display));
 		game->level.stage = LoadScaledBitmap("levels/1/stage.png", al_get_display_height(game->display)*4.73307291666666666667, al_get_display_height(game->display));
 		game->level.obst_bmps.pie = LoadScaledBitmap("menu/pie.png", al_get_display_width(game->display)*0.1, al_get_display_height(game->display)*0.1);
-		game->level.welcome = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
+		game->level.welcome = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display)/2);
 		al_set_target_bitmap(game->level.welcome);
 		al_clear_to_color(al_map_rgba(0,0,0,0));
 		al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.1, ALLEGRO_ALIGN_CENTRE, "Level 1");

@@ -348,7 +348,7 @@ int main(int argc, char **argv){
 	if (game.fullscreen) al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
 	else al_set_new_display_flags(ALLEGRO_WINDOWED);
 	al_set_new_display_option(ALLEGRO_VSYNC, 1, ALLEGRO_SUGGEST);
-	/*al_set_new_display_option(ALLEGRO_OPENGL, 1, ALLEGRO_SUGGEST);*/
+	al_set_new_display_option(ALLEGRO_OPENGL, 1, ALLEGRO_SUGGEST);
 	game.display = al_create_display(game.width, game.height);
 	if(!game.display) {
 		fprintf(stderr, "failed to create display!\n");
@@ -389,6 +389,12 @@ int main(int argc, char **argv){
 
 	game.showconsole = game.debug;
 
+	ALLEGRO_DISPLAY_MODE mode;
+	al_get_display_mode(0, &mode);
+	if (mode.refresh_rate < game.fps) {
+		PrintConsole(&game, "Refresh rate %d lower than FPS %d, lowering", mode.refresh_rate, game.fps);
+		game.fps = mode.refresh_rate;
+	}
 	al_clear_to_color(al_map_rgb(0,0,0));
 	al_flip_display();
 
