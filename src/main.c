@@ -385,9 +385,14 @@ int main(int argc, char **argv){
 	ALLEGRO_DISPLAY_MODE mode;
 	al_get_display_mode(0, &mode);
 	if (mode.refresh_rate < game.fps) {
-		PrintConsole(&game, "Refresh rate %d lower than FPS %d, lowering", mode.refresh_rate, game.fps);
-		game.fps = mode.refresh_rate;
+		if (atoi(GetConfigOptionDefault("SuperDerpy", "lower_fps_to_refresh_rate", "1"))) {
+			PrintConsole(&game, "Refresh rate %d lower than FPS %d, lowering", mode.refresh_rate, game.fps);
+			game.fps = mode.refresh_rate;
+		} else {
+			PrintConsole(&game, "Refresh rate %d lower than FPS %d, NOT lowering due to config", mode.refresh_rate, game.fps);
+		}
 	} else if (game.fps < 1) game.fps = mode.refresh_rate;
+	if (game.fps>600) game.fps = 600;
 	al_clear_to_color(al_map_rgb(0,0,0));
 	al_flip_display();
 
