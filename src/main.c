@@ -292,8 +292,7 @@ int main(int argc, char **argv){
 	game.music = atoi(GetConfigOptionDefault("SuperDerpy", "music", "10"));
 	game.voice = atoi(GetConfigOptionDefault("SuperDerpy", "voice", "10"));
 	game.fx = atoi(GetConfigOptionDefault("SuperDerpy", "fx", "10"));
-	game.fps = atoi(GetConfigOptionDefault("SuperDerpy", "fps", "60"));
-	if (game.fps<1) game.fps=60;
+	game.fps = atoi(GetConfigOptionDefault("SuperDerpy", "fps", "0"));
 	game.debug = atoi(GetConfigOptionDefault("SuperDerpy", "debug", "0"));
 	game.width = atoi(GetConfigOptionDefault("SuperDerpy", "width", "800"));
 	if (game.width<320) game.width=320;
@@ -305,11 +304,6 @@ int main(int argc, char **argv){
 		return -1;
 	}
 
-	game.timer = al_create_timer(ALLEGRO_BPS_TO_SECS(game.fps));
-	if(!game.timer) {
-		fprintf(stderr, "failed to create timer!\n");
-		return -1;
-	}
 
 	if(!al_init_image_addon()) {
 		fprintf(stderr, "failed to initialize image addon!\n");
@@ -384,7 +378,6 @@ int main(int argc, char **argv){
 	al_set_mixer_gain(game.audio.voice, game.voice/10.0);
 
 	al_register_event_source(game.event_queue, al_get_display_event_source(game.display));
-	al_register_event_source(game.event_queue, al_get_timer_event_source(game.timer));
 	al_register_event_source(game.event_queue, al_get_keyboard_event_source());
 
 	game.showconsole = game.debug;
@@ -394,9 +387,16 @@ int main(int argc, char **argv){
 	if (mode.refresh_rate < game.fps) {
 		PrintConsole(&game, "Refresh rate %d lower than FPS %d, lowering", mode.refresh_rate, game.fps);
 		game.fps = mode.refresh_rate;
-	}
+	} else if (game.fps < 1) game.fps = mode.refresh_rate;
 	al_clear_to_color(al_map_rgb(0,0,0));
 	al_flip_display();
+
+	game.timer = al_create_timer(ALLEGRO_BPS_TO_SECS(game.fps));
+	if(!game.timer) {
+		fprintf(stderr, "failed to create timer!\n");
+		return -1;
+	}
+	al_register_event_source(game.event_queue, al_get_timer_event_source(game.timer));
 
 	al_start_timer(game.timer);
 
