@@ -184,7 +184,7 @@ struct Map {
 
 /*! \brief Resources used by Intro state. */
 struct Intro {
-	int position;
+	float position;
 	int page;
 	bool in_animation; /*!< Animation as in page transition animation. */
 	float anim;
