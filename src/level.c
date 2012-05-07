@@ -83,8 +83,8 @@ void Level_Passed(struct Game *game) {
 
 bool Accelerate(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (state != TM_ACTIONSTATE_RUNNING) return false;
-	game->level.speed+=tps(game, 0.000005*60);
-	if (game->level.speed<tps(game, 0.0020*60)) return false;
+	game->level.speed+=0.000005;
+	if (game->level.speed<0.0020) return false;
 	return true;
 }
 
@@ -100,7 +100,7 @@ bool Walk(struct Game *game, struct TM_Action *action, enum TM_ActionState state
 
 bool Move(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (state != TM_ACTIONSTATE_RUNNING) return false;
-	game->level.speed=tps(game, 60*0.00035);
+	game->level.speed=0.00035;
 	if (game->level.st_pos<0.275) return false;
 	return true;
 }
@@ -146,7 +146,7 @@ bool GenerateObstracles(struct Game *game, struct TM_Action *action, enum TM_Act
 		*in = true;*/
 	}
 	else if (state == TM_ACTIONSTATE_RUNNING) {
-		if (rand()%100<=2) {
+		if (rand()%(10000/(int)tps(game, 60*100))<=2) {
 			PrintConsole(game, "OBSTRACLE %d", *count);
 			(*count)++;
 			struct Obstracle *obst = malloc(sizeof(struct Obstracle));
@@ -156,7 +156,7 @@ bool GenerateObstracles(struct Game *game, struct TM_Action *action, enum TM_Act
 			obst->speed = 0;
 			obst->bitmap = &(game->level.obst_bmps.pie);
 			obst->callback = NULL;
-			obst->data = NULL;
+			obst->data = rand()%2;
 			if (rand()%100<=50) obst->callback=Obst_MoveUpDown;
 			if (game->level.obstracles) {
 				game->level.obstracles->prev = obst;
@@ -206,15 +206,16 @@ void Level_Draw(struct Game *game) {
 		al_get_keyboard_state(&keyboard);
 		if (game->level.handle_input) {
 			if (al_key_down(&keyboard, ALLEGRO_KEY_UP)) {
-				game->level.derpy_y -= 0.005;
+				game->level.derpy_y -= tps(game, 60*0.005);
 				/*PrintConsole(game, "Derpy Y position: %f", game->level.derpy_y);*/
 			} 
 			if (al_key_down(&keyboard, ALLEGRO_KEY_DOWN)) {
-				game->level.derpy_y += 0.005;
+				game->level.derpy_y += tps(game, 60*0.005);
 				/*PrintConsole(game, "Derpy Y position: %f", game->level.derpy_y);*/
 			}
-			if ((game->level.derpy_y > 0.5) && (!game->level.sheet_speed)) { SelectDerpySpritesheet(game, "run"); game->level.sheet_speed = 0.0020/game->level.speed; }
+			if ((game->level.derpy_y > 0.5) && (!game->level.sheet_speed)) { SelectDerpySpritesheet(game, "run"); }
 			else if ((game->level.derpy_y <= 0.5) && (game->level.sheet_speed)) { SelectDerpySpritesheet(game, "fly"); game->level.sheet_speed=0; }
+			if (game->level.derpy_y > 0.5) game->level.sheet_speed = tps(game, 60*0.0020/game->level.speed);
 			if (game->level.derpy_y < 0) game->level.derpy_y=0;
 			else if (game->level.derpy_y > 0.75) game->level.derpy_y=0.75;
 		}
@@ -246,7 +247,7 @@ void Level_Draw(struct Game *game) {
 					  col = true;
 				al_draw_tinted_bitmap(*(tmp->bitmap), al_map_rgba(255,255-col*255,255-col*255,255), x, y, 0);
 				if (col) colision = true;
-				tmp->x -= game->level.speed*310;
+				tmp->x -= tps(game, game->level.speed*60)*310;
 				if (tmp->callback) tmp->callback(game, tmp);
 				tmp = tmp->next;
 			} else {
@@ -283,10 +284,10 @@ void Level_Draw(struct Game *game) {
 		al_draw_bitmap(game->level.foreground, (1+(-game->level.fg_pos))*al_get_bitmap_width(game->level.foreground), 0 ,0);
 
 		if (game->level.speed > 0) {
-			game->level.cl_pos += game->level.speed * 0.2;
-			game->level.bg_pos += game->level.speed * 0.6;
-			game->level.st_pos += game->level.speed * 1;
-			game->level.fg_pos += game->level.speed * 1.75;
+			game->level.cl_pos += tps(game, 60*game->level.speed) * 0.2;
+			game->level.bg_pos += tps(game, 60*game->level.speed) * 0.6;
+			game->level.st_pos += tps(game, 60*game->level.speed) * 1;
+			game->level.fg_pos += tps(game, 60*game->level.speed) * 1.75;
 			if (game->level.bg_pos >= 1) game->level.bg_pos=game->level.bg_pos-1;
 			if (game->level.st_pos >= 1) game->level.st_pos=game->level.st_pos-1;
 			if (game->level.fg_pos >= 1) game->level.fg_pos=game->level.fg_pos-1;
