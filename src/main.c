@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <getopt.h>
+#include <locale.h>
 #include "menu.h"
 #include "loading.h"
 #include "about.h"
@@ -405,6 +406,8 @@ int main(int argc, char **argv){
 	}
 	al_register_event_source(game.event_queue, al_get_timer_event_source(game.timer));
 	al_start_timer(game.timer);
+
+	setlocale(LC_NUMERIC, "C"); //FIXME?
 
 	game.shuttingdown = false;
 	game.menu.loaded = false;
