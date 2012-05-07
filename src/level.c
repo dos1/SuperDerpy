@@ -156,7 +156,7 @@ bool GenerateObstracles(struct Game *game, struct TM_Action *action, enum TM_Act
 			obst->speed = 0;
 			obst->bitmap = &(game->level.obst_bmps.pie);
 			obst->callback = NULL;
-			obst->data = rand()%2;
+			obst->data = (void*)(rand()%2);
 			if (rand()%100<=50) obst->callback=Obst_MoveUpDown;
 			if (game->level.obstracles) {
 				game->level.obstracles->prev = obst;
@@ -195,20 +195,20 @@ bool Letter(struct Game *game, struct TM_Action *action, enum TM_ActionState sta
 }
 
 void Level_Draw(struct Game *game) {
-	if (!al_get_sample_instance_playing(game->level.music) && (game->loadstate==GAMESTATE_LEVEL)) { 
+	if (!al_get_sample_instance_playing(game->level.music) && (game->loadstate==GAMESTATE_LEVEL)) {
 		al_set_sample_instance_playing(game->level.music, true);
 		al_set_sample_instance_position(game->level.music, game->level.music_pos);
 	}
 	if (game->level.current_level!=1) Moonwalk_Draw(game);
 	else {
-		
+
 		struct ALLEGRO_KEYBOARD_STATE keyboard;
 		al_get_keyboard_state(&keyboard);
 		if (game->level.handle_input) {
 			if (al_key_down(&keyboard, ALLEGRO_KEY_UP)) {
 				game->level.derpy_y -= tps(game, 60*0.005);
 				/*PrintConsole(game, "Derpy Y position: %f", game->level.derpy_y);*/
-			} 
+			}
 			if (al_key_down(&keyboard, ALLEGRO_KEY_DOWN)) {
 				game->level.derpy_y += tps(game, 60*0.005);
 				/*PrintConsole(game, "Derpy Y position: %f", game->level.derpy_y);*/
@@ -220,14 +220,14 @@ void Level_Draw(struct Game *game) {
 			else if (game->level.derpy_y > 0.75) game->level.derpy_y=0.75;
 		}
 		al_hold_bitmap_drawing(true);
-		
+
 		al_draw_bitmap(game->level.clouds, (-game->level.cl_pos)*al_get_bitmap_width(game->level.clouds), 0, 0);
 		al_draw_bitmap(game->level.clouds, (1+(-game->level.cl_pos))*al_get_bitmap_width(game->level.clouds), 0, 0);
 		al_draw_bitmap(game->level.background, (-game->level.bg_pos)*al_get_bitmap_width(game->level.background), 0, 0);
 		al_draw_bitmap(game->level.background, (1+(-game->level.bg_pos))*al_get_bitmap_width(game->level.background), 0, 0);
 		al_draw_bitmap(game->level.stage, (-game->level.st_pos)*al_get_bitmap_width(game->level.stage), 0 ,0);
 		al_draw_bitmap(game->level.stage, (1+(-game->level.st_pos))*al_get_bitmap_width(game->level.stage), 0 ,0);
-		
+
 		int derpyx = game->level.derpy_x*al_get_display_width(game->display);
 		int derpyy = game->level.derpy_y*al_get_display_height(game->display);
 		int derpyw = al_get_bitmap_width(game->level.derpy);
@@ -263,7 +263,7 @@ void Level_Draw(struct Game *game) {
 			}
 		}
 		al_hold_bitmap_drawing(false);
-		
+
 		al_set_target_bitmap(game->level.derpy);
 		al_clear_to_color(al_map_rgba(0,0,0,0));
 		al_draw_bitmap_region(*(game->level.derpy_sheet),al_get_bitmap_width(game->level.derpy)*(game->level.sheet_pos%game->level.sheet_cols),al_get_bitmap_height(game->level.derpy)*(game->level.sheet_pos/game->level.sheet_cols),al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy),0,0,0);
@@ -277,7 +277,7 @@ void Level_Draw(struct Game *game) {
 		}
 		al_set_target_bitmap(al_get_backbuffer(game->display));
 		al_hold_bitmap_drawing(true);
-		
+
 		al_draw_tinted_bitmap(game->level.derpy, al_map_rgba(255,255-colision*255,255-colision*255,255), derpyx, derpyy, 0);
 
 		al_draw_bitmap(game->level.foreground, (-game->level.fg_pos)*al_get_bitmap_width(game->level.foreground), 0 ,0);
@@ -295,13 +295,13 @@ void Level_Draw(struct Game *game) {
 		game->level.cl_pos += tps(game, 60*0.00005);
 		if (game->level.cl_pos >= 1) game->level.cl_pos=game->level.cl_pos-1;
 		al_hold_bitmap_drawing(false);
-		
+
 		TM_Process();
 	}
 }
 
 bool FadeIn(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
-	if (!action->arguments) { 
+	if (!action->arguments) {
 		action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(float)));
 		action->arguments = TM_AddToArgs(action->arguments, (void*)al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display)));
 	}
@@ -329,7 +329,7 @@ bool FadeIn(struct Game *game, struct TM_Action *action, enum TM_ActionState sta
 }
 
 bool FadeOut(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
-	if (!action->arguments) { 
+	if (!action->arguments) {
 		action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(float)));
 		action->arguments = TM_AddToArgs(action->arguments, (void*)al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display)));
 	}
@@ -360,7 +360,7 @@ bool FadeOut(struct Game *game, struct TM_Action *action, enum TM_ActionState st
 
 bool Welcome(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	float* tmp; bool* in;
-	if (!action->arguments) { 
+	if (!action->arguments) {
 		action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(float)));
 		action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(bool)));
 	}
@@ -444,14 +444,14 @@ void Level_Load(struct Game *game) {
         // wings disappear, deccelerate, fall down
 		// run
 		// show Fluttershy's house
-		
+
 		// second part gameplay goes here
 		//
-		
+
 		// cutscene goes here
 		//
 		*/
-		
+
 		TM_AddAction(&PassLevel, NULL, "passlevel");
 	}
 }
