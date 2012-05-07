@@ -407,7 +407,7 @@ int main(int argc, char **argv){
 	al_register_event_source(game.event_queue, al_get_timer_event_source(game.timer));
 	al_start_timer(game.timer);
 
-	setlocale(LC_NUMERIC, "C"); //FIXME?
+	setlocale(LC_NUMERIC, "C"); /* FIXME? */
 
 	game.shuttingdown = false;
 	game.menu.loaded = false;
