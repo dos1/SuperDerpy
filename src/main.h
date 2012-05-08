@@ -64,8 +64,8 @@ struct Obstracle {
 struct Spritesheet {
 	char* name;
 	ALLEGRO_BITMAP* bitmap;
-	int rows, cols;
-	float speed;
+	int rows, cols, blanks;
+	float speed, aspect, scale;
 	struct Spritesheet* next;
 };
 
@@ -76,7 +76,8 @@ struct Level {
 	float bg_pos, st_pos, fg_pos, cl_pos;
 	float derpy_x, derpy_y;
 	bool handle_input;
-	int sheet_rows, sheet_cols, sheet_pos;
+	bool flying;
+	int sheet_rows, sheet_cols, sheet_pos, sheet_blanks;
 	float sheet_tmp, sheet_speed, sheet_speed_modifier;
 	ALLEGRO_SAMPLE *sample; /*!< Sample with background music. */
 	ALLEGRO_SAMPLE_INSTANCE *music; /*!< Sample instance with background music. */

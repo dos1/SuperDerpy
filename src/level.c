@@ -39,8 +39,13 @@ void SelectDerpySpritesheet(struct Game *game, char* name) {
 			game->level.derpy_sheet = &(tmp->bitmap);
 			game->level.sheet_rows = tmp->rows;
 			game->level.sheet_cols = tmp->cols;
+			game->level.sheet_blanks = tmp->blanks;
 			game->level.sheet_speed_modifier = tmp->speed;
 			game->level.sheet_pos = 0;
+			al_destroy_bitmap(game->level.derpy);
+			/*int w = al_get_bitmap_width(tmp->bitmap)/tmp->cols;
+			int h = al_get_bitmap_height(tmp->bitmap)/tmp->rows;*/
+			game->level.derpy = al_create_bitmap(al_get_display_height(game->display)*0.25*tmp->aspect*tmp->scale, al_get_display_height(game->display)*0.25*tmp->scale);
 			return;
 		}
 		tmp = tmp->next;
@@ -59,7 +64,10 @@ void RegisterDerpySpritesheet(struct Game *game, char* name) {
 	s->bitmap = NULL;
 	s->cols = atoi(al_get_config_value(config, "", "cols"));
 	s->rows = atoi(al_get_config_value(config, "", "rows"));
+	s->blanks = atoi(al_get_config_value(config, "", "blanks"));
 	s->speed = atof(al_get_config_value(config, "", "speed"));
+	s->aspect = atof(al_get_config_value(config, "", "aspect"));
+	s->scale = atof(al_get_config_value(config, "", "scale"));
 	s->next = game->level.derpy_sheets;
 	game->level.derpy_sheets = s;
 	al_destroy_config(config);
@@ -108,7 +116,7 @@ bool Move(struct Game *game, struct TM_Action *action, enum TM_ActionState state
 bool Fly(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (state == TM_ACTIONSTATE_INIT) action->arguments = NULL;
 	if (state != TM_ACTIONSTATE_RUNNING) return false;
-	if (!(action->arguments)) SelectDerpySpritesheet(game, "fly");
+	if (!(action->arguments)) { SelectDerpySpritesheet(game, "fly"); game->level.flying = true; }
 	action->arguments++;
 	game->level.derpy_y-=tps(game, 60*0.004);
 	if (game->level.derpy_y>0.2) return false;
@@ -213,9 +221,17 @@ void Level_Draw(struct Game *game) {
 				game->level.derpy_y += tps(game, 60*0.005);
 				/*PrintConsole(game, "Derpy Y position: %f", game->level.derpy_y);*/
 			}
-			if ((game->level.derpy_y > 0.5) && (!game->level.sheet_speed)) { SelectDerpySpritesheet(game, "run"); }
-			else if ((game->level.derpy_y <= 0.5) && (game->level.sheet_speed)) { SelectDerpySpritesheet(game, "fly"); game->level.sheet_speed=0; }
-			if (game->level.derpy_y > 0.5) game->level.sheet_speed = tps(game, 60*0.0020/game->level.speed);
+			if ((game->level.derpy_y > 0.5) && (game->level.flying)) {
+				SelectDerpySpritesheet(game, "run");
+				game->level.flying = false;
+				game->level.sheet_speed = tps(game, 60*0.0020/game->level.speed);
+			}
+			else if ((game->level.derpy_y <= 0.5) && (!game->level.flying)) {
+				SelectDerpySpritesheet(game, "fly");
+				game->level.flying = true;
+				game->level.sheet_speed = tps(game, 60*2.4);
+			}
+			if (!game->level.flying) game->level.sheet_speed = tps(game, 60*0.0020/game->level.speed);
 			if (game->level.derpy_y < 0) game->level.derpy_y=0;
 			else if (game->level.derpy_y > 0.75) game->level.derpy_y=0.75;
 		}
@@ -273,12 +289,12 @@ void Level_Draw(struct Game *game) {
 				game->level.sheet_pos++;
 				game->level.sheet_tmp = 0;
 			}
-			if (game->level.sheet_pos>=game->level.sheet_cols*game->level.sheet_rows) game->level.sheet_pos=0;
+			if (game->level.sheet_pos>=game->level.sheet_cols*game->level.sheet_rows-game->level.sheet_blanks) game->level.sheet_pos=0;
 		}
 		al_set_target_bitmap(al_get_backbuffer(game->display));
 		al_hold_bitmap_drawing(true);
-
-		al_draw_tinted_bitmap(game->level.derpy, al_map_rgba(255,255-colision*255,255-colision*255,255), derpyx, derpyy, 0);
+		
+		al_draw_tinted_bitmap(game->level.derpy, al_map_rgba(255,255-colision*255,255-colision*255,255), derpyx+al_get_display_width(game->display)*0.1953125-al_get_bitmap_width(game->level.derpy), derpyy, 0);
 
 		al_draw_bitmap(game->level.foreground, (-game->level.fg_pos)*al_get_bitmap_width(game->level.foreground), 0 ,0);
 		al_draw_bitmap(game->level.foreground, (1+(-game->level.fg_pos))*al_get_bitmap_width(game->level.foreground), 0 ,0);
@@ -409,10 +425,11 @@ void Level_Load(struct Game *game) {
 	game->level.derpy_x = -0.2;
 	game->level.derpy_y = 0.6;
 	SelectDerpySpritesheet(game, "stand");
-	game->level.sheet_speed = 2.4;
+	game->level.sheet_speed = tps(game, 60*2.4);
 	game->level.sheet_tmp = 0;
 	game->level.handle_input = false;
 	game->level.obstracles = NULL;
+	game->level.flying = false;
 	al_clear_to_color(al_map_rgb(0,0,0));
 	if (game->level.current_level!=1) Moonwalk_Load(game);
 	else {
@@ -546,7 +563,7 @@ void Level_PreloadBitmaps(struct Game *game) {
 	while (tmp) {
 		char filename[255] = { };
 		sprintf(filename, "levels/derpy/%s.png", tmp->name);
-		tmp->bitmap = LoadScaledBitmap(filename, al_get_display_width(game->display)*0.1953125*tmp->cols, al_get_display_height(game->display)*0.25*tmp->rows);
+		tmp->bitmap = LoadScaledBitmap(filename, al_get_display_height(game->display)*0.25*tmp->aspect*tmp->cols*tmp->scale, al_get_display_height(game->display)*0.25*tmp->rows*tmp->scale);
 		tmp = tmp->next;
 	}
 
