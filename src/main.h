@@ -29,6 +29,7 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
+#include "allegro_utils.h"
 
 struct Game;
 
@@ -77,6 +78,7 @@ struct Level {
 	float derpy_x, derpy_y;
 	bool handle_input;
 	bool flying;
+	float meter_alpha;
 	int sheet_rows, sheet_cols, sheet_pos, sheet_blanks;
 	float sheet_tmp, sheet_speed, sheet_speed_modifier;
 	ALLEGRO_SAMPLE *sample; /*!< Sample with background music. */
@@ -86,6 +88,7 @@ struct Level {
 	ALLEGRO_BITMAP *welcome;
 	ALLEGRO_BITMAP **derpy_sheet; /*!< Active Derpy sprite sheet. */
 	ALLEGRO_BITMAP *derpy; /*!< Derpy sprite. */
+	ALLEGRO_BITMAP *meter_bmp;
 	struct Spritesheet* derpy_sheets; /*!< List of sprite sheets of Derpy character. */
 	struct Spritesheet* pony_sheets; /*!< List of sprite sheets of character rescued by Derpy. */
 	struct {

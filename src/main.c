@@ -60,11 +60,6 @@
 double old_time = 0, fps;
 int frames_done = 0;
 
-void al_draw_text_with_shadow(ALLEGRO_FONT *font, ALLEGRO_COLOR color, float x, float y, int flags, char const *text) {
-	al_draw_text(font, al_map_rgba(0,0,0,128), x+1, y+1, flags, text);
-	al_draw_text(font, color, x, y, flags, text);
-}
-
 void PrintConsole(struct Game *game, char* format, ...) {
 	va_list vl;
 	va_start(vl, format);
@@ -329,6 +324,11 @@ int main(int argc, char **argv){
 		return -1;
 	}
 
+	if(!al_init_primitives_addon()){
+		fprintf(stderr, "failed to initialize primitives!\n");
+		return -1;
+	}
+	
 /*	if (!al_reserve_samples(10)){
 		fprintf(stderr, "failed to reserve samples!\n");
 		return -1;

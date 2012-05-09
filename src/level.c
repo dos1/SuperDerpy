@@ -113,10 +113,24 @@ bool Move(struct Game *game, struct TM_Action *action, enum TM_ActionState state
 	return true;
 }
 
+bool ShowMeter(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
+	if (state != TM_ACTIONSTATE_RUNNING) return false;
+	game->level.meter_alpha+=tps(game, 60*3);
+	if (game->level.meter_alpha>=255) {
+		game->level.meter_alpha=255;
+		return true;
+	}
+	return false;
+}
+
 bool Fly(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (state == TM_ACTIONSTATE_INIT) action->arguments = NULL;
 	if (state != TM_ACTIONSTATE_RUNNING) return false;
-	if (!(action->arguments)) { SelectDerpySpritesheet(game, "fly"); game->level.flying = true; }
+	if (!(action->arguments)) {
+		SelectDerpySpritesheet(game, "fly");
+		game->level.flying = true;
+		TM_AddBackgroundAction(&ShowMeter, NULL, 0, "showmeter");
+	}
 	action->arguments++;
 	game->level.derpy_y-=tps(game, 60*0.004);
 	if (game->level.derpy_y>0.2) return false;
@@ -312,6 +326,11 @@ void Level_Draw(struct Game *game) {
 		if (game->level.cl_pos >= 1) game->level.cl_pos=game->level.cl_pos-1;
 		al_hold_bitmap_drawing(false);
 
+		al_set_target_bitmap(game->level.meter_bmp);
+		al_draw_horizontal_gradient_rect(0, 0, al_get_bitmap_width(game->level.meter_bmp), al_get_bitmap_height(game->level.meter_bmp), al_map_rgb(255,0,0), al_map_rgb(0,255,0));
+		al_set_target_bitmap(al_get_backbuffer(game->display));
+		al_draw_tinted_bitmap(game->level.meter_bmp, al_map_rgba(game->level.meter_alpha,game->level.meter_alpha,game->level.meter_alpha,game->level.meter_alpha), al_get_display_width(game->display)*0.75, al_get_display_height(game->display)*0.925, 0);
+
 		TM_Process();
 	}
 }
@@ -430,6 +449,7 @@ void Level_Load(struct Game *game) {
 	game->level.handle_input = false;
 	game->level.obstracles = NULL;
 	game->level.flying = false;
+	game->level.meter_alpha=0;
 	al_clear_to_color(al_map_rgb(0,0,0));
 	if (game->level.current_level!=1) Moonwalk_Load(game);
 	else {
@@ -555,6 +575,7 @@ void Level_UnloadBitmaps(struct Game *game) {
 		al_destroy_bitmap(game->level.clouds);
 		al_destroy_bitmap(game->level.welcome);
 		al_destroy_bitmap(game->level.obst_bmps.pie);
+		al_destroy_bitmap(game->level.meter_bmp);
 	}
 }
 
@@ -582,5 +603,7 @@ void Level_PreloadBitmaps(struct Game *game) {
 		al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.1, ALLEGRO_ALIGN_CENTRE, "Level 1");
 		al_draw_text_with_shadow(game->menu.font_subtitle, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.275, ALLEGRO_ALIGN_CENTRE, "Fluttershy");
 		al_set_target_bitmap(al_get_backbuffer(game->display));
+
+		game->level.meter_bmp = al_create_bitmap(al_get_display_width(game->display)*0.2, al_get_display_height(game->display)*0.025);
 	}
 }
