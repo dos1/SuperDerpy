@@ -115,7 +115,7 @@ bool Move(struct Game *game, struct TM_Action *action, enum TM_ActionState state
 
 bool ShowMeter(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (state != TM_ACTIONSTATE_RUNNING) return false;
-	game->level.meter_alpha+=tps(game, 60*3);
+	game->level.meter_alpha+=tps(game, 60*4);
 	if (game->level.meter_alpha>=255) {
 		game->level.meter_alpha=255;
 		return true;
@@ -327,9 +327,11 @@ void Level_Draw(struct Game *game) {
 		al_hold_bitmap_drawing(false);
 
 		al_set_target_bitmap(game->level.meter_bmp);
-		al_draw_horizontal_gradient_rect(0, 0, al_get_bitmap_width(game->level.meter_bmp), al_get_bitmap_height(game->level.meter_bmp), al_map_rgb(255,0,0), al_map_rgb(0,255,0));
+		al_clear_to_color(al_map_rgba(0,0,0,0));
+		al_draw_horizontal_gradient_rect(al_get_bitmap_width(game->level.meter_bmp)-al_get_display_width(game->display)*0.215, (al_get_bitmap_height(game->level.meter_bmp)-al_get_display_height(game->display)*0.025)/2, al_get_display_width(game->display)*0.215, al_get_display_height(game->display)*0.025, al_map_rgb(255,0,0), al_map_rgb(0,255,0));
+		al_draw_bitmap(game->level.meter_image, 0, 0, 0);
 		al_set_target_bitmap(al_get_backbuffer(game->display));
-		al_draw_tinted_bitmap(game->level.meter_bmp, al_map_rgba(game->level.meter_alpha,game->level.meter_alpha,game->level.meter_alpha,game->level.meter_alpha), al_get_display_width(game->display)*0.75, al_get_display_height(game->display)*0.925, 0);
+		al_draw_tinted_bitmap(game->level.meter_bmp, al_map_rgba(game->level.meter_alpha,game->level.meter_alpha,game->level.meter_alpha,game->level.meter_alpha), al_get_display_width(game->display)*0.95-al_get_bitmap_width(game->level.meter_bmp), al_get_display_height(game->display)*0.975-al_get_bitmap_height(game->level.meter_bmp), 0);
 
 		TM_Process();
 	}
@@ -576,6 +578,7 @@ void Level_UnloadBitmaps(struct Game *game) {
 		al_destroy_bitmap(game->level.welcome);
 		al_destroy_bitmap(game->level.obst_bmps.pie);
 		al_destroy_bitmap(game->level.meter_bmp);
+		al_destroy_bitmap(game->level.meter_image);
 	}
 }
 
@@ -602,8 +605,10 @@ void Level_PreloadBitmaps(struct Game *game) {
 		al_clear_to_color(al_map_rgba(0,0,0,0));
 		al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.1, ALLEGRO_ALIGN_CENTRE, "Level 1");
 		al_draw_text_with_shadow(game->menu.font_subtitle, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.275, ALLEGRO_ALIGN_CENTRE, "Fluttershy");
-		al_set_target_bitmap(al_get_backbuffer(game->display));
 
-		game->level.meter_bmp = al_create_bitmap(al_get_display_width(game->display)*0.2, al_get_display_height(game->display)*0.025);
+		game->level.meter_image = LoadScaledBitmap("levels/meter.png", al_get_display_width(game->display)*0.075, al_get_display_width(game->display)*0.075*0.96470588235294117647);
+		game->level.meter_bmp = al_create_bitmap(al_get_display_width(game->display)*0.2+al_get_bitmap_width(game->level.meter_image), al_get_bitmap_height(game->level.meter_image));
+
+		al_set_target_bitmap(al_get_backbuffer(game->display));
 	}
 }

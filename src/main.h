@@ -88,7 +88,7 @@ struct Level {
 	ALLEGRO_BITMAP *welcome;
 	ALLEGRO_BITMAP **derpy_sheet; /*!< Active Derpy sprite sheet. */
 	ALLEGRO_BITMAP *derpy; /*!< Derpy sprite. */
-	ALLEGRO_BITMAP *meter_bmp;
+	ALLEGRO_BITMAP *meter_bmp, *meter_image;
 	struct Spritesheet* derpy_sheets; /*!< List of sprite sheets of Derpy character. */
 	struct Spritesheet* pony_sheets; /*!< List of sprite sheets of character rescued by Derpy. */
 	struct {
