@@ -80,7 +80,7 @@ struct Level {
 	bool flying;
 	float meter_alpha;
 	int sheet_rows, sheet_cols, sheet_pos, sheet_blanks;
-	float sheet_tmp, sheet_speed, sheet_speed_modifier;
+	float sheet_tmp, sheet_speed, sheet_speed_modifier, sheet_scale;
 	ALLEGRO_SAMPLE *sample; /*!< Sample with background music. */
 	ALLEGRO_SAMPLE_INSTANCE *music; /*!< Sample instance with background music. */
 	unsigned int music_pos; /*!< Position of sample instance. Used when pausing game. */
