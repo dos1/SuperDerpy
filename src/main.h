@@ -76,6 +76,7 @@ struct Level {
 	float speed;
 	float bg_pos, st_pos, fg_pos, cl_pos;
 	float derpy_x, derpy_y;
+	float hp;
 	bool handle_input;
 	bool flying;
 	float meter_alpha;

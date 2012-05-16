@@ -291,6 +291,7 @@ void Level_Draw(struct Game *game) {
 				free(t);
 			}
 		}
+		if (colision) game->level.hp-=0.0005;
 		al_hold_bitmap_drawing(false);
 
 		al_set_target_bitmap(game->level.derpy);
@@ -327,9 +328,13 @@ void Level_Draw(struct Game *game) {
 
 		al_set_target_bitmap(game->level.meter_bmp);
 		al_clear_to_color(al_map_rgba(0,0,0,0));
-		al_draw_horizontal_gradient_rect(al_get_bitmap_width(game->level.meter_bmp)-al_get_display_width(game->display)*0.215, (al_get_bitmap_height(game->level.meter_bmp)-al_get_display_height(game->display)*0.025)/2, al_get_display_width(game->display)*0.215, al_get_display_height(game->display)*0.025, al_map_rgb(255,0,0), al_map_rgb(0,255,0));
+		al_draw_filled_rounded_rectangle(al_get_bitmap_width(game->level.meter_bmp)*0.1, al_get_bitmap_height(game->level.meter_bmp)*0.3, al_get_bitmap_width(game->level.meter_bmp), al_get_bitmap_height(game->level.meter_bmp)*0.7,
+																		 7.5,7.5, al_map_rgb(232,234,239));
+		al_draw_horizontal_gradient_rect(al_get_bitmap_width(game->level.meter_bmp)-al_get_display_width(game->display)*0.215, (al_get_bitmap_height(game->level.meter_bmp)-al_get_display_height(game->display)*0.025)/2, al_get_display_width(game->display)*0.215*0.975, al_get_display_height(game->display)*0.025, al_map_rgb(150,159,182), al_map_rgb(130,139,162));
+		al_draw_filled_rectangle(al_get_bitmap_width(game->level.meter_bmp)-al_get_display_width(game->display)*0.215, (al_get_bitmap_height(game->level.meter_bmp)-al_get_display_height(game->display)*0.025)/2, al_get_bitmap_width(game->level.meter_bmp)-al_get_display_width(game->display)*0.215+(al_get_display_width(game->display)*0.215*0.975)*game->level.hp, (al_get_bitmap_height(game->level.meter_bmp)-al_get_display_height(game->display)*0.025)/2+al_get_display_height(game->display)*0.025, al_map_rgb(214,172,55));
 		al_draw_bitmap(game->level.meter_image, 0, 0, 0);
 		al_set_target_bitmap(al_get_backbuffer(game->display));
+
 		al_draw_tinted_bitmap(game->level.meter_bmp, al_map_rgba(game->level.meter_alpha,game->level.meter_alpha,game->level.meter_alpha,game->level.meter_alpha), al_get_display_width(game->display)*0.95-al_get_bitmap_width(game->level.meter_bmp), al_get_display_height(game->display)*0.975-al_get_bitmap_height(game->level.meter_bmp), 0);
 
 		TM_Process();
@@ -437,6 +442,7 @@ bool PassLevel(struct Game *game, struct TM_Action *action, enum TM_ActionState 
 }
 
 void Level_Load(struct Game *game) {
+	game->level.hp=1;
 	game->level.cl_pos=0;
 	game->level.bg_pos=0;
 	game->level.fg_pos=0.2;

@@ -65,7 +65,7 @@ void PrintConsole(struct Game *game, char* format, ...) {
 	char text[255] = {};
 	vsprintf(text, format, vl);
 	va_end(vl);
-    if (game->debug) { printf("%s\n", text); fflush(stdout); }
+	if (game->debug) { printf("%s\n", text); fflush(stdout); }
 	ALLEGRO_BITMAP *con = al_create_bitmap(al_get_bitmap_width(game->console), al_get_bitmap_height(game->console));
 	al_set_target_bitmap(con);
 	al_clear_to_color(al_map_rgba(0,0,0,80));
