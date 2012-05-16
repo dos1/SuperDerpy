@@ -36,6 +36,7 @@ void Loading_Draw(struct Game *game) {
 
 	PreloadGameState(game);
 
+	al_wait_for_vsync();
 	al_start_timer(game->timer);
 
 	for(fadeloop=255; fadeloop>0; fadeloop-=tps(game, 600)){

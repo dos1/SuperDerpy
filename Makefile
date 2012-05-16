@@ -17,6 +17,8 @@ $(ODIR)/%.o: $(SRCDIR)/%.c
 $(OUTPUTDIR)/superderpy: $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
 
+all: $(OUTPUTDIR)/superderpy
+
 .PHONY: clean
 
 clean:

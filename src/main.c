@@ -1,5 +1,4 @@
-/*! \file main.c
- *  \brief Main file of SuperDerpy engine.
+/*! \file main.c * \brief Main file of SuperDerpy engine.
  *
  *   Contains basic functions shared by all views.
  */
@@ -343,7 +342,7 @@ int main(int argc, char **argv){
 
 	if (game.fullscreen) al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
 	else al_set_new_display_flags(ALLEGRO_WINDOWED);
-	al_set_new_display_option(ALLEGRO_VSYNC, atoi(GetConfigOptionDefault("SuperDerpy", "vsync", "1")), ALLEGRO_SUGGEST);
+	al_set_new_display_option(ALLEGRO_VSYNC, 2-atoi(GetConfigOptionDefault("SuperDerpy", "vsync", "1")), ALLEGRO_SUGGEST);
 	al_set_new_display_option(ALLEGRO_OPENGL, atoi(GetConfigOptionDefault("SuperDerpy", "opengl", "1")), ALLEGRO_SUGGEST);
 	al_set_new_display_option(ALLEGRO_SAMPLE_BUFFERS, 1, ALLEGRO_SUGGEST);
 	al_set_new_display_option(ALLEGRO_SAMPLES, 8, ALLEGRO_SUGGEST);
@@ -408,6 +407,7 @@ int main(int argc, char **argv){
 		return -1;
 	}
 	al_register_event_source(game.event_queue, al_get_timer_event_source(game.timer));
+	al_wait_for_vsync();
 	al_start_timer(game.timer);
 
 	setlocale(LC_NUMERIC, "C"); /* FIXME? */
