@@ -464,6 +464,7 @@ bool PassLevel(struct Game *game, struct TM_Action *action, enum TM_ActionState 
 }
 
 void Level_Load(struct Game *game) {
+	game->level.failed=false;
 	game->level.hp=1;
 	game->level.cl_pos=0;
 	game->level.bg_pos=0;
