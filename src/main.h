@@ -57,6 +57,7 @@ struct Obstracle {
 	ALLEGRO_BITMAP **bitmap;
 	float x, y, speed;
 	int points;
+	bool hit;
 	void (*callback)(struct Game*, struct Obstracle*);
 	void *data;
 	struct Obstracle *prev, *next;

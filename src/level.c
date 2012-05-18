@@ -90,8 +90,8 @@ void Level_Passed(struct Game *game) {
 
 bool Accelerate(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (state != TM_ACTIONSTATE_RUNNING) return false;
-	game->level.speed+=0.000005;
-	if (game->level.speed<0.0020) return false;
+	game->level.speed+=0.000015;
+	if (game->level.speed<0.0025) return false;
 	return true;
 }
 
@@ -167,7 +167,7 @@ bool GenerateObstracles(struct Game *game, struct TM_Action *action, enum TM_Act
 		*in = true;*/
 	}
 	else if (state == TM_ACTIONSTATE_RUNNING) {
-		if (rand()%(10000/(int)tps(game, 60*100))<=2) {
+		if (rand()%(10000/(int)tps(game, 60*100))<=1) {
 			PrintConsole(game, "OBSTRACLE %d", *count);
 			(*count)++;
 			struct Obstracle *obst = malloc(sizeof(struct Obstracle));
@@ -175,6 +175,8 @@ bool GenerateObstracles(struct Game *game, struct TM_Action *action, enum TM_Act
 			obst->x = 100;
 			obst->y = (rand()%91)-1;
 			obst->speed = 0;
+			obst->points = -10;
+			obst->hit = false;
 			obst->bitmap = &(game->level.obst_bmps.pie);
 			obst->callback = NULL;
 			obst->data = (void*)(rand()%2);
@@ -227,14 +229,14 @@ void Level_Draw(struct Game *game) {
 		al_get_keyboard_state(&keyboard);
 		if (game->level.handle_input) {
 			if (al_key_down(&keyboard, ALLEGRO_KEY_UP)) {
-				game->level.derpy_y -= tps(game, 60*0.005);
+				game->level.derpy_y -= tps(game, 60*0.0075);
 				/*PrintConsole(game, "Derpy Y position: %f", game->level.derpy_y);*/
 			}
 			if (al_key_down(&keyboard, ALLEGRO_KEY_DOWN)) {
-				game->level.derpy_y += tps(game, 60*0.005);
+				game->level.derpy_y += tps(game, 60*0.0075);
 				/*PrintConsole(game, "Derpy Y position: %f", game->level.derpy_y);*/
 			}
-			if ((game->level.derpy_y > 0.6) && (game->level.flying)) {
+			/*if ((game->level.derpy_y > 0.6) && (game->level.flying)) {
 				SelectDerpySpritesheet(game, "run");
 				game->level.flying = false;
 				game->level.sheet_speed = tps(game, 60*0.0020/game->level.speed);
@@ -243,7 +245,7 @@ void Level_Draw(struct Game *game) {
 				SelectDerpySpritesheet(game, "fly");
 				game->level.flying = true;
 				game->level.sheet_speed = tps(game, 60*2.4);
-			}
+			}*/
 			if (!game->level.flying) game->level.sheet_speed = tps(game, 60*0.0020/game->level.speed);
 			if (game->level.derpy_y < 0) game->level.derpy_y=0;
 			else if (game->level.derpy_y > 0.8) game->level.derpy_y=0.8;
@@ -266,16 +268,18 @@ void Level_Draw(struct Game *game) {
 		while (tmp) {
 			/*PrintConsole(game, "DRAWING %f %f", tmp->x, tmp->y);*/
 			if (tmp->x > -10) {
-				bool col = false;
 				int x = (tmp->x/100.0)*al_get_display_width(game->display);
 				int y = (tmp->y/100.0)*al_get_display_height(game->display);
 				int w = al_get_bitmap_width(*(tmp->bitmap));
 				int h = al_get_bitmap_height(*(tmp->bitmap));
-				if ((((x>=derpyx) && (x<=derpyx+derpyw)) || ((x+w>=derpyx) && (x+w<=derpyx+derpyw))) &&
-					(((y>=derpyy) && (y<=derpyy+derpyh)) || ((y+h>=derpyy) && (y+h<=derpyy+derpyh))))
-					  col = true;
-				al_draw_tinted_bitmap(*(tmp->bitmap), al_map_rgba(255,255-col*255,255-col*255,255), x, y, 0);
-				if (col) colision = true;
+				if (!tmp->hit)
+					if ((((x>=derpyx+0.36*derpyw) && (x<=derpyx+0.94*derpyw)) || ((x+w>=derpyx+0.36*derpyw) && (x+w<=derpyx+0.94*derpyw))) &&
+						(((y>=derpyy+0.26*derpyh) && (y<=derpyy+0.76*derpyh)) || ((y+h>=derpyy+0.26*derpyh) && (y+h<=derpyy+0.76*derpyh)))) {
+							tmp->hit=true;
+							game->level.hp+=tps(game, 60*0.0002*tmp->points);
+					}
+				al_draw_bitmap(*(tmp->bitmap), x, y, 0);
+				if (tmp->hit) colision = true;
 				tmp->x -= tps(game, game->level.speed*60)*310;
 				if (tmp->callback) tmp->callback(game, tmp);
 				tmp = tmp->next;
@@ -291,7 +295,7 @@ void Level_Draw(struct Game *game) {
 				free(t);
 			}
 		}
-		if (colision) game->level.hp-=0.0005;
+		if (colision) game->level.hp-=tps(game, 60*0.002);
 		al_hold_bitmap_drawing(false);
 
 		al_set_target_bitmap(game->level.derpy);
@@ -469,10 +473,10 @@ void Level_Load(struct Game *game) {
 		TM_AddAction(&Stop, NULL, "stop");
 		TM_AddDelay(1000);
 		TM_AddAction(&Letter, NULL, "letter");
-		TM_AddDelay(500);
+		TM_AddDelay(200);
 		TM_AddQueuedBackgroundAction(&Accelerate, NULL, 0, "accelerate");
 		TM_AddAction(&Fly, NULL, "fly");
-		TM_AddDelay(5*1000);
+		/*TM_AddDelay(2*1000);*/
 		/* first part gameplay goes here */
 
 		/* actions for generating obstracles should go here
