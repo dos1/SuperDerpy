@@ -31,6 +31,9 @@
 #include <allegro5/allegro_ttf.h>
 #include "allegro_utils.h"
 
+#define PROGRESS_INIT(a) float load_p = 0, load_a = a;
+#define PROGRESS if (progress) (*progress)(game, load_p+=1/load_a);
+
 struct Game;
 
 /*! \brief Enum of all available gamestates. */
@@ -249,7 +252,7 @@ struct Game {
 void al_draw_text_with_shadow(ALLEGRO_FONT *font, ALLEGRO_COLOR color, float x, float y, int flags, char const *text);
 
 /*! \brief Preloads gamestate set in game->loadstate. */
-void PreloadGameState(struct Game *game);
+void PreloadGameState(struct Game *game, void (*progress)(struct Game*, float));
 
 /*! \brief Unloads gamestate set in game->gamestate. */
 void UnloadGameState(struct Game *game);

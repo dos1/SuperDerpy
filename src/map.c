@@ -97,7 +97,9 @@ int Map_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	return 0;
 }
 
-void Map_Preload(struct Game *game) {
+void Map_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
+	PROGRESS_INIT(7);
+
 	game->map.available = atoi(GetConfigOptionDefault("MuffinAttack", "level", "1"));
 	if ((game->map.available<1) || (game->map.available>6)) game->map.available=1;
 	game->map.selected = game->map.available;
@@ -105,14 +107,19 @@ void Map_Preload(struct Game *game) {
 	game->map.arrowpos = 0;
 
 	game->map.map_bg = LoadScaledBitmap("map/background.png", al_get_display_width(game->display), al_get_display_height(game->display));
+	PROGRESS;
 	char filename[30] = { };
 	sprintf(filename, "map/highlight%d.png", game->map.available);
 	game->map.highlight = LoadScaledBitmap(filename, al_get_display_width(game->display), al_get_display_height(game->display));
+	PROGRESS;
 
 	game->map.arrow = al_load_bitmap( "data/map/arrow.png" );
+	PROGRESS;
 
 	game->map.click_sample = al_load_sample( "data/menu/click.flac" );
+	PROGRESS;
 	game->map.sample = al_load_sample( "data/map/map.flac" );
+	PROGRESS;
 
 	game->map.music = al_create_sample_instance(game->map.sample);
 	al_attach_sample_instance_to_mixer(game->map.music, game->audio.music);
@@ -132,10 +139,12 @@ void Map_Preload(struct Game *game) {
 	}
 
 	game->map.map = LoadScaledBitmap("table.png", al_get_display_width(game->display), al_get_display_height(game->display));
+	PROGRESS;
 	al_set_target_bitmap(game->map.map);
 	al_draw_bitmap(game->map.map_bg, 0, 0 ,0);
 	al_draw_bitmap(game->map.highlight, 0, 0 ,0);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
+	PROGRESS;
 }
 
 void Map_Unload(struct Game *game) {

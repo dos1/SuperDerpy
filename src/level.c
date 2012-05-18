@@ -522,7 +522,7 @@ void Level_ProcessLogic(struct Game *game, ALLEGRO_EVENT *ev) {
 
 }
 
-void Level_Preload(struct Game *game) {
+void Level_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	game->level.derpy_sheets = NULL;
 	game->level.derpy = NULL;
 	Pause_Preload(game);
@@ -542,7 +542,7 @@ void Level_Preload(struct Game *game) {
 			exit(-1);
 		}
 	}
-	Level_PreloadBitmaps(game);
+	Level_PreloadBitmaps(game, progress);
 }
 
 void Level_Unload(struct Game *game) {
@@ -591,15 +591,26 @@ void Level_UnloadBitmaps(struct Game *game) {
 	}
 }
 
-void Level_PreloadBitmaps(struct Game *game) {
+void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float)) {
+	PROGRESS_INIT(10);
+	int x = 0;
 	struct Spritesheet *tmp = game->level.derpy_sheets;
+	while (tmp) {
+		x++;
+		tmp = tmp->next;
+	}
+	if (game->level.current_level==1) load_a+=x;
+	else load_a=2+x;
+
+	tmp = game->level.derpy_sheets;
 	while (tmp) {
 		char filename[255] = { };
 		sprintf(filename, "levels/derpy/%s.png", tmp->name);
 		tmp->bitmap = LoadScaledBitmap(filename, al_get_display_height(game->display)*0.25*tmp->aspect*tmp->cols*tmp->scale, al_get_display_height(game->display)*0.25*tmp->rows*tmp->scale);
+		PROGRESS;
 		tmp = tmp->next;
 	}
-
+	PROGRESS;
 	if (!game->level.derpy) SelectDerpySpritesheet(game, "stand");
 
 	game->level.derpy = al_create_bitmap(al_get_bitmap_width(*(game->level.derpy_sheet))/game->level.sheet_cols, al_get_bitmap_height(*(game->level.derpy_sheet))/game->level.sheet_rows);
@@ -608,19 +619,28 @@ void Level_PreloadBitmaps(struct Game *game) {
 	else {
 		/* TODO: handle strange display aspects */
 		game->level.clouds = LoadScaledBitmap("levels/1/clouds.png", al_get_display_height(game->display)*4.73307291666666666667, al_get_display_height(game->display));
+		PROGRESS;
 		game->level.foreground = LoadScaledBitmap("levels/1/foreground.png", al_get_display_height(game->display)*4.73307291666666666667, al_get_display_height(game->display));
+		PROGRESS;
 		game->level.background = LoadScaledBitmap("levels/1/background.png", al_get_display_height(game->display)*4.73307291666666666667, al_get_display_height(game->display));
+		PROGRESS;
 		game->level.stage = LoadScaledBitmap("levels/1/stage.png", al_get_display_height(game->display)*4.73307291666666666667, al_get_display_height(game->display));
+		PROGRESS;
 		game->level.obst_bmps.pie = LoadScaledBitmap("menu/pie.png", al_get_display_width(game->display)*0.1, al_get_display_height(game->display)*0.1);
+		PROGRESS;
 		game->level.welcome = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display)/2);
+		PROGRESS;
 		al_set_target_bitmap(game->level.welcome);
 		al_clear_to_color(al_map_rgba(0,0,0,0));
 		al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.1, ALLEGRO_ALIGN_CENTRE, "Level 1");
 		al_draw_text_with_shadow(game->menu.font_subtitle, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.275, ALLEGRO_ALIGN_CENTRE, "Fluttershy");
+		PROGRESS;
 
 		game->level.meter_image = LoadScaledBitmap("levels/meter.png", al_get_display_width(game->display)*0.075, al_get_display_width(game->display)*0.075*0.96470588235294117647);
+		PROGRESS;
 		game->level.meter_bmp = al_create_bitmap(al_get_display_width(game->display)*0.2+al_get_bitmap_width(game->level.meter_image), al_get_bitmap_height(game->level.meter_image));
 
 		al_set_target_bitmap(al_get_backbuffer(game->display));
 	}
+	PROGRESS;
 }

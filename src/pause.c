@@ -47,9 +47,9 @@ int Pause_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 			Loading_Unload(game);
 			Loading_Load(game);
 			Menu_Unload(game);
-			Menu_Preload(game);
+			Menu_Preload(game, NULL);
 			Level_UnloadBitmaps(game);
-			Level_PreloadBitmaps(game);
+			Level_PreloadBitmaps(game, NULL);
 			Pause_Unload_Real(game);
 			Pause_Preload(game);
 			Pause_Load(game);
@@ -64,7 +64,7 @@ void Pause_Preload(struct Game* game) {
 	PrintConsole(game,"Pause preloaded.");
 	if (!game->menu.loaded) {
 		PrintConsole(game,"Pause: Preloading GAMESTATE_MENU...");
-		Menu_Preload(game);
+		Menu_Preload(game, NULL);
 	}
 }
 

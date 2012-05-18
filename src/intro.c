@@ -201,7 +201,9 @@ int Intro_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	return 0;
 }
 
-void Intro_Preload(struct Game *game) {
+void Intro_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
+	PROGRESS_INIT(16);
+
 	game->intro.audiostream = NULL;
 	game->intro.position = 0;
 	game->intro.page = 0;
@@ -209,15 +211,23 @@ void Intro_Preload(struct Game *game) {
 	game->intro.anim = 0;
 
 	game->intro.animsprites[0] = LoadScaledBitmap("intro/1.png", al_get_display_width(game->display)*0.3125*3, al_get_display_height(game->display)*0.63*3);
+	PROGRESS;
 	game->intro.animsprites[1] = LoadScaledBitmap("levels/derpy/walk.png", al_get_display_width(game->display)*0.3125*3, al_get_display_height(game->display)*0.63*3);
+	PROGRESS;
 	game->intro.animsprites[2] = LoadScaledBitmap("intro/3.png", al_get_display_width(game->display)*0.3125*3, al_get_display_height(game->display)*0.63*3);
+	PROGRESS;
 	game->intro.animsprites[3] = LoadScaledBitmap("loading.png", al_get_display_width(game->display)*0.3125*3, al_get_display_height(game->display)*0.63*3);
+	PROGRESS;
 	game->intro.animsprites[4] = LoadScaledBitmap("about/letter.png", al_get_display_width(game->display)*0.3125*3, al_get_display_height(game->display)*0.63*3);
+	PROGRESS;
 
 	game->intro.table_bitmap =LoadScaledBitmap("intro/paper.png", al_get_display_width(game->display), al_get_display_height(game->display));
+	PROGRESS;
 	game->intro.frame =LoadScaledBitmap("intro/frame.png", al_get_display_width(game->display), al_get_display_height(game->display));
-	
+	PROGRESS;
+
 	game->intro.sample = al_load_sample( "data/intro/intro.flac" );
+	PROGRESS;
 
 	game->intro.music = al_create_sample_instance(game->intro.sample);
 	al_attach_sample_instance_to_mixer(game->intro.music, game->audio.music);
@@ -233,9 +243,15 @@ void Intro_Preload(struct Game *game) {
 	game->intro.font = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.04,0 );
 
 	FillPage(game, 1);
+	PROGRESS;
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 	PrintConsole(game, "Chainpreloading GAMESTATE_MAP...");
-	Map_Preload(game);
+	PROGRESS;
+	void MapProgress(struct Game* game, float p) {
+		/* if (progress) (*progress)(game, load_p+=1/load_a); */
+		if (progress) (*progress)(game, 0.625+0.375*p);
+	}
+	Map_Preload(game, &MapProgress);
 }
 
 void Intro_Unload(struct Game *game) {

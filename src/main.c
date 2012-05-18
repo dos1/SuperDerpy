@@ -37,7 +37,7 @@
  *  Preloading of state happens when loading screen is displayed.
  */
 #define PRELOAD_STATE(state, name) case state:\
-	PrintConsole(game, "Preload %s...", #state); DrawConsole(game); al_flip_display(); name ## _Preload(game); break;
+	PrintConsole(game, "Preload %s...", #state); DrawConsole(game); al_flip_display(); name ## _Preload(game, progress); break;
 /*! \brief Macro for unloading gamestate.
  *
  *  Unloading of state happens after it's fadeout.
@@ -94,7 +94,7 @@ void DrawConsole(struct Game *game) {
 	frames_done++;
 }
 
-void PreloadGameState(struct Game *game) {
+void PreloadGameState(struct Game *game, void (*progress)(struct Game*, float)) {
 	if ((game->loadstate==GAMESTATE_MENU) && (game->menu.loaded)) {
 		PrintConsole(game, "GAMESTATE_MENU already loaded, skipping...");
 		return;
@@ -416,7 +416,7 @@ int main(int argc, char **argv){
 	game.menu.loaded = false;
 	game.restart = false;
 	game.loadstate = GAMESTATE_LOADING;
-	PreloadGameState(&game);
+	PreloadGameState(&game, NULL);
 	LoadGameState(&game);
 	game.loadstate = GAMESTATE_MENU;
 

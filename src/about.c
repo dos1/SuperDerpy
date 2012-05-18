@@ -63,18 +63,24 @@ int About_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	return 0;
 }
 
-void About_Preload(struct Game *game) {
+void About_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
+	PROGRESS_INIT(7);
+
 	game->about.image =LoadScaledBitmap("table.png", al_get_display_width(game->display), al_get_display_height(game->display));
+	PROGRESS;
 	game->about.letter = LoadScaledBitmap("about/letter.png", al_get_display_width(game->display), al_get_display_height(game->display) );
+	PROGRESS;
 
 	game->about.sample = al_load_sample( "data/about/about.flac" );
-	
+	PROGRESS;
+
 	game->about.music = al_create_sample_instance(game->about.sample);
 	al_attach_sample_instance_to_mixer(game->about.music, game->audio.music);
 	al_set_sample_instance_playmode(game->about.music, ALLEGRO_PLAYMODE_LOOP);
 	al_set_sample_instance_position(game->about.music, game->music ? 420000 : 700000);
 
 	game->about.font = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.035,0 );
+	PROGRESS;
 	game->about.x = -0.1;
 	if (!game->about.sample){
 		fprintf(stderr, "Audio clip sample not loaded!\n" );
@@ -91,7 +97,8 @@ void About_Preload(struct Game *game) {
 		al_draw_text(game->about.font, al_map_rgb(255,255,255), 0, y*al_get_bitmap_height(game->about.text_bitmap), ALLEGRO_ALIGN_LEFT, text);
 		y+=0.0128;
 	}
-	
+	PROGRESS;
+
 	draw_text("Written by:");
 	draw_text(" - Sebastian Krzyszkowiak");
 	draw_text("   http://dosowisko.net/");
@@ -163,6 +170,7 @@ void About_Preload(struct Game *game) {
 	draw_text("Author of Super Derpy is not");
 	draw_text("affiliated to Hasbro, The Hub");
 	draw_text("or its associates.");
+	PROGRESS;
 
 	game->about.fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 	
@@ -172,6 +180,7 @@ void About_Preload(struct Game *game) {
 	al_draw_bitmap_region(game->about.text_bitmap, 0, 0, al_get_bitmap_width(game->about.text_bitmap), al_get_display_height(game->display)*0.8, al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.1, 0);
 
 	al_set_target_bitmap(al_get_backbuffer(game->display));
+	PROGRESS;
 }
 
 void About_Unload(struct Game *game) {
