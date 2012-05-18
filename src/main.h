@@ -99,6 +99,7 @@ struct Level {
 	struct Spritesheet* pony_sheets; /*!< List of sprite sheets of character rescued by Derpy. */
 	struct {
 		ALLEGRO_BITMAP *pie;
+		ALLEGRO_BITMAP *muffin;
 	} obst_bmps;
 	struct Obstracle *obstracles;
 	struct Moonwalk moonwalk;

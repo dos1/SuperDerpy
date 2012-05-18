@@ -191,10 +191,14 @@ bool GenerateObstracles(struct Game *game, struct TM_Action *action, enum TM_Act
 			obst->speed = 0;
 			obst->points = -10;
 			obst->hit = false;
-			obst->bitmap = &(game->level.obst_bmps.pie);
-			obst->callback = NULL;
+			if (rand()%100<=50) {
+				obst->callback=Obst_MoveUpDown;
+				obst->bitmap = &(game->level.obst_bmps.pie);
+			} else {
+				obst->callback = NULL;
+				obst->bitmap = &(game->level.obst_bmps.muffin);
+			}
 			obst->data = (void*)(rand()%2);
-			if (rand()%100<=50) obst->callback=Obst_MoveUpDown;
 			if (game->level.obstracles) {
 				game->level.obstracles->prev = obst;
 				obst->next = game->level.obstracles;
@@ -612,7 +616,7 @@ void Level_UnloadBitmaps(struct Game *game) {
 }
 
 void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float)) {
-	PROGRESS_INIT(10);
+	PROGRESS_INIT(11);
 	int x = 0;
 	struct Spritesheet *tmp = game->level.derpy_sheets;
 	while (tmp) {
@@ -647,6 +651,8 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 		game->level.stage = LoadScaledBitmap("levels/1/stage.png", al_get_display_height(game->display)*4.73307291666666666667, al_get_display_height(game->display));
 		PROGRESS;
 		game->level.obst_bmps.pie = LoadScaledBitmap("menu/pie.png", al_get_display_width(game->display)*0.1, al_get_display_height(game->display)*0.1);
+		PROGRESS;
+		game->level.obst_bmps.muffin = LoadScaledBitmap("levels/muffin.png", al_get_display_width(game->display)*0.07, al_get_display_height(game->display)*0.1);
 		PROGRESS;
 		game->level.welcome = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display)/2);
 		PROGRESS;
