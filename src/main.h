@@ -83,6 +83,7 @@ struct Level {
 	float hp;
 	bool handle_input;
 	bool flying;
+	bool failed;
 	float meter_alpha;
 	int sheet_rows, sheet_cols, sheet_pos, sheet_blanks;
 	float sheet_tmp, sheet_speed, sheet_speed_modifier, sheet_scale;

@@ -88,6 +88,20 @@ void Level_Passed(struct Game *game) {
 	}
 }
 
+bool FadeOut(struct Game *game, struct TM_Action *action, enum TM_ActionState state);
+
+bool LevelFailed(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
+	if (state == TM_ACTIONSTATE_INIT) {
+		TM_AddBackgroundAction(&FadeOut, NULL, 3000, "fadeout");
+	} else if (state == TM_ACTIONSTATE_RUNNING) {
+		al_draw_filled_rectangle(0, 0, al_get_display_width(game->display), al_get_display_height(game->display), al_map_rgba(0,0,0,100));
+		al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.4, ALLEGRO_ALIGN_CENTRE, "Failed!");
+		game->level.speed-=0.00001;
+		return false;
+	}
+	return true;
+}
+
 bool Accelerate(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (state != TM_ACTIONSTATE_RUNNING) return false;
 	game->level.speed+=0.000015;
@@ -250,7 +264,6 @@ void Level_Draw(struct Game *game) {
 			if (game->level.derpy_y < 0) game->level.derpy_y=0;
 			else if (game->level.derpy_y > 0.8) game->level.derpy_y=0.8;
 		}
-		al_hold_bitmap_drawing(true);
 
 		al_draw_bitmap(game->level.clouds, (-game->level.cl_pos)*al_get_bitmap_width(game->level.clouds), 0, 0);
 		al_draw_bitmap(game->level.clouds, (1+(-game->level.cl_pos))*al_get_bitmap_width(game->level.clouds), 0, 0);
@@ -277,6 +290,10 @@ void Level_Draw(struct Game *game) {
 						(((y>=derpyy+0.26*derpyh) && (y<=derpyy+0.76*derpyh)) || ((y+h>=derpyy+0.26*derpyh) && (y+h<=derpyy+0.76*derpyh)))) {
 							tmp->hit=true;
 							game->level.hp+=tps(game, 60*0.0002*tmp->points);
+							if ((game->level.hp<=0) && (!game->level.failed)) {
+								game->level.failed = true;
+								TM_AddBackgroundAction(&LevelFailed, NULL, 0, "levelfailed");
+							}
 					}
 				al_draw_bitmap(*(tmp->bitmap), x, y, 0);
 				if (tmp->hit) colision = true;
@@ -296,7 +313,6 @@ void Level_Draw(struct Game *game) {
 			}
 		}
 		if (colision) game->level.hp-=tps(game, 60*0.002);
-		al_hold_bitmap_drawing(false);
 
 		al_set_target_bitmap(game->level.derpy);
 		al_clear_to_color(al_map_rgba(0,0,0,0));
@@ -310,7 +326,6 @@ void Level_Draw(struct Game *game) {
 			if (game->level.sheet_pos>=game->level.sheet_cols*game->level.sheet_rows-game->level.sheet_blanks) game->level.sheet_pos=0;
 		}
 		al_set_target_bitmap(al_get_backbuffer(game->display));
-		al_hold_bitmap_drawing(true);
 		
 		al_draw_tinted_bitmap(game->level.derpy, al_map_rgba(255,255-colision*255,255-colision*255,255), derpyx+al_get_display_width(game->display)*0.1953125-al_get_bitmap_width(game->level.derpy), derpyy, 0);
 
@@ -328,12 +343,11 @@ void Level_Draw(struct Game *game) {
 		}
 		game->level.cl_pos += tps(game, 60*0.00005);
 		if (game->level.cl_pos >= 1) game->level.cl_pos=game->level.cl_pos-1;
-		al_hold_bitmap_drawing(false);
 
 		al_set_target_bitmap(game->level.meter_bmp);
 		al_clear_to_color(al_map_rgba(0,0,0,0));
-		al_draw_filled_rounded_rectangle(al_get_bitmap_width(game->level.meter_bmp)*0.1, al_get_bitmap_height(game->level.meter_bmp)*0.3, al_get_bitmap_width(game->level.meter_bmp), al_get_bitmap_height(game->level.meter_bmp)*0.7,
-																		 7.5,7.5, al_map_rgb(232,234,239));
+		al_draw_filled_rounded_rectangle(al_get_bitmap_width(game->level.meter_bmp)*0.1, al_get_bitmap_height(game->level.meter_bmp)*0.34, al_get_bitmap_width(game->level.meter_bmp)*0.993, al_get_bitmap_height(game->level.meter_bmp)*0.66,
+																		 6,6, al_map_rgb(232,234,239));
 		al_draw_horizontal_gradient_rect(al_get_bitmap_width(game->level.meter_bmp)-al_get_display_width(game->display)*0.215, (al_get_bitmap_height(game->level.meter_bmp)-al_get_display_height(game->display)*0.025)/2, al_get_display_width(game->display)*0.215*0.975, al_get_display_height(game->display)*0.025, al_map_rgb(150,159,182), al_map_rgb(130,139,162));
 		al_draw_filled_rectangle(al_get_bitmap_width(game->level.meter_bmp)-al_get_display_width(game->display)*0.215, (al_get_bitmap_height(game->level.meter_bmp)-al_get_display_height(game->display)*0.025)/2, al_get_bitmap_width(game->level.meter_bmp)-al_get_display_width(game->display)*0.215+(al_get_display_width(game->display)*0.215*0.975)*game->level.hp, (al_get_bitmap_height(game->level.meter_bmp)-al_get_display_height(game->display)*0.025)/2+al_get_display_height(game->display)*0.025, al_map_rgb(214,172,55));
 		al_draw_bitmap(game->level.meter_image, 0, 0, 0);
@@ -507,6 +521,12 @@ int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	if (ev->keyboard.keycode==ALLEGRO_KEY_ESCAPE) {
 		game->level.music_pos = al_get_sample_instance_position(game->level.music);
 		al_set_sample_instance_playing(game->level.music, false);
+	} else if ((game->debug) && (ev->keyboard.keycode==ALLEGRO_KEY_F2)) {
+		game->level.hp -= 0.1;
+		if (game->level.hp <= 0) game->level.hp=0.001;
+	} else 	if ((game->debug) && (ev->keyboard.keycode==ALLEGRO_KEY_F3)) {
+		game->level.hp += 0.1;
+		if (game->level.hp > 1) game->level.hp=1;
 	}
 	if (game->level.current_level!=1) Moonwalk_Keydown(game, ev);
 	if (ev->keyboard.keycode==ALLEGRO_KEY_ESCAPE) {
