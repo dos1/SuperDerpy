@@ -91,6 +91,7 @@ struct Spritesheet {
 struct Level {
 	int current_level; /*!< Level number. */
 	float speed; /*!< Speed of the player. */
+	float speed_modifier; /*!< Modifier of the speed of the player. */
 	float bg_pos; /*!< Position of the background layer of the scene. */
 	float st_pos; /*!< Position of the stage layer of the scene. */
 	float fg_pos; /*!< Position of the foreground layer of the scene. */

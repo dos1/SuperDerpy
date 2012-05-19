@@ -305,7 +305,7 @@ void Level_Draw(struct Game *game) {
 				if (game->level.debug_show_sprite_frames) al_draw_rectangle(x, y, x+w, y+h, al_map_rgba(255,0,0,255), 3);
 
 				if (tmp->hit) colision = true;
-				tmp->x -= tps(game, game->level.speed*60)*310;
+				tmp->x -= tps(game, game->level.speed*game->level.speed_modifier*60)*310;
 				if (tmp->callback) tmp->callback(game, tmp);
 				tmp = tmp->next;
 			} else {
@@ -327,7 +327,7 @@ void Level_Draw(struct Game *game) {
 		al_draw_bitmap_region(*(game->level.derpy_sheet),al_get_bitmap_width(game->level.derpy)*(game->level.sheet_pos%game->level.sheet_cols),al_get_bitmap_height(game->level.derpy)*(game->level.sheet_pos/game->level.sheet_cols),al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy),0,0,0);
 		if ((game->level.sheet_speed) && (game->level.sheet_speed_modifier)) {
 			game->level.sheet_tmp+=tps(game, 60);
-			if (game->level.sheet_tmp >= game->level.sheet_speed/game->level.sheet_speed_modifier) {
+			if (game->level.sheet_tmp >= (game->level.sheet_speed/game->level.speed_modifier)/game->level.sheet_speed_modifier) {
 				game->level.sheet_pos++;
 				game->level.sheet_tmp = 0;
 			}
@@ -349,10 +349,10 @@ void Level_Draw(struct Game *game) {
 		al_draw_bitmap(game->level.foreground, (1+(-game->level.fg_pos))*al_get_bitmap_width(game->level.foreground), 0 ,0);
 
 		if (game->level.speed > 0) {
-			game->level.cl_pos += tps(game, 60*game->level.speed) * 0.2;
-			game->level.bg_pos += tps(game, 60*game->level.speed) * 0.6;
-			game->level.st_pos += tps(game, 60*game->level.speed) * 1;
-			game->level.fg_pos += tps(game, 60*game->level.speed) * 1.75;
+			game->level.cl_pos += tps(game, 60*game->level.speed*game->level.speed_modifier) * 0.2;
+			game->level.bg_pos += tps(game, 60*game->level.speed*game->level.speed_modifier) * 0.6;
+			game->level.st_pos += tps(game, 60*game->level.speed*game->level.speed_modifier) * 1;
+			game->level.fg_pos += tps(game, 60*game->level.speed*game->level.speed_modifier) * 1.75;
 			if (game->level.bg_pos >= 1) game->level.bg_pos=game->level.bg_pos-1;
 			if (game->level.st_pos >= 1) game->level.st_pos=game->level.st_pos-1;
 			if (game->level.fg_pos >= 1) game->level.fg_pos=game->level.fg_pos-1;
@@ -483,6 +483,7 @@ void Level_Load(struct Game *game) {
 	game->level.fg_pos=0.2;
 	game->level.st_pos=0.1;
 	game->level.speed = 0;
+	game->level.speed_modifier = 1;
 	game->level.derpy_x = -0.2;
 	game->level.derpy_y = 0.6;
 	game->level.sheet_speed = tps(game, 60*2.4);
@@ -548,6 +549,13 @@ int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 		game->level.debug_show_sprite_frames = !game->level.debug_show_sprite_frames;
 	}
 	if (game->level.current_level!=1) Moonwalk_Keydown(game, ev);
+	else if (game->level.handle_input) {
+		if (ev->keyboard.keycode==ALLEGRO_KEY_LEFT) {
+			game->level.speed_modifier = 0.75;
+		} else if (ev->keyboard.keycode==ALLEGRO_KEY_RIGHT) {
+			game->level.speed_modifier = 1.3;
+		}
+	}
 	if (ev->keyboard.keycode==ALLEGRO_KEY_ESCAPE) {
 		game->gamestate = GAMESTATE_PAUSE;
 		game->loadstate = GAMESTATE_LEVEL;
@@ -557,8 +565,24 @@ int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 }
 
 void Level_ProcessLogic(struct Game *game, ALLEGRO_EVENT *ev) {
+	if (game->level.handle_input) {
+		if ((ev->type==ALLEGRO_EVENT_KEY_UP) && (ev->keyboard.keycode==ALLEGRO_KEY_LEFT)) {
+			game->level.speed_modifier = 1;
+			struct ALLEGRO_KEYBOARD_STATE keyboard;
+			al_get_keyboard_state(&keyboard);
+			if (al_key_down(&keyboard, ALLEGRO_KEY_RIGHT)) {
+				game->level.speed_modifier = 1.3;
+			}
+		} else if ((ev->type==ALLEGRO_EVENT_KEY_UP) && (ev->keyboard.keycode==ALLEGRO_KEY_RIGHT)) {
+			game->level.speed_modifier = 1;
+			struct ALLEGRO_KEYBOARD_STATE keyboard;
+			al_get_keyboard_state(&keyboard);
+			if (al_key_down(&keyboard, ALLEGRO_KEY_LEFT)) {
+				game->level.speed_modifier = 0.75;
+			}
+		}
+	}
 	if (game->level.current_level==1) TM_HandleEvent(ev);
-
 }
 
 void Level_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
