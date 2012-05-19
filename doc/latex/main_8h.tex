@@ -12,6 +12,7 @@
 {\ttfamily \#include $<$allegro5/allegro\-\_\-image.\-h$>$}\*
 {\ttfamily \#include $<$allegro5/allegro\-\_\-font.\-h$>$}\*
 {\ttfamily \#include $<$allegro5/allegro\-\_\-ttf.\-h$>$}\*
+{\ttfamily \#include \char`\"{}allegro\-\_\-utils.\-h\char`\"{}}\*
 \subsection*{\-Classes}
 \begin{DoxyCompactItemize}
 \item 
@@ -37,6 +38,15 @@ struct \hyperlink{structIntro}{\-Intro}
 \begin{DoxyCompactList}\small\item\em \-Resources used by \hyperlink{structIntro}{\-Intro} state. \end{DoxyCompactList}\item 
 struct \hyperlink{structGame}{\-Game}
 \begin{DoxyCompactList}\small\item\em \-Resources used by \hyperlink{structGame}{\-Game} state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{main_8h_a7f1d27b16e12e005a5c1318303fbc616}{\#define {\bfseries \-P\-R\-O\-G\-R\-E\-S\-S\-\_\-\-I\-N\-I\-T}(a)~float load\-\_\-p = 0, load\-\_\-a = a;}\label{main_8h_a7f1d27b16e12e005a5c1318303fbc616}
+
+\item 
+\hypertarget{main_8h_a5c9c57e1e8bc5ea8821d381a06d3f4d0}{\#define {\bfseries \-P\-R\-O\-G\-R\-E\-S\-S}~if (progress) ($\ast$progress)(game, load\-\_\-p+=1/load\-\_\-a);}\label{main_8h_a5c9c57e1e8bc5ea8821d381a06d3f4d0}
+
+\end{DoxyCompactItemize}
 \subsection*{\-Enumerations}
 \begin{DoxyCompactItemize}
 \item 
@@ -66,7 +76,7 @@ enum \hyperlink{main_8h_a5b988954c565e5ff444d61085e367fae}{menustate\-\_\-enum} 
 \item 
 void \hyperlink{main_8h_a37ff4b9f7c61255aaaba68d349398974}{al\-\_\-draw\-\_\-text\-\_\-with\-\_\-shadow} (\-A\-L\-L\-E\-G\-R\-O\-\_\-\-F\-O\-N\-T $\ast$font, \-A\-L\-L\-E\-G\-R\-O\-\_\-\-C\-O\-L\-O\-R color, float x, float y, int flags, char const $\ast$text)
 \begin{DoxyCompactList}\small\item\em \-Draws text with shadow. \end{DoxyCompactList}\item 
-\hypertarget{main_8h_a26e3725246efa2aa75508247a84fbfa9}{void \hyperlink{main_8h_a26e3725246efa2aa75508247a84fbfa9}{\-Preload\-Game\-State} (struct \hyperlink{structGame}{\-Game} $\ast$game)}\label{main_8h_a26e3725246efa2aa75508247a84fbfa9}
+\hypertarget{main_8h_afd10ce18ae3e601a9c462e2bd552ed32}{void \hyperlink{main_8h_afd10ce18ae3e601a9c462e2bd552ed32}{\-Preload\-Game\-State} (struct \hyperlink{structGame}{\-Game} $\ast$game, void($\ast$progress)(struct \hyperlink{structGame}{\-Game} $\ast$, float))}\label{main_8h_afd10ce18ae3e601a9c462e2bd552ed32}
 
 \begin{DoxyCompactList}\small\item\em \-Preloads gamestate set in game-\/$>$loadstate. \end{DoxyCompactList}\item 
 \hypertarget{main_8h_afbbdeccc0adc5c3a0c84461f51a45a5b}{void \hyperlink{main_8h_afbbdeccc0adc5c3a0c84461f51a45a5b}{\-Unload\-Game\-State} (struct \hyperlink{structGame}{\-Game} $\ast$game)}\label{main_8h_afbbdeccc0adc5c3a0c84461f51a45a5b}

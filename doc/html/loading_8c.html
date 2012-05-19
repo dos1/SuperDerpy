@@ -84,18 +84,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p><a class="el" href="structLoading.html" title="Resources used by Loading state.">Loading</a> screen.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="loading_8h_source.html">loading.h</a>&quot;</code><br/>
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br/>
+<code>#include &quot;<a class="el" href="loading_8h_source.html">loading.h</a>&quot;</code><br/>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adf72e4565d82db9e055ad26468c4b8e1"></a><!-- doxytag: member="loading.c::Progress" ref="adf72e4565d82db9e055ad26468c4b8e1" args="(struct Game *game, float p)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Progress</b> (struct <a class="el" href="structGame.html">Game</a> *game, float p)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a497502359f39a29abbe1789ab77cddda"></a><!-- doxytag: member="loading.c::Loading_Draw" ref="a497502359f39a29abbe1789ab77cddda" args="(struct Game *game)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Loading_Draw</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5525b39d9ff238903584c41affaf1f0e"></a><!-- doxytag: member="loading.c::Loading_Load" ref="a5525b39d9ff238903584c41affaf1f0e" args="(struct Game *game)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Loading_Load</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab92c89bbc6815479c39f5a4ce46709a6"></a><!-- doxytag: member="loading.c::Loading_Keydown" ref="ab92c89bbc6815479c39f5a4ce46709a6" args="(struct Game *game, ALLEGRO_EVENT *ev)" -->
 int&#160;</td><td class="memItemRight" valign="bottom"><b>Loading_Keydown</b> (struct <a class="el" href="structGame.html">Game</a> *game, ALLEGRO_EVENT *ev)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa0e9d37af389a5dcc5a1c3573c6b2f8a"></a><!-- doxytag: member="loading.c::Loading_Preload" ref="aa0e9d37af389a5dcc5a1c3573c6b2f8a" args="(struct Game *game)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Loading_Preload</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a737099347cae174b8b64bbe5a0ff91a3"></a><!-- doxytag: member="loading.c::Loading_Preload" ref="a737099347cae174b8b64bbe5a0ff91a3" args="(struct Game *game, void(*progress)(struct Game *, float))" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Loading_Preload</b> (struct <a class="el" href="structGame.html">Game</a> *game, void(*progress)(struct <a class="el" href="structGame.html">Game</a> *, float))</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad790731659d0bb7b142f34afe20bac99"></a><!-- doxytag: member="loading.c::Loading_Unload" ref="ad790731659d0bb7b142f34afe20bac99" args="(struct Game *game)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Loading_Unload</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
 </table>
@@ -119,7 +122,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Loading_Unload</b> (s
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri May 4 2012 03:43:36 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat May 19 2012 15:06:47 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

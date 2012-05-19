@@ -24,6 +24,12 @@
 \hypertarget{level_8c_afd8cf0a0a99661bc2b21f5e1a695a4f3}{void {\bfseries \-Level\-\_\-\-Passed} (struct \hyperlink{structGame}{\-Game} $\ast$game)}\label{level_8c_afd8cf0a0a99661bc2b21f5e1a695a4f3}
 
 \item 
+\hypertarget{level_8c_a54e1fe675a65e73e07084aeedcca2b59}{bool {\bfseries \-Fade\-Out} (struct \hyperlink{structGame}{\-Game} $\ast$game, struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$action, enum \-T\-M\-\_\-\-Action\-State state)}\label{level_8c_a54e1fe675a65e73e07084aeedcca2b59}
+
+\item 
+\hypertarget{level_8c_af47a0e8a010bf6619c54b025218a791f}{bool {\bfseries \-Level\-Failed} (struct \hyperlink{structGame}{\-Game} $\ast$game, struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$action, enum \-T\-M\-\_\-\-Action\-State state)}\label{level_8c_af47a0e8a010bf6619c54b025218a791f}
+
+\item 
 \hypertarget{level_8c_a30a1b6b19047767179aa1b9366b371a4}{bool {\bfseries \-Accelerate} (struct \hyperlink{structGame}{\-Game} $\ast$game, struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$action, enum \-T\-M\-\_\-\-Action\-State state)}\label{level_8c_a30a1b6b19047767179aa1b9366b371a4}
 
 \item 
@@ -31,6 +37,9 @@
 
 \item 
 \hypertarget{level_8c_aa293be19929b6eb00fe52c0d7c5fc8d5}{bool {\bfseries \-Move} (struct \hyperlink{structGame}{\-Game} $\ast$game, struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$action, enum \-T\-M\-\_\-\-Action\-State state)}\label{level_8c_aa293be19929b6eb00fe52c0d7c5fc8d5}
+
+\item 
+\hypertarget{level_8c_a9d9935c62f8bacc1923acd0d1f8149bf}{bool {\bfseries \-Show\-Meter} (struct \hyperlink{structGame}{\-Game} $\ast$game, struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$action, enum \-T\-M\-\_\-\-Action\-State state)}\label{level_8c_a9d9935c62f8bacc1923acd0d1f8149bf}
 
 \item 
 \hypertarget{level_8c_a23487051f427babc97f5bc670b2ca8d6}{bool {\bfseries \-Fly} (struct \hyperlink{structGame}{\-Game} $\ast$game, struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$action, enum \-T\-M\-\_\-\-Action\-State state)}\label{level_8c_a23487051f427babc97f5bc670b2ca8d6}
@@ -54,9 +63,6 @@
 \hypertarget{level_8c_a2b55190c74aadd3e48b3b094f3d117f5}{bool {\bfseries \-Fade\-In} (struct \hyperlink{structGame}{\-Game} $\ast$game, struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$action, enum \-T\-M\-\_\-\-Action\-State state)}\label{level_8c_a2b55190c74aadd3e48b3b094f3d117f5}
 
 \item 
-\hypertarget{level_8c_a54e1fe675a65e73e07084aeedcca2b59}{bool {\bfseries \-Fade\-Out} (struct \hyperlink{structGame}{\-Game} $\ast$game, struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$action, enum \-T\-M\-\_\-\-Action\-State state)}\label{level_8c_a54e1fe675a65e73e07084aeedcca2b59}
-
-\item 
 \hypertarget{level_8c_a8d383a4d947717a13239c94a1ed437a4}{bool {\bfseries \-Welcome} (struct \hyperlink{structGame}{\-Game} $\ast$game, struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$action, enum \-T\-M\-\_\-\-Action\-State state)}\label{level_8c_a8d383a4d947717a13239c94a1ed437a4}
 
 \item 
@@ -72,7 +78,7 @@
 \hypertarget{level_8c_abdc031ea1495aef130933bfcc21ed14b}{void {\bfseries \-Level\-\_\-\-Process\-Logic} (struct \hyperlink{structGame}{\-Game} $\ast$game, \-A\-L\-L\-E\-G\-R\-O\-\_\-\-E\-V\-E\-N\-T $\ast$ev)}\label{level_8c_abdc031ea1495aef130933bfcc21ed14b}
 
 \item 
-\hypertarget{level_8c_a637c6cbe83575b03f2388173e9817f3c}{void {\bfseries \-Level\-\_\-\-Preload} (struct \hyperlink{structGame}{\-Game} $\ast$game)}\label{level_8c_a637c6cbe83575b03f2388173e9817f3c}
+\hypertarget{level_8c_a983de798a9590bd5f177e0465b77b70e}{void {\bfseries \-Level\-\_\-\-Preload} (struct \hyperlink{structGame}{\-Game} $\ast$game, void($\ast$progress)(struct \hyperlink{structGame}{\-Game} $\ast$, float))}\label{level_8c_a983de798a9590bd5f177e0465b77b70e}
 
 \item 
 \hypertarget{level_8c_a90e915acd1cecf93fac834c2928f9f57}{void {\bfseries \-Level\-\_\-\-Unload} (struct \hyperlink{structGame}{\-Game} $\ast$game)}\label{level_8c_a90e915acd1cecf93fac834c2928f9f57}
@@ -81,7 +87,7 @@
 \hypertarget{level_8c_a9a3a3059a7c3e0858df40898a3b3a533}{void {\bfseries \-Level\-\_\-\-Unload\-Bitmaps} (struct \hyperlink{structGame}{\-Game} $\ast$game)}\label{level_8c_a9a3a3059a7c3e0858df40898a3b3a533}
 
 \item 
-\hypertarget{level_8c_af83bfca9a8a8f7fe84d5522009f5097d}{void {\bfseries \-Level\-\_\-\-Preload\-Bitmaps} (struct \hyperlink{structGame}{\-Game} $\ast$game)}\label{level_8c_af83bfca9a8a8f7fe84d5522009f5097d}
+\hypertarget{level_8c_a65dd2a494c2e9e1f5e963f0e6cb546b5}{void {\bfseries \-Level\-\_\-\-Preload\-Bitmaps} (struct \hyperlink{structGame}{\-Game} $\ast$game, void($\ast$progress)(struct \hyperlink{structGame}{\-Game} $\ast$, float))}\label{level_8c_a65dd2a494c2e9e1f5e963f0e6cb546b5}
 
 \end{DoxyCompactItemize}
 

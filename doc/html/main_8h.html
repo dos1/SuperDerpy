@@ -77,6 +77,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#define-members">Defines</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
@@ -92,6 +93,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <code>#include &lt;allegro5/allegro_image.h&gt;</code><br/>
 <code>#include &lt;allegro5/allegro_font.h&gt;</code><br/>
 <code>#include &lt;allegro5/allegro_ttf.h&gt;</code><br/>
+<code>#include &quot;allegro_utils.h&quot;</code><br/>
 </div>
 <p><a href="main_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -117,6 +119,12 @@ Classes</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Resources used by <a class="el" href="structIntro.html" title="Resources used by Intro state.">Intro</a> state.  <a href="structIntro.html#details">More...</a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGame.html">Game</a></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Resources used by <a class="el" href="structGame.html" title="Resources used by Game state.">Game</a> state.  <a href="structGame.html#details">More...</a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="define-members"></a>
+Defines</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7f1d27b16e12e005a5c1318303fbc616"></a><!-- doxytag: member="main.h::PROGRESS_INIT" ref="a7f1d27b16e12e005a5c1318303fbc616" args="(a)" -->
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>PROGRESS_INIT</b>(a)&#160;&#160;&#160;float load_p = 0, load_a = a;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c9c57e1e8bc5ea8821d381a06d3f4d0"></a><!-- doxytag: member="main.h::PROGRESS" ref="a5c9c57e1e8bc5ea8821d381a06d3f4d0" args="" -->
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>PROGRESS</b>&#160;&#160;&#160;if (progress) (*progress)(game, load_p+=1/load_a);</td></tr>
 <tr><td colspan="2"><h2><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#ae1e9f94402d151ae1adc212237a6d153">gamestate_enum</a> { <br/>
@@ -146,8 +154,8 @@ Enumerations</h2></td></tr>
 Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a37ff4b9f7c61255aaaba68d349398974">al_draw_text_with_shadow</a> (ALLEGRO_FONT *font, ALLEGRO_COLOR color, float x, float y, int flags, char const *text)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws text with shadow.  <a href="#a37ff4b9f7c61255aaaba68d349398974"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a26e3725246efa2aa75508247a84fbfa9"></a><!-- doxytag: member="main.h::PreloadGameState" ref="a26e3725246efa2aa75508247a84fbfa9" args="(struct Game *game)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a26e3725246efa2aa75508247a84fbfa9">PreloadGameState</a> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afd10ce18ae3e601a9c462e2bd552ed32"></a><!-- doxytag: member="main.h::PreloadGameState" ref="afd10ce18ae3e601a9c462e2bd552ed32" args="(struct Game *game, void(*progress)(struct Game *, float))" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#afd10ce18ae3e601a9c462e2bd552ed32">PreloadGameState</a> (struct <a class="el" href="structGame.html">Game</a> *game, void(*progress)(struct <a class="el" href="structGame.html">Game</a> *, float))</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Preloads gamestate set in game-&gt;loadstate. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afbbdeccc0adc5c3a0c84461f51a45a5b"></a><!-- doxytag: member="main.h::UnloadGameState" ref="afbbdeccc0adc5c3a0c84461f51a45a5b" args="(struct Game *game)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#afbbdeccc0adc5c3a0c84461f51a45a5b">UnloadGameState</a> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
@@ -283,7 +291,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Shared_Unload</b> (st
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri May 4 2012 03:43:36 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat May 19 2012 15:06:47 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
