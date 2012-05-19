@@ -11,3 +11,5 @@ Compilation (on GNU/Linux):
 Running:
 
 	bin/superderpy
+
+Written by Sebastian Krzyszkowiak <dos@dosowisko.net>
