@@ -29,13 +29,13 @@
 
 void SelectDerpySpritesheet(struct Game *game, char* name) {
 	struct Spritesheet *tmp = game->level.derpy_sheets;
+	PrintConsole(game, "Selecting Derpy spritesheet: %s", name);
 	if (!tmp) {
 		PrintConsole(game, "ERROR: No spritesheets registered for Derpy!");
 		return;
 	}
 	while (tmp) {
 		if (!strcmp(tmp->name, name)) {
-			PrintConsole(game, "Selecting Derpy spritesheet: %s", name);
 			game->level.derpy_sheet = &(tmp->bitmap);
 			game->level.sheet_rows = tmp->rows;
 			game->level.sheet_cols = tmp->cols;
@@ -44,7 +44,8 @@ void SelectDerpySpritesheet(struct Game *game, char* name) {
 			game->level.sheet_pos = 0;
 			game->level.sheet_scale = tmp->scale;
 			if (game->level.derpy) al_destroy_bitmap(game->level.derpy);
-			game->level.derpy = al_create_bitmap(al_get_display_height(game->display)*0.25*tmp->aspect*tmp->scale, al_get_display_height(game->display)*0.25*tmp->scale);
+			game->level.derpy = al_create_bitmap((al_get_display_height(game->display)*0.25)*tmp->aspect*tmp->scale, (al_get_display_height(game->display)*0.25)*tmp->scale);
+			PrintConsole(game, "SUCCESS: Derpy spritesheet activated: %s (%dx%d)", name, al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy));
 			return;
 		}
 		tmp = tmp->next;
@@ -70,6 +71,7 @@ void RegisterDerpySpritesheet(struct Game *game, char* name) {
 	s->next = game->level.derpy_sheets;
 	game->level.derpy_sheets = s;
 	al_destroy_config(config);
+	PrintConsole(game, "Registering Derpy spritesheet: %s", name);
 }
 
 void Level_Passed(struct Game *game) {
@@ -220,7 +222,6 @@ bool Stop(struct Game *game, struct TM_Action *action, enum TM_ActionState state
 	if (state != TM_ACTIONSTATE_RUNNING) return false;
 	game->level.speed=0;
 	SelectDerpySpritesheet(game, "stand");
-	/*game->level.sheet_speed = 0;*/
 	return true;
 }
 
@@ -644,7 +645,7 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 	while (tmp) {
 		char filename[255] = { };
 		sprintf(filename, "levels/derpy/%s.png", tmp->name);
-		tmp->bitmap = LoadScaledBitmap(filename, al_get_display_height(game->display)*0.25*tmp->aspect*tmp->cols*tmp->scale, al_get_display_height(game->display)*0.25*tmp->rows*tmp->scale);
+		tmp->bitmap = LoadScaledBitmap(filename, (int)(al_get_display_height(game->display)*0.25*tmp->aspect*tmp->scale)*tmp->cols, (int)(al_get_display_height(game->display)*0.25*tmp->scale)*tmp->rows);
 		PROGRESS;
 		tmp = tmp->next;
 	}
