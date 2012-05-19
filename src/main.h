@@ -121,6 +121,7 @@ struct Level {
 	ALLEGRO_BITMAP *derpy; /*!< Derpy sprite. */
 	ALLEGRO_BITMAP *meter_bmp; /*!< Bitmap of the HP meter. */
 	ALLEGRO_BITMAP *meter_image; /*!< Derpy image used in the HP meter. */
+	bool debug_show_sprite_frames; /*!< When true, displays colorful borders around spritesheets and their active areas. */
 	struct Spritesheet* derpy_sheets; /*!< List of sprite sheets of Derpy character. */
 	struct Spritesheet* pony_sheets; /*!< List of sprite sheets of character rescued by Derpy. */
 	struct {

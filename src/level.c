@@ -141,7 +141,7 @@ bool Fly(struct Game *game, struct TM_Action *action, enum TM_ActionState state)
 	if (state != TM_ACTIONSTATE_RUNNING) return false;
 	if (!(action->arguments)) {
 		SelectDerpySpritesheet(game, "fly");
-		game->level.flying = true;
+		/*game->level.gg = true;*/
 		TM_AddBackgroundAction(&ShowMeter, NULL, 0, "showmeter");
 	}
 	action->arguments++;
@@ -263,8 +263,8 @@ void Level_Draw(struct Game *game) {
 				SelectDerpySpritesheet(game, "fly");
 				game->level.flying = true;
 				game->level.sheet_speed = tps(game, 60*2.4);
-			}*/
-			if (!game->level.flying) game->level.sheet_speed = tps(game, 60*0.0020/game->level.speed);
+			}
+			if (!game->level.flying) game->level.sheet_speed = tps(game, 60*0.0020/game->level.speed); */
 			if (game->level.derpy_y < 0) game->level.derpy_y=0;
 			else if (game->level.derpy_y > 0.8) game->level.derpy_y=0.8;
 		}
@@ -280,6 +280,7 @@ void Level_Draw(struct Game *game) {
 		int derpyy = game->level.derpy_y*al_get_display_height(game->display);
 		int derpyw = al_get_bitmap_width(game->level.derpy);
 		int derpyh = al_get_bitmap_height(game->level.derpy);
+		int derpyo = al_get_display_width(game->display)*0.1953125-al_get_bitmap_width(game->level.derpy); /* offset */
 		bool colision = false;
 		struct Obstacle *tmp = game->level.obstacles;
 		while (tmp) {
@@ -290,7 +291,7 @@ void Level_Draw(struct Game *game) {
 				int w = al_get_bitmap_width(*(tmp->bitmap));
 				int h = al_get_bitmap_height(*(tmp->bitmap));
 				if (!tmp->hit)
-					if ((((x>=derpyx+0.36*derpyw) && (x<=derpyx+0.94*derpyw)) || ((x+w>=derpyx+0.36*derpyw) && (x+w<=derpyx+0.94*derpyw))) &&
+					if ((((x>=derpyx+0.38*derpyw+derpyo) && (x<=derpyx+0.94*derpyw+derpyo)) || ((x+w>=derpyx+0.38*derpyw+derpyo) && (x+w<=derpyx+0.94*derpyw+derpyo))) &&
 						(((y>=derpyy+0.26*derpyh) && (y<=derpyy+0.76*derpyh)) || ((y+h>=derpyy+0.26*derpyh) && (y+h<=derpyy+0.76*derpyh)))) {
 							tmp->hit=true;
 							game->level.hp+=tps(game, 60*0.0002*tmp->points);
@@ -300,6 +301,8 @@ void Level_Draw(struct Game *game) {
 							}
 					}
 				al_draw_bitmap(*(tmp->bitmap), x, y, 0);
+				if (game->level.debug_show_sprite_frames) al_draw_rectangle(x, y, x+w, y+h, al_map_rgba(255,0,0,255), 3);
+
 				if (tmp->hit) colision = true;
 				tmp->x -= tps(game, game->level.speed*60)*310;
 				if (tmp->callback) tmp->callback(game, tmp);
@@ -332,6 +335,14 @@ void Level_Draw(struct Game *game) {
 		al_set_target_bitmap(al_get_backbuffer(game->display));
 		
 		al_draw_tinted_bitmap(game->level.derpy, al_map_rgba(255,255-colision*255,255-colision*255,255), derpyx+al_get_display_width(game->display)*0.1953125-al_get_bitmap_width(game->level.derpy), derpyy, 0);
+
+/*		if ((((x>=derpyx+0.36*derpyw) && (x<=derpyx+0.94*derpyw)) || ((x+w>=derpyx+0.36*derpyw) && (x+w<=derpyx+0.94*derpyw))) &&
+			(((y>=derpyy+0.26*derpyh) && (y<=derpyy+0.76*derpyh)) || ((y+h>=derpyy+0.26*derpyh) && (y+h<=derpyy+0.76*derpyh)))) {
+	*/
+		if (game->level.debug_show_sprite_frames) {
+			al_draw_rectangle(derpyx+derpyo, derpyy, derpyx+derpyw+derpyo, derpyy+derpyh, al_map_rgba(0,255,0,255), 3);
+			al_draw_rectangle(derpyx+0.38*derpyw+derpyo, derpyy+0.26*derpyh, derpyx+0.94*derpyw+derpyo, derpyy+0.76*derpyh, al_map_rgba(0,0,255,255), 3);
+		}
 
 		al_draw_bitmap(game->level.foreground, (-game->level.fg_pos)*al_get_bitmap_width(game->level.foreground), 0 ,0);
 		al_draw_bitmap(game->level.foreground, (1+(-game->level.fg_pos))*al_get_bitmap_width(game->level.foreground), 0 ,0);
@@ -477,8 +488,8 @@ void Level_Load(struct Game *game) {
 	game->level.sheet_tmp = 0;
 	game->level.handle_input = false;
 	game->level.obstacles = NULL;
-	game->level.flying = false;
 	game->level.meter_alpha=0;
+	game->level.debug_show_sprite_frames=false;
 	al_clear_to_color(al_map_rgb(0,0,0));
 	if (game->level.current_level!=1) Moonwalk_Load(game);
 	else {
@@ -529,9 +540,11 @@ int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	} else if ((game->debug) && (ev->keyboard.keycode==ALLEGRO_KEY_F2)) {
 		game->level.hp -= 0.1;
 		if (game->level.hp <= 0) game->level.hp=0.001;
-	} else 	if ((game->debug) && (ev->keyboard.keycode==ALLEGRO_KEY_F3)) {
+	} else if ((game->debug) && (ev->keyboard.keycode==ALLEGRO_KEY_F3)) {
 		game->level.hp += 0.1;
 		if (game->level.hp > 1) game->level.hp=1;
+	} else if ((game->debug) && (ev->keyboard.keycode==ALLEGRO_KEY_F4)) {
+		game->level.debug_show_sprite_frames = !game->level.debug_show_sprite_frames;
 	}
 	if (game->level.current_level!=1) Moonwalk_Keydown(game, ev);
 	if (ev->keyboard.keycode==ALLEGRO_KEY_ESCAPE) {
