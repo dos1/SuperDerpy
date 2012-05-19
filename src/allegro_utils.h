@@ -20,6 +20,13 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
 
+/*! \brief Draws rectangle filled with vertical gradient. */
 void al_draw_vertical_gradient_rect(float x, float y, float w, float h, ALLEGRO_COLOR top, ALLEGRO_COLOR bottom);
+/*! \brief Draws rectangle filled with horizontal gradient. */
 void al_draw_horizontal_gradient_rect(float x, float y, float w, float h, ALLEGRO_COLOR left, ALLEGRO_COLOR right);
+/*! \brief Draws text with shadow.
+ *
+ * Draws given text two times: once with color (0,0,0,128) and 1px off in both x and y axis,
+ * and second time with actual given color and position.
+ */
 void al_draw_text_with_shadow(ALLEGRO_FONT *font, ALLEGRO_COLOR color, float x, float y, int flags, char const *text);
