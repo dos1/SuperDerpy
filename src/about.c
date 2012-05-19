@@ -64,7 +64,7 @@ int About_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 }
 
 void About_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
-	PROGRESS_INIT(7);
+	PROGRESS_INIT(6);
 
 	game->about.image =LoadScaledBitmap("table.png", al_get_display_width(game->display), al_get_display_height(game->display));
 	PROGRESS;
@@ -97,7 +97,6 @@ void About_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 		al_draw_text(game->about.font, al_map_rgb(255,255,255), 0, y*al_get_bitmap_height(game->about.text_bitmap), ALLEGRO_ALIGN_LEFT, text);
 		y+=0.0128;
 	}
-	PROGRESS;
 
 	draw_text("Written by:");
 	draw_text(" - Sebastian Krzyszkowiak");
