@@ -422,6 +422,7 @@ bool FadeOut(struct Game *game, struct TM_Action *action, enum TM_ActionState st
 		*fadeloop+=tps(game, 600);
 		if (*fadeloop>=256) return true;
 	} else {
+		PrintConsole(game, "Leaving level with %d HP", (int)(game->level.hp*100));
 		al_destroy_bitmap(fade_bitmap);
 		free(fadeloop);
 		Level_Unload(game);
