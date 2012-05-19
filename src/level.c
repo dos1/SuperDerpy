@@ -151,21 +151,21 @@ bool Fly(struct Game *game, struct TM_Action *action, enum TM_ActionState state)
 	return true;
 }
 
-void Obst_MoveUpDown(struct Game *game, struct Obstracle *obstracle) {
-	if (obstracle->data) {
-		obstracle->y -= 0.5;
-		if (obstracle->y<=0) {
-			obstracle->data=NULL;
+void Obst_MoveUpDown(struct Game *game, struct Obstacle *obstacle) {
+	if (obstacle->data) {
+		obstacle->y -= 0.5;
+		if (obstacle->y<=0) {
+			obstacle->data=NULL;
 		}
 	} else {
-		obstracle->y += 0.5;
-		if (obstracle->y>=100) {
-			obstracle->data++;
+		obstacle->y += 0.5;
+		if (obstacle->y>=100) {
+			obstacle->data++;
 		}
 	}
 }
 
-bool GenerateObstracles(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
+bool GenerateObstacles(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	/*float* tmp; bool* in;*/
 	int* count;
 	if (!action->arguments) {
@@ -182,9 +182,9 @@ bool GenerateObstracles(struct Game *game, struct TM_Action *action, enum TM_Act
 	}
 	else if (state == TM_ACTIONSTATE_RUNNING) {
 		if (rand()%(10000/(int)tps(game, 60*100))<=1) {
-			PrintConsole(game, "OBSTRACLE %d", *count);
+			PrintConsole(game, "OBSTACLE %d", *count);
 			(*count)++;
-			struct Obstracle *obst = malloc(sizeof(struct Obstracle));
+			struct Obstacle *obst = malloc(sizeof(struct Obstacle));
 			obst->prev = NULL;
 			obst->x = 100;
 			obst->y = (rand()%91)-1;
@@ -199,13 +199,13 @@ bool GenerateObstracles(struct Game *game, struct TM_Action *action, enum TM_Act
 				obst->bitmap = &(game->level.obst_bmps.muffin);
 			}
 			obst->data = (void*)(rand()%2);
-			if (game->level.obstracles) {
-				game->level.obstracles->prev = obst;
-				obst->next = game->level.obstracles;
+			if (game->level.obstacles) {
+				game->level.obstacles->prev = obst;
+				obst->next = game->level.obstacles;
 			} else {
 				obst->next = NULL;
 			}
-			game->level.obstracles = obst;
+			game->level.obstacles = obst;
 			if (*count > 64) return true;
 		}
 	} else {
@@ -281,7 +281,7 @@ void Level_Draw(struct Game *game) {
 		int derpyw = al_get_bitmap_width(game->level.derpy);
 		int derpyh = al_get_bitmap_height(game->level.derpy);
 		bool colision = false;
-		struct Obstracle *tmp = game->level.obstracles;
+		struct Obstacle *tmp = game->level.obstacles;
 		while (tmp) {
 			/*PrintConsole(game, "DRAWING %f %f", tmp->x, tmp->y);*/
 			if (tmp->x > -10) {
@@ -310,8 +310,8 @@ void Level_Draw(struct Game *game) {
 				if (tmp->prev)
 					tmp->prev->next = tmp->next;
 				else
-					game->level.obstracles = tmp->next;
-				struct Obstracle *t = tmp;
+					game->level.obstacles = tmp->next;
+				struct Obstacle *t = tmp;
 				tmp = tmp->next;
 				free(t);
 			}
@@ -476,7 +476,7 @@ void Level_Load(struct Game *game) {
 	game->level.sheet_speed = tps(game, 60*2.4);
 	game->level.sheet_tmp = 0;
 	game->level.handle_input = false;
-	game->level.obstracles = NULL;
+	game->level.obstacles = NULL;
 	game->level.flying = false;
 	game->level.meter_alpha=0;
 	al_clear_to_color(al_map_rgb(0,0,0));
@@ -498,12 +498,12 @@ void Level_Load(struct Game *game) {
 		/*TM_AddDelay(2*1000);*/
 		/* first part gameplay goes here */
 
-		/* actions for generating obstracles should go here
+		/* actions for generating obstacles should go here
 		* probably as regular actions. When one ends, harder one
 		* begins. After last one part with muffins starts.
-		* Should obstracles themselves be handled as objects
+		* Should obstacles themselves be handled as objects
 		* on timeline? (probably not). Hmm... */
-		TM_AddAction(&GenerateObstracles, NULL, "obstracles");
+		TM_AddAction(&GenerateObstacles, NULL, "obstacles");
 		TM_AddDelay(5*1000);
 
 		/*
@@ -578,7 +578,7 @@ void Level_Unload(struct Game *game) {
 	else {
 		TM_Destroy();
 	}
-	struct Obstracle *t = game->level.obstracles;
+	struct Obstacle *t = game->level.obstacles;
 	if (t) {
 		while (t->next) {
 			if (t->prev) free(t->prev);

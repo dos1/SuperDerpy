@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['obstracle',['Obstracle',['../structObstracle.html',1,'']]]
+  ['obstacle',['Obstacle',['../structObstacle.html',1,'']]]
 ];

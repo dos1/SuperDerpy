@@ -56,14 +56,14 @@ struct Moonwalk {
 	double derpy_pos; /*!< Position of Derpy on screen. */
 };
 
-struct Obstracle {
+struct Obstacle {
 	ALLEGRO_BITMAP **bitmap;
 	float x, y, speed;
 	int points;
 	bool hit;
-	void (*callback)(struct Game*, struct Obstracle*);
+	void (*callback)(struct Game*, struct Obstacle*);
 	void *data;
-	struct Obstracle *prev, *next;
+	struct Obstacle *prev, *next;
 };
 
 struct Spritesheet {
@@ -101,7 +101,7 @@ struct Level {
 		ALLEGRO_BITMAP *pie;
 		ALLEGRO_BITMAP *muffin;
 	} obst_bmps;
-	struct Obstracle *obstracles;
+	struct Obstacle *obstacles;
 	struct Moonwalk moonwalk;
 };
 
