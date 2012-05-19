@@ -93,39 +93,54 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <tr><td colspan="2"><h2><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTM__Arguments.html">TM_Arguments</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Arguments for <a class="el" href="structTM__Action.html" title="Timeline action.">TM_Action</a>.  <a href="structTM__Arguments.html#details">More...</a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTM__Action.html">TM_Action</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeline action.  <a href="structTM__Action.html#details">More...</a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><b>TM_ActionState</b> { <b>TM_ACTIONSTATE_INIT</b>, 
+<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeline_8h.html#a76cf4bbb9006628ae8bcd1a4f3afdf87">TM_ActionState</a> { <b>TM_ACTIONSTATE_INIT</b>, 
 <b>TM_ACTIONSTATE_RUNNING</b>, 
 <b>TM_ACTIONSTATE_DESTROY</b>
  }</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">State of the <a class="el" href="structTM__Action.html" title="Timeline action.">TM_Action</a>. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6f31f95cc5e5c9167c63d6091a9726b3"></a><!-- doxytag: member="timeline.h::TM_Init" ref="a6f31f95cc5e5c9167c63d6091a9726b3" args="(struct Game *game)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>TM_Init</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeline_8h.html#a6f31f95cc5e5c9167c63d6091a9726b3">TM_Init</a> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Init timeline. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a75451d54b61c3ec12815790c2e33a31e"></a><!-- doxytag: member="timeline.h::TM_Process" ref="a75451d54b61c3ec12815790c2e33a31e" args="()" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>TM_Process</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeline_8h.html#a75451d54b61c3ec12815790c2e33a31e">TM_Process</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Process current timeline actions. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2e38ca3352eaa0cccb741f7d6c6f9bb9"></a><!-- doxytag: member="timeline.h::TM_HandleEvent" ref="a2e38ca3352eaa0cccb741f7d6c6f9bb9" args="(ALLEGRO_EVENT *ev)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>TM_HandleEvent</b> (ALLEGRO_EVENT *ev)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeline_8h.html#a2e38ca3352eaa0cccb741f7d6c6f9bb9">TM_HandleEvent</a> (ALLEGRO_EVENT *ev)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle timer events. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6f909356f7c1e9bdade01c6bc46aa078"></a><!-- doxytag: member="timeline.h::TM_AddAction" ref="a6f909356f7c1e9bdade01c6bc46aa078" args="(bool(*func)(struct Game *, struct TM_Action *, enum TM_ActionState), struct TM_Arguments *args, char *name)" -->
-struct <a class="el" href="structTM__Action.html">TM_Action</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>TM_AddAction</b> (bool(*func)(struct <a class="el" href="structGame.html">Game</a> *, struct <a class="el" href="structTM__Action.html">TM_Action</a> *, enum TM_ActionState), struct <a class="el" href="structTM__Arguments.html">TM_Arguments</a> *args, char *name)</td></tr>
+struct <a class="el" href="structTM__Action.html">TM_Action</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeline_8h.html#a6f909356f7c1e9bdade01c6bc46aa078">TM_AddAction</a> (bool(*func)(struct <a class="el" href="structGame.html">Game</a> *, struct <a class="el" href="structTM__Action.html">TM_Action</a> *, enum <a class="el" href="timeline_8h.html#a76cf4bbb9006628ae8bcd1a4f3afdf87">TM_ActionState</a>), struct <a class="el" href="structTM__Arguments.html">TM_Arguments</a> *args, char *name)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new action to main queue. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2506eb9068da955dfbe606837d57344f"></a><!-- doxytag: member="timeline.h::TM_AddBackgroundAction" ref="a2506eb9068da955dfbe606837d57344f" args="(bool(*func)(struct Game *, struct TM_Action *, enum TM_ActionState), struct TM_Arguments *args, float delay, char *name)" -->
-struct <a class="el" href="structTM__Action.html">TM_Action</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>TM_AddBackgroundAction</b> (bool(*func)(struct <a class="el" href="structGame.html">Game</a> *, struct <a class="el" href="structTM__Action.html">TM_Action</a> *, enum TM_ActionState), struct <a class="el" href="structTM__Arguments.html">TM_Arguments</a> *args, float delay, char *name)</td></tr>
+struct <a class="el" href="structTM__Action.html">TM_Action</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeline_8h.html#a2506eb9068da955dfbe606837d57344f">TM_AddBackgroundAction</a> (bool(*func)(struct <a class="el" href="structGame.html">Game</a> *, struct <a class="el" href="structTM__Action.html">TM_Action</a> *, enum <a class="el" href="timeline_8h.html#a76cf4bbb9006628ae8bcd1a4f3afdf87">TM_ActionState</a>), struct <a class="el" href="structTM__Arguments.html">TM_Arguments</a> *args, float delay, char *name)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new action to background queue. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4e5673d8b4ef973830395af22dd0bd25"></a><!-- doxytag: member="timeline.h::TM_AddQueuedBackgroundAction" ref="a4e5673d8b4ef973830395af22dd0bd25" args="(bool(*func)(struct Game *, struct TM_Action *, enum TM_ActionState), struct TM_Arguments *args, float delay, char *name)" -->
-struct <a class="el" href="structTM__Action.html">TM_Action</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>TM_AddQueuedBackgroundAction</b> (bool(*func)(struct <a class="el" href="structGame.html">Game</a> *, struct <a class="el" href="structTM__Action.html">TM_Action</a> *, enum TM_ActionState), struct <a class="el" href="structTM__Arguments.html">TM_Arguments</a> *args, float delay, char *name)</td></tr>
+struct <a class="el" href="structTM__Action.html">TM_Action</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeline_8h.html#a4e5673d8b4ef973830395af22dd0bd25">TM_AddQueuedBackgroundAction</a> (bool(*func)(struct <a class="el" href="structGame.html">Game</a> *, struct <a class="el" href="structTM__Action.html">TM_Action</a> *, enum <a class="el" href="timeline_8h.html#a76cf4bbb9006628ae8bcd1a4f3afdf87">TM_ActionState</a>), struct <a class="el" href="structTM__Arguments.html">TM_Arguments</a> *args, float delay, char *name)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add new action to main queue, which adds specified action into background queue. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a96012953eefd9118c10f0b888b001e41"></a><!-- doxytag: member="timeline.h::TM_AddDelay" ref="a96012953eefd9118c10f0b888b001e41" args="(float delay)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>TM_AddDelay</b> (float delay)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeline_8h.html#a96012953eefd9118c10f0b888b001e41">TM_AddDelay</a> (float delay)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add delay to main queue. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acbfe5777a0ca67e36ba31b6e4ce55696"></a><!-- doxytag: member="timeline.h::TM_Pause" ref="acbfe5777a0ca67e36ba31b6e4ce55696" args="(bool pause)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>TM_Pause</b> (bool pause)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeline_8h.html#acbfe5777a0ca67e36ba31b6e4ce55696">TM_Pause</a> (bool pause)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structPause.html" title="Resources used by Pause state.">Pause</a> timers. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a950cb13ffd2bf9dc9954ad6cc462075f"></a><!-- doxytag: member="timeline.h::TM_Destroy" ref="a950cb13ffd2bf9dc9954ad6cc462075f" args="()" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>TM_Destroy</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeline_8h.html#a950cb13ffd2bf9dc9954ad6cc462075f">TM_Destroy</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy timeline. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a05d060d4a95e97538697d90181fb298d"></a><!-- doxytag: member="timeline.h::TM_AddToArgs" ref="a05d060d4a95e97538697d90181fb298d" args="(struct TM_Arguments *args, void *arg)" -->
-struct <a class="el" href="structTM__Arguments.html">TM_Arguments</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>TM_AddToArgs</b> (struct <a class="el" href="structTM__Arguments.html">TM_Arguments</a> *args, void *arg)</td></tr>
+struct <a class="el" href="structTM__Arguments.html">TM_Arguments</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeline_8h.html#a05d060d4a95e97538697d90181fb298d">TM_AddToArgs</a> (struct <a class="el" href="structTM__Arguments.html">TM_Arguments</a> *args, void *arg)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add data to <a class="el" href="structTM__Arguments.html" title="Arguments for TM_Action.">TM_Arguments</a> queue. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae4fa0908342990aa1d3cf0654bae6808"></a><!-- doxytag: member="timeline.h::TM_DestroyArgs" ref="ae4fa0908342990aa1d3cf0654bae6808" args="(struct TM_Arguments *args)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>TM_DestroyArgs</b> (struct <a class="el" href="structTM__Arguments.html">TM_Arguments</a> *args)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeline_8h.html#ae4fa0908342990aa1d3cf0654bae6808">TM_DestroyArgs</a> (struct <a class="el" href="structTM__Arguments.html">TM_Arguments</a> *args)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy <a class="el" href="structTM__Arguments.html" title="Arguments for TM_Action.">TM_Arguments</a> queue. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a39af041908160eed75defd882e718765"></a><!-- doxytag: member="timeline.h::TM_Initialized" ref="a39af041908160eed75defd882e718765" args="()" -->
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>TM_Initialized</b> ()</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeline_8h.html#a39af041908160eed75defd882e718765">TM_Initialized</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if timeline is initialised. <br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Timeline Manager framework. </p>
@@ -147,7 +162,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>TM_Initialized</b> ()
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat May 19 2012 18:08:58 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat May 19 2012 18:28:10 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -74,6 +74,7 @@ struct Obstacle {
 	struct Obstacle *next; /*!< Next obstacle on the list. */
 };
 
+/*! \brief Structure representing one spritesheet animation of Derpy. */
 struct Spritesheet {
 	char* name; /*!< Readable name of the spritesheet. */
 	ALLEGRO_BITMAP* bitmap; /*!< Spritesheet bitmap. */

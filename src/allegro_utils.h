@@ -1,3 +1,6 @@
+/*! \file allegro_utils.h
+ *  \brief Headers of helper functions for Allegro.
+ */
 /*
  * Copyright (c) Sebastian Krzyszkowiak <dos@dosowisko.net>
  *

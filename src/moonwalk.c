@@ -1,5 +1,5 @@
-/*! \file level.c
- *  \brief Playable Level code.
+/*! \file moonwalk.c
+ *  \brief Moonwalk Level placeholder code.
  */
 /*
  * Copyright (c) Sebastian Krzyszkowiak <dos@dosowisko.net>

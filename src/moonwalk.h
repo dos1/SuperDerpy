@@ -1,5 +1,5 @@
-/*! \file level.h
- *  \brief Playable Level headers.
+/*! \file moonwalk.h
+ *  \brief Moonwalk Level placeholder headers.
  */
 /*
  * Copyright (c) Sebastian Krzyszkowiak <dos@dosowisko.net>

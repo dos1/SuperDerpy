@@ -21,17 +21,20 @@
 
 #include "main.h"
 
+/*! \brief State of the TM_Action. */
 enum TM_ActionState {
 	TM_ACTIONSTATE_INIT,
 	TM_ACTIONSTATE_RUNNING,
 	TM_ACTIONSTATE_DESTROY
 };
 
+/*! \brief Arguments for TM_Action. */
 struct TM_Arguments {
 	void *value;
 	struct TM_Arguments *next;
 };
 
+/*! \brief Timeline action. */
 struct TM_Action {
 	bool (*function)(struct Game*, struct TM_Action*, enum TM_ActionState);
 	struct TM_Arguments *arguments;
@@ -43,15 +46,27 @@ struct TM_Action {
 	char* name;
 };
 
+/*! \brief Init timeline. */
 void TM_Init(struct Game* game);
+/*! \brief Process current timeline actions. */
 void TM_Process();
+/*! \brief Handle timer events. */
 void TM_HandleEvent(ALLEGRO_EVENT *ev);
+/*! \brief Add new action to main queue. */
 struct TM_Action* TM_AddAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, char* name);
+/*! \brief Add new action to background queue. */
 struct TM_Action* TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, float delay, char* name);
+/*! \brief Add new action to main queue, which adds specified action into background queue. */
 struct TM_Action* TM_AddQueuedBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, float delay, char* name);
+/*! \brief Add delay to main queue. */
 void TM_AddDelay(float delay);
+/*! \brief Pause timers. */
 void TM_Pause(bool pause);
+/*! \brief Destroy timeline. */
 void TM_Destroy();
+/*! \brief Add data to TM_Arguments queue. */
 struct TM_Arguments* TM_AddToArgs(struct TM_Arguments* args, void* arg);
+/*! \brief Destroy TM_Arguments queue. */
 void TM_DestroyArgs(struct TM_Arguments* args);
+/*! \brief Check if timeline is initialised. */
 bool TM_Initialized();
