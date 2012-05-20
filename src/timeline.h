@@ -18,6 +18,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
+#ifndef TIMELINE_H
+#define TIMELINE_H
 
 #include "main.h"
 
@@ -70,3 +72,5 @@ struct TM_Arguments* TM_AddToArgs(struct TM_Arguments* args, void* arg);
 void TM_DestroyArgs(struct TM_Arguments* args);
 /*! \brief Check if timeline is initialised. */
 bool TM_Initialized();
+
+#endif

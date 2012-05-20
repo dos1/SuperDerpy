@@ -20,6 +20,7 @@
  */
 #include <stdio.h>
 #include <math.h>
+#include "levels/actions.h"
 #include "moonwalk.h"
 #include "config.h"
 #include "pause.h"
@@ -91,177 +92,6 @@ void Level_Passed(struct Game *game) {
 	}
 }
 
-bool FadeOut(struct Game *game, struct TM_Action *action, enum TM_ActionState state);
-
-bool LevelFailed(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
-	if (state == TM_ACTIONSTATE_INIT) {
-		TM_AddBackgroundAction(&FadeOut, NULL, 3000, "fadeout");
-	} else if (state == TM_ACTIONSTATE_RUNNING) {
-		al_draw_filled_rectangle(0, 0, al_get_display_width(game->display), al_get_display_height(game->display), al_map_rgba(0,0,0,100));
-		al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.4, ALLEGRO_ALIGN_CENTRE, "Failed!");
-		game->level.speed-=0.00001;
-		return false;
-	}
-	return true;
-}
-
-bool Accelerate(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
-	if (state != TM_ACTIONSTATE_RUNNING) return false;
-	game->level.speed+=0.000015;
-	if (game->level.speed<0.0025) return false;
-	return true;
-}
-
-bool Walk(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
-	if (state == TM_ACTIONSTATE_INIT) action->arguments = NULL;
-	if (state != TM_ACTIONSTATE_RUNNING) return false;
-	if (!(action->arguments)) SelectDerpySpritesheet(game, "walk");
-	action->arguments++;
-	game->level.derpy_x+=tps(game, 60*0.001);
-	if (game->level.derpy_x<0.05) return false;
-	return true;
-}
-
-bool Move(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
-	if (state != TM_ACTIONSTATE_RUNNING) return false;
-	game->level.speed=0.00035;
-	if (game->level.st_pos<0.275) return false;
-	return true;
-}
-
-bool ShowMeter(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
-	if (state != TM_ACTIONSTATE_RUNNING) return false;
-	game->level.meter_alpha+=tps(game, 60*4);
-	if (game->level.meter_alpha>=255) {
-		game->level.meter_alpha=255;
-		return true;
-	}
-	return false;
-}
-
-bool Fly(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
-	if (state == TM_ACTIONSTATE_INIT) action->arguments = NULL;
-	if (state != TM_ACTIONSTATE_RUNNING) return false;
-	if (!(action->arguments)) {
-		SelectDerpySpritesheet(game, "fly");
-		/*game->level.gg = true;*/
-		TM_AddBackgroundAction(&ShowMeter, NULL, 0, "showmeter");
-	}
-	action->arguments++;
-	game->level.derpy_y-=tps(game, 60*0.004);
-	if (game->level.derpy_y>0.2) return false;
-	game->level.handle_input=true;
-	return true;
-}
-
-void Obst_MoveUpDown(struct Game *game, struct Obstacle *obstacle) {
-	if (obstacle->data) {
-		obstacle->y -= 0.5;
-		if (obstacle->y<=0) {
-			obstacle->data=NULL;
-		}
-	} else {
-		obstacle->y += 0.5;
-		if (obstacle->y>=100) {
-			obstacle->data++;
-		}
-	}
-}
-
-void Obst_MoveSin(struct Game *game, struct Obstacle *obstacle) {
-	float* a = (float*)obstacle->data;
-	/*PrintConsole(game, "%p - %f", obstacle, obstacle->y);*/
-	obstacle->y -= sin(*a)*4;
-	*a+=tps(game, 4.5);
-	obstacle->y += sin(*a)*4;
-}
-
-
-bool GenerateObstacles(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
-	/*float* tmp; bool* in;*/
-	int* count;
-	if (!action->arguments) {
-		action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(int)));
-		/* action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(bool))); */
-	}
-	count = (int*)action->arguments->value;
-	/*tmp = (float*)action->arguments->value;
-	in = (bool*)action->arguments->next->value;*/
-	if (state == TM_ACTIONSTATE_INIT) {
-		*count = 0;
-		/* *tmp = 0;
-		*in = true;*/
-	}
-	else if (state == TM_ACTIONSTATE_RUNNING) {
-		if (rand()%(10000/(int)tps(game, 60*100))<=1) {
-			PrintConsole(game, "OBSTACLE %d", *count);
-			(*count)++;
-			struct Obstacle *obst = malloc(sizeof(struct Obstacle));
-			obst->prev = NULL;
-			obst->x = 100;
-			obst->y = (rand()%91)-1;
-			obst->speed = 1;
-			obst->points = -10;
-			obst->hit = false;
-			obst->rows = 1;
-			obst->cols = 1;
-			obst->pos = 0;
-			obst->blanks = 0;
-			obst->anim_speed = 0;
-			obst->tmp_pos = 0;
-			if (rand()%100<=33) {
-				obst->callback= &Obst_MoveUpDown;
-				obst->bitmap = &(game->level.obst_bmps.pie);
-				obst->data = (void*)(rand()%2);
-			} else if (rand()%100<=50) {
-				obst->callback = NULL;
-				obst->data = NULL;
-				obst->bitmap = &(game->level.obst_bmps.muffin);
-			} else {
-				obst->callback = &Obst_MoveSin;
-				obst->data = malloc(sizeof(float));
-				*((float*)obst->data) = 0;
-				obst->bitmap = &(game->level.obst_bmps.pig);
-				obst->rows = 3;
-				obst->cols = 3;
-				obst->speed = 1.2;
-				obst->anim_speed = 2;
-			}
-			if (game->level.obstacles) {
-				game->level.obstacles->prev = obst;
-				obst->next = game->level.obstacles;
-			} else {
-				obst->next = NULL;
-			}
-			game->level.obstacles = obst;
-			if (*count > 64) return true;
-		}
-	} else {
-		free(action->arguments->value);
-		TM_DestroyArgs(action->arguments);
-		action->arguments = NULL;
-	}
-	return false;
-}
-
-bool Stop(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
-	if (state != TM_ACTIONSTATE_RUNNING) return false;
-	game->level.speed=0;
-	SelectDerpySpritesheet(game, "stand");
-	return true;
-}
-
-bool Letter(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
-	if (state != TM_ACTIONSTATE_RUNNING) return false;
-	al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.45, ALLEGRO_ALIGN_CENTRE, "Letter from Twilight");
-	struct ALLEGRO_KEYBOARD_STATE keyboard;
-	al_get_keyboard_state(&keyboard);
-	if (al_key_down(&keyboard, ALLEGRO_KEY_ENTER)) {
-		return true;
-	}
-	return false;
-}
-
 void Level_Draw(struct Game *game) {
 	if (!al_get_sample_instance_playing(game->level.music) && (game->loadstate==GAMESTATE_LEVEL)) {
 		al_set_sample_instance_playing(game->level.music, true);
@@ -317,15 +147,10 @@ void Level_Draw(struct Game *game) {
 			int w = al_get_bitmap_width(*(tmp->bitmap))/tmp->cols;
 			int h = al_get_bitmap_height(*(tmp->bitmap))/tmp->rows;
 			if (x > -w) {
-				if (!tmp->hit)
+				/*if (!tmp->hit)*/
 					if ((((x>=derpyx+0.38*derpyw+derpyo) && (x<=derpyx+0.94*derpyw+derpyo)) || ((x+w>=derpyx+0.38*derpyw+derpyo) && (x+w<=derpyx+0.94*derpyw+derpyo))) &&
 						(((y>=derpyy+0.26*derpyh) && (y<=derpyy+0.76*derpyh)) || ((y+h>=derpyy+0.26*derpyh) && (y+h<=derpyy+0.76*derpyh)))) {
 							tmp->hit=true;
-							game->level.hp+=tps(game, 60*0.0002*tmp->points);
-							if ((game->level.hp<=0) && (!game->level.failed)) {
-								game->level.failed = true;
-								TM_AddBackgroundAction(&LevelFailed, NULL, 0, "levelfailed");
-							}
 					}
 
 				al_draw_bitmap_region(*(tmp->bitmap),w*(tmp->pos%tmp->cols), h*(tmp->pos/tmp->cols),w,h,x,y,0);
@@ -342,7 +167,15 @@ void Level_Draw(struct Game *game) {
 				/*al_draw_bitmap(*(tmp->bitmap), x, y, 0);*/
 				if (game->level.debug_show_sprite_frames) al_draw_rectangle(x, y, x+w, y+h, al_map_rgba(255,0,0,255), 3);
 
-				if (tmp->hit) colision = true;
+				if (tmp->hit) {
+					colision = true;
+					game->level.hp+=tps(game, 60*0.0002*tmp->points*(((1-game->level.speed_modifier)/2.0)+1));
+					PrintConsole(game, "POINTS: %d, %f", tmp->points, tps(game, 60*0.0002*tmp->points*game->level.speed_modifier));
+					if ((game->level.hp<=0) && (!game->level.failed)) {
+						game->level.failed = true;
+						TM_AddBackgroundAction(&LevelFailed, NULL, 0, "levelfailed");
+					}
+				}
 				tmp->x -= tps(game, game->level.speed*game->level.speed_modifier*60*tmp->speed)*310;
 				if (tmp->callback) tmp->callback(game, tmp);
 				tmp = tmp->next;
@@ -358,7 +191,7 @@ void Level_Draw(struct Game *game) {
 				free(t);
 			}
 		}
-		if (colision) game->level.hp-=tps(game, 60*0.002);
+		/*if (colision) game->level.hp-=tps(game, 60*0.002);*/
 
 		al_set_target_bitmap(game->level.derpy);
 		al_clear_to_color(al_map_rgba(0,0,0,0));
@@ -413,107 +246,6 @@ void Level_Draw(struct Game *game) {
 	}
 }
 
-bool FadeIn(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
-	if (!action->arguments) {
-		action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(float)));
-		action->arguments = TM_AddToArgs(action->arguments, (void*)al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display)));
-	}
-	float* fadeloop;
-	ALLEGRO_BITMAP* fade_bitmap;
-	fadeloop = (float*)action->arguments->value;
-	fade_bitmap = (ALLEGRO_BITMAP*)action->arguments->next->value;
-	if (state == TM_ACTIONSTATE_INIT) {
-		*fadeloop = 255;
-		al_set_target_bitmap(fade_bitmap);
-		al_clear_to_color(al_map_rgb(0,0,0));
-		al_set_target_bitmap(al_get_backbuffer(game->display));
-	} else if (state == TM_ACTIONSTATE_RUNNING) {
-		al_draw_tinted_bitmap(fade_bitmap,al_map_rgba_f(1,1,1,*fadeloop/255.0),0,0,0);
-		*fadeloop-=tps(game, 600);
-		if (*fadeloop<=0) return true;
-	} else {
-		al_destroy_bitmap(fade_bitmap);
-		free(fadeloop);
-		TM_DestroyArgs(action->arguments);
-		action->arguments = NULL;
-		al_play_sample_instance(game->level.music);
-	}
-	return false;
-}
-
-bool FadeOut(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
-	if (!action->arguments) {
-		action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(float)));
-		action->arguments = TM_AddToArgs(action->arguments, (void*)al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display)));
-	}
-	float* fadeloop;
-	ALLEGRO_BITMAP* fade_bitmap;
-	fadeloop = (float*)action->arguments->value;
-	fade_bitmap = (ALLEGRO_BITMAP*)action->arguments->next->value;
-	if (state == TM_ACTIONSTATE_INIT) {
-		*fadeloop = 0;
-		al_set_target_bitmap(fade_bitmap);
-		al_clear_to_color(al_map_rgb(0,0,0));
-		al_set_target_bitmap(al_get_backbuffer(game->display));
-	} else if (state == TM_ACTIONSTATE_RUNNING) {
-		al_draw_tinted_bitmap(fade_bitmap,al_map_rgba_f(1,1,1,*fadeloop/255.0),0,0,0);
-		*fadeloop+=tps(game, 600);
-		if (*fadeloop>=256) return true;
-	} else {
-		PrintConsole(game, "Leaving level with %d HP", (int)(game->level.hp*100));
-		al_destroy_bitmap(fade_bitmap);
-		free(fadeloop);
-		Level_Unload(game);
-		game->gamestate = GAMESTATE_LOADING;
-		game->loadstate = GAMESTATE_MAP;
-		TM_DestroyArgs(action->arguments);
-		action->arguments = NULL;
-	}
-	return false;
-}
-
-bool Welcome(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
-	float* tmp; bool* in;
-	if (!action->arguments) {
-		action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(float)));
-		action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(bool)));
-	}
-	tmp = (float*)action->arguments->value;
-	in = (bool*)action->arguments->next->value;
-	if (state == TM_ACTIONSTATE_INIT) {
-		*tmp = 0;
-		*in = true;
-		/*PrintConsole(game, "WELCOME INIT");*/
-	}
-	else if (state == TM_ACTIONSTATE_RUNNING) {
-		/*PrintConsole(game, "WELCOME RUNNING FADE=%f, IN=%d", *in); */
-		float fade = *tmp;
-		if (fade>255) fade=255;
-		if (*tmp > 2048) { *tmp=255; *in=false; }
-		al_draw_tinted_bitmap(game->level.welcome, al_map_rgba_f(fade/255.0,fade/255.0,fade/255.0,fade/255.0), 0, 0, 0);
-		if (*in) {
-			*tmp+=tps(game, 600);
-		} else {
-			*tmp-=tps(game, 600);
-			if (*tmp<=0) { return true; }
-		}
-	} else {
-		free(action->arguments->value);
-		free(action->arguments->next->value);
-		TM_DestroyArgs(action->arguments);
-		action->arguments = NULL;
-	}
-	return false;
-}
-
-bool PassLevel(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
-	if (state == TM_ACTIONSTATE_DESTROY) {
-		Level_Passed(game);
-		TM_AddBackgroundAction(&FadeOut, NULL, 0, "fadeout");
-	}
-	return true;
-}
-
 void Level_Load(struct Game *game) {
 	game->level.failed=false;
 	game->level.hp=1;
@@ -556,7 +288,7 @@ void Level_Load(struct Game *game) {
 		* Should obstacles themselves be handled as objects
 		* on timeline? (probably not). Hmm... */
 		TM_AddAction(&GenerateObstacles, NULL, "obstacles");
-		TM_AddDelay(5*1000);
+		TM_AddDelay(4*1000);
 
 		/*
         // wings disappear, deccelerate, fall down
