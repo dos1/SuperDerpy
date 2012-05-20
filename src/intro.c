@@ -210,15 +210,15 @@ void Intro_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	game->intro.in_animation = false;
 	game->intro.anim = 0;
 
-	game->intro.animsprites[0] = LoadScaledBitmap("intro/1.png", al_get_display_width(game->display)*0.3125*3, al_get_display_height(game->display)*0.63*3);
+	game->intro.animsprites[0] = LoadScaledBitmap("intro/1.png", (int)(al_get_display_width(game->display)*0.3125)*3, al_get_display_height(game->display)*0.63*3);
 	PROGRESS;
-	game->intro.animsprites[1] = LoadScaledBitmap("levels/derpy/walk.png", al_get_display_width(game->display)*0.3125*3, al_get_display_height(game->display)*0.63*3);
+	game->intro.animsprites[1] = LoadScaledBitmap("levels/derpy/walk.png", (int)(al_get_display_width(game->display)*0.3125)*3, al_get_display_height(game->display)*0.63*3);
 	PROGRESS;
-	game->intro.animsprites[2] = LoadScaledBitmap("intro/3.png", al_get_display_width(game->display)*0.3125*3, al_get_display_height(game->display)*0.63*3);
+	game->intro.animsprites[2] = LoadScaledBitmap("intro/3.png", (int)(al_get_display_width(game->display)*0.3125)*3, al_get_display_height(game->display)*0.63*3);
 	PROGRESS;
-	game->intro.animsprites[3] = LoadScaledBitmap("loading.png", al_get_display_width(game->display)*0.3125*3, al_get_display_height(game->display)*0.63*3);
+	game->intro.animsprites[3] = LoadScaledBitmap("loading.png", (int)(al_get_display_width(game->display)*0.3125)*3, al_get_display_height(game->display)*0.63*3);
 	PROGRESS;
-	game->intro.animsprites[4] = LoadScaledBitmap("about/letter.png", al_get_display_width(game->display)*0.3125*3, al_get_display_height(game->display)*0.63*3);
+	game->intro.animsprites[4] = LoadScaledBitmap("about/letter.png", (int)(al_get_display_width(game->display)*0.3125)*3, al_get_display_height(game->display)*0.63*3);
 	PROGRESS;
 
 	game->intro.table_bitmap =LoadScaledBitmap("intro/paper.png", al_get_display_width(game->display), al_get_display_height(game->display));
