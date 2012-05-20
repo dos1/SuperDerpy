@@ -19,6 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 #include <stdio.h>
+#include <math.h>
 #include "moonwalk.h"
 #include "config.h"
 #include "pause.h"
@@ -167,6 +168,15 @@ void Obst_MoveUpDown(struct Game *game, struct Obstacle *obstacle) {
 	}
 }
 
+void Obst_MoveSin(struct Game *game, struct Obstacle *obstacle) {
+	float* a = (float*)obstacle->data;
+	/*PrintConsole(game, "%p - %f", obstacle, obstacle->y);*/
+	obstacle->y -= sin(*a)*4;
+	*a+=tps(game, 4.5);
+	obstacle->y += sin(*a)*4;
+}
+
+
 bool GenerateObstacles(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	/*float* tmp; bool* in;*/
 	int* count;
@@ -190,17 +200,33 @@ bool GenerateObstacles(struct Game *game, struct TM_Action *action, enum TM_Acti
 			obst->prev = NULL;
 			obst->x = 100;
 			obst->y = (rand()%91)-1;
-			obst->speed = 0;
+			obst->speed = 1;
 			obst->points = -10;
 			obst->hit = false;
-			if (rand()%100<=50) {
-				obst->callback=Obst_MoveUpDown;
+			obst->rows = 1;
+			obst->cols = 1;
+			obst->pos = 0;
+			obst->blanks = 0;
+			obst->anim_speed = 0;
+			obst->tmp_pos = 0;
+			if (rand()%100<=33) {
+				obst->callback= &Obst_MoveUpDown;
 				obst->bitmap = &(game->level.obst_bmps.pie);
-			} else {
+				obst->data = (void*)(rand()%2);
+			} else if (rand()%100<=50) {
 				obst->callback = NULL;
+				obst->data = NULL;
 				obst->bitmap = &(game->level.obst_bmps.muffin);
+			} else {
+				obst->callback = &Obst_MoveSin;
+				obst->data = malloc(sizeof(float));
+				*((float*)obst->data) = 0;
+				obst->bitmap = &(game->level.obst_bmps.pig);
+				obst->rows = 3;
+				obst->cols = 3;
+				obst->speed = 1.2;
+				obst->anim_speed = 2;
 			}
-			obst->data = (void*)(rand()%2);
 			if (game->level.obstacles) {
 				game->level.obstacles->prev = obst;
 				obst->next = game->level.obstacles;
@@ -286,11 +312,11 @@ void Level_Draw(struct Game *game) {
 		struct Obstacle *tmp = game->level.obstacles;
 		while (tmp) {
 			/*PrintConsole(game, "DRAWING %f %f", tmp->x, tmp->y);*/
-			if (tmp->x > -10) {
-				int x = (tmp->x/100.0)*al_get_display_width(game->display);
-				int y = (tmp->y/100.0)*al_get_display_height(game->display);
-				int w = al_get_bitmap_width(*(tmp->bitmap));
-				int h = al_get_bitmap_height(*(tmp->bitmap));
+			int x = (tmp->x/100.0)*al_get_display_width(game->display);
+			int y = (tmp->y/100.0)*al_get_display_height(game->display);
+			int w = al_get_bitmap_width(*(tmp->bitmap))/tmp->cols;
+			int h = al_get_bitmap_height(*(tmp->bitmap))/tmp->rows;
+			if (x > -w) {
 				if (!tmp->hit)
 					if ((((x>=derpyx+0.38*derpyw+derpyo) && (x<=derpyx+0.94*derpyw+derpyo)) || ((x+w>=derpyx+0.38*derpyw+derpyo) && (x+w<=derpyx+0.94*derpyw+derpyo))) &&
 						(((y>=derpyy+0.26*derpyh) && (y<=derpyy+0.76*derpyh)) || ((y+h>=derpyy+0.26*derpyh) && (y+h<=derpyy+0.76*derpyh)))) {
@@ -301,11 +327,23 @@ void Level_Draw(struct Game *game) {
 								TM_AddBackgroundAction(&LevelFailed, NULL, 0, "levelfailed");
 							}
 					}
-				al_draw_bitmap(*(tmp->bitmap), x, y, 0);
+
+				al_draw_bitmap_region(*(tmp->bitmap),w*(tmp->pos%tmp->cols), h*(tmp->pos/tmp->cols),w,h,x,y,0);
+
+				if (tmp->anim_speed) {
+					tmp->tmp_pos+=tps(game, 60);
+					if (tmp->tmp_pos >= tmp->anim_speed) {
+						tmp->pos++;
+						tmp->tmp_pos = 0;
+					}
+					if (tmp->pos>=tmp->cols*tmp->rows-tmp->blanks) tmp->pos=0;
+				}
+
+				/*al_draw_bitmap(*(tmp->bitmap), x, y, 0);*/
 				if (game->level.debug_show_sprite_frames) al_draw_rectangle(x, y, x+w, y+h, al_map_rgba(255,0,0,255), 3);
 
 				if (tmp->hit) colision = true;
-				tmp->x -= tps(game, game->level.speed*game->level.speed_modifier*60)*310;
+				tmp->x -= tps(game, game->level.speed*game->level.speed_modifier*60*tmp->speed)*310;
 				if (tmp->callback) tmp->callback(game, tmp);
 				tmp = tmp->next;
 			} else {
@@ -656,7 +694,7 @@ void Level_UnloadBitmaps(struct Game *game) {
 }
 
 void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float)) {
-	PROGRESS_INIT(11);
+	PROGRESS_INIT(12);
 	int x = 0;
 	struct Spritesheet *tmp = game->level.derpy_sheets;
 	while (tmp) {
@@ -691,6 +729,8 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 		game->level.stage = LoadScaledBitmap("levels/1/stage.png", al_get_display_height(game->display)*4.73307291666666666667, al_get_display_height(game->display));
 		PROGRESS;
 		game->level.obst_bmps.pie = LoadScaledBitmap("menu/pie.png", al_get_display_width(game->display)*0.1, al_get_display_height(game->display)*0.1);
+		PROGRESS;
+		game->level.obst_bmps.pig = LoadScaledBitmap("levels/pig.png", al_get_display_width(game->display)*0.15*3, al_get_display_height(game->display)*0.2*3);
 		PROGRESS;
 		game->level.obst_bmps.muffin = LoadScaledBitmap("levels/muffin.png", al_get_display_width(game->display)*0.07, al_get_display_height(game->display)*0.1);
 		PROGRESS;

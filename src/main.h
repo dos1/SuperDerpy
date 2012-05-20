@@ -63,11 +63,19 @@ struct Moonwalk {
 /*! \brief Structure representing obstacles and power-ups flying through the level. */
 struct Obstacle {
 	ALLEGRO_BITMAP **bitmap; /*!< Pointer to bitmap used by obstacle. */
-	float x; /*!< Horizontal position on the screen, in range 0-1. */
-	float y; /*!< Vertical position on the screen, in range 0-1. */
+	float x; /*!< Horizontal position on the screen, in range 0-100. */
+	float y; /*!< Vertical position on the screen, in range 0-100. */
 	float speed; /*!< Horizontal speed of obstracle. */
 	int points; /*!< Number of points given when hit by player. Positive gives HP to power, negative takes it. */
 	bool hit; /*!< Indicates if this obstacle was already hit by the player or not. */
+
+	int cols; /*!< Number of columns in spritesheet. */
+	int rows; /*!< Number of rows in spritesheet. */
+	int pos; /*!< Current position in spritesheet. */
+	int blanks; /*!< Number of blank frames at the end of the spritesheet. */
+	float tmp_pos; /*!< Temporary counter used to slow down spritesheet animation. */
+	float anim_speed; /*!< Speed of spritesheet animation. */
+
 	void (*callback)(struct Game*, struct Obstacle*); /*!< Pointer to function called to update obstacle position, animate it, etc. */
 	void *data; /*!< Pointer passed to callback function. */
 	struct Obstacle *prev; /*!< Previous obstacle on the list. */
@@ -128,6 +136,7 @@ struct Level {
 	struct {
 		ALLEGRO_BITMAP *pie; /*!< Pie bitmap. */
 		ALLEGRO_BITMAP *muffin; /*!< Muffin bitmap. */
+		ALLEGRO_BITMAP *pig; /*!< Pig spritesheet bitmap. */
 	} obst_bmps; /*!< Obstacle bitmaps. */
 	struct Obstacle *obstacles; /*!< List of obstacles being currently rendered. */
 	struct Moonwalk moonwalk; /*!< Moonwalk placeholder data. */
