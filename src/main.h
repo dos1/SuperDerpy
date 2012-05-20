@@ -121,6 +121,7 @@ struct Level {
 	ALLEGRO_SAMPLE *sample; /*!< Sample with background music. */
 	ALLEGRO_SAMPLE_INSTANCE *music; /*!< Sample instance with background music. */
 	unsigned int music_pos; /*!< Position of sample instance. Used when pausing game. */
+	ALLEGRO_BITMAP *owl; /*!< Owlicious bitmap. */
 	ALLEGRO_BITMAP *background; /*!< Bitmap of the background layer of the scene. */
 	ALLEGRO_BITMAP *stage; /*!< Bitmap of the stage layer of the scene. */
 	ALLEGRO_BITMAP *foreground; /*!< Bitmap of the foreground layer of the scene. */
