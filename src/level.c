@@ -730,7 +730,7 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 		PROGRESS;
 		game->level.obst_bmps.pie = LoadScaledBitmap("menu/pie.png", al_get_display_width(game->display)*0.1, al_get_display_height(game->display)*0.1);
 		PROGRESS;
-		game->level.obst_bmps.pig = LoadScaledBitmap("levels/pig.png", al_get_display_width(game->display)*0.15*3, al_get_display_height(game->display)*0.2*3);
+		game->level.obst_bmps.pig = LoadScaledBitmap("levels/pig.png", (int)(al_get_display_width(game->display)*0.15)*3, (int)(al_get_display_height(game->display)*0.2)*3);
 		PROGRESS;
 		game->level.obst_bmps.muffin = LoadScaledBitmap("levels/muffin.png", al_get_display_width(game->display)*0.07, al_get_display_height(game->display)*0.1);
 		PROGRESS;
