@@ -144,8 +144,11 @@ void Level_Draw(struct Game *game) {
 			/*PrintConsole(game, "DRAWING %f %f", tmp->x, tmp->y);*/
 			int x = (tmp->x/100.0)*al_get_display_width(game->display);
 			int y = (tmp->y/100.0)*al_get_display_height(game->display);
-			int w = al_get_bitmap_width(*(tmp->bitmap))/tmp->cols;
-			int h = al_get_bitmap_height(*(tmp->bitmap))/tmp->rows;
+			int w = 0, h = 0;
+			if (tmp->bitmap) {
+				w = al_get_bitmap_width(*(tmp->bitmap))/tmp->cols;
+				h = al_get_bitmap_height(*(tmp->bitmap))/tmp->rows;
+			}
 			if (x > -w) {
 				/*if (!tmp->hit)*/
 					if ((((x>=derpyx+0.38*derpyw+derpyo) && (x<=derpyx+0.94*derpyw+derpyo)) || ((x+w>=derpyx+0.38*derpyw+derpyo) && (x+w<=derpyx+0.94*derpyw+derpyo))) &&
@@ -153,7 +156,7 @@ void Level_Draw(struct Game *game) {
 							tmp->hit=true;
 					}
 
-				al_draw_bitmap_region(*(tmp->bitmap),w*(tmp->pos%tmp->cols), h*(tmp->pos/tmp->cols),w,h,x,y,0);
+				if (tmp->bitmap) al_draw_bitmap_region(*(tmp->bitmap),w*(tmp->pos%tmp->cols), h*(tmp->pos/tmp->cols),w,h,x,y,0);
 
 				if (tmp->anim_speed) {
 					tmp->tmp_pos+=tps(game, 60);
@@ -168,11 +171,15 @@ void Level_Draw(struct Game *game) {
 				if (game->level.debug_show_sprite_frames) al_draw_rectangle(x, y, x+w, y+h, al_map_rgba(255,0,0,255), 3);
 
 				if (tmp->hit) {
-					colision = true;
+					if (tmp->points<0) colision = true;
+					else tmp->bitmap = NULL;
 					game->level.hp+=tps(game, 60*0.0002*tmp->points*(((1-game->level.speed_modifier)/2.0)+1));
+					if (game->level.hp>1) game->level.hp=1;
 					PrintConsole(game, "POINTS: %d, %f", tmp->points, tps(game, 60*0.0002*tmp->points*game->level.speed_modifier));
 					if ((game->level.hp<=0) && (!game->level.failed)) {
 						game->level.failed = true;
+						game->level.handle_input = false;
+						game->level.speed_modifier = 1;
 						TM_AddBackgroundAction(&LevelFailed, NULL, 0, "levelfailed");
 					}
 				}

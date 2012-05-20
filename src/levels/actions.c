@@ -100,7 +100,7 @@ bool GenerateObstacles(struct Game *game, struct TM_Action *action, enum TM_Acti
         *in = true;*/
     }
     else if (state == TM_ACTIONSTATE_RUNNING) {
-        if (rand()%(10000/(int)tps(game, 60*85))<=2) {
+        if (rand()%(10000/(int)tps(game, 60*85*game->level.speed_modifier))<=2) {
             PrintConsole(game, "OBSTACLE %d", *count);
             (*count)++;
             struct Obstacle *obst = malloc(sizeof(struct Obstacle));
@@ -143,7 +143,7 @@ bool GenerateObstacles(struct Game *game, struct TM_Action *action, enum TM_Acti
                 obst->next = NULL;
             }
             game->level.obstacles = obst;
-            if (*count > 64) return true;
+            if (*count > 128) return true;
         }
     } else {
         free(action->arguments->value);
