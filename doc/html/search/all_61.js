@@ -12,6 +12,7 @@ var searchData=
   ['al_5fdraw_5fvertical_5fgradient_5frect',['al_draw_vertical_gradient_rect',['../allegro__utils_8c.html#af7761a08e60e5ba6d1704bf4e3dfaea0',1,'al_draw_vertical_gradient_rect(float x, float y, float w, float h, ALLEGRO_COLOR top, ALLEGRO_COLOR bottom):&#160;allegro_utils.c'],['../allegro__utils_8h.html#af7761a08e60e5ba6d1704bf4e3dfaea0',1,'al_draw_vertical_gradient_rect(float x, float y, float w, float h, ALLEGRO_COLOR top, ALLEGRO_COLOR bottom):&#160;allegro_utils.c']]],
   ['allegro_5futils_2ec',['allegro_utils.c',['../allegro__utils_8c.html',1,'']]],
   ['allegro_5futils_2eh',['allegro_utils.h',['../allegro__utils_8h.html',1,'']]],
+  ['angle',['angle',['../structObstacle.html#a99d85ef4e92f7e899b49ac85b2e1dbdc',1,'Obstacle']]],
   ['anim',['anim',['../structIntro.html#a7bac02ef374847f0efbe638892cb401f',1,'Intro']]],
   ['anim_5fspeed',['anim_speed',['../structObstacle.html#a96a13e4704e4643291989193a112366a',1,'Obstacle']]],
   ['animsprites',['animsprites',['../structIntro.html#ae89a2ad7dfed9e06a558a5f92bba55bc',1,'Intro']]],

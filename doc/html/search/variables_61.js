@@ -2,6 +2,7 @@ var searchData=
 [
   ['about',['about',['../structGame.html#a0f7f35de759c984c4b53c86fb0dcbd44',1,'Game']]],
   ['active',['active',['../structTM__Action.html#a6ff56cc7060fa2369a3879b4244180e7',1,'TM_Action']]],
+  ['angle',['angle',['../structObstacle.html#a99d85ef4e92f7e899b49ac85b2e1dbdc',1,'Obstacle']]],
   ['anim',['anim',['../structIntro.html#a7bac02ef374847f0efbe638892cb401f',1,'Intro']]],
   ['anim_5fspeed',['anim_speed',['../structObstacle.html#a96a13e4704e4643291989193a112366a',1,'Obstacle']]],
   ['animsprites',['animsprites',['../structIntro.html#ae89a2ad7dfed9e06a558a5f92bba55bc',1,'Intro']]],
