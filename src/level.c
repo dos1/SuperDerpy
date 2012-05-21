@@ -290,29 +290,22 @@ void Level_Load(struct Game *game) {
 		TM_AddDelay(200);
 		TM_AddQueuedBackgroundAction(&Accelerate, NULL, 0, "accelerate");
 		TM_AddAction(&Fly, NULL, "fly");
-		/*TM_AddDelay(2*1000);*/
+		TM_AddDelay(500);
 		/* first part gameplay goes here */
 
 		/* actions for generating obstacles should go here
 		* probably as regular actions. When one ends, harder one
-		* begins. After last one part with muffins starts.
-		* Should obstacles themselves be handled as objects
-		* on timeline? (probably not). Hmm... */
+		* begins. After last one part with muffins starts. */
 		TM_AddAction(&GenerateObstacles, NULL, "obstacles");
-		TM_AddDelay(4*1000);
-
-		/*
-        // wings disappear, deccelerate, fall down
-		// run
-		// show Fluttershy's house
+		TM_AddDelay(3*1000);
+		/* wings disappear, deccelerate */
+		TM_AddAction(&Run, NULL, "run");
+		TM_AddDelay(3*1000);
+		/* show Fluttershy's house
 
 		// second part gameplay goes here
-		//
 
-		// cutscene goes here
-		//
-		*/
-
+		// cutscene goes here */
 		TM_AddAction(&PassLevel, NULL, "passlevel");
 
 		struct Obstacle *obst = malloc(sizeof(struct Obstacle));

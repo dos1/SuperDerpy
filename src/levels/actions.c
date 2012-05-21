@@ -76,11 +76,25 @@ bool Fly(struct Game *game, struct TM_Action *action, enum TM_ActionState state)
         SelectDerpySpritesheet(game, "fly");
         /*game->level.gg = true;*/
         TM_AddBackgroundAction(&ShowMeter, NULL, 0, "showmeter");
+        action->arguments++;
     }
-    action->arguments++;
     game->level.derpy_y-=tps(game, 60*0.004);
     if (game->level.derpy_y>0.2) return false;
     game->level.handle_input=true;
+    return true;
+}
+
+bool Run(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
+    if (state == TM_ACTIONSTATE_INIT) action->arguments = NULL;
+    if (state != TM_ACTIONSTATE_RUNNING) return false;
+    if (!(action->arguments)) {
+        game->level.handle_input=false;
+        game->level.speed_modifier=1;
+        action->arguments++;
+    }
+    game->level.derpy_y+=tps(game, 60*0.0042);
+    if (game->level.derpy_y<0.65) return false;
+    SelectDerpySpritesheet(game, "run");
     return true;
 }
 

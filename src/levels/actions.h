@@ -40,6 +40,9 @@ bool ShowMeter(struct Game *game, struct TM_Action *action, enum TM_ActionState 
 /*! \brief Fly Derpy, fly! */
 bool Fly(struct Game *game, struct TM_Action *action, enum TM_ActionState state);
 
+/*! \brief Run Derpy, run! */
+bool Run(struct Game *game, struct TM_Action *action, enum TM_ActionState state);
+
 /*! \brief Generates obstacles. */
 bool GenerateObstacles(struct Game *game, struct TM_Action *action, enum TM_ActionState state);
 
