@@ -199,6 +199,7 @@ struct TM_Action* TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Ac
 	return action;
 }
 
+/*! \brief Predefined action used by TM_AddQueuedBackgroundAction */
 bool runinbackground(struct Game* game, struct TM_Action* action, enum TM_ActionState state) {
 	if (state != TM_ACTIONSTATE_RUNNING) return false;
 	float* delay = (float*) action->arguments->next->value;

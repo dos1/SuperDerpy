@@ -1,9 +1,12 @@
 var searchData=
 [
   ['fade_5fbitmap',['fade_bitmap',['../structMoonwalk.html#adfea9d8976238abf5d94a797df7ee929',1,'Moonwalk::fade_bitmap()'],['../structAbout.html#a0c80b08e1d60093504bed342b41e51c1',1,'About::fade_bitmap()']]],
+  ['fadein',['FadeIn',['../actions_8c.html#a2b55190c74aadd3e48b3b094f3d117f5',1,'FadeIn(struct Game *game, struct TM_Action *action, enum TM_ActionState state):&#160;actions.c'],['../actions_8h.html#a2b55190c74aadd3e48b3b094f3d117f5',1,'FadeIn(struct Game *game, struct TM_Action *action, enum TM_ActionState state):&#160;actions.c']]],
   ['fadeloop',['fadeloop',['../structAbout.html#a3a7b7ae29163ae843671a2c2b5e8c1f0',1,'About']]],
+  ['fadeout',['FadeOut',['../actions_8c.html#a54e1fe675a65e73e07084aeedcca2b59',1,'FadeOut(struct Game *game, struct TM_Action *action, enum TM_ActionState state):&#160;actions.c'],['../actions_8h.html#a54e1fe675a65e73e07084aeedcca2b59',1,'FadeOut(struct Game *game, struct TM_Action *action, enum TM_ActionState state):&#160;actions.c']]],
   ['failed',['failed',['../structLevel.html#a5bea34b31777260f1b23a1d64e6cd865',1,'Level']]],
   ['fg_5fpos',['fg_pos',['../structLevel.html#a665bb93951ab6b7a91543712152a3acf',1,'Level']]],
+  ['fly',['Fly',['../actions_8c.html#a23487051f427babc97f5bc670b2ca8d6',1,'Fly(struct Game *game, struct TM_Action *action, enum TM_ActionState state):&#160;actions.c'],['../actions_8h.html#a23487051f427babc97f5bc670b2ca8d6',1,'Fly(struct Game *game, struct TM_Action *action, enum TM_ActionState state):&#160;actions.c']]],
   ['font',['font',['../structMenu.html#aa4e0229cb315ef9e0ea90263b26a37f8',1,'Menu::font()'],['../structAbout.html#ad14358b4942c0260e502a65b98732f93',1,'About::font()'],['../structIntro.html#a896d4fdd74cf47535173eeaa6e81f734',1,'Intro::font()'],['../structGame.html#a455bfdaacd5f2bda80b640c02ec3250e',1,'Game::font()']]],
   ['font_5fconsole',['font_console',['../structGame.html#a692f2c3ec0f3e956aa8bdac00a864bf8',1,'Game']]],
   ['font_5fselected',['font_selected',['../structMenu.html#a577ad17dfddafaae41dde63ca7970003',1,'Menu']]],

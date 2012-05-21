@@ -173,6 +173,7 @@ void DrawGameState(struct Game *game) {
 	}
 }
 
+/*! \brief Scales bitmap using software linear filtering method to current target. */
 void ScaleBitmap(ALLEGRO_BITMAP* source, int width, int height) {
 	if ((al_get_bitmap_width(source)==width) && (al_get_bitmap_height(source)==height)) {
 		al_draw_bitmap(source, 0, 0, 0);

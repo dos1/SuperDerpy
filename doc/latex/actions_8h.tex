@@ -1,0 +1,56 @@
+\hypertarget{actions_8h}{\section{src/levels/actions.h \-File \-Reference}
+\label{actions_8h}\index{src/levels/actions.\-h@{src/levels/actions.\-h}}
+}
+
+
+\-Header file with \hyperlink{structLevel}{\-Level} actions for \-Timeline \-Manager.  
+
+
+{\ttfamily \#include \char`\"{}../main.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}../timeline.\-h\char`\"{}}\*
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{actions_8h_af47a0e8a010bf6619c54b025218a791f}{bool \hyperlink{actions_8h_af47a0e8a010bf6619c54b025218a791f}{\-Level\-Failed} (struct \hyperlink{structGame}{\-Game} $\ast$game, struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$action, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{\-T\-M\-\_\-\-Action\-State} state)}\label{actions_8h_af47a0e8a010bf6619c54b025218a791f}
+
+\begin{DoxyCompactList}\small\item\em \-Display level failed screen and set fade-\/out to be run after few seconds. \end{DoxyCompactList}\item 
+\hypertarget{actions_8h_a30a1b6b19047767179aa1b9366b371a4}{bool \hyperlink{actions_8h_a30a1b6b19047767179aa1b9366b371a4}{\-Accelerate} (struct \hyperlink{structGame}{\-Game} $\ast$game, struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$action, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{\-T\-M\-\_\-\-Action\-State} state)}\label{actions_8h_a30a1b6b19047767179aa1b9366b371a4}
+
+\begin{DoxyCompactList}\small\item\em \-Accelerate current speed game until threshold is reached. \end{DoxyCompactList}\item 
+\hypertarget{actions_8h_a6c22701a9126337808a9a602a77dffc5}{bool \hyperlink{actions_8h_a6c22701a9126337808a9a602a77dffc5}{\-Walk} (struct \hyperlink{structGame}{\-Game} $\ast$game, struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$action, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{\-T\-M\-\_\-\-Action\-State} state)}\label{actions_8h_a6c22701a9126337808a9a602a77dffc5}
+
+\begin{DoxyCompactList}\small\item\em \-Set \-Derpy to walk and move her position on screen. \end{DoxyCompactList}\item 
+\hypertarget{actions_8h_aa293be19929b6eb00fe52c0d7c5fc8d5}{bool \hyperlink{actions_8h_aa293be19929b6eb00fe52c0d7c5fc8d5}{\-Move} (struct \hyperlink{structGame}{\-Game} $\ast$game, struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$action, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{\-T\-M\-\_\-\-Action\-State} state)}\label{actions_8h_aa293be19929b6eb00fe52c0d7c5fc8d5}
+
+\begin{DoxyCompactList}\small\item\em \-Move screen until some position is reached. \end{DoxyCompactList}\item 
+\hypertarget{actions_8h_a9d9935c62f8bacc1923acd0d1f8149bf}{bool \hyperlink{actions_8h_a9d9935c62f8bacc1923acd0d1f8149bf}{\-Show\-Meter} (struct \hyperlink{structGame}{\-Game} $\ast$game, struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$action, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{\-T\-M\-\_\-\-Action\-State} state)}\label{actions_8h_a9d9935c62f8bacc1923acd0d1f8149bf}
+
+\begin{DoxyCompactList}\small\item\em \-Fade-\/in \-H\-P meter. \end{DoxyCompactList}\item 
+\hypertarget{actions_8h_a23487051f427babc97f5bc670b2ca8d6}{bool \hyperlink{actions_8h_a23487051f427babc97f5bc670b2ca8d6}{\-Fly} (struct \hyperlink{structGame}{\-Game} $\ast$game, struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$action, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{\-T\-M\-\_\-\-Action\-State} state)}\label{actions_8h_a23487051f427babc97f5bc670b2ca8d6}
+
+\begin{DoxyCompactList}\small\item\em \-Fly \-Derpy, fly! \end{DoxyCompactList}\item 
+\hypertarget{actions_8h_a26dfefd8a1749ca21c02592c6decb8b8}{bool \hyperlink{actions_8h_a26dfefd8a1749ca21c02592c6decb8b8}{\-Generate\-Obstacles} (struct \hyperlink{structGame}{\-Game} $\ast$game, struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$action, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{\-T\-M\-\_\-\-Action\-State} state)}\label{actions_8h_a26dfefd8a1749ca21c02592c6decb8b8}
+
+\begin{DoxyCompactList}\small\item\em \-Generates obstracles. \end{DoxyCompactList}\item 
+\hypertarget{actions_8h_a4b59af1bdb93050df607e02275920462}{bool \hyperlink{actions_8h_a4b59af1bdb93050df607e02275920462}{\-Stop} (struct \hyperlink{structGame}{\-Game} $\ast$game, struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$action, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{\-T\-M\-\_\-\-Action\-State} state)}\label{actions_8h_a4b59af1bdb93050df607e02275920462}
+
+\begin{DoxyCompactList}\small\item\em \-Stops \-Derpy. \end{DoxyCompactList}\item 
+\hypertarget{actions_8h_ae8e45a00c15c76ba06ab04b38f1fc7b8}{bool \hyperlink{actions_8h_ae8e45a00c15c76ba06ab04b38f1fc7b8}{\-Letter} (struct \hyperlink{structGame}{\-Game} $\ast$game, struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$action, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{\-T\-M\-\_\-\-Action\-State} state)}\label{actions_8h_ae8e45a00c15c76ba06ab04b38f1fc7b8}
+
+\begin{DoxyCompactList}\small\item\em \-Shows letter from \-Twilight on screen. \end{DoxyCompactList}\item 
+\hypertarget{actions_8h_a2b55190c74aadd3e48b3b094f3d117f5}{bool \hyperlink{actions_8h_a2b55190c74aadd3e48b3b094f3d117f5}{\-Fade\-In} (struct \hyperlink{structGame}{\-Game} $\ast$game, struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$action, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{\-T\-M\-\_\-\-Action\-State} state)}\label{actions_8h_a2b55190c74aadd3e48b3b094f3d117f5}
+
+\begin{DoxyCompactList}\small\item\em \-Fade-\/in screen. \end{DoxyCompactList}\item 
+\hypertarget{actions_8h_a54e1fe675a65e73e07084aeedcca2b59}{bool \hyperlink{actions_8h_a54e1fe675a65e73e07084aeedcca2b59}{\-Fade\-Out} (struct \hyperlink{structGame}{\-Game} $\ast$game, struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$action, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{\-T\-M\-\_\-\-Action\-State} state)}\label{actions_8h_a54e1fe675a65e73e07084aeedcca2b59}
+
+\begin{DoxyCompactList}\small\item\em \-Fade-\/out screen. \end{DoxyCompactList}\item 
+\hypertarget{actions_8h_a8d383a4d947717a13239c94a1ed437a4}{bool \hyperlink{actions_8h_a8d383a4d947717a13239c94a1ed437a4}{\-Welcome} (struct \hyperlink{structGame}{\-Game} $\ast$game, struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$action, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{\-T\-M\-\_\-\-Action\-State} state)}\label{actions_8h_a8d383a4d947717a13239c94a1ed437a4}
+
+\begin{DoxyCompactList}\small\item\em \-Show welcome screen (for instance \char`\"{}\-Level 1\-: Fluttershy\char`\"{}). \end{DoxyCompactList}\item 
+\hypertarget{actions_8h_a51e9ed5b383810dfdb7508bbdc9fa045}{bool \hyperlink{actions_8h_a51e9ed5b383810dfdb7508bbdc9fa045}{\-Pass\-Level} (struct \hyperlink{structGame}{\-Game} $\ast$game, struct \hyperlink{structTM__Action}{\-T\-M\-\_\-\-Action} $\ast$action, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{\-T\-M\-\_\-\-Action\-State} state)}\label{actions_8h_a51e9ed5b383810dfdb7508bbdc9fa045}
+
+\begin{DoxyCompactList}\small\item\em \-Pass level and fade-\/out after few seconds. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Header file with \hyperlink{structLevel}{\-Level} actions for \-Timeline \-Manager. 
