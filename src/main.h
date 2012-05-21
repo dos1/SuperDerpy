@@ -137,8 +137,10 @@ struct Level {
 	struct Spritesheet* pony_sheets; /*!< List of sprite sheets of character rescued by Derpy. */
 	struct {
 		ALLEGRO_BITMAP *pie; /*!< Pie bitmap. */
-		ALLEGRO_BITMAP *muffin; /*!< Muffin bitmap. */
+		ALLEGRO_BITMAP *muffin; /*!< Good muffin bitmap. */
+		ALLEGRO_BITMAP *badmuffin; /*!< Bad muffin bitmap. */
 		ALLEGRO_BITMAP *pig; /*!< Pig spritesheet bitmap. */
+		ALLEGRO_BITMAP *screwball; /*!< Screwball spritesheet bitmap. */
 	} obst_bmps; /*!< Obstacle bitmaps. */
 	struct Obstacle *obstacles; /*!< List of obstacles being currently rendered. */
 	struct Moonwalk moonwalk; /*!< Moonwalk placeholder data. */

@@ -456,7 +456,7 @@ void Level_UnloadBitmaps(struct Game *game) {
 }
 
 void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float)) {
-	PROGRESS_INIT(13);
+	PROGRESS_INIT(15);
 	int x = 0;
 	struct Spritesheet *tmp = game->level.derpy_sheets;
 	while (tmp) {
@@ -494,7 +494,11 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 		PROGRESS;
 		game->level.obst_bmps.pig = LoadScaledBitmap("levels/pig.png", (int)(al_get_display_width(game->display)*0.15)*3, (int)(al_get_display_height(game->display)*0.2)*3);
 		PROGRESS;
+		game->level.obst_bmps.screwball = LoadScaledBitmap("levels/screwball.png", (int)(al_get_display_height(game->display)*0.2)*4*1.4, (int)(al_get_display_height(game->display)*0.2)*4);
+		PROGRESS;
 		game->level.obst_bmps.muffin = LoadScaledBitmap("levels/muffin.png", al_get_display_width(game->display)*0.07, al_get_display_height(game->display)*0.1);
+		PROGRESS;
+		game->level.obst_bmps.badmuffin = LoadScaledBitmap("levels/badmuffin.png", al_get_display_width(game->display)*0.07, al_get_display_height(game->display)*0.1);
 		PROGRESS;
 		game->level.owl = LoadScaledBitmap("levels/owl.png", al_get_display_width(game->display)*0.08, al_get_display_width(game->display)*0.08);
 		PROGRESS;

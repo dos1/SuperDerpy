@@ -24,6 +24,9 @@
 /*! \brief Move up or down until reaching the edge of the screen. After that - change direction. */
 void Obst_MoveUpDown(struct Game *game, struct Obstacle *obstacle);
 
+/*! \brief Move up at constant speed. */
+void Obst_MoveUp(struct Game *game, struct Obstacle *obstacle);
+
 /*! \brief Move in sinusoidal way in Y-axis relative to position at beginning. */
 void Obst_MoveSin(struct Game *game, struct Obstacle *obstacle);
 

@@ -36,6 +36,11 @@ void Obst_MoveUpDown(struct Game *game, struct Obstacle *obstacle) {
     }
 }
 
+void Obst_MoveUp(struct Game *game, struct Obstacle *obstacle) {
+    float* a = (float*)obstacle->data;
+    obstacle->y -= *a;
+}
+
 void Obst_RotateSin(struct Game *game, struct Obstacle *obstacle) {
     float* a = (float*)obstacle->data;
     /*PrintConsole(game, "%p - %f", obstacle, obstacle->y);*/

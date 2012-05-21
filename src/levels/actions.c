@@ -117,17 +117,26 @@ bool GenerateObstacles(struct Game *game, struct TM_Action *action, enum TM_Acti
             obst->anim_speed = 0;
             obst->tmp_pos = 0;
             obst->angle = 0;
-            if (rand()%100<=15) {
+            if (rand()%100<=50) {
+                obst->callback= NULL;
+                obst->data = NULL;
+                obst->points = -5;
+                obst->bitmap = &(game->level.obst_bmps.badmuffin);
+                obst->speed = 1.2;
+            } else if (rand()%100<=12) {
                 obst->callback= &Obst_RotateSin;
                 obst->data = malloc(sizeof(float));
                 *((float*)obst->data) = 0;
                 obst->points = 5;
                 obst->bitmap = &(game->level.obst_bmps.muffin);
-            } else if (rand()%100<=75) {
-                obst->callback= &Obst_MoveUpDown;
+            } else if (rand()%100<=70) {
+                obst->callback= &Obst_MoveUp;
                 obst->bitmap = &(game->level.obst_bmps.pie);
-                obst->data = (void*)(rand()%2);
-            } else {
+                obst->data = malloc(sizeof(float));
+                *((float*)obst->data) = 0.5+(rand()%25/100.0);
+                obst->y*=1.8;
+                obst->angle = ((rand()%50)/100.0)-0.25;
+            } else if (rand()%100<=70) {
                 obst->callback = &Obst_MoveSin;
                 obst->data = malloc(sizeof(float));
                 *((float*)obst->data) = 0;
@@ -137,6 +146,15 @@ bool GenerateObstacles(struct Game *game, struct TM_Action *action, enum TM_Acti
                 obst->speed = 1.2;
                 obst->anim_speed = 2;
                 obst->points = -20;
+            } else {
+                obst->callback = &Obst_MoveUpDown;
+                obst->bitmap = &(game->level.obst_bmps.screwball);
+                obst->data = (void*)(rand()%2);
+                obst->rows = 4;
+                obst->cols = 4;
+                obst->speed = 1.2;
+                obst->anim_speed = 2;
+                obst->points = -25;
             }
             if (game->level.obstacles) {
                 game->level.obstacles->prev = obst;
