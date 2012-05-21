@@ -155,39 +155,39 @@ enum menustate_enum {
 
 /*! \brief Resources used by Menu state. */
 struct Menu {
-	ALLEGRO_BITMAP *menu_fade_bitmap;
-	ALLEGRO_BITMAP *image;
-	ALLEGRO_BITMAP *cloud;
-	ALLEGRO_BITMAP *cloud2;
-	ALLEGRO_BITMAP *pie;
-	ALLEGRO_BITMAP *pie_bitmap;
-	ALLEGRO_BITMAP *pinkcloud_bitmap;
-	ALLEGRO_BITMAP *pinkcloud;
-	ALLEGRO_BITMAP *rain;
-	ALLEGRO_BITMAP *rain_bitmap;
-	ALLEGRO_BITMAP *mountain;
-	float cloud_position;
-	float cloud2_position;
-	int mountain_position;
-	ALLEGRO_SAMPLE *sample;
-	ALLEGRO_SAMPLE *rain_sample;
-	ALLEGRO_SAMPLE *click_sample;
+	ALLEGRO_BITMAP *menu_fade_bitmap; /*!< Screenshot bitmap used for fades. */
+	ALLEGRO_BITMAP *image; /*!< Bitmap with lower portion of menu landscape. */
+	ALLEGRO_BITMAP *cloud; /*!< Bitmap with bigger cloud. */
+	ALLEGRO_BITMAP *cloud2; /*!< Bitmap with small cloud. */
+	ALLEGRO_BITMAP *pie; /*!< Unscaled bitmap with pie. */
+	ALLEGRO_BITMAP *pie_bitmap; /*!< Scaled and "rendered" bitmap with pies. */
+	ALLEGRO_BITMAP *pinkcloud_bitmap; /*!< Scaled bitmap with pinkcloud and home. */
+	ALLEGRO_BITMAP *pinkcloud; /*!< Unscaled bitmap with pinkcloud and home. */
+	ALLEGRO_BITMAP *rain; /*!< Unscaled bitmap with rain drop. */
+	ALLEGRO_BITMAP *rain_bitmap; /*!< Scaled and "rendered" bitmap with rain drops. */
+	ALLEGRO_BITMAP *mountain; /*!< Flashing mountain in background bitmap. */
+	float cloud_position; /*!< Position of bigger cloud. */
+	float cloud2_position; /*!< Position of small cloud. */
+	int mountain_position; /*!< Position of flashing mountain. */
+	ALLEGRO_SAMPLE *sample; /*!< Background music sample. */
+	ALLEGRO_SAMPLE *rain_sample; /*!< Rain sound sample. */
+	ALLEGRO_SAMPLE *click_sample; /*!< Click sound sample. */
 	ALLEGRO_SAMPLE_INSTANCE *music; /*!< Sample instance with background music. */
 	ALLEGRO_SAMPLE_INSTANCE *rain_sound; /*!< Sample instance with rain sound. */
 	ALLEGRO_SAMPLE_INSTANCE *click; /*!< Sample instance with click sound. */
-	ALLEGRO_FONT *font_title;
-	ALLEGRO_FONT *font_subtitle;
-	ALLEGRO_FONT *font;
-	ALLEGRO_FONT *font_selected;
-	int selected;
-	enum menustate_enum menustate;
-	bool loaded;
+	ALLEGRO_FONT *font_title; /*!< Font of "Super Derpy" text. */
+	ALLEGRO_FONT *font_subtitle; /*!< Font of "Muffin Attack" text. */
+	ALLEGRO_FONT *font; /*!< Font of standard menu item. */
+	ALLEGRO_FONT *font_selected; /*!< Font of selected menu item. */
+	int selected; /*!< Number of selected menu item. */
+	enum menustate_enum menustate; /*!< Current menu page. */
+	bool loaded; /*!< True if Menu state has been already loaded. */
 	struct {
 		bool fullscreen;
 		int fps;
 		int width;
 		int height;
-	} options;
+	} options; /*!< Options which can be changed in menu. */
 };
 
 /*! \brief Resources used by Loading state. */
@@ -217,71 +217,70 @@ struct About {
 
 /*! \brief Resources used by Map state. */
 struct Map {
-	ALLEGRO_BITMAP *map;
-	ALLEGRO_BITMAP *background;
-	ALLEGRO_BITMAP *map_bg;
-	ALLEGRO_BITMAP *highlight;
-	ALLEGRO_BITMAP *arrow;
-	int selected;
-	int available;
+	ALLEGRO_BITMAP *map; /*!< Background table bitmap. */
+	ALLEGRO_BITMAP *map_bg; /*!< Map bitmap. */
+	ALLEGRO_BITMAP *highlight; /*!< Level highlights bitmap. */
+	ALLEGRO_BITMAP *arrow; /*!< Arrow bitmap. */
+	int selected; /*!< Number of currently selected level. */
+	int available; /*!< Number of highest available level. */
 	float arrowpos; /*!< Vertical position of the arrow. */
-	ALLEGRO_SAMPLE *sample;
-	ALLEGRO_SAMPLE *click_sample;
+	ALLEGRO_SAMPLE *sample; /*!< Sample with backgrond music. */
+	ALLEGRO_SAMPLE *click_sample; /*!< Sample with click sound. */
 	ALLEGRO_SAMPLE_INSTANCE *music; /*!< Sample instance with background music. */
 	ALLEGRO_SAMPLE_INSTANCE *click; /*!< Sample instance with click sound. */
 };
 
 /*! \brief Resources used by Intro state. */
 struct Intro {
-	int position;
-	int page;
+	int position; /*!< Position of the page. */
+	int page; /*!< Current page number. */
 	bool in_animation; /*!< Animation as in page transition animation. */
-	float anim;
-	ALLEGRO_BITMAP *table;
-	ALLEGRO_BITMAP *table_bitmap;
-	ALLEGRO_BITMAP *frame;
-	ALLEGRO_BITMAP *animsprites[5];
-	ALLEGRO_FONT *font;
-	ALLEGRO_SAMPLE *sample;
+	float anim; /*!< Counter used for spritesheet animations. */
+	ALLEGRO_BITMAP *table; /*!< Background paper bitmap, two pages long. */
+	ALLEGRO_BITMAP *table_bitmap; /*!< Unscaled background paper bitmap. */
+	ALLEGRO_BITMAP *frame; /*!< Bitmap with frame around the screen. */
+	ALLEGRO_BITMAP *animsprites[5]; /*!< Array with spritesheet bitmaps. */
+	ALLEGRO_FONT *font; /*!< Font used for text. */
+	ALLEGRO_SAMPLE *sample; /*!< Background music sample. */
 	ALLEGRO_SAMPLE_INSTANCE *music; /*!< Sample instance with background music. */
-	ALLEGRO_AUDIO_STREAM *audiostream;
+	ALLEGRO_AUDIO_STREAM *audiostream; /*!< Audiostream used for Celestia voice. */
 };
 
 /*! \brief Resources used by Game state. */
 struct Game {
-	ALLEGRO_DISPLAY *display;
-	ALLEGRO_FONT *font;
-	ALLEGRO_FONT *font_console;
-	enum gamestate_enum gamestate;
-	enum gamestate_enum loadstate;
-	ALLEGRO_EVENT_QUEUE *event_queue;
-	ALLEGRO_TIMER *timer;
-	ALLEGRO_BITMAP *console;
-	bool showconsole;
-	int fx;
-	int music;
-	int voice;
-	bool fullscreen;
-	bool debug;
-	int fps;
-	int width;
-	int height;
-	bool shuttingdown;
-	bool restart;
-	struct Menu menu;
-	struct Loading loading;
-	struct Intro intro;
-	struct About about;
-	struct Map map;
-	struct Level level;
-	struct Pause pause;
+	ALLEGRO_DISPLAY *display; /*!< Main Allegro display. */
+	ALLEGRO_FONT *font; /*!< Main font used in game. */
+	ALLEGRO_FONT *font_console; /*!< Font used in game console. */
+	enum gamestate_enum gamestate; /*!< Current game state. */
+	enum gamestate_enum loadstate; /*!< Game state to be loaded. */
+	ALLEGRO_EVENT_QUEUE *event_queue; /*!< Main event queue. */
+	ALLEGRO_TIMER *timer; /*!< Main FPS timer. */
+	ALLEGRO_BITMAP *console; /*!< Bitmap with game console. */
+	bool showconsole; /*!< If true, game console is rendered on screen. */
+	int fx; /*!< Effects volume. */
+	int music; /*!< Music volume. */
+	int voice; /*!< Voice volume. */
+	bool fullscreen; /*!< Fullscreen toggle. */
+	bool debug; /*!< Toggles debug mode. */
+	int fps; /*!< FPS limit */
+	int width; /*!< Width of window as being set in configuration. */
+	int height; /*!< Height of window as being set in configuration. */
+	bool shuttingdown; /*!< If true then shut down of the game is pending. */
+	bool restart; /*!< If true then restart of the game is pending. */
+	struct Menu menu; /*!< Resources used by Menu state. */
+	struct Loading loading; /*!< Resources used by Menu state. */
+	struct Intro intro; /*!< Resources used by Intro state. */
+	struct About about; /*!< Resources used by About state. */
+	struct Map map; /*!< Resources used by Map state. */
+	struct Level level; /*!< Resources used by Level state. */
+	struct Pause pause; /*!< Resources used by Pause state. */
 	struct {
-		ALLEGRO_VOICE *v;
-		ALLEGRO_MIXER *mixer;
-		ALLEGRO_MIXER *music;
-		ALLEGRO_MIXER *voice;
-		ALLEGRO_MIXER *fx;
-	} audio;
+		ALLEGRO_VOICE *v; /*!< Main voice used by the game. */
+		ALLEGRO_MIXER *mixer; /*!< Main mixer of the game. */
+		ALLEGRO_MIXER *music; /*!< Music mixer. */
+		ALLEGRO_MIXER *voice; /*!< Voice mixer. */
+		ALLEGRO_MIXER *fx; /*!< Effects mixer. */
+	} audio; /*!< Audio resources. */
 };
 
 /*! \brief Preloads gamestate set in game->loadstate. */

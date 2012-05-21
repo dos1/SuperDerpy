@@ -1,8 +1,11 @@
 var searchData=
 [
+  ['table',['table',['../structIntro.html#a342227f3940dba9ed6b5d3bb4579fd48',1,'Intro']]],
+  ['table_5fbitmap',['table_bitmap',['../structIntro.html#a77ea358d1f44d69e5477f5dedfc9fd2b',1,'Intro']]],
   ['text_5fbitmap',['text_bitmap',['../structAbout.html#a2e5dbd59393791949fd988de7b770f86',1,'About']]],
   ['timeline_2ec',['timeline.c',['../timeline_8c.html',1,'']]],
   ['timeline_2eh',['timeline.h',['../timeline_8h.html',1,'']]],
+  ['timer',['timer',['../structGame.html#a8d6d4f06c6412d085112cd007977d868',1,'Game::timer()'],['../structTM__Action.html#adf47bc086ee38527104d0113fab58386',1,'TM_Action::timer()']]],
   ['tm_5faction',['TM_Action',['../structTM__Action.html',1,'']]],
   ['tm_5factionstate',['TM_ActionState',['../timeline_8h.html#a76cf4bbb9006628ae8bcd1a4f3afdf87',1,'timeline.h']]],
   ['tm_5faddaction',['TM_AddAction',['../timeline_8c.html#a6f909356f7c1e9bdade01c6bc46aa078',1,'TM_AddAction(bool(*func)(struct Game *, struct TM_Action *, enum TM_ActionState), struct TM_Arguments *args, char *name):&#160;timeline.c'],['../timeline_8h.html#a6f909356f7c1e9bdade01c6bc46aa078',1,'TM_AddAction(bool(*func)(struct Game *, struct TM_Action *, enum TM_ActionState), struct TM_Arguments *args, char *name):&#160;timeline.c']]],
@@ -18,5 +21,6 @@ var searchData=
   ['tm_5finitialized',['TM_Initialized',['../timeline_8c.html#a39af041908160eed75defd882e718765',1,'TM_Initialized():&#160;timeline.c'],['../timeline_8h.html#a39af041908160eed75defd882e718765',1,'TM_Initialized():&#160;timeline.c']]],
   ['tm_5fpause',['TM_Pause',['../timeline_8c.html#acbfe5777a0ca67e36ba31b6e4ce55696',1,'TM_Pause(bool pause):&#160;timeline.c'],['../timeline_8h.html#acbfe5777a0ca67e36ba31b6e4ce55696',1,'TM_Pause(bool pause):&#160;timeline.c']]],
   ['tm_5fprocess',['TM_Process',['../timeline_8c.html#a75451d54b61c3ec12815790c2e33a31e',1,'TM_Process():&#160;timeline.c'],['../timeline_8h.html#a75451d54b61c3ec12815790c2e33a31e',1,'TM_Process():&#160;timeline.c']]],
+  ['tmp_5fpos',['tmp_pos',['../structObstacle.html#afd620c4c3496cd6f84184dcda4ca7611',1,'Obstacle']]],
   ['tps',['tps',['../main_8c.html#a1f39d133bfa874d55703118487a186e6',1,'tps(struct Game *game, float t):&#160;main.c'],['../main_8h.html#a1f39d133bfa874d55703118487a186e6',1,'tps(struct Game *game, float t):&#160;main.c']]]
 ];

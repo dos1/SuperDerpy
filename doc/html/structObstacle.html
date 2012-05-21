@@ -98,6 +98,12 @@ Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structObstacle.html#a1e2b46db05325273ce0fcba3550b5b2a">speed</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structObstacle.html#a38a164a0e4d6f6508fb65c6eff39147f">points</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structObstacle.html#ac89d025f4ad7c2f083d262c1bee4e851">hit</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structObstacle.html#ad51aa07361c732a47e78c80fae2fab7c">cols</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structObstacle.html#aab33c9d4c0f05d02fda4e77cff7d7e72">rows</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structObstacle.html#a5228dff4dc773a66043e822fb4d6d00c">pos</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structObstacle.html#a862f4038bd63057d91406720bb586a9c">blanks</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structObstacle.html#afd620c4c3496cd6f84184dcda4ca7611">tmp_pos</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structObstacle.html#a96a13e4704e4643291989193a112366a">anim_speed</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structObstacle.html#a21b4ff0edaa2dc5394ff7a6328e48358">callback</a> )(struct <a class="el" href="structGame.html">Game</a> *, struct <a class="el" href="structObstacle.html">Obstacle</a> *)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structObstacle.html#a88728e624cc62993e2bf52aff816cdff">data</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structObstacle.html">Obstacle</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structObstacle.html#a13bc07b730f58d5b1c3db68e8e4aca27">prev</a></td></tr>
@@ -106,6 +112,20 @@ Public Attributes</h2></td></tr>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Structure representing obstacles and power-ups flying through the level. </p>
 </div><hr/><h2>Member Data Documentation</h2>
+<a class="anchor" id="a96a13e4704e4643291989193a112366a"></a><!-- doxytag: member="Obstacle::anim_speed" ref="a96a13e4704e4643291989193a112366a" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float <a class="el" href="structObstacle.html#a96a13e4704e4643291989193a112366a">Obstacle::anim_speed</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Speed of spritesheet animation. </p>
+
+</div>
+</div>
 <a class="anchor" id="a1f35f88fe8f6d0664da082f82ae4b774"></a><!-- doxytag: member="Obstacle::bitmap" ref="a1f35f88fe8f6d0664da082f82ae4b774" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -120,6 +140,20 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a862f4038bd63057d91406720bb586a9c"></a><!-- doxytag: member="Obstacle::blanks" ref="a862f4038bd63057d91406720bb586a9c" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="structObstacle.html#a862f4038bd63057d91406720bb586a9c">Obstacle::blanks</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Number of blank frames at the end of the spritesheet. </p>
+
+</div>
+</div>
 <a class="anchor" id="a21b4ff0edaa2dc5394ff7a6328e48358"></a><!-- doxytag: member="Obstacle::callback" ref="a21b4ff0edaa2dc5394ff7a6328e48358" args=")(struct Game *, struct Obstacle *)" -->
 <div class="memitem">
 <div class="memproto">
@@ -131,6 +165,20 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>Pointer to function called to update obstacle position, animate it, etc. </p>
+
+</div>
+</div>
+<a class="anchor" id="ad51aa07361c732a47e78c80fae2fab7c"></a><!-- doxytag: member="Obstacle::cols" ref="ad51aa07361c732a47e78c80fae2fab7c" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="structObstacle.html#ad51aa07361c732a47e78c80fae2fab7c">Obstacle::cols</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Number of columns in spritesheet. </p>
 
 </div>
 </div>
@@ -190,6 +238,20 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a5228dff4dc773a66043e822fb4d6d00c"></a><!-- doxytag: member="Obstacle::pos" ref="a5228dff4dc773a66043e822fb4d6d00c" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="structObstacle.html#a5228dff4dc773a66043e822fb4d6d00c">Obstacle::pos</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Current position in spritesheet. </p>
+
+</div>
+</div>
 <a class="anchor" id="a13bc07b730f58d5b1c3db68e8e4aca27"></a><!-- doxytag: member="Obstacle::prev" ref="a13bc07b730f58d5b1c3db68e8e4aca27" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -201,6 +263,20 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>Previous obstacle on the list. </p>
+
+</div>
+</div>
+<a class="anchor" id="aab33c9d4c0f05d02fda4e77cff7d7e72"></a><!-- doxytag: member="Obstacle::rows" ref="aab33c9d4c0f05d02fda4e77cff7d7e72" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="structObstacle.html#aab33c9d4c0f05d02fda4e77cff7d7e72">Obstacle::rows</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Number of rows in spritesheet. </p>
 
 </div>
 </div>
@@ -218,6 +294,20 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="afd620c4c3496cd6f84184dcda4ca7611"></a><!-- doxytag: member="Obstacle::tmp_pos" ref="afd620c4c3496cd6f84184dcda4ca7611" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float <a class="el" href="structObstacle.html#afd620c4c3496cd6f84184dcda4ca7611">Obstacle::tmp_pos</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Temporary counter used to slow down spritesheet animation. </p>
+
+</div>
+</div>
 <a class="anchor" id="ad9cd25e0032f6692a4f93a057ccdfd85"></a><!-- doxytag: member="Obstacle::x" ref="ad9cd25e0032f6692a4f93a057ccdfd85" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -228,7 +318,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Horizontal position on the screen, in range 0-1. </p>
+<p>Horizontal position on the screen, in range 0-100. </p>
 
 </div>
 </div>
@@ -242,7 +332,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Vertical position on the screen, in range 0-1. </p>
+<p>Vertical position on the screen, in range 0-100. </p>
 
 </div>
 </div>
@@ -267,7 +357,7 @@ Public Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat May 19 2012 18:28:11 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon May 21 2012 10:14:12 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

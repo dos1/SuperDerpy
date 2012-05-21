@@ -139,221 +139,230 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00068"></a><a class="code" href="structObstacle.html#a1e2b46db05325273ce0fcba3550b5b2a">00068</a>         <span class="keywordtype">float</span> <a class="code" href="structObstacle.html#a1e2b46db05325273ce0fcba3550b5b2a">speed</a>; 
 <a name="l00069"></a><a class="code" href="structObstacle.html#a38a164a0e4d6f6508fb65c6eff39147f">00069</a>         <span class="keywordtype">int</span> <a class="code" href="structObstacle.html#a38a164a0e4d6f6508fb65c6eff39147f">points</a>; 
 <a name="l00070"></a><a class="code" href="structObstacle.html#ac89d025f4ad7c2f083d262c1bee4e851">00070</a>         <span class="keywordtype">bool</span> <a class="code" href="structObstacle.html#ac89d025f4ad7c2f083d262c1bee4e851">hit</a>; 
-<a name="l00071"></a><a class="code" href="structObstacle.html#a21b4ff0edaa2dc5394ff7a6328e48358">00071</a>         void (*<a class="code" href="structObstacle.html#a21b4ff0edaa2dc5394ff7a6328e48358">callback</a>)(<span class="keyword">struct </span><a class="code" href="structGame.html" title="Resources used by Game state.">Game</a>*, <span class="keyword">struct </span><a class="code" href="structObstacle.html" title="Structure representing obstacles and power-ups flying through the level.">Obstacle</a>*); 
-<a name="l00072"></a><a class="code" href="structObstacle.html#a88728e624cc62993e2bf52aff816cdff">00072</a>         <span class="keywordtype">void</span> *<a class="code" href="structObstacle.html#a88728e624cc62993e2bf52aff816cdff">data</a>; 
-<a name="l00073"></a><a class="code" href="structObstacle.html#a13bc07b730f58d5b1c3db68e8e4aca27">00073</a>         <span class="keyword">struct </span><a class="code" href="structObstacle.html" title="Structure representing obstacles and power-ups flying through the level.">Obstacle</a> *<a class="code" href="structObstacle.html#a13bc07b730f58d5b1c3db68e8e4aca27">prev</a>; 
-<a name="l00074"></a><a class="code" href="structObstacle.html#aedbcf65351fa59ca9f18f6fba0287dc1">00074</a>         <span class="keyword">struct </span><a class="code" href="structObstacle.html" title="Structure representing obstacles and power-ups flying through the level.">Obstacle</a> *<a class="code" href="structObstacle.html#aedbcf65351fa59ca9f18f6fba0287dc1">next</a>; 
-<a name="l00075"></a>00075 };
-<a name="l00076"></a>00076 
-<a name="l00078"></a><a class="code" href="structSpritesheet.html">00078</a> <span class="keyword">struct </span><a class="code" href="structSpritesheet.html" title="Structure representing one spritesheet animation of Derpy.">Spritesheet</a> {
-<a name="l00079"></a><a class="code" href="structSpritesheet.html#a6788d53f825bd74cda7e50e75435befa">00079</a>         <span class="keywordtype">char</span>* <a class="code" href="structSpritesheet.html#a6788d53f825bd74cda7e50e75435befa">name</a>; 
-<a name="l00080"></a><a class="code" href="structSpritesheet.html#ad31be6e59349586862e6a813ea139bcb">00080</a>         ALLEGRO_BITMAP* <a class="code" href="structSpritesheet.html#ad31be6e59349586862e6a813ea139bcb">bitmap</a>; 
-<a name="l00081"></a><a class="code" href="structSpritesheet.html#aeab321ce6cdd45cc8a5078e80480510e">00081</a>         <span class="keywordtype">int</span> <a class="code" href="structSpritesheet.html#aeab321ce6cdd45cc8a5078e80480510e">rows</a>; 
-<a name="l00082"></a><a class="code" href="structSpritesheet.html#a3d512755ce492a35e1816fe026cc37c9">00082</a>         <span class="keywordtype">int</span> <a class="code" href="structSpritesheet.html#a3d512755ce492a35e1816fe026cc37c9">cols</a>; 
-<a name="l00083"></a><a class="code" href="structSpritesheet.html#a5010b18959949b1c577078f94a810ef3">00083</a>         <span class="keywordtype">int</span> <a class="code" href="structSpritesheet.html#a5010b18959949b1c577078f94a810ef3">blanks</a>; 
-<a name="l00084"></a><a class="code" href="structSpritesheet.html#ad011770ca540de2bad85f0cb155c774b">00084</a>         <span class="keywordtype">float</span> <a class="code" href="structSpritesheet.html#ad011770ca540de2bad85f0cb155c774b">speed</a>; 
-<a name="l00085"></a><a class="code" href="structSpritesheet.html#a85c93c8d80227725374e1581c4c8e049">00085</a>         <span class="keywordtype">float</span> <a class="code" href="structSpritesheet.html#a85c93c8d80227725374e1581c4c8e049">aspect</a>; 
-<a name="l00086"></a><a class="code" href="structSpritesheet.html#ac46cf3d01609f66aae140e3b7d3d1109">00086</a>         <span class="keywordtype">float</span> <a class="code" href="structSpritesheet.html#ac46cf3d01609f66aae140e3b7d3d1109">scale</a>; 
-<a name="l00087"></a><a class="code" href="structSpritesheet.html#a671f77f759138aa2c852e5252b6daac5">00087</a>         <span class="keyword">struct </span><a class="code" href="structSpritesheet.html" title="Structure representing one spritesheet animation of Derpy.">Spritesheet</a>* <a class="code" href="structSpritesheet.html#a671f77f759138aa2c852e5252b6daac5">next</a>; 
-<a name="l00088"></a>00088 };
-<a name="l00089"></a>00089 
-<a name="l00091"></a><a class="code" href="structLevel.html">00091</a> <span class="keyword">struct </span><a class="code" href="structLevel.html" title="Resources used by Level state.">Level</a> {
-<a name="l00092"></a><a class="code" href="structLevel.html#a1ba3ee0104c912dde5d6e70fee889512">00092</a>         <span class="keywordtype">int</span> <a class="code" href="structLevel.html#a1ba3ee0104c912dde5d6e70fee889512">current_level</a>; 
-<a name="l00093"></a><a class="code" href="structLevel.html#a936a1d131d1e056878474ca831c5e88f">00093</a>         <span class="keywordtype">float</span> <a class="code" href="structLevel.html#a936a1d131d1e056878474ca831c5e88f">speed</a>; 
-<a name="l00094"></a><a class="code" href="structLevel.html#a00321214fdc30f67615053d1ca614948">00094</a>         <span class="keywordtype">float</span> <a class="code" href="structLevel.html#a00321214fdc30f67615053d1ca614948">bg_pos</a>; 
-<a name="l00095"></a><a class="code" href="structLevel.html#ab13f799d9e2e06a04debbd97676fb512">00095</a>         <span class="keywordtype">float</span> <a class="code" href="structLevel.html#ab13f799d9e2e06a04debbd97676fb512">st_pos</a>; 
-<a name="l00096"></a><a class="code" href="structLevel.html#a665bb93951ab6b7a91543712152a3acf">00096</a>         <span class="keywordtype">float</span> <a class="code" href="structLevel.html#a665bb93951ab6b7a91543712152a3acf">fg_pos</a>; 
-<a name="l00097"></a><a class="code" href="structLevel.html#af466533be369b5ce1f48196a7f3b7b0b">00097</a>         <span class="keywordtype">float</span> <a class="code" href="structLevel.html#af466533be369b5ce1f48196a7f3b7b0b">cl_pos</a>; 
-<a name="l00098"></a><a class="code" href="structLevel.html#ae5a97d5b61c70c63e93992a9ff3935f9">00098</a>         <span class="keywordtype">float</span> <a class="code" href="structLevel.html#ae5a97d5b61c70c63e93992a9ff3935f9">derpy_x</a>; 
-<a name="l00099"></a><a class="code" href="structLevel.html#a7b3c0f5af134797a1ed21ef48da3ab00">00099</a>         <span class="keywordtype">float</span> <a class="code" href="structLevel.html#a7b3c0f5af134797a1ed21ef48da3ab00">derpy_y</a>; 
-<a name="l00100"></a><a class="code" href="structLevel.html#a49df009e8113251cfcb48fe17df0b571">00100</a>         <span class="keywordtype">float</span> <a class="code" href="structLevel.html#a49df009e8113251cfcb48fe17df0b571">hp</a>; 
-<a name="l00101"></a><a class="code" href="structLevel.html#a06cf4f2da517284d2006540051d3e5c0">00101</a>         <span class="keywordtype">bool</span> <a class="code" href="structLevel.html#a06cf4f2da517284d2006540051d3e5c0">handle_input</a>; 
-<a name="l00102"></a><a class="code" href="structLevel.html#a5bea34b31777260f1b23a1d64e6cd865">00102</a>         <span class="keywordtype">bool</span> <a class="code" href="structLevel.html#a5bea34b31777260f1b23a1d64e6cd865">failed</a>; 
-<a name="l00103"></a><a class="code" href="structLevel.html#a246ce1ecf1523db218cf067df15e511f">00103</a>         <span class="keywordtype">float</span> <a class="code" href="structLevel.html#a246ce1ecf1523db218cf067df15e511f">meter_alpha</a>; 
-<a name="l00104"></a><a class="code" href="structLevel.html#a6d608b79c9b4dd8a5efc0c7e5fb482b0">00104</a>         <span class="keywordtype">int</span> <a class="code" href="structLevel.html#a6d608b79c9b4dd8a5efc0c7e5fb482b0">sheet_rows</a>; 
-<a name="l00105"></a><a class="code" href="structLevel.html#a8a5c443169a4ff15f330a65473eedb1b">00105</a>         <span class="keywordtype">int</span> <a class="code" href="structLevel.html#a8a5c443169a4ff15f330a65473eedb1b">sheet_cols</a>; 
-<a name="l00106"></a><a class="code" href="structLevel.html#a21c699af201ffe60ccd1319b3f540947">00106</a>         <span class="keywordtype">int</span> <a class="code" href="structLevel.html#a21c699af201ffe60ccd1319b3f540947">sheet_pos</a>; 
-<a name="l00107"></a><a class="code" href="structLevel.html#aebaaba311e5d4842fdbd8c50edd40808">00107</a>         <span class="keywordtype">int</span> <a class="code" href="structLevel.html#aebaaba311e5d4842fdbd8c50edd40808">sheet_blanks</a>; 
-<a name="l00108"></a><a class="code" href="structLevel.html#a22e80ea91fd267dae85c0457e581d072">00108</a>         <span class="keywordtype">float</span> <a class="code" href="structLevel.html#a22e80ea91fd267dae85c0457e581d072">sheet_tmp</a>; 
-<a name="l00109"></a><a class="code" href="structLevel.html#a41db1345ac158898450907010a49748f">00109</a>         <span class="keywordtype">float</span> <a class="code" href="structLevel.html#a41db1345ac158898450907010a49748f">sheet_speed</a>; 
-<a name="l00110"></a><a class="code" href="structLevel.html#a3cae10fd441bcc14b6a47dd5fedafa59">00110</a>         <span class="keywordtype">float</span> <a class="code" href="structLevel.html#a3cae10fd441bcc14b6a47dd5fedafa59">sheet_speed_modifier</a>; 
-<a name="l00111"></a><a class="code" href="structLevel.html#a267a140bd3de1fc3f23a88623de425ed">00111</a>         <span class="keywordtype">float</span> <a class="code" href="structLevel.html#a267a140bd3de1fc3f23a88623de425ed">sheet_scale</a>; 
-<a name="l00112"></a><a class="code" href="structLevel.html#a234fa7b9ec35dd360e4e3c48a944fc7d">00112</a>         ALLEGRO_SAMPLE *<a class="code" href="structLevel.html#a234fa7b9ec35dd360e4e3c48a944fc7d">sample</a>; 
-<a name="l00113"></a><a class="code" href="structLevel.html#a41c6aae8f508e078b02c291e1d6f8e67">00113</a>         ALLEGRO_SAMPLE_INSTANCE *<a class="code" href="structLevel.html#a41c6aae8f508e078b02c291e1d6f8e67">music</a>; 
-<a name="l00114"></a><a class="code" href="structLevel.html#a13e322deb3298846260af31324e5b492">00114</a>         <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="structLevel.html#a13e322deb3298846260af31324e5b492">music_pos</a>; 
-<a name="l00115"></a><a class="code" href="structLevel.html#a4b4dd31284206502977b3d5b95d52abc">00115</a>         ALLEGRO_BITMAP *<a class="code" href="structLevel.html#a4b4dd31284206502977b3d5b95d52abc">background</a>; 
-<a name="l00116"></a><a class="code" href="structLevel.html#ad412b858a4e688114dd89a44ecb005bb">00116</a>         ALLEGRO_BITMAP *<a class="code" href="structLevel.html#ad412b858a4e688114dd89a44ecb005bb">stage</a>; 
-<a name="l00117"></a><a class="code" href="structLevel.html#a26c758ccdc7404a3ee0e766d1cbbf0be">00117</a>         ALLEGRO_BITMAP *<a class="code" href="structLevel.html#a26c758ccdc7404a3ee0e766d1cbbf0be">foreground</a>; 
-<a name="l00118"></a><a class="code" href="structLevel.html#a27d34b57b66d4e7f733cb6a5cc16ff18">00118</a>         ALLEGRO_BITMAP *<a class="code" href="structLevel.html#a27d34b57b66d4e7f733cb6a5cc16ff18">clouds</a>; 
-<a name="l00119"></a><a class="code" href="structLevel.html#a575fec7686bd94b5c35b15d73296c977">00119</a>         ALLEGRO_BITMAP *<a class="code" href="structLevel.html#a575fec7686bd94b5c35b15d73296c977">welcome</a>; 
-<a name="l00120"></a><a class="code" href="structLevel.html#a0e02f3a5674a2ad3c23de22b6a4ed044">00120</a>         ALLEGRO_BITMAP **<a class="code" href="structLevel.html#a0e02f3a5674a2ad3c23de22b6a4ed044">derpy_sheet</a>; 
-<a name="l00121"></a><a class="code" href="structLevel.html#ae33832497116b7a0c184959bbde21ee5">00121</a>         ALLEGRO_BITMAP *<a class="code" href="structLevel.html#ae33832497116b7a0c184959bbde21ee5">derpy</a>; 
-<a name="l00122"></a><a class="code" href="structLevel.html#a4e78a54cbf3cdcc804f65acb03cef0b3">00122</a>         ALLEGRO_BITMAP *<a class="code" href="structLevel.html#a4e78a54cbf3cdcc804f65acb03cef0b3">meter_bmp</a>; 
-<a name="l00123"></a><a class="code" href="structLevel.html#a371c97dfa3d564a19648cb1b72edbf60">00123</a>         ALLEGRO_BITMAP *<a class="code" href="structLevel.html#a371c97dfa3d564a19648cb1b72edbf60">meter_image</a>; 
-<a name="l00124"></a><a class="code" href="structLevel.html#aad19c0af5ac43ceb72df311d89bd4297">00124</a>         <span class="keyword">struct </span><a class="code" href="structSpritesheet.html" title="Structure representing one spritesheet animation of Derpy.">Spritesheet</a>* <a class="code" href="structLevel.html#aad19c0af5ac43ceb72df311d89bd4297">derpy_sheets</a>; 
-<a name="l00125"></a><a class="code" href="structLevel.html#a591b830752cc796a306e96166f736e3b">00125</a>         <span class="keyword">struct </span><a class="code" href="structSpritesheet.html" title="Structure representing one spritesheet animation of Derpy.">Spritesheet</a>* <a class="code" href="structLevel.html#a591b830752cc796a306e96166f736e3b">pony_sheets</a>; 
-<a name="l00126"></a>00126         <span class="keyword">struct </span>{
-<a name="l00127"></a><a class="code" href="structLevel.html#a8910f05e860fca85c96ae45633cc244d">00127</a>                 ALLEGRO_BITMAP *<a class="code" href="structLevel.html#a8910f05e860fca85c96ae45633cc244d">pie</a>; 
-<a name="l00128"></a><a class="code" href="structLevel.html#ad4d4190d232b674d4211f3355a9b7a93">00128</a>                 ALLEGRO_BITMAP *<a class="code" href="structLevel.html#ad4d4190d232b674d4211f3355a9b7a93">muffin</a>; 
-<a name="l00129"></a>00129         } <a class="code" href="structLevel.html#aeb52cb0b931eae0233dd1b50f2c02bf2">obst_bmps</a>; 
-<a name="l00130"></a><a class="code" href="structLevel.html#a4b4ac826580c681b588dae8ae0dde418">00130</a>         <span class="keyword">struct </span><a class="code" href="structObstacle.html" title="Structure representing obstacles and power-ups flying through the level.">Obstacle</a> *<a class="code" href="structLevel.html#a4b4ac826580c681b588dae8ae0dde418">obstacles</a>; 
-<a name="l00131"></a><a class="code" href="structLevel.html#ab9e39b9ac0f342332e034c59d55d6a07">00131</a>         <span class="keyword">struct </span><a class="code" href="structMoonwalk.html" title="Resources used by moonwalk level placeholder.">Moonwalk</a> <a class="code" href="structLevel.html#ab9e39b9ac0f342332e034c59d55d6a07">moonwalk</a>; 
-<a name="l00132"></a>00132 };
-<a name="l00133"></a>00133 
-<a name="l00135"></a><a class="code" href="main_8h.html#a5b988954c565e5ff444d61085e367fae">00135</a> <span class="keyword">enum</span> <a class="code" href="main_8h.html#a5b988954c565e5ff444d61085e367fae" title="Enum of menu states in Menu and Pause game states.">menustate_enum</a> {
-<a name="l00136"></a>00136         MENUSTATE_MAIN,
-<a name="l00137"></a>00137         MENUSTATE_OPTIONS,
-<a name="l00138"></a>00138         MENUSTATE_CONTROLS,
-<a name="l00139"></a>00139         MENUSTATE_VIDEO,
-<a name="l00140"></a>00140         MENUSTATE_PAUSE,
-<a name="l00141"></a>00141         MENUSTATE_AUDIO
-<a name="l00142"></a>00142 };
-<a name="l00143"></a>00143 
-<a name="l00145"></a><a class="code" href="structMenu.html">00145</a> <span class="keyword">struct </span><a class="code" href="structMenu.html" title="Resources used by Menu state.">Menu</a> {
-<a name="l00146"></a>00146         ALLEGRO_BITMAP *menu_fade_bitmap;
-<a name="l00147"></a>00147         ALLEGRO_BITMAP *image;
-<a name="l00148"></a>00148         ALLEGRO_BITMAP *cloud;
-<a name="l00149"></a>00149         ALLEGRO_BITMAP *cloud2;
-<a name="l00150"></a>00150         ALLEGRO_BITMAP *pie;
-<a name="l00151"></a>00151         ALLEGRO_BITMAP *pie_bitmap;
-<a name="l00152"></a>00152         ALLEGRO_BITMAP *pinkcloud_bitmap;
-<a name="l00153"></a>00153         ALLEGRO_BITMAP *pinkcloud;
-<a name="l00154"></a>00154         ALLEGRO_BITMAP *rain;
-<a name="l00155"></a>00155         ALLEGRO_BITMAP *rain_bitmap;
-<a name="l00156"></a>00156         ALLEGRO_BITMAP *mountain;
-<a name="l00157"></a>00157         <span class="keywordtype">float</span> cloud_position;
-<a name="l00158"></a>00158         <span class="keywordtype">float</span> cloud2_position;
-<a name="l00159"></a>00159         <span class="keywordtype">int</span> mountain_position;
-<a name="l00160"></a>00160         ALLEGRO_SAMPLE *sample;
-<a name="l00161"></a>00161         ALLEGRO_SAMPLE *rain_sample;
-<a name="l00162"></a>00162         ALLEGRO_SAMPLE *click_sample;
-<a name="l00163"></a><a class="code" href="structMenu.html#a7b8c42bd64118eb18dceafbd9ac8b3d5">00163</a>         ALLEGRO_SAMPLE_INSTANCE *<a class="code" href="structMenu.html#a7b8c42bd64118eb18dceafbd9ac8b3d5">music</a>; 
-<a name="l00164"></a><a class="code" href="structMenu.html#a31b58f4005206ba8ecc4b6f40223295f">00164</a>         ALLEGRO_SAMPLE_INSTANCE *<a class="code" href="structMenu.html#a31b58f4005206ba8ecc4b6f40223295f">rain_sound</a>; 
-<a name="l00165"></a><a class="code" href="structMenu.html#a8f8e8b511a64f03e71259dde1a7bf6f2">00165</a>         ALLEGRO_SAMPLE_INSTANCE *<a class="code" href="structMenu.html#a8f8e8b511a64f03e71259dde1a7bf6f2">click</a>; 
-<a name="l00166"></a>00166         ALLEGRO_FONT *font_title;
-<a name="l00167"></a>00167         ALLEGRO_FONT *font_subtitle;
-<a name="l00168"></a>00168         ALLEGRO_FONT *font;
-<a name="l00169"></a>00169         ALLEGRO_FONT *font_selected;
-<a name="l00170"></a>00170         <span class="keywordtype">int</span> selected;
-<a name="l00171"></a>00171         <span class="keyword">enum</span> <a class="code" href="main_8h.html#a5b988954c565e5ff444d61085e367fae" title="Enum of menu states in Menu and Pause game states.">menustate_enum</a> menustate;
-<a name="l00172"></a>00172         <span class="keywordtype">bool</span> loaded;
-<a name="l00173"></a>00173         <span class="keyword">struct </span>{
-<a name="l00174"></a>00174                 <span class="keywordtype">bool</span> fullscreen;
-<a name="l00175"></a>00175                 <span class="keywordtype">int</span> fps;
-<a name="l00176"></a>00176                 <span class="keywordtype">int</span> width;
-<a name="l00177"></a>00177                 <span class="keywordtype">int</span> height;
-<a name="l00178"></a>00178         } options;
-<a name="l00179"></a>00179 };
-<a name="l00180"></a>00180 
-<a name="l00182"></a><a class="code" href="structLoading.html">00182</a> <span class="keyword">struct </span><a class="code" href="structLoading.html" title="Resources used by Loading state.">Loading</a> {
-<a name="l00183"></a><a class="code" href="structLoading.html#aa6c655f5a0c41583f9c1a547ca81b98b">00183</a>         ALLEGRO_BITMAP *<a class="code" href="structLoading.html#aa6c655f5a0c41583f9c1a547ca81b98b">loading_bitmap</a>; 
-<a name="l00184"></a><a class="code" href="structLoading.html#a1d0c3f575a47ca8928fe0b5af85059c9">00184</a>         ALLEGRO_BITMAP *<a class="code" href="structLoading.html#a1d0c3f575a47ca8928fe0b5af85059c9">image</a>; 
-<a name="l00185"></a>00185 };
-<a name="l00186"></a>00186 
-<a name="l00188"></a><a class="code" href="structPause.html">00188</a> <span class="keyword">struct </span><a class="code" href="structPause.html" title="Resources used by Pause state.">Pause</a> {
-<a name="l00189"></a><a class="code" href="structPause.html#a50c6c3e5d72008c50ae7e3aba1c794d1">00189</a>         ALLEGRO_BITMAP *<a class="code" href="structPause.html#a50c6c3e5d72008c50ae7e3aba1c794d1">bitmap</a>; 
-<a name="l00190"></a><a class="code" href="structPause.html#aa2a1cde9971149a5c48f10899ca97079">00190</a>         ALLEGRO_BITMAP *<a class="code" href="structPause.html#aa2a1cde9971149a5c48f10899ca97079">derpy</a>; 
+<a name="l00072"></a><a class="code" href="structObstacle.html#ad51aa07361c732a47e78c80fae2fab7c">00072</a>         <span class="keywordtype">int</span> <a class="code" href="structObstacle.html#ad51aa07361c732a47e78c80fae2fab7c">cols</a>; 
+<a name="l00073"></a><a class="code" href="structObstacle.html#aab33c9d4c0f05d02fda4e77cff7d7e72">00073</a>         <span class="keywordtype">int</span> <a class="code" href="structObstacle.html#aab33c9d4c0f05d02fda4e77cff7d7e72">rows</a>; 
+<a name="l00074"></a><a class="code" href="structObstacle.html#a5228dff4dc773a66043e822fb4d6d00c">00074</a>         <span class="keywordtype">int</span> <a class="code" href="structObstacle.html#a5228dff4dc773a66043e822fb4d6d00c">pos</a>; 
+<a name="l00075"></a><a class="code" href="structObstacle.html#a862f4038bd63057d91406720bb586a9c">00075</a>         <span class="keywordtype">int</span> <a class="code" href="structObstacle.html#a862f4038bd63057d91406720bb586a9c">blanks</a>; 
+<a name="l00076"></a><a class="code" href="structObstacle.html#afd620c4c3496cd6f84184dcda4ca7611">00076</a>         <span class="keywordtype">float</span> <a class="code" href="structObstacle.html#afd620c4c3496cd6f84184dcda4ca7611">tmp_pos</a>; 
+<a name="l00077"></a><a class="code" href="structObstacle.html#a96a13e4704e4643291989193a112366a">00077</a>         <span class="keywordtype">float</span> <a class="code" href="structObstacle.html#a96a13e4704e4643291989193a112366a">anim_speed</a>; 
+<a name="l00079"></a><a class="code" href="structObstacle.html#a21b4ff0edaa2dc5394ff7a6328e48358">00079</a>         void (*<a class="code" href="structObstacle.html#a21b4ff0edaa2dc5394ff7a6328e48358">callback</a>)(<span class="keyword">struct </span><a class="code" href="structGame.html" title="Resources used by Game state.">Game</a>*, <span class="keyword">struct </span><a class="code" href="structObstacle.html" title="Structure representing obstacles and power-ups flying through the level.">Obstacle</a>*); 
+<a name="l00080"></a><a class="code" href="structObstacle.html#a88728e624cc62993e2bf52aff816cdff">00080</a>         <span class="keywordtype">void</span> *<a class="code" href="structObstacle.html#a88728e624cc62993e2bf52aff816cdff">data</a>; 
+<a name="l00081"></a><a class="code" href="structObstacle.html#a13bc07b730f58d5b1c3db68e8e4aca27">00081</a>         <span class="keyword">struct </span><a class="code" href="structObstacle.html" title="Structure representing obstacles and power-ups flying through the level.">Obstacle</a> *<a class="code" href="structObstacle.html#a13bc07b730f58d5b1c3db68e8e4aca27">prev</a>; 
+<a name="l00082"></a><a class="code" href="structObstacle.html#aedbcf65351fa59ca9f18f6fba0287dc1">00082</a>         <span class="keyword">struct </span><a class="code" href="structObstacle.html" title="Structure representing obstacles and power-ups flying through the level.">Obstacle</a> *<a class="code" href="structObstacle.html#aedbcf65351fa59ca9f18f6fba0287dc1">next</a>; 
+<a name="l00083"></a>00083 };
+<a name="l00084"></a>00084 
+<a name="l00086"></a><a class="code" href="structSpritesheet.html">00086</a> <span class="keyword">struct </span><a class="code" href="structSpritesheet.html" title="Structure representing one spritesheet animation of Derpy.">Spritesheet</a> {
+<a name="l00087"></a><a class="code" href="structSpritesheet.html#a6788d53f825bd74cda7e50e75435befa">00087</a>         <span class="keywordtype">char</span>* <a class="code" href="structSpritesheet.html#a6788d53f825bd74cda7e50e75435befa">name</a>; 
+<a name="l00088"></a><a class="code" href="structSpritesheet.html#ad31be6e59349586862e6a813ea139bcb">00088</a>         ALLEGRO_BITMAP* <a class="code" href="structSpritesheet.html#ad31be6e59349586862e6a813ea139bcb">bitmap</a>; 
+<a name="l00089"></a><a class="code" href="structSpritesheet.html#aeab321ce6cdd45cc8a5078e80480510e">00089</a>         <span class="keywordtype">int</span> <a class="code" href="structSpritesheet.html#aeab321ce6cdd45cc8a5078e80480510e">rows</a>; 
+<a name="l00090"></a><a class="code" href="structSpritesheet.html#a3d512755ce492a35e1816fe026cc37c9">00090</a>         <span class="keywordtype">int</span> <a class="code" href="structSpritesheet.html#a3d512755ce492a35e1816fe026cc37c9">cols</a>; 
+<a name="l00091"></a><a class="code" href="structSpritesheet.html#a5010b18959949b1c577078f94a810ef3">00091</a>         <span class="keywordtype">int</span> <a class="code" href="structSpritesheet.html#a5010b18959949b1c577078f94a810ef3">blanks</a>; 
+<a name="l00092"></a><a class="code" href="structSpritesheet.html#ad011770ca540de2bad85f0cb155c774b">00092</a>         <span class="keywordtype">float</span> <a class="code" href="structSpritesheet.html#ad011770ca540de2bad85f0cb155c774b">speed</a>; 
+<a name="l00093"></a><a class="code" href="structSpritesheet.html#a85c93c8d80227725374e1581c4c8e049">00093</a>         <span class="keywordtype">float</span> <a class="code" href="structSpritesheet.html#a85c93c8d80227725374e1581c4c8e049">aspect</a>; 
+<a name="l00094"></a><a class="code" href="structSpritesheet.html#ac46cf3d01609f66aae140e3b7d3d1109">00094</a>         <span class="keywordtype">float</span> <a class="code" href="structSpritesheet.html#ac46cf3d01609f66aae140e3b7d3d1109">scale</a>; 
+<a name="l00095"></a><a class="code" href="structSpritesheet.html#a671f77f759138aa2c852e5252b6daac5">00095</a>         <span class="keyword">struct </span><a class="code" href="structSpritesheet.html" title="Structure representing one spritesheet animation of Derpy.">Spritesheet</a>* <a class="code" href="structSpritesheet.html#a671f77f759138aa2c852e5252b6daac5">next</a>; 
+<a name="l00096"></a>00096 };
+<a name="l00097"></a>00097 
+<a name="l00099"></a><a class="code" href="structLevel.html">00099</a> <span class="keyword">struct </span><a class="code" href="structLevel.html" title="Resources used by Level state.">Level</a> {
+<a name="l00100"></a><a class="code" href="structLevel.html#a1ba3ee0104c912dde5d6e70fee889512">00100</a>         <span class="keywordtype">int</span> <a class="code" href="structLevel.html#a1ba3ee0104c912dde5d6e70fee889512">current_level</a>; 
+<a name="l00101"></a><a class="code" href="structLevel.html#a936a1d131d1e056878474ca831c5e88f">00101</a>         <span class="keywordtype">float</span> <a class="code" href="structLevel.html#a936a1d131d1e056878474ca831c5e88f">speed</a>; 
+<a name="l00102"></a><a class="code" href="structLevel.html#a0f6fa70a2e0b85437dc1973d1409381f">00102</a>         <span class="keywordtype">float</span> <a class="code" href="structLevel.html#a0f6fa70a2e0b85437dc1973d1409381f">speed_modifier</a>; 
+<a name="l00103"></a><a class="code" href="structLevel.html#a00321214fdc30f67615053d1ca614948">00103</a>         <span class="keywordtype">float</span> <a class="code" href="structLevel.html#a00321214fdc30f67615053d1ca614948">bg_pos</a>; 
+<a name="l00104"></a><a class="code" href="structLevel.html#ab13f799d9e2e06a04debbd97676fb512">00104</a>         <span class="keywordtype">float</span> <a class="code" href="structLevel.html#ab13f799d9e2e06a04debbd97676fb512">st_pos</a>; 
+<a name="l00105"></a><a class="code" href="structLevel.html#a665bb93951ab6b7a91543712152a3acf">00105</a>         <span class="keywordtype">float</span> <a class="code" href="structLevel.html#a665bb93951ab6b7a91543712152a3acf">fg_pos</a>; 
+<a name="l00106"></a><a class="code" href="structLevel.html#af466533be369b5ce1f48196a7f3b7b0b">00106</a>         <span class="keywordtype">float</span> <a class="code" href="structLevel.html#af466533be369b5ce1f48196a7f3b7b0b">cl_pos</a>; 
+<a name="l00107"></a><a class="code" href="structLevel.html#ae5a97d5b61c70c63e93992a9ff3935f9">00107</a>         <span class="keywordtype">float</span> <a class="code" href="structLevel.html#ae5a97d5b61c70c63e93992a9ff3935f9">derpy_x</a>; 
+<a name="l00108"></a><a class="code" href="structLevel.html#a7b3c0f5af134797a1ed21ef48da3ab00">00108</a>         <span class="keywordtype">float</span> <a class="code" href="structLevel.html#a7b3c0f5af134797a1ed21ef48da3ab00">derpy_y</a>; 
+<a name="l00109"></a><a class="code" href="structLevel.html#a49df009e8113251cfcb48fe17df0b571">00109</a>         <span class="keywordtype">float</span> <a class="code" href="structLevel.html#a49df009e8113251cfcb48fe17df0b571">hp</a>; 
+<a name="l00110"></a><a class="code" href="structLevel.html#a06cf4f2da517284d2006540051d3e5c0">00110</a>         <span class="keywordtype">bool</span> <a class="code" href="structLevel.html#a06cf4f2da517284d2006540051d3e5c0">handle_input</a>; 
+<a name="l00111"></a><a class="code" href="structLevel.html#a5bea34b31777260f1b23a1d64e6cd865">00111</a>         <span class="keywordtype">bool</span> <a class="code" href="structLevel.html#a5bea34b31777260f1b23a1d64e6cd865">failed</a>; 
+<a name="l00112"></a><a class="code" href="structLevel.html#a246ce1ecf1523db218cf067df15e511f">00112</a>         <span class="keywordtype">float</span> <a class="code" href="structLevel.html#a246ce1ecf1523db218cf067df15e511f">meter_alpha</a>; 
+<a name="l00113"></a><a class="code" href="structLevel.html#a6d608b79c9b4dd8a5efc0c7e5fb482b0">00113</a>         <span class="keywordtype">int</span> <a class="code" href="structLevel.html#a6d608b79c9b4dd8a5efc0c7e5fb482b0">sheet_rows</a>; 
+<a name="l00114"></a><a class="code" href="structLevel.html#a8a5c443169a4ff15f330a65473eedb1b">00114</a>         <span class="keywordtype">int</span> <a class="code" href="structLevel.html#a8a5c443169a4ff15f330a65473eedb1b">sheet_cols</a>; 
+<a name="l00115"></a><a class="code" href="structLevel.html#a21c699af201ffe60ccd1319b3f540947">00115</a>         <span class="keywordtype">int</span> <a class="code" href="structLevel.html#a21c699af201ffe60ccd1319b3f540947">sheet_pos</a>; 
+<a name="l00116"></a><a class="code" href="structLevel.html#aebaaba311e5d4842fdbd8c50edd40808">00116</a>         <span class="keywordtype">int</span> <a class="code" href="structLevel.html#aebaaba311e5d4842fdbd8c50edd40808">sheet_blanks</a>; 
+<a name="l00117"></a><a class="code" href="structLevel.html#a22e80ea91fd267dae85c0457e581d072">00117</a>         <span class="keywordtype">float</span> <a class="code" href="structLevel.html#a22e80ea91fd267dae85c0457e581d072">sheet_tmp</a>; 
+<a name="l00118"></a><a class="code" href="structLevel.html#a41db1345ac158898450907010a49748f">00118</a>         <span class="keywordtype">float</span> <a class="code" href="structLevel.html#a41db1345ac158898450907010a49748f">sheet_speed</a>; 
+<a name="l00119"></a><a class="code" href="structLevel.html#a3cae10fd441bcc14b6a47dd5fedafa59">00119</a>         <span class="keywordtype">float</span> <a class="code" href="structLevel.html#a3cae10fd441bcc14b6a47dd5fedafa59">sheet_speed_modifier</a>; 
+<a name="l00120"></a><a class="code" href="structLevel.html#a267a140bd3de1fc3f23a88623de425ed">00120</a>         <span class="keywordtype">float</span> <a class="code" href="structLevel.html#a267a140bd3de1fc3f23a88623de425ed">sheet_scale</a>; 
+<a name="l00121"></a><a class="code" href="structLevel.html#a234fa7b9ec35dd360e4e3c48a944fc7d">00121</a>         ALLEGRO_SAMPLE *<a class="code" href="structLevel.html#a234fa7b9ec35dd360e4e3c48a944fc7d">sample</a>; 
+<a name="l00122"></a><a class="code" href="structLevel.html#a41c6aae8f508e078b02c291e1d6f8e67">00122</a>         ALLEGRO_SAMPLE_INSTANCE *<a class="code" href="structLevel.html#a41c6aae8f508e078b02c291e1d6f8e67">music</a>; 
+<a name="l00123"></a><a class="code" href="structLevel.html#a13e322deb3298846260af31324e5b492">00123</a>         <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="structLevel.html#a13e322deb3298846260af31324e5b492">music_pos</a>; 
+<a name="l00124"></a><a class="code" href="structLevel.html#af504e3f628040bc2a2913a50253e856d">00124</a>         ALLEGRO_BITMAP *<a class="code" href="structLevel.html#af504e3f628040bc2a2913a50253e856d">owl</a>; 
+<a name="l00125"></a><a class="code" href="structLevel.html#a4b4dd31284206502977b3d5b95d52abc">00125</a>         ALLEGRO_BITMAP *<a class="code" href="structLevel.html#a4b4dd31284206502977b3d5b95d52abc">background</a>; 
+<a name="l00126"></a><a class="code" href="structLevel.html#ad412b858a4e688114dd89a44ecb005bb">00126</a>         ALLEGRO_BITMAP *<a class="code" href="structLevel.html#ad412b858a4e688114dd89a44ecb005bb">stage</a>; 
+<a name="l00127"></a><a class="code" href="structLevel.html#a26c758ccdc7404a3ee0e766d1cbbf0be">00127</a>         ALLEGRO_BITMAP *<a class="code" href="structLevel.html#a26c758ccdc7404a3ee0e766d1cbbf0be">foreground</a>; 
+<a name="l00128"></a><a class="code" href="structLevel.html#a27d34b57b66d4e7f733cb6a5cc16ff18">00128</a>         ALLEGRO_BITMAP *<a class="code" href="structLevel.html#a27d34b57b66d4e7f733cb6a5cc16ff18">clouds</a>; 
+<a name="l00129"></a><a class="code" href="structLevel.html#a575fec7686bd94b5c35b15d73296c977">00129</a>         ALLEGRO_BITMAP *<a class="code" href="structLevel.html#a575fec7686bd94b5c35b15d73296c977">welcome</a>; 
+<a name="l00130"></a><a class="code" href="structLevel.html#a0e02f3a5674a2ad3c23de22b6a4ed044">00130</a>         ALLEGRO_BITMAP **<a class="code" href="structLevel.html#a0e02f3a5674a2ad3c23de22b6a4ed044">derpy_sheet</a>; 
+<a name="l00131"></a><a class="code" href="structLevel.html#ae33832497116b7a0c184959bbde21ee5">00131</a>         ALLEGRO_BITMAP *<a class="code" href="structLevel.html#ae33832497116b7a0c184959bbde21ee5">derpy</a>; 
+<a name="l00132"></a><a class="code" href="structLevel.html#a4e78a54cbf3cdcc804f65acb03cef0b3">00132</a>         ALLEGRO_BITMAP *<a class="code" href="structLevel.html#a4e78a54cbf3cdcc804f65acb03cef0b3">meter_bmp</a>; 
+<a name="l00133"></a><a class="code" href="structLevel.html#a371c97dfa3d564a19648cb1b72edbf60">00133</a>         ALLEGRO_BITMAP *<a class="code" href="structLevel.html#a371c97dfa3d564a19648cb1b72edbf60">meter_image</a>; 
+<a name="l00134"></a><a class="code" href="structLevel.html#a1df786b74cff642434ea6587e6141b4d">00134</a>         <span class="keywordtype">bool</span> <a class="code" href="structLevel.html#a1df786b74cff642434ea6587e6141b4d">debug_show_sprite_frames</a>; 
+<a name="l00135"></a><a class="code" href="structLevel.html#aad19c0af5ac43ceb72df311d89bd4297">00135</a>         <span class="keyword">struct </span><a class="code" href="structSpritesheet.html" title="Structure representing one spritesheet animation of Derpy.">Spritesheet</a>* <a class="code" href="structLevel.html#aad19c0af5ac43ceb72df311d89bd4297">derpy_sheets</a>; 
+<a name="l00136"></a><a class="code" href="structLevel.html#a591b830752cc796a306e96166f736e3b">00136</a>         <span class="keyword">struct </span><a class="code" href="structSpritesheet.html" title="Structure representing one spritesheet animation of Derpy.">Spritesheet</a>* <a class="code" href="structLevel.html#a591b830752cc796a306e96166f736e3b">pony_sheets</a>; 
+<a name="l00137"></a>00137         <span class="keyword">struct </span>{
+<a name="l00138"></a><a class="code" href="structLevel.html#a8910f05e860fca85c96ae45633cc244d">00138</a>                 ALLEGRO_BITMAP *<a class="code" href="structLevel.html#a8910f05e860fca85c96ae45633cc244d">pie</a>; 
+<a name="l00139"></a><a class="code" href="structLevel.html#ad4d4190d232b674d4211f3355a9b7a93">00139</a>                 ALLEGRO_BITMAP *<a class="code" href="structLevel.html#ad4d4190d232b674d4211f3355a9b7a93">muffin</a>; 
+<a name="l00140"></a><a class="code" href="structLevel.html#aacde4816ff59c4d9ab6f403758630b8f">00140</a>                 ALLEGRO_BITMAP *<a class="code" href="structLevel.html#aacde4816ff59c4d9ab6f403758630b8f">pig</a>; 
+<a name="l00141"></a>00141         } <a class="code" href="structLevel.html#aeb52cb0b931eae0233dd1b50f2c02bf2">obst_bmps</a>; 
+<a name="l00142"></a><a class="code" href="structLevel.html#a4b4ac826580c681b588dae8ae0dde418">00142</a>         <span class="keyword">struct </span><a class="code" href="structObstacle.html" title="Structure representing obstacles and power-ups flying through the level.">Obstacle</a> *<a class="code" href="structLevel.html#a4b4ac826580c681b588dae8ae0dde418">obstacles</a>; 
+<a name="l00143"></a><a class="code" href="structLevel.html#ab9e39b9ac0f342332e034c59d55d6a07">00143</a>         <span class="keyword">struct </span><a class="code" href="structMoonwalk.html" title="Resources used by moonwalk level placeholder.">Moonwalk</a> <a class="code" href="structLevel.html#ab9e39b9ac0f342332e034c59d55d6a07">moonwalk</a>; 
+<a name="l00144"></a>00144 };
+<a name="l00145"></a>00145 
+<a name="l00147"></a><a class="code" href="main_8h.html#a5b988954c565e5ff444d61085e367fae">00147</a> <span class="keyword">enum</span> <a class="code" href="main_8h.html#a5b988954c565e5ff444d61085e367fae" title="Enum of menu states in Menu and Pause game states.">menustate_enum</a> {
+<a name="l00148"></a>00148         MENUSTATE_MAIN,
+<a name="l00149"></a>00149         MENUSTATE_OPTIONS,
+<a name="l00150"></a>00150         MENUSTATE_CONTROLS,
+<a name="l00151"></a>00151         MENUSTATE_VIDEO,
+<a name="l00152"></a>00152         MENUSTATE_PAUSE,
+<a name="l00153"></a>00153         MENUSTATE_AUDIO
+<a name="l00154"></a>00154 };
+<a name="l00155"></a>00155 
+<a name="l00157"></a><a class="code" href="structMenu.html">00157</a> <span class="keyword">struct </span><a class="code" href="structMenu.html" title="Resources used by Menu state.">Menu</a> {
+<a name="l00158"></a><a class="code" href="structMenu.html#a4d3a2c17b2882c7adf10a15ba49932b4">00158</a>         ALLEGRO_BITMAP *<a class="code" href="structMenu.html#a4d3a2c17b2882c7adf10a15ba49932b4">menu_fade_bitmap</a>; 
+<a name="l00159"></a><a class="code" href="structMenu.html#a7ac035a3356434a3ce6eae45f876eba9">00159</a>         ALLEGRO_BITMAP *<a class="code" href="structMenu.html#a7ac035a3356434a3ce6eae45f876eba9">image</a>; 
+<a name="l00160"></a><a class="code" href="structMenu.html#a9abb4b7b9f726884aa378e746857b6f2">00160</a>         ALLEGRO_BITMAP *<a class="code" href="structMenu.html#a9abb4b7b9f726884aa378e746857b6f2">cloud</a>; 
+<a name="l00161"></a><a class="code" href="structMenu.html#a6ee03b8791791ecca4f9a3b9fb1851c1">00161</a>         ALLEGRO_BITMAP *<a class="code" href="structMenu.html#a6ee03b8791791ecca4f9a3b9fb1851c1">cloud2</a>; 
+<a name="l00162"></a><a class="code" href="structMenu.html#a397eb035f88ef8138c4ba29f3fc1d63c">00162</a>         ALLEGRO_BITMAP *<a class="code" href="structMenu.html#a397eb035f88ef8138c4ba29f3fc1d63c">pie</a>; 
+<a name="l00163"></a><a class="code" href="structMenu.html#ab46ce3041264bac0aabde3abd7549877">00163</a>         ALLEGRO_BITMAP *<a class="code" href="structMenu.html#ab46ce3041264bac0aabde3abd7549877">pie_bitmap</a>; 
+<a name="l00164"></a><a class="code" href="structMenu.html#a970ef9c492ae797fc59d22fa6cfead71">00164</a>         ALLEGRO_BITMAP *<a class="code" href="structMenu.html#a970ef9c492ae797fc59d22fa6cfead71">pinkcloud_bitmap</a>; 
+<a name="l00165"></a><a class="code" href="structMenu.html#aec110fca9c47ccf9aaf6e4e7589b86f2">00165</a>         ALLEGRO_BITMAP *<a class="code" href="structMenu.html#aec110fca9c47ccf9aaf6e4e7589b86f2">pinkcloud</a>; 
+<a name="l00166"></a><a class="code" href="structMenu.html#a3ba357f6bd47ac51f9aa9b9c381bbe9f">00166</a>         ALLEGRO_BITMAP *<a class="code" href="structMenu.html#a3ba357f6bd47ac51f9aa9b9c381bbe9f">rain</a>; 
+<a name="l00167"></a><a class="code" href="structMenu.html#a9207cdbfc8c670d9069c9a2c64c6ca95">00167</a>         ALLEGRO_BITMAP *<a class="code" href="structMenu.html#a9207cdbfc8c670d9069c9a2c64c6ca95">rain_bitmap</a>; 
+<a name="l00168"></a><a class="code" href="structMenu.html#a3a957c0b3a961e3c2be9001c15e82208">00168</a>         ALLEGRO_BITMAP *<a class="code" href="structMenu.html#a3a957c0b3a961e3c2be9001c15e82208">mountain</a>; 
+<a name="l00169"></a><a class="code" href="structMenu.html#a0e6c60743147ff2ead1e0bb2f89d0036">00169</a>         <span class="keywordtype">float</span> <a class="code" href="structMenu.html#a0e6c60743147ff2ead1e0bb2f89d0036">cloud_position</a>; 
+<a name="l00170"></a><a class="code" href="structMenu.html#a143c3675204c7cf1381decbfe4be5476">00170</a>         <span class="keywordtype">float</span> <a class="code" href="structMenu.html#a143c3675204c7cf1381decbfe4be5476">cloud2_position</a>; 
+<a name="l00171"></a><a class="code" href="structMenu.html#a10770a9453a92c77d64c7fdb0e34e725">00171</a>         <span class="keywordtype">int</span> <a class="code" href="structMenu.html#a10770a9453a92c77d64c7fdb0e34e725">mountain_position</a>; 
+<a name="l00172"></a><a class="code" href="structMenu.html#a19a25811d2d08b8fa1d1819088168b72">00172</a>         ALLEGRO_SAMPLE *<a class="code" href="structMenu.html#a19a25811d2d08b8fa1d1819088168b72">sample</a>; 
+<a name="l00173"></a><a class="code" href="structMenu.html#ad14705d9172d76dc241de8f4657254cc">00173</a>         ALLEGRO_SAMPLE *<a class="code" href="structMenu.html#ad14705d9172d76dc241de8f4657254cc">rain_sample</a>; 
+<a name="l00174"></a><a class="code" href="structMenu.html#a012f284df5f9d8e39785a264c736c506">00174</a>         ALLEGRO_SAMPLE *<a class="code" href="structMenu.html#a012f284df5f9d8e39785a264c736c506">click_sample</a>; 
+<a name="l00175"></a><a class="code" href="structMenu.html#a7b8c42bd64118eb18dceafbd9ac8b3d5">00175</a>         ALLEGRO_SAMPLE_INSTANCE *<a class="code" href="structMenu.html#a7b8c42bd64118eb18dceafbd9ac8b3d5">music</a>; 
+<a name="l00176"></a><a class="code" href="structMenu.html#a31b58f4005206ba8ecc4b6f40223295f">00176</a>         ALLEGRO_SAMPLE_INSTANCE *<a class="code" href="structMenu.html#a31b58f4005206ba8ecc4b6f40223295f">rain_sound</a>; 
+<a name="l00177"></a><a class="code" href="structMenu.html#a8f8e8b511a64f03e71259dde1a7bf6f2">00177</a>         ALLEGRO_SAMPLE_INSTANCE *<a class="code" href="structMenu.html#a8f8e8b511a64f03e71259dde1a7bf6f2">click</a>; 
+<a name="l00178"></a><a class="code" href="structMenu.html#aac0297cac51099ec75020a510a6dcbb3">00178</a>         ALLEGRO_FONT *<a class="code" href="structMenu.html#aac0297cac51099ec75020a510a6dcbb3">font_title</a>; 
+<a name="l00179"></a><a class="code" href="structMenu.html#a18d7377e798bac336e55e253243d4e13">00179</a>         ALLEGRO_FONT *<a class="code" href="structMenu.html#a18d7377e798bac336e55e253243d4e13">font_subtitle</a>; 
+<a name="l00180"></a><a class="code" href="structMenu.html#aa4e0229cb315ef9e0ea90263b26a37f8">00180</a>         ALLEGRO_FONT *<a class="code" href="structMenu.html#aa4e0229cb315ef9e0ea90263b26a37f8">font</a>; 
+<a name="l00181"></a><a class="code" href="structMenu.html#a577ad17dfddafaae41dde63ca7970003">00181</a>         ALLEGRO_FONT *<a class="code" href="structMenu.html#a577ad17dfddafaae41dde63ca7970003">font_selected</a>; 
+<a name="l00182"></a><a class="code" href="structMenu.html#a608e2768a5458057048bf1c7ab9a81aa">00182</a>         <span class="keywordtype">int</span> <a class="code" href="structMenu.html#a608e2768a5458057048bf1c7ab9a81aa">selected</a>; 
+<a name="l00183"></a><a class="code" href="structMenu.html#a6c264952ac073cf2f290de86a677c876">00183</a>         <span class="keyword">enum</span> <a class="code" href="main_8h.html#a5b988954c565e5ff444d61085e367fae" title="Enum of menu states in Menu and Pause game states.">menustate_enum</a> <a class="code" href="structMenu.html#a6c264952ac073cf2f290de86a677c876">menustate</a>; 
+<a name="l00184"></a><a class="code" href="structMenu.html#afd245b822f2805677609fc0f78ee59ac">00184</a>         <span class="keywordtype">bool</span> <a class="code" href="structMenu.html#afd245b822f2805677609fc0f78ee59ac">loaded</a>; 
+<a name="l00185"></a>00185         <span class="keyword">struct </span>{
+<a name="l00186"></a>00186                 <span class="keywordtype">bool</span> fullscreen;
+<a name="l00187"></a>00187                 <span class="keywordtype">int</span> fps;
+<a name="l00188"></a>00188                 <span class="keywordtype">int</span> width;
+<a name="l00189"></a>00189                 <span class="keywordtype">int</span> height;
+<a name="l00190"></a>00190         } <a class="code" href="structMenu.html#a6ee9749efa96939d50728015a3fd6609">options</a>; 
 <a name="l00191"></a>00191 };
 <a name="l00192"></a>00192 
-<a name="l00194"></a><a class="code" href="structAbout.html">00194</a> <span class="keyword">struct </span><a class="code" href="structAbout.html" title="Resources used by About state.">About</a> {
-<a name="l00195"></a><a class="code" href="structAbout.html#a0c80b08e1d60093504bed342b41e51c1">00195</a>         ALLEGRO_BITMAP *<a class="code" href="structAbout.html#a0c80b08e1d60093504bed342b41e51c1">fade_bitmap</a>; 
-<a name="l00196"></a><a class="code" href="structAbout.html#a9e724aa84d322d2bfff5c00109492a1d">00196</a>         ALLEGRO_BITMAP *<a class="code" href="structAbout.html#a9e724aa84d322d2bfff5c00109492a1d">image</a>; 
-<a name="l00197"></a><a class="code" href="structAbout.html#a2e5dbd59393791949fd988de7b770f86">00197</a>         ALLEGRO_BITMAP *<a class="code" href="structAbout.html#a2e5dbd59393791949fd988de7b770f86">text_bitmap</a>; 
-<a name="l00198"></a><a class="code" href="structAbout.html#aa46380e60629ac39d782e18dc6a08f8e">00198</a>         ALLEGRO_BITMAP *<a class="code" href="structAbout.html#aa46380e60629ac39d782e18dc6a08f8e">letter</a>; 
-<a name="l00199"></a><a class="code" href="structAbout.html#aaae3fb8b349d9973fde2156e1f86c75b">00199</a>         ALLEGRO_SAMPLE *<a class="code" href="structAbout.html#aaae3fb8b349d9973fde2156e1f86c75b">sample</a>; 
-<a name="l00200"></a><a class="code" href="structAbout.html#a4c25f6cd85f909dca5325b8825eed16c">00200</a>         ALLEGRO_SAMPLE_INSTANCE *<a class="code" href="structAbout.html#a4c25f6cd85f909dca5325b8825eed16c">music</a>; 
-<a name="l00201"></a><a class="code" href="structAbout.html#ad14358b4942c0260e502a65b98732f93">00201</a>         ALLEGRO_FONT *<a class="code" href="structAbout.html#ad14358b4942c0260e502a65b98732f93">font</a>; 
-<a name="l00202"></a><a class="code" href="structAbout.html#a8ff1ed42ee1abd6ad45def77614015ce">00202</a>         <span class="keywordtype">float</span> <a class="code" href="structAbout.html#a8ff1ed42ee1abd6ad45def77614015ce">x</a>; 
-<a name="l00203"></a><a class="code" href="structAbout.html#a3a7b7ae29163ae843671a2c2b5e8c1f0">00203</a>         <span class="keywordtype">int</span> <a class="code" href="structAbout.html#a3a7b7ae29163ae843671a2c2b5e8c1f0">fadeloop</a>; 
-<a name="l00204"></a>00204 };
-<a name="l00205"></a>00205 
-<a name="l00207"></a><a class="code" href="structMap.html">00207</a> <span class="keyword">struct </span><a class="code" href="structMap.html" title="Resources used by Map state.">Map</a> {
-<a name="l00208"></a>00208         ALLEGRO_BITMAP *map;
-<a name="l00209"></a>00209         ALLEGRO_BITMAP *background;
-<a name="l00210"></a>00210         ALLEGRO_BITMAP *map_bg;
-<a name="l00211"></a>00211         ALLEGRO_BITMAP *highlight;
-<a name="l00212"></a>00212         ALLEGRO_BITMAP *arrow;
-<a name="l00213"></a>00213         <span class="keywordtype">int</span> selected;
-<a name="l00214"></a>00214         <span class="keywordtype">int</span> available;
-<a name="l00215"></a><a class="code" href="structMap.html#a4f395f7bdf7bc0782e29e996e87237bb">00215</a>         <span class="keywordtype">float</span> <a class="code" href="structMap.html#a4f395f7bdf7bc0782e29e996e87237bb">arrowpos</a>; 
-<a name="l00216"></a>00216         ALLEGRO_SAMPLE *sample;
-<a name="l00217"></a>00217         ALLEGRO_SAMPLE *click_sample;
-<a name="l00218"></a><a class="code" href="structMap.html#a17ae4f61c1209816b26940d1c8a88f68">00218</a>         ALLEGRO_SAMPLE_INSTANCE *<a class="code" href="structMap.html#a17ae4f61c1209816b26940d1c8a88f68">music</a>; 
-<a name="l00219"></a><a class="code" href="structMap.html#a32370a5fb75fcf7d0bebd210cb2a0985">00219</a>         ALLEGRO_SAMPLE_INSTANCE *<a class="code" href="structMap.html#a32370a5fb75fcf7d0bebd210cb2a0985">click</a>; 
-<a name="l00220"></a>00220 };
-<a name="l00221"></a>00221 
-<a name="l00223"></a><a class="code" href="structIntro.html">00223</a> <span class="keyword">struct </span><a class="code" href="structIntro.html" title="Resources used by Intro state.">Intro</a> {
-<a name="l00224"></a>00224         <span class="keywordtype">int</span> position;
-<a name="l00225"></a>00225         <span class="keywordtype">int</span> page;
-<a name="l00226"></a><a class="code" href="structIntro.html#a2876fd8a7bfd940c3936eb6445984a22">00226</a>         <span class="keywordtype">bool</span> <a class="code" href="structIntro.html#a2876fd8a7bfd940c3936eb6445984a22">in_animation</a>; 
-<a name="l00227"></a>00227         <span class="keywordtype">float</span> anim;
-<a name="l00228"></a>00228         ALLEGRO_BITMAP *table;
-<a name="l00229"></a>00229         ALLEGRO_BITMAP *table_bitmap;
-<a name="l00230"></a>00230         ALLEGRO_BITMAP *frame;
-<a name="l00231"></a>00231         ALLEGRO_BITMAP *animsprites[5];
-<a name="l00232"></a>00232         ALLEGRO_FONT *font;
-<a name="l00233"></a>00233         ALLEGRO_SAMPLE *sample;
-<a name="l00234"></a><a class="code" href="structIntro.html#a461ce3f44fd4f7d2d3713e2f31c1d1ec">00234</a>         ALLEGRO_SAMPLE_INSTANCE *<a class="code" href="structIntro.html#a461ce3f44fd4f7d2d3713e2f31c1d1ec">music</a>; 
-<a name="l00235"></a>00235         ALLEGRO_AUDIO_STREAM *audiostream;
-<a name="l00236"></a>00236 };
-<a name="l00237"></a>00237 
-<a name="l00239"></a><a class="code" href="structGame.html">00239</a> <span class="keyword">struct </span><a class="code" href="structGame.html" title="Resources used by Game state.">Game</a> {
-<a name="l00240"></a>00240         ALLEGRO_DISPLAY *display;
-<a name="l00241"></a>00241         ALLEGRO_FONT *font;
-<a name="l00242"></a>00242         ALLEGRO_FONT *font_console;
-<a name="l00243"></a>00243         <span class="keyword">enum</span> <a class="code" href="main_8h.html#ae1e9f94402d151ae1adc212237a6d153" title="Enum of all available gamestates.">gamestate_enum</a> gamestate;
-<a name="l00244"></a>00244         <span class="keyword">enum</span> <a class="code" href="main_8h.html#ae1e9f94402d151ae1adc212237a6d153" title="Enum of all available gamestates.">gamestate_enum</a> loadstate;
-<a name="l00245"></a>00245         ALLEGRO_EVENT_QUEUE *event_queue;
-<a name="l00246"></a>00246         ALLEGRO_TIMER *timer;
-<a name="l00247"></a>00247         ALLEGRO_BITMAP *console;
-<a name="l00248"></a>00248         <span class="keywordtype">bool</span> showconsole;
-<a name="l00249"></a>00249         <span class="keywordtype">int</span> fx;
-<a name="l00250"></a>00250         <span class="keywordtype">int</span> music;
-<a name="l00251"></a>00251         <span class="keywordtype">int</span> voice;
-<a name="l00252"></a>00252         <span class="keywordtype">bool</span> fullscreen;
-<a name="l00253"></a>00253         <span class="keywordtype">bool</span> debug;
-<a name="l00254"></a>00254         <span class="keywordtype">int</span> fps;
-<a name="l00255"></a>00255         <span class="keywordtype">int</span> width;
-<a name="l00256"></a>00256         <span class="keywordtype">int</span> height;
-<a name="l00257"></a>00257         <span class="keywordtype">bool</span> shuttingdown;
-<a name="l00258"></a>00258         <span class="keywordtype">bool</span> restart;
-<a name="l00259"></a>00259         <span class="keyword">struct </span><a class="code" href="structMenu.html" title="Resources used by Menu state.">Menu</a> menu;
-<a name="l00260"></a>00260         <span class="keyword">struct </span><a class="code" href="structLoading.html" title="Resources used by Loading state.">Loading</a> loading;
-<a name="l00261"></a>00261         <span class="keyword">struct </span><a class="code" href="structIntro.html" title="Resources used by Intro state.">Intro</a> intro;
-<a name="l00262"></a>00262         <span class="keyword">struct </span><a class="code" href="structAbout.html" title="Resources used by About state.">About</a> about;
-<a name="l00263"></a>00263         <span class="keyword">struct </span><a class="code" href="structMap.html" title="Resources used by Map state.">Map</a> map;
-<a name="l00264"></a>00264         <span class="keyword">struct </span><a class="code" href="structLevel.html" title="Resources used by Level state.">Level</a> level;
-<a name="l00265"></a>00265         <span class="keyword">struct </span><a class="code" href="structPause.html" title="Resources used by Pause state.">Pause</a> pause;
-<a name="l00266"></a>00266         <span class="keyword">struct </span>{
-<a name="l00267"></a>00267                 ALLEGRO_VOICE *v;
-<a name="l00268"></a>00268                 ALLEGRO_MIXER *mixer;
-<a name="l00269"></a>00269                 ALLEGRO_MIXER *music;
-<a name="l00270"></a>00270                 ALLEGRO_MIXER *voice;
-<a name="l00271"></a>00271                 ALLEGRO_MIXER *fx;
-<a name="l00272"></a>00272         } audio;
-<a name="l00273"></a>00273 };
-<a name="l00274"></a>00274 
-<a name="l00276"></a>00276 <span class="keywordtype">void</span> <a class="code" href="main_8c.html#afd10ce18ae3e601a9c462e2bd552ed32" title="Preloads gamestate set in game-&gt;loadstate.">PreloadGameState</a>(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Resources used by Game state.">Game</a> *game, <span class="keywordtype">void</span> (*progress)(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Resources used by Game state.">Game</a>*, <span class="keywordtype">float</span>));
-<a name="l00277"></a>00277 
-<a name="l00279"></a>00279 <span class="keywordtype">void</span> <a class="code" href="main_8c.html#afbbdeccc0adc5c3a0c84461f51a45a5b" title="Unloads gamestate set in game-&gt;gamestate.">UnloadGameState</a>(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Resources used by Game state.">Game</a> *game);
-<a name="l00280"></a>00280 
-<a name="l00282"></a>00282 <span class="keywordtype">void</span> <a class="code" href="main_8c.html#afe84ca1b0107fe689f9d2987d83caea0" title="Loads gamestate set in game-&gt;loadstate.">LoadGameState</a>(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Resources used by Game state.">Game</a> *game);
-<a name="l00283"></a>00283 
-<a name="l00290"></a>00290 <span class="keywordtype">void</span> <a class="code" href="main_8c.html#a83e9560a39a8b6beea953f69553dd28b" title="Print some message on game console.">PrintConsole</a>(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Resources used by Game state.">Game</a> *game, <span class="keywordtype">char</span>* format, ...);
+<a name="l00194"></a><a class="code" href="structLoading.html">00194</a> <span class="keyword">struct </span><a class="code" href="structLoading.html" title="Resources used by Loading state.">Loading</a> {
+<a name="l00195"></a><a class="code" href="structLoading.html#aa6c655f5a0c41583f9c1a547ca81b98b">00195</a>         ALLEGRO_BITMAP *<a class="code" href="structLoading.html#aa6c655f5a0c41583f9c1a547ca81b98b">loading_bitmap</a>; 
+<a name="l00196"></a><a class="code" href="structLoading.html#a1d0c3f575a47ca8928fe0b5af85059c9">00196</a>         ALLEGRO_BITMAP *<a class="code" href="structLoading.html#a1d0c3f575a47ca8928fe0b5af85059c9">image</a>; 
+<a name="l00197"></a>00197 };
+<a name="l00198"></a>00198 
+<a name="l00200"></a><a class="code" href="structPause.html">00200</a> <span class="keyword">struct </span><a class="code" href="structPause.html" title="Resources used by Pause state.">Pause</a> {
+<a name="l00201"></a><a class="code" href="structPause.html#a50c6c3e5d72008c50ae7e3aba1c794d1">00201</a>         ALLEGRO_BITMAP *<a class="code" href="structPause.html#a50c6c3e5d72008c50ae7e3aba1c794d1">bitmap</a>; 
+<a name="l00202"></a><a class="code" href="structPause.html#aa2a1cde9971149a5c48f10899ca97079">00202</a>         ALLEGRO_BITMAP *<a class="code" href="structPause.html#aa2a1cde9971149a5c48f10899ca97079">derpy</a>; 
+<a name="l00203"></a>00203 };
+<a name="l00204"></a>00204 
+<a name="l00206"></a><a class="code" href="structAbout.html">00206</a> <span class="keyword">struct </span><a class="code" href="structAbout.html" title="Resources used by About state.">About</a> {
+<a name="l00207"></a><a class="code" href="structAbout.html#a0c80b08e1d60093504bed342b41e51c1">00207</a>         ALLEGRO_BITMAP *<a class="code" href="structAbout.html#a0c80b08e1d60093504bed342b41e51c1">fade_bitmap</a>; 
+<a name="l00208"></a><a class="code" href="structAbout.html#a9e724aa84d322d2bfff5c00109492a1d">00208</a>         ALLEGRO_BITMAP *<a class="code" href="structAbout.html#a9e724aa84d322d2bfff5c00109492a1d">image</a>; 
+<a name="l00209"></a><a class="code" href="structAbout.html#a2e5dbd59393791949fd988de7b770f86">00209</a>         ALLEGRO_BITMAP *<a class="code" href="structAbout.html#a2e5dbd59393791949fd988de7b770f86">text_bitmap</a>; 
+<a name="l00210"></a><a class="code" href="structAbout.html#aa46380e60629ac39d782e18dc6a08f8e">00210</a>         ALLEGRO_BITMAP *<a class="code" href="structAbout.html#aa46380e60629ac39d782e18dc6a08f8e">letter</a>; 
+<a name="l00211"></a><a class="code" href="structAbout.html#aaae3fb8b349d9973fde2156e1f86c75b">00211</a>         ALLEGRO_SAMPLE *<a class="code" href="structAbout.html#aaae3fb8b349d9973fde2156e1f86c75b">sample</a>; 
+<a name="l00212"></a><a class="code" href="structAbout.html#a4c25f6cd85f909dca5325b8825eed16c">00212</a>         ALLEGRO_SAMPLE_INSTANCE *<a class="code" href="structAbout.html#a4c25f6cd85f909dca5325b8825eed16c">music</a>; 
+<a name="l00213"></a><a class="code" href="structAbout.html#ad14358b4942c0260e502a65b98732f93">00213</a>         ALLEGRO_FONT *<a class="code" href="structAbout.html#ad14358b4942c0260e502a65b98732f93">font</a>; 
+<a name="l00214"></a><a class="code" href="structAbout.html#a8ff1ed42ee1abd6ad45def77614015ce">00214</a>         <span class="keywordtype">float</span> <a class="code" href="structAbout.html#a8ff1ed42ee1abd6ad45def77614015ce">x</a>; 
+<a name="l00215"></a><a class="code" href="structAbout.html#a3a7b7ae29163ae843671a2c2b5e8c1f0">00215</a>         <span class="keywordtype">int</span> <a class="code" href="structAbout.html#a3a7b7ae29163ae843671a2c2b5e8c1f0">fadeloop</a>; 
+<a name="l00216"></a>00216 };
+<a name="l00217"></a>00217 
+<a name="l00219"></a><a class="code" href="structMap.html">00219</a> <span class="keyword">struct </span><a class="code" href="structMap.html" title="Resources used by Map state.">Map</a> {
+<a name="l00220"></a><a class="code" href="structMap.html#abaf70186fbb2b4b047b8350e3ec5347c">00220</a>         ALLEGRO_BITMAP *<a class="code" href="structMap.html#abaf70186fbb2b4b047b8350e3ec5347c">map</a>; 
+<a name="l00221"></a><a class="code" href="structMap.html#ac0b084971832b4466a9d91233452378d">00221</a>         ALLEGRO_BITMAP *<a class="code" href="structMap.html#ac0b084971832b4466a9d91233452378d">map_bg</a>; 
+<a name="l00222"></a><a class="code" href="structMap.html#a703b41e358b7c8ff39bf0d8dd37bb408">00222</a>         ALLEGRO_BITMAP *<a class="code" href="structMap.html#a703b41e358b7c8ff39bf0d8dd37bb408">highlight</a>; 
+<a name="l00223"></a><a class="code" href="structMap.html#a607f79d7c594540ebf58f88fb999250d">00223</a>         ALLEGRO_BITMAP *<a class="code" href="structMap.html#a607f79d7c594540ebf58f88fb999250d">arrow</a>; 
+<a name="l00224"></a><a class="code" href="structMap.html#a07b3269191a003d517977da3adc7f0a4">00224</a>         <span class="keywordtype">int</span> <a class="code" href="structMap.html#a07b3269191a003d517977da3adc7f0a4">selected</a>; 
+<a name="l00225"></a><a class="code" href="structMap.html#aa000e129cf19d6d6d9a78cfce0ef58fc">00225</a>         <span class="keywordtype">int</span> <a class="code" href="structMap.html#aa000e129cf19d6d6d9a78cfce0ef58fc">available</a>; 
+<a name="l00226"></a><a class="code" href="structMap.html#a4f395f7bdf7bc0782e29e996e87237bb">00226</a>         <span class="keywordtype">float</span> <a class="code" href="structMap.html#a4f395f7bdf7bc0782e29e996e87237bb">arrowpos</a>; 
+<a name="l00227"></a><a class="code" href="structMap.html#a3334bc47109df8757b77c9d3bf67ec5f">00227</a>         ALLEGRO_SAMPLE *<a class="code" href="structMap.html#a3334bc47109df8757b77c9d3bf67ec5f">sample</a>; 
+<a name="l00228"></a><a class="code" href="structMap.html#abcd15a027ece6075efe4baaf99c7595d">00228</a>         ALLEGRO_SAMPLE *<a class="code" href="structMap.html#abcd15a027ece6075efe4baaf99c7595d">click_sample</a>; 
+<a name="l00229"></a><a class="code" href="structMap.html#a17ae4f61c1209816b26940d1c8a88f68">00229</a>         ALLEGRO_SAMPLE_INSTANCE *<a class="code" href="structMap.html#a17ae4f61c1209816b26940d1c8a88f68">music</a>; 
+<a name="l00230"></a><a class="code" href="structMap.html#a32370a5fb75fcf7d0bebd210cb2a0985">00230</a>         ALLEGRO_SAMPLE_INSTANCE *<a class="code" href="structMap.html#a32370a5fb75fcf7d0bebd210cb2a0985">click</a>; 
+<a name="l00231"></a>00231 };
+<a name="l00232"></a>00232 
+<a name="l00234"></a><a class="code" href="structIntro.html">00234</a> <span class="keyword">struct </span><a class="code" href="structIntro.html" title="Resources used by Intro state.">Intro</a> {
+<a name="l00235"></a><a class="code" href="structIntro.html#a5c266b2590d4304f92fd3bad033f4375">00235</a>         <span class="keywordtype">int</span> <a class="code" href="structIntro.html#a5c266b2590d4304f92fd3bad033f4375">position</a>; 
+<a name="l00236"></a><a class="code" href="structIntro.html#aaea1b2d24c0c9a5437c59d727c79ebd1">00236</a>         <span class="keywordtype">int</span> <a class="code" href="structIntro.html#aaea1b2d24c0c9a5437c59d727c79ebd1">page</a>; 
+<a name="l00237"></a><a class="code" href="structIntro.html#a2876fd8a7bfd940c3936eb6445984a22">00237</a>         <span class="keywordtype">bool</span> <a class="code" href="structIntro.html#a2876fd8a7bfd940c3936eb6445984a22">in_animation</a>; 
+<a name="l00238"></a><a class="code" href="structIntro.html#a7bac02ef374847f0efbe638892cb401f">00238</a>         <span class="keywordtype">float</span> <a class="code" href="structIntro.html#a7bac02ef374847f0efbe638892cb401f">anim</a>; 
+<a name="l00239"></a><a class="code" href="structIntro.html#a342227f3940dba9ed6b5d3bb4579fd48">00239</a>         ALLEGRO_BITMAP *<a class="code" href="structIntro.html#a342227f3940dba9ed6b5d3bb4579fd48">table</a>; 
+<a name="l00240"></a><a class="code" href="structIntro.html#a77ea358d1f44d69e5477f5dedfc9fd2b">00240</a>         ALLEGRO_BITMAP *<a class="code" href="structIntro.html#a77ea358d1f44d69e5477f5dedfc9fd2b">table_bitmap</a>; 
+<a name="l00241"></a><a class="code" href="structIntro.html#a122ded263b7d3b22ee9a11555d84df52">00241</a>         ALLEGRO_BITMAP *<a class="code" href="structIntro.html#a122ded263b7d3b22ee9a11555d84df52">frame</a>; 
+<a name="l00242"></a><a class="code" href="structIntro.html#ae89a2ad7dfed9e06a558a5f92bba55bc">00242</a>         ALLEGRO_BITMAP *<a class="code" href="structIntro.html#ae89a2ad7dfed9e06a558a5f92bba55bc">animsprites</a>[5]; 
+<a name="l00243"></a><a class="code" href="structIntro.html#a896d4fdd74cf47535173eeaa6e81f734">00243</a>         ALLEGRO_FONT *<a class="code" href="structIntro.html#a896d4fdd74cf47535173eeaa6e81f734">font</a>; 
+<a name="l00244"></a><a class="code" href="structIntro.html#a0189475d44f8e19e6fe543371a9daedb">00244</a>         ALLEGRO_SAMPLE *<a class="code" href="structIntro.html#a0189475d44f8e19e6fe543371a9daedb">sample</a>; 
+<a name="l00245"></a><a class="code" href="structIntro.html#a461ce3f44fd4f7d2d3713e2f31c1d1ec">00245</a>         ALLEGRO_SAMPLE_INSTANCE *<a class="code" href="structIntro.html#a461ce3f44fd4f7d2d3713e2f31c1d1ec">music</a>; 
+<a name="l00246"></a><a class="code" href="structIntro.html#a879aa48597b2f7b6fbeb9f9911234350">00246</a>         ALLEGRO_AUDIO_STREAM *<a class="code" href="structIntro.html#a879aa48597b2f7b6fbeb9f9911234350">audiostream</a>; 
+<a name="l00247"></a>00247 };
+<a name="l00248"></a>00248 
+<a name="l00250"></a><a class="code" href="structGame.html">00250</a> <span class="keyword">struct </span><a class="code" href="structGame.html" title="Resources used by Game state.">Game</a> {
+<a name="l00251"></a><a class="code" href="structGame.html#a2bf8ece79fe05b03c31f2e2ede42e5f5">00251</a>         ALLEGRO_DISPLAY *<a class="code" href="structGame.html#a2bf8ece79fe05b03c31f2e2ede42e5f5">display</a>; 
+<a name="l00252"></a><a class="code" href="structGame.html#a455bfdaacd5f2bda80b640c02ec3250e">00252</a>         ALLEGRO_FONT *<a class="code" href="structGame.html#a455bfdaacd5f2bda80b640c02ec3250e">font</a>; 
+<a name="l00253"></a><a class="code" href="structGame.html#a692f2c3ec0f3e956aa8bdac00a864bf8">00253</a>         ALLEGRO_FONT *<a class="code" href="structGame.html#a692f2c3ec0f3e956aa8bdac00a864bf8">font_console</a>; 
+<a name="l00254"></a><a class="code" href="structGame.html#a5118a01ee6bb74fb41e8e8880a5b85a2">00254</a>         <span class="keyword">enum</span> <a class="code" href="main_8h.html#ae1e9f94402d151ae1adc212237a6d153" title="Enum of all available gamestates.">gamestate_enum</a> <a class="code" href="structGame.html#a5118a01ee6bb74fb41e8e8880a5b85a2">gamestate</a>; 
+<a name="l00255"></a><a class="code" href="structGame.html#a026bb8ebb6454c0d87dea503eafa9197">00255</a>         <span class="keyword">enum</span> <a class="code" href="main_8h.html#ae1e9f94402d151ae1adc212237a6d153" title="Enum of all available gamestates.">gamestate_enum</a> <a class="code" href="structGame.html#a026bb8ebb6454c0d87dea503eafa9197">loadstate</a>; 
+<a name="l00256"></a><a class="code" href="structGame.html#a820782e408ff7a704dc12af67eb0c44f">00256</a>         ALLEGRO_EVENT_QUEUE *<a class="code" href="structGame.html#a820782e408ff7a704dc12af67eb0c44f">event_queue</a>; 
+<a name="l00257"></a><a class="code" href="structGame.html#a8d6d4f06c6412d085112cd007977d868">00257</a>         ALLEGRO_TIMER *<a class="code" href="structGame.html#a8d6d4f06c6412d085112cd007977d868">timer</a>; 
+<a name="l00258"></a><a class="code" href="structGame.html#aa2e3d0922374dc870a1aeabf9e3b8ae2">00258</a>         ALLEGRO_BITMAP *<a class="code" href="structGame.html#aa2e3d0922374dc870a1aeabf9e3b8ae2">console</a>; 
+<a name="l00259"></a><a class="code" href="structGame.html#ab1dafa4ce0c3526439418ac24bf616d8">00259</a>         <span class="keywordtype">bool</span> <a class="code" href="structGame.html#ab1dafa4ce0c3526439418ac24bf616d8">showconsole</a>; 
+<a name="l00260"></a><a class="code" href="structGame.html#a10c0e81918f42e7367b4590e6885048e">00260</a>         <span class="keywordtype">int</span> <a class="code" href="structGame.html#a10c0e81918f42e7367b4590e6885048e">fx</a>; 
+<a name="l00261"></a><a class="code" href="structGame.html#aa8eff7d132a51e5ca97a376433790426">00261</a>         <span class="keywordtype">int</span> <a class="code" href="structGame.html#aa8eff7d132a51e5ca97a376433790426">music</a>; 
+<a name="l00262"></a><a class="code" href="structGame.html#a5523ac4fdb8fdbd2e86b58a3fbc2e6d0">00262</a>         <span class="keywordtype">int</span> <a class="code" href="structGame.html#a5523ac4fdb8fdbd2e86b58a3fbc2e6d0">voice</a>; 
+<a name="l00263"></a><a class="code" href="structGame.html#a026034417d95688ab99ba2e96e064b7f">00263</a>         <span class="keywordtype">bool</span> <a class="code" href="structGame.html#a026034417d95688ab99ba2e96e064b7f">fullscreen</a>; 
+<a name="l00264"></a><a class="code" href="structGame.html#ad1a3eb5c2d99f8cb9c1f7eb91689af6d">00264</a>         <span class="keywordtype">bool</span> <a class="code" href="structGame.html#ad1a3eb5c2d99f8cb9c1f7eb91689af6d">debug</a>; 
+<a name="l00265"></a><a class="code" href="structGame.html#a28534ff51b7b2adc76bdd8894a750d0d">00265</a>         <span class="keywordtype">int</span> <a class="code" href="structGame.html#a28534ff51b7b2adc76bdd8894a750d0d">fps</a>; 
+<a name="l00266"></a><a class="code" href="structGame.html#a06b5a675d7c0f6a9b58d395872b1a4e7">00266</a>         <span class="keywordtype">int</span> <a class="code" href="structGame.html#a06b5a675d7c0f6a9b58d395872b1a4e7">width</a>; 
+<a name="l00267"></a><a class="code" href="structGame.html#aa6d1743c45de5558a0ca99078df85250">00267</a>         <span class="keywordtype">int</span> <a class="code" href="structGame.html#aa6d1743c45de5558a0ca99078df85250">height</a>; 
+<a name="l00268"></a><a class="code" href="structGame.html#a9a1d33be7ec00f87ede16b96bd2df312">00268</a>         <span class="keywordtype">bool</span> <a class="code" href="structGame.html#a9a1d33be7ec00f87ede16b96bd2df312">shuttingdown</a>; 
+<a name="l00269"></a><a class="code" href="structGame.html#aad2035c807bd99529d1a07e443e0016b">00269</a>         <span class="keywordtype">bool</span> <a class="code" href="structGame.html#aad2035c807bd99529d1a07e443e0016b">restart</a>; 
+<a name="l00270"></a><a class="code" href="structGame.html#ad120de2e84e2d857dd83fc1116176f21">00270</a>         <span class="keyword">struct </span><a class="code" href="structMenu.html" title="Resources used by Menu state.">Menu</a> <a class="code" href="structGame.html#ad120de2e84e2d857dd83fc1116176f21">menu</a>; 
+<a name="l00271"></a><a class="code" href="structGame.html#a496f71737460d24add0f426f7fbc90b9">00271</a>         <span class="keyword">struct </span><a class="code" href="structLoading.html" title="Resources used by Loading state.">Loading</a> <a class="code" href="structGame.html#a496f71737460d24add0f426f7fbc90b9">loading</a>; 
+<a name="l00272"></a><a class="code" href="structGame.html#afcc0b09f19df8162100973a002509000">00272</a>         <span class="keyword">struct </span><a class="code" href="structIntro.html" title="Resources used by Intro state.">Intro</a> <a class="code" href="structGame.html#afcc0b09f19df8162100973a002509000">intro</a>; 
+<a name="l00273"></a><a class="code" href="structGame.html#a0f7f35de759c984c4b53c86fb0dcbd44">00273</a>         <span class="keyword">struct </span><a class="code" href="structAbout.html" title="Resources used by About state.">About</a> <a class="code" href="structGame.html#a0f7f35de759c984c4b53c86fb0dcbd44">about</a>; 
+<a name="l00274"></a><a class="code" href="structGame.html#aaab875b9e556df53251db40341046cab">00274</a>         <span class="keyword">struct </span><a class="code" href="structMap.html" title="Resources used by Map state.">Map</a> <a class="code" href="structGame.html#aaab875b9e556df53251db40341046cab">map</a>; 
+<a name="l00275"></a><a class="code" href="structGame.html#aa258068886c6db9c88d73e07c7e114f2">00275</a>         <span class="keyword">struct </span><a class="code" href="structLevel.html" title="Resources used by Level state.">Level</a> <a class="code" href="structGame.html#aa258068886c6db9c88d73e07c7e114f2">level</a>; 
+<a name="l00276"></a><a class="code" href="structGame.html#a3fe420d2d9b47cbdbb26d4f68bb5a0f0">00276</a>         <span class="keyword">struct </span><a class="code" href="structPause.html" title="Resources used by Pause state.">Pause</a> <a class="code" href="structGame.html#a3fe420d2d9b47cbdbb26d4f68bb5a0f0">pause</a>; 
+<a name="l00277"></a>00277         <span class="keyword">struct </span>{
+<a name="l00278"></a><a class="code" href="structGame.html#ab27cb95bcd1591fec45317a1e9f5062d">00278</a>                 ALLEGRO_VOICE *<a class="code" href="structGame.html#ab27cb95bcd1591fec45317a1e9f5062d">v</a>; 
+<a name="l00279"></a><a class="code" href="structGame.html#ab8265074be4df5408a7c2fc1fb89dfc4">00279</a>                 ALLEGRO_MIXER *<a class="code" href="structGame.html#ab8265074be4df5408a7c2fc1fb89dfc4">mixer</a>; 
+<a name="l00280"></a><a class="code" href="structGame.html#a49891173b349e56fcda6b0a0e39a47ee">00280</a>                 ALLEGRO_MIXER *<a class="code" href="structGame.html#a49891173b349e56fcda6b0a0e39a47ee">music</a>; 
+<a name="l00281"></a><a class="code" href="structGame.html#acc651129cb9fafedf0588e229827c543">00281</a>                 ALLEGRO_MIXER *<a class="code" href="structGame.html#acc651129cb9fafedf0588e229827c543">voice</a>; 
+<a name="l00282"></a><a class="code" href="structGame.html#adb4702bfcc1973de315ead6d683331b2">00282</a>                 ALLEGRO_MIXER *<a class="code" href="structGame.html#adb4702bfcc1973de315ead6d683331b2">fx</a>; 
+<a name="l00283"></a>00283         } <a class="code" href="structGame.html#a08fa0fd8226d1c661bbdd069197fb690">audio</a>; 
+<a name="l00284"></a>00284 };
+<a name="l00285"></a>00285 
+<a name="l00287"></a>00287 <span class="keywordtype">void</span> <a class="code" href="main_8c.html#afd10ce18ae3e601a9c462e2bd552ed32" title="Preloads gamestate set in game-&gt;loadstate.">PreloadGameState</a>(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Resources used by Game state.">Game</a> *game, <span class="keywordtype">void</span> (*progress)(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Resources used by Game state.">Game</a>*, <span class="keywordtype">float</span>));
+<a name="l00288"></a>00288 
+<a name="l00290"></a>00290 <span class="keywordtype">void</span> <a class="code" href="main_8c.html#afbbdeccc0adc5c3a0c84461f51a45a5b" title="Unloads gamestate set in game-&gt;gamestate.">UnloadGameState</a>(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Resources used by Game state.">Game</a> *game);
 <a name="l00291"></a>00291 
-<a name="l00293"></a>00293 <span class="keywordtype">void</span> <a class="code" href="main_8c.html#a3a03870a3158c22e10b22d60822c190a" title="Draws console bitmap on screen.">DrawConsole</a>(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Resources used by Game state.">Game</a> *game);
+<a name="l00293"></a>00293 <span class="keywordtype">void</span> <a class="code" href="main_8c.html#afe84ca1b0107fe689f9d2987d83caea0" title="Loads gamestate set in game-&gt;loadstate.">LoadGameState</a>(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Resources used by Game state.">Game</a> *game);
 <a name="l00294"></a>00294 
-<a name="l00296"></a>00296 ALLEGRO_BITMAP* <a class="code" href="main_8c.html#a83bf17fca7535cabf55e8fcffbf80c7c" title="Loads bitmap into memory and scales it with software linear filtering.">LoadScaledBitmap</a>(<span class="keywordtype">char</span>* filename, <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> height);
-<a name="l00297"></a>00297 
-<a name="l00299"></a>00299 <span class="keywordtype">float</span> <a class="code" href="main_8c.html#a1f39d133bfa874d55703118487a186e6" title="Draws console bitmap on screen.">tps</a>(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Resources used by Game state.">Game</a> *game, <span class="keywordtype">float</span> t);
-<a name="l00300"></a>00300 
-<a name="l00302"></a>00302 <span class="keywordtype">void</span> <a class="code" href="main_8c.html#aba8768911068b399b4118452eb3959ec" title="Draws frame from current gamestate.">DrawGameState</a>(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Resources used by Game state.">Game</a> *game);
-<a name="l00303"></a>00303 
-<a name="l00305"></a>00305 <span class="keywordtype">int</span> <a class="code" href="main_8c.html#ab0af27461c4e23c088670da5e6a971ef" title="Load shared resources.">Shared_Load</a>(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Resources used by Game state.">Game</a> *game);
-<a name="l00306"></a>00306 
-<a name="l00308"></a>00308 <span class="keywordtype">void</span> <a class="code" href="main_8c.html#af9010ebe7fc75fbd882a9a8bf7b32d0c" title="Unload shared resources.">Shared_Unload</a>(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Resources used by Game state.">Game</a> *game);
-<a name="l00309"></a>00309 
-<a name="l00310"></a>00310 <span class="preprocessor">#endif</span>
+<a name="l00301"></a>00301 <span class="keywordtype">void</span> <a class="code" href="main_8c.html#a83e9560a39a8b6beea953f69553dd28b" title="Print some message on game console.">PrintConsole</a>(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Resources used by Game state.">Game</a> *game, <span class="keywordtype">char</span>* format, ...);
+<a name="l00302"></a>00302 
+<a name="l00304"></a>00304 <span class="keywordtype">void</span> <a class="code" href="main_8c.html#a3a03870a3158c22e10b22d60822c190a" title="Draws console bitmap on screen.">DrawConsole</a>(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Resources used by Game state.">Game</a> *game);
+<a name="l00305"></a>00305 
+<a name="l00307"></a>00307 ALLEGRO_BITMAP* <a class="code" href="main_8c.html#a83bf17fca7535cabf55e8fcffbf80c7c" title="Loads bitmap into memory and scales it with software linear filtering.">LoadScaledBitmap</a>(<span class="keywordtype">char</span>* filename, <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> height);
+<a name="l00308"></a>00308 
+<a name="l00310"></a>00310 <span class="keywordtype">float</span> <a class="code" href="main_8c.html#a1f39d133bfa874d55703118487a186e6" title="Draws console bitmap on screen.">tps</a>(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Resources used by Game state.">Game</a> *game, <span class="keywordtype">float</span> t);
+<a name="l00311"></a>00311 
+<a name="l00313"></a>00313 <span class="keywordtype">void</span> <a class="code" href="main_8c.html#aba8768911068b399b4118452eb3959ec" title="Draws frame from current gamestate.">DrawGameState</a>(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Resources used by Game state.">Game</a> *game);
+<a name="l00314"></a>00314 
+<a name="l00316"></a>00316 <span class="keywordtype">int</span> <a class="code" href="main_8c.html#ab0af27461c4e23c088670da5e6a971ef" title="Load shared resources.">Shared_Load</a>(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Resources used by Game state.">Game</a> *game);
+<a name="l00317"></a>00317 
+<a name="l00319"></a>00319 <span class="keywordtype">void</span> <a class="code" href="main_8c.html#af9010ebe7fc75fbd882a9a8bf7b32d0c" title="Unload shared resources.">Shared_Unload</a>(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Resources used by Game state.">Game</a> *game);
+<a name="l00320"></a>00320 
+<a name="l00321"></a>00321 <span class="preprocessor">#endif</span>
 </pre></div></div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -372,7 +381,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat May 19 2012 18:28:10 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon May 21 2012 10:14:12 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
