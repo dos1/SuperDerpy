@@ -227,7 +227,7 @@ ALLEGRO_BITMAP* LoadScaledBitmap(char* filename, int width, int height) {
 		al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
 
 		source = al_load_bitmap( origfn );
-		al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR | ALLEGRO_MIN_LINEAR);
+		al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR | ALLEGRO_MAG_LINEAR);
 
 		ScaleBitmap(source, width, height);
 		/*al_save_bitmap(cachefn, target);

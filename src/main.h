@@ -66,6 +66,7 @@ struct Obstacle {
 	float x; /*!< Horizontal position on the screen, in range 0-100. */
 	float y; /*!< Vertical position on the screen, in range 0-100. */
 	float speed; /*!< Horizontal speed of obstracle. */
+	float angle; /*!< Angle of bitmap rotation in radians. */
 	int points; /*!< Number of points given when hit by player. Positive gives HP to power, negative takes it. */
 	bool hit; /*!< Indicates if this obstacle was already hit by the player or not. */
 

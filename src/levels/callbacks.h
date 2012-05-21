@@ -26,3 +26,6 @@ void Obst_MoveUpDown(struct Game *game, struct Obstacle *obstacle);
 
 /*! \brief Move in sinusoidal way in Y-axis relative to position at beginning. */
 void Obst_MoveSin(struct Game *game, struct Obstacle *obstacle);
+
+/*! \brief Rotate in sinusoidal way. */
+void Obst_RotateSin(struct Game *game, struct Obstacle *obstacle);

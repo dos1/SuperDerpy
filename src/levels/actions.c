@@ -116,9 +116,11 @@ bool GenerateObstacles(struct Game *game, struct TM_Action *action, enum TM_Acti
             obst->blanks = 0;
             obst->anim_speed = 0;
             obst->tmp_pos = 0;
-            if (rand()%100<=10) {
-                obst->callback = NULL;
-                obst->data = NULL;
+            obst->angle = 0;
+            if (rand()%100<=15) {
+                obst->callback= &Obst_RotateSin;
+                obst->data = malloc(sizeof(float));
+                *((float*)obst->data) = 0;
                 obst->points = 5;
                 obst->bitmap = &(game->level.obst_bmps.muffin);
             } else if (rand()%100<=75) {

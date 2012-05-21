@@ -156,7 +156,11 @@ void Level_Draw(struct Game *game) {
 							tmp->hit=true;
 					}
 
-				if (tmp->bitmap) al_draw_bitmap_region(*(tmp->bitmap),w*(tmp->pos%tmp->cols), h*(tmp->pos/tmp->cols),w,h,x,y,0);
+				if (tmp->bitmap) {
+					ALLEGRO_BITMAP* subbitmap = al_create_sub_bitmap(*(tmp->bitmap),w*(tmp->pos%tmp->cols), h*(tmp->pos/tmp->cols),w,h);
+					al_draw_rotated_bitmap(subbitmap,w/2.0, h/2.0, x+w/2.0,y+h/2.0, tmp->angle, 0);
+					al_destroy_bitmap(subbitmap);
+				}
 
 				if (tmp->anim_speed) {
 					tmp->tmp_pos+=tps(game, 60);

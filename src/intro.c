@@ -264,7 +264,7 @@ void Intro_Unload(struct Game *game) {
 	for(fadeloop=255; fadeloop>=0; fadeloop-=tps(game, 600)){
 		al_wait_for_event(game->event_queue, &ev);
 		if (game->intro.in_animation) {
-			al_draw_tinted_bitmap(game->intro.table, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), -1*al_get_display_width(game->display) + (cos(((-1*((game->intro.position)%al_get_display_width(game->display)))/(float)al_get_display_width(game->display))*(3.1415))/2.0)*al_get_display_width(game->display)  + al_get_display_width(game->display)/2.0, 0, 0);
+			al_draw_tinted_bitmap(game->intro.table, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), -1*al_get_display_width(game->display) + (cos(((-1*((game->intro.position)%al_get_display_width(game->display)))/(float)al_get_display_width(game->display))*(ALLEGRO_PI))/2.0)*al_get_display_width(game->display)  + al_get_display_width(game->display)/2.0, 0, 0);
 			AnimPage(game, game->intro.page, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1));
 		}
 		else {
