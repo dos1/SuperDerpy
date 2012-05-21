@@ -6,5 +6,6 @@ var searchData=
   ['rain_5fsound',['rain_sound',['../structMenu.html#a31b58f4005206ba8ecc4b6f40223295f',1,'Menu']]],
   ['restart',['restart',['../structGame.html#aad2035c807bd99529d1a07e443e0016b',1,'Game']]],
   ['rows',['rows',['../structObstacle.html#aab33c9d4c0f05d02fda4e77cff7d7e72',1,'Obstacle::rows()'],['../structSpritesheet.html#aeab321ce6cdd45cc8a5078e80480510e',1,'Spritesheet::rows()']]],
+  ['run',['Run',['../actions_8c.html#a745000c94a778f0473bdf85b6f113f58',1,'Run(struct Game *game, struct TM_Action *action, enum TM_ActionState state):&#160;actions.c'],['../actions_8h.html#a745000c94a778f0473bdf85b6f113f58',1,'Run(struct Game *game, struct TM_Action *action, enum TM_ActionState state):&#160;actions.c']]],
   ['runinbackground',['runinbackground',['../timeline_8c.html#afeb0e00b3d49fdeb9d5cebfc9dad84bd',1,'timeline.c']]]
 ];

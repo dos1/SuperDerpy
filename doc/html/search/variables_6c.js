@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['letter',['letter',['../structAbout.html#aa46380e60629ac39d782e18dc6a08f8e',1,'About']]],
+  ['letter',['letter',['../structLevel.html#af1b1699478b4633d76c01ea09e666df4',1,'Level::letter()'],['../structAbout.html#aa46380e60629ac39d782e18dc6a08f8e',1,'About::letter()']]],
   ['level',['level',['../structGame.html#aa258068886c6db9c88d73e07c7e114f2',1,'Game']]],
   ['loaded',['loaded',['../structMenu.html#afd245b822f2805677609fc0f78ee59ac',1,'Menu']]],
   ['loading',['loading',['../structGame.html#a496f71737460d24add0f426f7fbc90b9',1,'Game']]],
