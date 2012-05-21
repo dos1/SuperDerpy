@@ -30,7 +30,7 @@ void Obst_MoveUpDown(struct Game *game, struct Obstacle *obstacle) {
         }
     } else {
         obstacle->y += 0.5;
-        if (obstacle->y>=100) {
+        if (obstacle->y>=((al_get_display_height(game->display)-al_get_bitmap_height(*(obstacle->bitmap))/obstacle->rows)/(float)al_get_display_height(game->display))*100) {
             obstacle->data++;
         }
     }

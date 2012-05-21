@@ -100,7 +100,7 @@ bool GenerateObstacles(struct Game *game, struct TM_Action *action, enum TM_Acti
         *in = true;*/
     }
     else if (state == TM_ACTIONSTATE_RUNNING) {
-        if (rand()%(10000/(int)tps(game, 60*85*game->level.speed_modifier))<=2) {
+        if (rand()%(10000/(int)tps(game, 60*85*game->level.speed_modifier))<=3) {
             PrintConsole(game, "OBSTACLE %d", *count);
             (*count)++;
             struct Obstacle *obst = malloc(sizeof(struct Obstacle));
@@ -122,21 +122,20 @@ bool GenerateObstacles(struct Game *game, struct TM_Action *action, enum TM_Acti
                 obst->data = NULL;
                 obst->points = -5;
                 obst->bitmap = &(game->level.obst_bmps.badmuffin);
-                obst->speed = 1.2;
             } else if (rand()%100<=12) {
                 obst->callback= &Obst_RotateSin;
                 obst->data = malloc(sizeof(float));
                 *((float*)obst->data) = 0;
                 obst->points = 5;
                 obst->bitmap = &(game->level.obst_bmps.muffin);
-            } else if (rand()%100<=70) {
+            } else if (rand()%100<=65) {
                 obst->callback= &Obst_MoveUp;
                 obst->bitmap = &(game->level.obst_bmps.pie);
                 obst->data = malloc(sizeof(float));
                 *((float*)obst->data) = 0.5+(rand()%25/100.0);
                 obst->y*=1.8;
                 obst->angle = ((rand()%50)/100.0)-0.25;
-            } else if (rand()%100<=70) {
+            } else if (rand()%100<=80) {
                 obst->callback = &Obst_MoveSin;
                 obst->data = malloc(sizeof(float));
                 *((float*)obst->data) = 0;
