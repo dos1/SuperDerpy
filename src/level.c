@@ -506,7 +506,7 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 		PROGRESS;
 		game->level.letter = LoadScaledBitmap("levels/letter.png", al_get_display_height(game->display), al_get_display_height(game->display));
 		al_set_target_bitmap(game->level.letter);
-		al_draw_text(game->menu.font, al_map_rgb(0,0,0), al_get_bitmap_width(game->level.letter)*0.375, al_get_display_height(game->display)*0.45, ALLEGRO_ALIGN_CENTRE, "Letter from Twilight");
+		al_draw_text(game->menu.font, al_map_rgb(0,0,0), al_get_bitmap_width(game->level.letter)*0.45, al_get_display_height(game->display)*0.45, ALLEGRO_ALIGN_CENTRE, "Letter from Twilight");
 		al_set_target_bitmap(al_get_backbuffer(game->display));
 		PROGRESS;
 		game->level.welcome = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display)/2);
