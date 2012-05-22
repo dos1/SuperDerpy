@@ -163,7 +163,7 @@ void Menu_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
 	game->menu.rain = al_load_bitmap( "data/menu/rain.png" );
 	PROGRESS;
-	game->menu.pie = al_load_bitmap( "data/menu/pie.png" );
+	game->menu.pie = al_load_bitmap( "data/levels/pie1.png" );
 	al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR | ALLEGRO_MIN_LINEAR);
 	PROGRESS;
 

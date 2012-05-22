@@ -36,10 +36,13 @@ void About_Draw(struct Game *game) {
 	}
 
 	al_draw_scaled_bitmap(game->about.image,0,0,al_get_bitmap_width(game->about.image),al_get_bitmap_height(game->about.image),0,0,al_get_display_width(game->display), al_get_display_height(game->display),0);
-	al_draw_scaled_bitmap(game->about.letter,0,0,al_get_bitmap_width(game->about.letter),al_get_bitmap_height(game->about.letter),0,0,al_get_display_width(game->display), al_get_display_height(game->display),0);
+	al_draw_bitmap(game->about.letter, al_get_display_width(game->display)*0.3, -al_get_display_height(game->display)*0.1, 0);
 	float x = game->about.x;
 	if (x<0) x=0;
-	al_draw_bitmap_region(game->about.text_bitmap, 0, x*al_get_bitmap_height(game->about.text_bitmap), al_get_bitmap_width(game->about.text_bitmap), al_get_display_height(game->display)*0.8, al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.1, 0);
+	ALLEGRO_BITMAP* subbitmap;
+	subbitmap = al_create_sub_bitmap(game->about.text_bitmap, 0, x*al_get_bitmap_height(game->about.text_bitmap), al_get_bitmap_width(game->about.text_bitmap), al_get_display_height(game->display)*0.8);
+	al_draw_rotated_bitmap(subbitmap, al_get_bitmap_width(subbitmap)/2.0, al_get_bitmap_height(subbitmap)/2.0, al_get_display_width(game->display)*0.5+al_get_bitmap_width(subbitmap)/2.0, al_get_display_height(game->display)*0.1+al_get_bitmap_height(subbitmap)/2.0, -0.1, 0);
+	al_destroy_bitmap(subbitmap);
 	game->about.x+=tps(game, 60*0.00025);
 	if (game->about.x>1) {
 		UnloadGameState(game);
@@ -68,7 +71,7 @@ void About_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 
 	game->about.image =LoadScaledBitmap("table.png", al_get_display_width(game->display), al_get_display_height(game->display));
 	PROGRESS;
-	game->about.letter = LoadScaledBitmap("about/letter.png", al_get_display_width(game->display), al_get_display_height(game->display) );
+	game->about.letter = LoadScaledBitmap("about/letter.png", al_get_display_height(game->display)*1.3, al_get_display_height(game->display)*1.3 );
 	PROGRESS;
 
 	game->about.sample = al_load_sample( "data/about/about.flac" );
@@ -89,12 +92,12 @@ void About_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	game->about.text_bitmap = al_create_bitmap(al_get_display_width(game->display)*0.4, al_get_display_height(game->display)*3.5);
 	al_set_target_bitmap(game->about.text_bitmap);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
-	al_draw_text(game->about.font, al_map_rgb(255,255,255), 0.5*al_get_bitmap_width(game->about.text_bitmap), 0.015*al_get_bitmap_height(game->about.text_bitmap), ALLEGRO_ALIGN_CENTRE, "Super Derpy: Muffin Attack");
-	al_draw_text(game->about.font, al_map_rgb(255,255,255), 0.5*al_get_bitmap_width(game->about.text_bitmap), 0.035*al_get_bitmap_height(game->about.text_bitmap), ALLEGRO_ALIGN_CENTRE, "Version 0.1");
+	al_draw_text(game->about.font, al_map_rgb(0,0,0), 0.5*al_get_bitmap_width(game->about.text_bitmap), 0.015*al_get_bitmap_height(game->about.text_bitmap), ALLEGRO_ALIGN_CENTRE, "Super Derpy: Muffin Attack");
+	al_draw_text(game->about.font, al_map_rgb(0,0,0), 0.5*al_get_bitmap_width(game->about.text_bitmap), 0.035*al_get_bitmap_height(game->about.text_bitmap), ALLEGRO_ALIGN_CENTRE, "Version 0.1");
 	
 	float y=0.07;
 	void draw_text(char* text) {
-		al_draw_text(game->about.font, al_map_rgb(255,255,255), 0, y*al_get_bitmap_height(game->about.text_bitmap), ALLEGRO_ALIGN_LEFT, text);
+		al_draw_text(game->about.font, al_map_rgb(0,0,0), 0, y*al_get_bitmap_height(game->about.text_bitmap), ALLEGRO_ALIGN_LEFT, text);
 		y+=0.0128;
 	}
 
@@ -175,8 +178,11 @@ void About_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	
 	al_set_target_bitmap(game->about.fade_bitmap);
 	al_draw_bitmap(game->about.image, 0, 0, 0);
-	al_draw_bitmap(game->about.letter, 0, 0, 0);
-	al_draw_bitmap_region(game->about.text_bitmap, 0, 0, al_get_bitmap_width(game->about.text_bitmap), al_get_display_height(game->display)*0.8, al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.1, 0);
+	al_draw_bitmap(game->about.letter, al_get_display_width(game->display)*0.3, -al_get_display_height(game->display)*0.1, 0);
+	ALLEGRO_BITMAP* subbitmap;
+	subbitmap = al_create_sub_bitmap(game->about.text_bitmap, 0, 0, al_get_bitmap_width(game->about.text_bitmap), al_get_display_height(game->display)*0.8);
+	al_draw_rotated_bitmap(subbitmap, al_get_bitmap_width(subbitmap)/2.0, al_get_bitmap_height(subbitmap)/2.0, al_get_display_width(game->display)*0.5+al_get_bitmap_width(subbitmap)/2.0, al_get_display_height(game->display)*0.1+al_get_bitmap_height(subbitmap)/2.0, -0.1, 0);
+	al_destroy_bitmap(subbitmap);
 
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 	PROGRESS;
@@ -187,9 +193,13 @@ void About_Unload(struct Game *game) {
 	ALLEGRO_EVENT ev;
 	game->about.fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
 	al_set_target_bitmap(game->about.fade_bitmap);
-	al_draw_scaled_bitmap(game->about.image,0,0,al_get_bitmap_width(game->about.image),al_get_bitmap_height(game->about.image),0,0,al_get_display_width(game->display), al_get_display_height(game->display),0);
-	al_draw_scaled_bitmap(game->about.letter,0,0,al_get_bitmap_width(game->about.letter),al_get_bitmap_height(game->about.letter),0,0,al_get_display_width(game->display), al_get_display_height(game->display),0);
-	al_draw_bitmap_region(game->about.text_bitmap, 0, game->about.x*al_get_bitmap_height(game->about.text_bitmap), al_get_bitmap_width(game->about.text_bitmap), al_get_display_height(game->display)*0.8, al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.1, 0);
+	al_draw_bitmap(game->about.image,0,0,0);
+	al_draw_bitmap(game->about.letter, al_get_display_width(game->display)*0.3, -al_get_display_height(game->display)*0.1, 0);
+
+	ALLEGRO_BITMAP* subbitmap;
+	subbitmap = al_create_sub_bitmap(game->about.text_bitmap, 0, game->about.x*al_get_bitmap_height(game->about.text_bitmap), al_get_bitmap_width(game->about.text_bitmap), al_get_display_height(game->display)*0.8);
+	al_draw_rotated_bitmap(subbitmap, al_get_bitmap_width(subbitmap)/2.0, al_get_bitmap_height(subbitmap)/2.0, al_get_display_width(game->display)*0.5+al_get_bitmap_width(subbitmap)/2.0, al_get_display_height(game->display)*0.1+al_get_bitmap_height(subbitmap)/2.0, -0.1, 0);
+	al_destroy_bitmap(subbitmap);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 	float fadeloop;
 	if (game->about.fadeloop!=0)

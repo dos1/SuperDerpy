@@ -442,7 +442,14 @@ void Level_UnloadBitmaps(struct Game *game) {
 		al_destroy_bitmap(game->level.stage);
 		al_destroy_bitmap(game->level.clouds);
 		al_destroy_bitmap(game->level.welcome);
-		al_destroy_bitmap(game->level.obst_bmps.pie);
+		al_destroy_bitmap(game->level.letter);
+		al_destroy_bitmap(game->level.owl);
+		al_destroy_bitmap(game->level.obst_bmps.pie1);
+		al_destroy_bitmap(game->level.obst_bmps.pie2);
+		al_destroy_bitmap(game->level.obst_bmps.pig);
+		al_destroy_bitmap(game->level.obst_bmps.muffin);
+		al_destroy_bitmap(game->level.obst_bmps.badmuffin);
+		al_destroy_bitmap(game->level.obst_bmps.screwball);
 		al_destroy_bitmap(game->level.meter_bmp);
 		al_destroy_bitmap(game->level.meter_image);
 	}
@@ -483,7 +490,9 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 		PROGRESS;
 		game->level.stage = LoadScaledBitmap("levels/1/stage.png", al_get_display_height(game->display)*4.73307291666666666667, al_get_display_height(game->display));
 		PROGRESS;
-		game->level.obst_bmps.pie = LoadScaledBitmap("menu/pie.png", al_get_display_width(game->display)*0.1, al_get_display_height(game->display)*0.1);
+		game->level.obst_bmps.pie1 = LoadScaledBitmap("levels/pie1.png", al_get_display_width(game->display)*0.1, al_get_display_height(game->display)*0.08);
+		PROGRESS;
+		game->level.obst_bmps.pie2 = LoadScaledBitmap("levels/pie2.png", al_get_display_width(game->display)*0.1, al_get_display_height(game->display)*0.08);
 		PROGRESS;
 		game->level.obst_bmps.pig = LoadScaledBitmap("levels/pig.png", (int)(al_get_display_width(game->display)*0.15)*3, (int)(al_get_display_height(game->display)*0.2)*3);
 		PROGRESS;
@@ -495,9 +504,9 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 		PROGRESS;
 		game->level.owl = LoadScaledBitmap("levels/owl.png", al_get_display_width(game->display)*0.08, al_get_display_width(game->display)*0.08);
 		PROGRESS;
-		game->level.letter = LoadScaledBitmap("levels/letter.png", al_get_display_width(game->display), al_get_display_height(game->display));
+		game->level.letter = LoadScaledBitmap("levels/letter.png", al_get_display_height(game->display), al_get_display_height(game->display));
 		al_set_target_bitmap(game->level.letter);
-		al_draw_text(game->menu.font_subtitle, al_map_rgb(0,0,0), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.45, ALLEGRO_ALIGN_CENTRE, "Letter from Twilight");
+		al_draw_text(game->menu.font, al_map_rgb(0,0,0), al_get_bitmap_width(game->level.letter)*0.375, al_get_display_height(game->display)*0.45, ALLEGRO_ALIGN_CENTRE, "Letter from Twilight");
 		al_set_target_bitmap(al_get_backbuffer(game->display));
 		PROGRESS;
 		game->level.welcome = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display)/2);

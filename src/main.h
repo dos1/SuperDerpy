@@ -137,7 +137,8 @@ struct Level {
 	struct Spritesheet* derpy_sheets; /*!< List of sprite sheets of Derpy character. */
 	struct Spritesheet* pony_sheets; /*!< List of sprite sheets of character rescued by Derpy. */
 	struct {
-		ALLEGRO_BITMAP *pie; /*!< Pie bitmap. */
+		ALLEGRO_BITMAP *pie1; /*!< Pie bitmap. */
+		ALLEGRO_BITMAP *pie2; /*!< Pie bitmap (crossed). */
 		ALLEGRO_BITMAP *muffin; /*!< Good muffin bitmap. */
 		ALLEGRO_BITMAP *badmuffin; /*!< Bad muffin bitmap. */
 		ALLEGRO_BITMAP *pig; /*!< Pig spritesheet bitmap. */

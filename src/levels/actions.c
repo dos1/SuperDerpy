@@ -144,8 +144,12 @@ bool GenerateObstacles(struct Game *game, struct TM_Action *action, enum TM_Acti
                 obst->bitmap = &(game->level.obst_bmps.muffin);
             } else if (rand()%100<=65) {
                 obst->callback= &Obst_MoveUp;
-                obst->bitmap = &(game->level.obst_bmps.pie);
-                obst->data = malloc(sizeof(float));
+								if (rand()%100<=80) obst->bitmap = &(game->level.obst_bmps.pie1);
+								else {
+									obst->bitmap = &(game->level.obst_bmps.pie2);
+									obst->points = -12;
+								}
+								obst->data = malloc(sizeof(float));
                 *((float*)obst->data) = 0.25+(rand()%50/100.0);
                 obst->y*=1.8;
                 obst->angle = ((rand()%50)/100.0)-0.25;
@@ -204,7 +208,7 @@ bool Letter(struct Game *game, struct TM_Action *action, enum TM_ActionState sta
     float* f = (float*)action->arguments->value;
     *f+=tps(game,350);
     if (*f>255) *f=255;
-    al_draw_tinted_bitmap(game->level.letter, al_map_rgba(*f,*f,*f,*f), 0, 0, 0);
+		al_draw_tinted_bitmap(game->level.letter, al_map_rgba(*f,*f,*f,*f), (al_get_display_width(game->display)-al_get_bitmap_width(game->level.letter))/2.0, 0, 0);
     struct ALLEGRO_KEYBOARD_STATE keyboard;
     al_get_keyboard_state(&keyboard);
     if (al_key_down(&keyboard, ALLEGRO_KEY_ENTER)) {
