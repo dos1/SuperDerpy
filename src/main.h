@@ -141,6 +141,7 @@ struct Level {
 		ALLEGRO_BITMAP *pie2; /*!< Pie bitmap (crossed). */
 		ALLEGRO_BITMAP *muffin; /*!< Good muffin bitmap. */
 		ALLEGRO_BITMAP *badmuffin; /*!< Bad muffin bitmap. */
+		ALLEGRO_BITMAP *cherry; /*!< Cherry bitmap. */
 		ALLEGRO_BITMAP *pig; /*!< Pig spritesheet bitmap. */
 		ALLEGRO_BITMAP *screwball; /*!< Screwball spritesheet bitmap. */
 	} obst_bmps; /*!< Obstacle bitmaps. */
