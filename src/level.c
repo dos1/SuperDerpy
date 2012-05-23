@@ -456,7 +456,7 @@ void Level_UnloadBitmaps(struct Game *game) {
 }
 
 void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float)) {
-	PROGRESS_INIT(15);
+	PROGRESS_INIT(17);
 	int x = 0;
 	struct Spritesheet *tmp = game->level.derpy_sheets;
 	while (tmp) {
