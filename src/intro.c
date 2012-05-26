@@ -28,11 +28,18 @@ void AnimPage(struct Game *game, int page, ALLEGRO_COLOR tint) {
 	if (game->intro.in_animation) offset = -1*al_get_display_width(game->display) + (cos(((-1*((game->intro.position)%al_get_display_width(game->display)))/(float)al_get_display_width(game->display))*(ALLEGRO_PI))/2.0)*al_get_display_width(game->display) + al_get_display_width(game->display)/2.0;
 	
 	int amount1 = 2, amount2 = 2;
-	if (page==3) amount1=3;
-	if (page==2) amount2=3;
+	float anim = game->intro.anim;
+	if (page==3) { amount1=3; amount2=3; }
+	if (page==5) { amount1=5; amount2=3; anim*=2; }
 
-	if (page<6) al_draw_tinted_bitmap_region(game->intro.animsprites[page-1],tint,al_get_display_width(game->display)*0.3125*(int)fmod(game->intro.anim,amount1),al_get_display_height(game->display)*0.63*(((int)(game->intro.anim/amount1))%amount1),al_get_display_width(game->display)*0.3125, al_get_display_height(game->display)*0.63,offset+al_get_display_width(game->display)*0.08, al_get_display_height(game->display)*0.18,0);
-	if (page<5) al_draw_tinted_bitmap_region(game->intro.animsprites[page],tint,al_get_display_width(game->display)*0.3125*(int)fmod(game->intro.anim,amount2),al_get_display_height(game->display)*0.63*(((int)(game->intro.anim/amount2))%amount2),al_get_display_width(game->display)*0.3125, al_get_display_height(game->display)*0.63,offset+al_get_display_width(game->display)*1.08, al_get_display_height(game->display)*0.18,0);
+	if (page<6) al_draw_tinted_bitmap_region(game->intro.animsprites[page-1],tint,al_get_display_width(game->display)*0.3125*(int)fmod(anim,amount1),al_get_display_height(game->display)*0.63*(((int)(anim/amount1))%amount2),al_get_display_width(game->display)*0.3125, al_get_display_height(game->display)*0.63,offset+al_get_display_width(game->display)*0.08, al_get_display_height(game->display)*0.18,0);
+
+	amount1 = 2;
+	amount2 = 2;
+	if (page==2) { amount1=3; amount2=3; }
+	if (page==4) { amount1=5; amount2=3; anim*=2; }
+
+	if (page<5) al_draw_tinted_bitmap_region(game->intro.animsprites[page],tint,al_get_display_width(game->display)*0.3125*(int)fmod(anim,amount1),al_get_display_height(game->display)*0.63*(((int)(anim/amount1))%amount2),al_get_display_width(game->display)*0.3125, al_get_display_height(game->display)*0.63,offset+al_get_display_width(game->display)*1.08, al_get_display_height(game->display)*0.18,0);
 
 	game->intro.anim += tps(game, 2);
 }
@@ -222,7 +229,7 @@ void Intro_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	PROGRESS;
 	game->intro.animsprites[3] = LoadScaledBitmap("intro/4.png", (int)(al_get_display_width(game->display)*0.3125)*2, al_get_display_height(game->display)*0.63*2);
 	PROGRESS;
-	game->intro.animsprites[4] = LoadScaledBitmap("about/letter.png", (int)(al_get_display_width(game->display)*0.3125)*2, al_get_display_height(game->display)*0.63*2);
+	game->intro.animsprites[4] = LoadScaledBitmap("intro/5.png", (int)(al_get_display_width(game->display)*0.3125)*5, al_get_display_height(game->display)*0.63*3);
 	PROGRESS;
 
 	game->intro.table_bitmap =LoadScaledBitmap("intro/paper.png", al_get_display_width(game->display), al_get_display_height(game->display));
