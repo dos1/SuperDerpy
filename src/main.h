@@ -107,6 +107,7 @@ struct Level {
 	float cl_pos; /*!< Position of the clouds layer of the scene. */
 	float derpy_x; /*!< Horizontal position of Derpy (0-1). */
 	float derpy_y; /*!< Vertical position of Derpy (0-1). */
+	float derpy_angle; /*!< Angle of Derpy sprite on screen (radians). */
 	float hp; /*!< Player health points (0-1). */
 	bool handle_input; /*!< When false, player looses control over Derpy. */
 	bool failed; /*!< Indicates if player failed level. */

@@ -74,6 +74,7 @@ bool Fly(struct Game *game, struct TM_Action *action, enum TM_ActionState state)
     if (state != TM_ACTIONSTATE_RUNNING) return false;
     if (!(action->arguments)) {
         SelectDerpySpritesheet(game, "fly");
+        game->level.derpy_angle = tps(game, 60*-0.15);
         /*game->level.gg = true;*/
         TM_AddBackgroundAction(&ShowMeter, NULL, 0, "showmeter");
         action->arguments++;

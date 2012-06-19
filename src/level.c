@@ -103,12 +103,18 @@ void Level_Draw(struct Game *game) {
 		struct ALLEGRO_KEYBOARD_STATE keyboard;
 		al_get_keyboard_state(&keyboard);
 		if (game->level.handle_input) {
+			if (game->level.derpy_angle > 0) { game->level.derpy_angle -= tps(game, 60*0.02); if (game->level.derpy_angle < 0) game->level.derpy_angle = 0; }
+			if (game->level.derpy_angle < 0) { game->level.derpy_angle += tps(game, 60*0.02); if (game->level.derpy_angle > 0) game->level.derpy_angle = 0; }
 			if (al_key_down(&keyboard, ALLEGRO_KEY_UP)) {
-				game->level.derpy_y -= tps(game, 60*0.0075);
+				game->level.derpy_y -= tps(game, 60*0.005);
+				game->level.derpy_angle -= tps(game, 60*0.03);
+				if (game->level.derpy_angle < tps(game, 60*-0.15)) game->level.derpy_angle = tps(game, 60*-0.15);
 				/*PrintConsole(game, "Derpy Y position: %f", game->level.derpy_y);*/
 			}
 			if (al_key_down(&keyboard, ALLEGRO_KEY_DOWN)) {
-				game->level.derpy_y += tps(game, 60*0.0075);
+				game->level.derpy_y += tps(game, 60*0.005);
+				game->level.derpy_angle += tps(game, 60*0.03);
+				if (game->level.derpy_angle > tps(game, 60*0.15)) game->level.derpy_angle = tps(game, 60*0.15);
 				/*PrintConsole(game, "Derpy Y position: %f", game->level.derpy_y);*/
 			}
 			/*if ((game->level.derpy_y > 0.6) && (game->level.flying)) {
@@ -124,8 +130,10 @@ void Level_Draw(struct Game *game) {
 			if (!game->level.flying) game->level.sheet_speed = tps(game, 60*0.0020/game->level.speed); */
 			if (game->level.derpy_y < 0) game->level.derpy_y=0;
 			else if (game->level.derpy_y > 0.8) game->level.derpy_y=0.8;
-		}
 
+			game->level.derpy_y += tps(game, 60*(game->level.derpy_angle / 30));
+
+		}
 		al_draw_bitmap(game->level.clouds, (-game->level.cl_pos)*al_get_bitmap_width(game->level.clouds), 0, 0);
 		al_draw_bitmap(game->level.clouds, (1+(-game->level.cl_pos))*al_get_bitmap_width(game->level.clouds), 0, 0);
 		al_draw_bitmap(game->level.background, (-game->level.bg_pos)*al_get_bitmap_width(game->level.background), 0, 0);
@@ -216,8 +224,8 @@ void Level_Draw(struct Game *game) {
 			if (game->level.sheet_pos>=game->level.sheet_cols*game->level.sheet_rows-game->level.sheet_blanks) game->level.sheet_pos=0;
 		}
 		al_set_target_bitmap(al_get_backbuffer(game->display));
-		
-		al_draw_tinted_bitmap(game->level.derpy, al_map_rgba(255,255-colision*255,255-colision*255,255), derpyx+al_get_display_width(game->display)*0.1953125-al_get_bitmap_width(game->level.derpy), derpyy, 0);
+
+		al_draw_tinted_rotated_bitmap(game->level.derpy, al_map_rgba(255,255-colision*255,255-colision*255,255), al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy)/2, derpyx+al_get_display_width(game->display)*0.1953125, derpyy + al_get_bitmap_height(game->level.derpy)/2, game->level.derpy_angle, 0);
 
 /*		if ((((x>=derpyx+0.36*derpyw) && (x<=derpyx+0.94*derpyw)) || ((x+w>=derpyx+0.36*derpyw) && (x+w<=derpyx+0.94*derpyw))) &&
 			(((y>=derpyy+0.26*derpyh) && (y<=derpyy+0.76*derpyh)) || ((y+h>=derpyy+0.26*derpyh) && (y+h<=derpyy+0.76*derpyh)))) {
@@ -268,6 +276,7 @@ void Level_Load(struct Game *game) {
 	game->level.speed_modifier = 1;
 	game->level.derpy_x = -0.2;
 	game->level.derpy_y = 0.6;
+	game->level.derpy_angle = 0;
 	game->level.sheet_speed = tps(game, 60*2.4);
 	game->level.sheet_tmp = 0;
 	game->level.handle_input = false;
