@@ -331,6 +331,7 @@ void Level_Load(struct Game *game) {
 		obst->blanks = 0;
 		obst->anim_speed = 0;
 		obst->tmp_pos = 0;
+		obst->angle = 0;
 		obst->callback = NULL;
 		obst->data = NULL;
 		obst->bitmap = &(game->level.owl);
