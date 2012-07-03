@@ -466,6 +466,14 @@ int main(int argc, char **argv){
 				}
 				game.showconsole = true;
 				PrintConsole(&game, "DEBUG: 512 frames skipped...");
+			} else if ((game.debug) && (ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_F12)) {
+				ALLEGRO_PATH *path = al_get_standard_path(ALLEGRO_USER_DOCUMENTS_PATH);
+				char filename[255] = { };
+				sprintf(filename, "SuperDerpy_%ld_%ld.png", time(NULL), clock());
+				al_set_path_filename(path, filename);
+				al_save_bitmap(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP), al_get_backbuffer(game.display));
+				PrintConsole(&game, "Screenshot stored in %s", al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
+				al_destroy_path(path);
 			}
 			KEYDOWN_STATE(GAMESTATE_PAUSE, Pause)
 			KEYDOWN_STATE(GAMESTATE_MENU, Menu)
