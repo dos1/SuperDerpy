@@ -132,39 +132,28 @@ void Menu_Draw(struct Game *game) {
 	al_draw_bitmap(game->menu.pie_bitmap, al_get_display_width(game->display)/2, al_get_display_height(game->display)*(game->menu.cloud_position)/10,0);
 
 	/* GLASS EFFECT */
-	ALLEGRO_BITMAP *bg = al_create_bitmap(al_get_bitmap_width(game->menu.logo), al_get_bitmap_height(game->menu.logo));
-	al_set_target_bitmap(bg);
+	al_set_target_bitmap(game->menu.blurbg);
 	al_draw_bitmap_region(al_get_backbuffer(game->display), (al_get_display_width(game->display)/2)-(al_get_bitmap_width(game->menu.logo)/2), (al_get_display_height(game->display)*0.1), al_get_bitmap_width(game->menu.logo), al_get_bitmap_height(game->menu.logo), 0, 0, 0);
-	ALLEGRO_BITMAP *bg2 = al_create_bitmap(al_get_bitmap_width(game->menu.logo), al_get_bitmap_height(game->menu.logo));
-	al_set_target_bitmap(bg2);
+	al_set_target_bitmap(game->menu.blurbg2);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 
-	float alpha = (1.0/5.0);
+	float alpha = (1.0/8.0);
 	ALLEGRO_COLOR color = al_map_rgba_f(alpha, alpha, alpha, alpha);
 	int bx = 0, by = 0;
 	for (by = -2; by <= 2; by++) {
 		for (bx = -2; bx <= 2; bx++) {
 			if (sqrt(bx*bx+by*by) <= 2)
-				al_draw_tinted_bitmap(bg, color, bx*2, by*2, 0);
+				al_draw_tinted_bitmap(game->menu.blurbg, color, bx*2, by*2, 0);
 		}
 	}
-	al_destroy_bitmap(bg);
 	al_draw_bitmap(game->menu.glass, 0, 0, 0);
 	al_set_blender(ALLEGRO_ADD, ALLEGRO_ZERO, ALLEGRO_ALPHA);
 	al_draw_bitmap(game->menu.logo, 0, 0, 0);
 	al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
-	al_draw_bitmap(bg2, (al_get_display_width(game->display)/2)-(al_get_bitmap_width(game->menu.logo)/2), (al_get_display_height(game->display)*0.1), 0);
-	al_destroy_bitmap(bg2);
+	al_draw_bitmap(game->menu.blurbg2, (al_get_display_width(game->display)/2)-(al_get_bitmap_width(game->menu.logo)/2), (al_get_display_height(game->display)*0.1), 0);
 
-	alpha = (1.0/40.0);
-	color = al_map_rgba_f(alpha, alpha, alpha, alpha);
-	for (by = -2; by <= 2; by++) {
-		for (bx = -2; bx <= 2; bx++) {
-			if (sqrt(bx*bx+by*by) <= 2)
-				al_draw_tinted_bitmap(game->menu.logo, color, (al_get_display_width(game->display)/2)-(al_get_bitmap_width(game->menu.logo)/2)+bx, (al_get_display_height(game->display)*0.1)+by, 0);
-		}
-	}
+	al_draw_bitmap(game->menu.logoblur, (al_get_display_width(game->display)/2)-(al_get_bitmap_width(game->menu.logo)/2)-2, (al_get_display_height(game->display)*0.1)-2, 0);
 	al_draw_tinted_bitmap(game->menu.logo, al_map_rgba_f(0.1, 0.1, 0.1, 0.1), (al_get_display_width(game->display)/2)-(al_get_bitmap_width(game->menu.logo)/2), (al_get_display_height(game->display)*0.1), 0);
 	/* END OF GLASS EFFECT */
 
@@ -180,7 +169,7 @@ void Menu_Draw(struct Game *game) {
 }
 
 void Menu_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
-	PROGRESS_INIT(15);
+	PROGRESS_INIT(16);
 
 	game->menu.options.fullscreen = game->fullscreen;
 	game->menu.options.fps = game->fps;
@@ -196,6 +185,22 @@ void Menu_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	game->menu.cloud2 = LoadScaledBitmap( "menu/cloud2.png", al_get_display_width(game->display)*0.2, al_get_display_height(game->display)*0.1 );
 	PROGRESS;
 	game->menu.logo = LoadScaledBitmap( "menu/logo.png", al_get_display_width(game->display)*0.3, al_get_display_height(game->display)*0.35 );
+	game->menu.blurbg = al_create_bitmap(al_get_display_width(game->display)*0.3, al_get_display_height(game->display)*0.35);
+	game->menu.blurbg2 = al_create_bitmap(al_get_display_width(game->display)*0.3, al_get_display_height(game->display)*0.35);
+	PROGRESS;
+	game->menu.logoblur = al_create_bitmap(al_get_display_width(game->display)*0.3+4, al_get_display_height(game->display)*0.35+4);
+	al_set_target_bitmap(game->menu.logoblur);
+	al_clear_to_color(al_map_rgba(0,0,0,0));
+	float alpha = (1.0/40.0);
+	ALLEGRO_COLOR color = al_map_rgba_f(alpha, alpha, alpha, alpha);
+	int by, bx;
+	for (by = -2; by <= 2; by++) {
+		for (bx = -2; bx <= 2; bx++) {
+			if (sqrt(bx*bx+by*by) <= 2)
+				al_draw_tinted_bitmap(game->menu.logo, color, bx, by, 0);
+		}
+	}
+	al_set_target_bitmap(al_get_backbuffer(game->display));
 	PROGRESS;
 	game->menu.glass = LoadScaledBitmap( "menu/glass.png", al_get_display_width(game->display)*0.3, al_get_display_height(game->display)*0.35 );
 	PROGRESS;
@@ -307,7 +312,10 @@ void Menu_Unload(struct Game *game) {
 	al_destroy_bitmap(game->menu.mountain);
 	al_destroy_bitmap(game->menu.pie_bitmap);
 	al_destroy_bitmap(game->menu.logo);
+	al_destroy_bitmap(game->menu.logoblur);
 	al_destroy_bitmap(game->menu.glass);
+	al_destroy_bitmap(game->menu.blurbg);
+	al_destroy_bitmap(game->menu.blurbg2);
 	al_destroy_font(game->menu.font_title);
 	al_destroy_font(game->menu.font_subtitle);
 	al_destroy_font(game->menu.font);

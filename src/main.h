@@ -174,7 +174,10 @@ struct Menu {
 	ALLEGRO_BITMAP *rain_bitmap; /*!< Scaled and "rendered" bitmap with rain drops. */
 	ALLEGRO_BITMAP *mountain; /*!< Flashing mountain in background bitmap. */
 	ALLEGRO_BITMAP *logo; /*!< Logo displayed in the background. */
+	ALLEGRO_BITMAP *logoblur; /*!< Prerendered blurred logo. */
 	ALLEGRO_BITMAP *glass; /*!< Texture used for glass effect in the logo. */
+	ALLEGRO_BITMAP *blurbg; /*!< Temporary bitmap used for blur effect in glass logo. */
+	ALLEGRO_BITMAP *blurbg2; /*!< Temporary bitmap used for blur effect in glass logo. */
 	float cloud_position; /*!< Position of bigger cloud. */
 	float cloud2_position; /*!< Position of small cloud. */
 	int mountain_position; /*!< Position of flashing mountain. */

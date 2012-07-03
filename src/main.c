@@ -279,6 +279,9 @@ void Shared_Unload(struct Game *game) {
 int main(int argc, char **argv){
 	srand(time(NULL));
 
+	al_set_org_name("Super Derpy");
+	al_set_app_name("Muffin Attack");
+
 	InitConfig();
 
 	bool redraw = true;
