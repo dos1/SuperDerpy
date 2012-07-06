@@ -26,9 +26,11 @@
 void AnimPage(struct Game *game, int page, ALLEGRO_COLOR tint) {
     int offset = 0;
 	if (game->intro.in_animation) offset = -1*al_get_display_width(game->display) + (cos(((-1*((game->intro.position)%al_get_display_width(game->display)))/(float)al_get_display_width(game->display))*(ALLEGRO_PI))/2.0)*al_get_display_width(game->display) + al_get_display_width(game->display)/2.0;
-	
+
 	int amount1 = 2, amount2 = 2;
 	float anim = game->intro.anim;
+
+        if (page==2) { amount1=4; amount2=3; }
 	if (page==3) { amount1=3; amount2=3; }
 	if (page==5) { amount1=5; amount2=3; anim*=2; }
 
@@ -36,6 +38,7 @@ void AnimPage(struct Game *game, int page, ALLEGRO_COLOR tint) {
 
 	amount1 = 2;
 	amount2 = 2;
+        if (page==1) { amount1=4; amount2=3; }
 	if (page==2) { amount1=3; amount2=3; }
 	if (page==4) { amount1=5; amount2=3; anim*=2; }
 
@@ -223,7 +226,7 @@ void Intro_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 
 	game->intro.animsprites[0] = LoadScaledBitmap("intro/1.png", (int)(al_get_display_width(game->display)*0.3125)*2, al_get_display_height(game->display)*0.63*2);
 	PROGRESS;
-	game->intro.animsprites[1] = LoadScaledBitmap("levels/derpy/walk.png", (int)(al_get_display_width(game->display)*0.3125)*2, al_get_display_height(game->display)*0.63*2);
+	game->intro.animsprites[1] = LoadScaledBitmap("intro/2.png", (int)(al_get_display_width(game->display)*0.3125)*4, al_get_display_height(game->display)*0.63*3);
 	PROGRESS;
 	game->intro.animsprites[2] = LoadScaledBitmap("intro/3.png", (int)(al_get_display_width(game->display)*0.3125)*3, al_get_display_height(game->display)*0.63*3);
 	PROGRESS;
