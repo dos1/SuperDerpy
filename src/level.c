@@ -447,6 +447,7 @@ void Level_UnloadBitmaps(struct Game *game) {
 	}
 	if (game->level.current_level!=1) Moonwalk_UnloadBitmaps(game);
 	else {
+		al_destroy_font(game->level.letter_font);
 		al_destroy_bitmap(game->level.foreground);
 		al_destroy_bitmap(game->level.background);
 		al_destroy_bitmap(game->level.stage);
@@ -467,7 +468,7 @@ void Level_UnloadBitmaps(struct Game *game) {
 }
 
 void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float)) {
-	PROGRESS_INIT(18);
+	PROGRESS_INIT(19);
 	int x = 0;
 	struct Spritesheet *tmp = game->level.derpy_sheets;
 	while (tmp) {
@@ -517,9 +518,47 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 		PROGRESS;
 		game->level.owl = LoadScaledBitmap("levels/owl.png", al_get_display_width(game->display)*0.08, al_get_display_width(game->display)*0.08);
 		PROGRESS;
-		game->level.letter = LoadScaledBitmap("levels/letter.png", al_get_display_height(game->display), al_get_display_height(game->display));
+		game->level.letter_font = al_load_ttf_font("data/DejaVuSans.ttf",al_get_display_height(game->display)*0.0225,0 );
+		PROGRESS;
+		game->level.letter = LoadScaledBitmap("levels/letter.png", al_get_display_height(game->display)*1.3, al_get_display_height(game->display)*1.2);
 		al_set_target_bitmap(game->level.letter);
-		al_draw_text(game->menu.font, al_map_rgb(0,0,0), al_get_bitmap_width(game->level.letter)*0.45, al_get_display_height(game->display)*0.45, ALLEGRO_ALIGN_CENTRE, "Letter from Twilight");
+		float y = 0.20;
+		float x = 0.19;
+		void draw_text(char* text) {
+			al_draw_text(game->level.letter_font, al_map_rgb(0,0,0), al_get_bitmap_width(game->level.letter)*x, al_get_display_height(game->display)*y, ALLEGRO_ALIGN_LEFT, text);
+			y+=0.028;
+		}
+		draw_text("Dear Derpy,");
+		draw_text("");
+		x = 0.20;
+		draw_text("I'm glad you decided to help us! I found a few tips");
+		draw_text("in my library that might be useful on your mission.");
+		draw_text("I would like to share them with you.");
+		draw_text("");
+		x = 0.21;
+		draw_text("Muffins regenerate your energy, so collect as many");
+		draw_text("as you can. Cherries can help you as well. But be");
+		draw_text("careful and avoid the muffin-zombies - they can");
+		draw_text("harm you!");
+		draw_text("");
+		x = 0.22;
+		draw_text("Discord is not fully awake yet, but he's already");
+		draw_text("causing chaos all over Equestria and his strange");
+		draw_text("creatures may try to stop you. Don't let them!");
+		draw_text("");
+		x = 0.23;
+		draw_text("Last but not least - You should be able to see the");
+		draw_text("constellation Orion in the sky tonight. Be sure to");
+		draw_text("take a moment to look for it if you have one to");
+		draw_text("spare. It's beautiful!");
+		draw_text("");
+		x = 0.25;
+		draw_text("The fate of Equestria rests in your hooves.");
+		draw_text("Be safe and good luck!");
+		draw_text("");
+		x = 0.26;
+		draw_text("Yours,");
+		draw_text("Twilight Sparkle");
 		al_set_target_bitmap(al_get_backbuffer(game->display));
 		PROGRESS;
 		game->level.welcome = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display)/2);

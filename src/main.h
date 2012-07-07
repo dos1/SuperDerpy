@@ -120,6 +120,7 @@ struct Level {
 	float sheet_speed; /*!< Current speed of Derpy animation. */
 	float sheet_speed_modifier; /*!< Modifier of speed, specified by current spritesheet. */
 	float sheet_scale; /*!< Scale modifier of current spritesheet. */
+	ALLEGRO_FONT *letter_font; /*!< Font used in letter from Twilight on first level. */
 	ALLEGRO_SAMPLE *sample; /*!< Sample with background music. */
 	ALLEGRO_SAMPLE_INSTANCE *music; /*!< Sample instance with background music. */
 	unsigned int music_pos; /*!< Position of sample instance. Used when pausing game. */

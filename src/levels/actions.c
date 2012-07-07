@@ -215,7 +215,7 @@ bool Letter(struct Game *game, struct TM_Action *action, enum TM_ActionState sta
     float* f = (float*)action->arguments->value;
     *f+=tps(game,350);
     if (*f>255) *f=255;
-		al_draw_tinted_bitmap(game->level.letter, al_map_rgba(*f,*f,*f,*f), (al_get_display_width(game->display)-al_get_bitmap_width(game->level.letter))/2.0, 0, 0);
+		al_draw_tinted_bitmap(game->level.letter, al_map_rgba(*f,*f,*f,*f), (al_get_display_width(game->display)-al_get_bitmap_width(game->level.letter))/2.0, al_get_bitmap_height(game->level.letter)*-0.05, 0);
     struct ALLEGRO_KEYBOARD_STATE keyboard;
     al_get_keyboard_state(&keyboard);
     if (al_key_down(&keyboard, ALLEGRO_KEY_ENTER)) {
