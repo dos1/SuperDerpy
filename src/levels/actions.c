@@ -94,8 +94,11 @@ bool Run(struct Game *game, struct TM_Action *action, enum TM_ActionState state)
         action->arguments++;
     }
     game->level.derpy_y+=tps(game, 60*0.0042);
+		if (game->level.derpy_angle > 0) { game->level.derpy_angle -= tps(game, 60*0.02); if (game->level.derpy_angle < 0) game->level.derpy_angle = 0; }
+		if (game->level.derpy_angle < 0) { game->level.derpy_angle += tps(game, 60*0.02); if (game->level.derpy_angle > 0) game->level.derpy_angle = 0; }
     if (game->level.derpy_y<0.65) return false;
-    SelectDerpySpritesheet(game, "run");
+		game->level.derpy_angle = 0;
+		SelectDerpySpritesheet(game, "run");
     return true;
 }
 
