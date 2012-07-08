@@ -20,6 +20,7 @@
  */
 #include <stdio.h>
 #include "intro.h"
+#include "menu.h"
 #include "about.h"
 
 void Disclaimer_Draw(struct Game *game) {
@@ -52,6 +53,10 @@ int Disclaimer_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 }
 
 void Disclaimer_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
+    if (!game->menu.loaded) {
+        game->menu.font = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.05,0 );
+        game->menu.font_selected = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.065,0 );
+    }
     PrintConsole(game, "Preloading GAMESTATE_INTRO...");
     Intro_Preload(game, progress);
 }
@@ -65,6 +70,10 @@ void Disclaimer_Unload(struct Game *game) {
         al_draw_filled_rectangle(0,0,al_get_display_width(game->display),al_get_display_height(game->display),al_map_rgba(0,0,0,fadeloop));
         DrawConsole(game);
         al_flip_display();
+    }
+    if (!game->menu.loaded) {
+        al_destroy_font(game->menu.font);
+        al_destroy_font(game->menu.font_selected);
     }
     al_clear_to_color(al_map_rgb(0,0,0));
 }
