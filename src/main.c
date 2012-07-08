@@ -96,6 +96,10 @@ void DrawConsole(struct Game *game) {
 }
 
 void PreloadGameState(struct Game *game, void (*progress)(struct Game*, float)) {
+	if (game->loadstate<1) {
+		PrintConsole(game, "ERROR: Attempted to preload invalid gamestate %d! Loading GAMESTATE_MENU instead...", game->loadstate);
+		game->loadstate = GAMESTATE_MENU;
+	}
 	if ((game->loadstate==GAMESTATE_MENU) && (game->menu.loaded)) {
 		PrintConsole(game, "GAMESTATE_MENU already loaded, skipping...");
 		return;
@@ -167,6 +171,7 @@ void DrawGameState(struct Game *game) {
 		DRAW_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
 		default:
 			game->showconsole = true;
+			al_clear_to_color(al_map_rgb(0,0,0));
 			PrintConsole(game, "ERROR: Unknown gamestate %d reached! (5 sec sleep)", game->gamestate);
 			DrawConsole(game);
 			al_flip_display();
