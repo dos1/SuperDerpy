@@ -538,7 +538,7 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 		x = 0.21;
 		draw_text("Muffins regenerate your energy, so collect as many");
 		draw_text("as you can. Cherries can help you as well. But be");
-		draw_text("careful and avoid the muffin-zombies - they can");
+		draw_text("careful and avoid the muffinzombies - they can");
 		draw_text("harm you!");
 		draw_text("");
 		x = 0.22;
@@ -559,6 +559,7 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 		x = 0.26;
 		draw_text("Yours,");
 		draw_text("Twilight Sparkle");
+		al_draw_text_with_shadow(game->menu.font, al_map_rgb(255,255,255), al_get_bitmap_width(game->level.letter)*0.5, al_get_bitmap_height(game->level.letter)*0.8, ALLEGRO_ALIGN_CENTRE, "Press enter to continue...");
 		al_set_target_bitmap(al_get_backbuffer(game->display));
 		PROGRESS;
 		game->level.welcome = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display)/2);
