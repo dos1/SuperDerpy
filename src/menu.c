@@ -376,7 +376,7 @@ int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 					case 0:
 						UnloadGameState(game);
 						game->gamestate = GAMESTATE_LOADING;
-						game->loadstate = GAMESTATE_INTRO;
+						game->loadstate = GAMESTATE_DISCLAIMER;
 						break;
 					case 1:
 						ChangeMenuState(game,MENUSTATE_OPTIONS);

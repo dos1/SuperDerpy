@@ -27,3 +27,5 @@ src/levels/actions.h
 src/levels/callbacks.c
 src/levels/actions.c
 Makefile
+src/disclaimer.h
+src/disclaimer.c

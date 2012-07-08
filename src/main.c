@@ -30,6 +30,7 @@
 #include "map.h"
 #include "level.h"
 #include "pause.h"
+#include "disclaimer.h"
 #include "config.h"
 
 /*! \brief Macro for preloading gamestate.
@@ -106,6 +107,7 @@ void PreloadGameState(struct Game *game, void (*progress)(struct Game*, float)) 
 		PRELOAD_STATE(GAMESTATE_INTRO, Intro)
 		PRELOAD_STATE(GAMESTATE_MAP, Map)
 		PRELOAD_STATE(GAMESTATE_LEVEL, Level)
+		PRELOAD_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
 		default:
 			PrintConsole(game, "ERROR: Attempted to preload unknown gamestate %d!", game->loadstate);
 			break;
@@ -128,6 +130,7 @@ void UnloadGameState(struct Game *game) {
 		UNLOAD_STATE(GAMESTATE_INTRO, Intro)
 		UNLOAD_STATE(GAMESTATE_MAP, Map)
 		UNLOAD_STATE(GAMESTATE_LEVEL, Level)
+		UNLOAD_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
 		default:
 			PrintConsole(game, "ERROR: Attempted to unload unknown gamestate %d!", game->gamestate);
 			break;
@@ -143,6 +146,7 @@ void LoadGameState(struct Game *game) {
 		LOAD_STATE(GAMESTATE_INTRO, Intro)
 		LOAD_STATE(GAMESTATE_MAP, Map)
 		LOAD_STATE(GAMESTATE_LEVEL, Level)
+		LOAD_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
 		default:
 			PrintConsole(game, "ERROR: Attempted to load unknown gamestate %d!", game->loadstate);
 	}
@@ -160,6 +164,7 @@ void DrawGameState(struct Game *game) {
 		DRAW_STATE(GAMESTATE_INTRO, Intro)
 		DRAW_STATE(GAMESTATE_MAP, Map)
 		DRAW_STATE(GAMESTATE_LEVEL, Level)
+		DRAW_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
 		default:
 			game->showconsole = true;
 			PrintConsole(game, "ERROR: Unknown gamestate %d reached! (5 sec sleep)", game->gamestate);
@@ -482,6 +487,7 @@ int main(int argc, char **argv){
 			KEYDOWN_STATE(GAMESTATE_INTRO, Intro)
 			KEYDOWN_STATE(GAMESTATE_MAP, Map)
 			KEYDOWN_STATE(GAMESTATE_LEVEL, Level)
+			KEYDOWN_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
 			else {
 				game.showconsole = true;
 				PrintConsole(&game, "ERROR: Keystroke in unknown (%d) gamestate! (5 sec sleep)", game.gamestate);

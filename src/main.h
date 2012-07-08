@@ -48,7 +48,8 @@ enum gamestate_enum {
 	GAMESTATE_ABOUT,
 	GAMESTATE_INTRO,
 	GAMESTATE_MAP,
-	GAMESTATE_LEVEL
+	GAMESTATE_LEVEL,
+	GAMESTATE_DISCLAIMER
 };
 
 /*! \brief Resources used by moonwalk level placeholder. */
