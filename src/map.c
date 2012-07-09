@@ -28,7 +28,7 @@ void Map_Draw(struct Game *game) {
 	float x,y;
 	switch (game->map.selected) {
 		case 1:
-			x=0.2;
+			x=0.175;
 			y=0.25;
 			break;
 		case 2:
