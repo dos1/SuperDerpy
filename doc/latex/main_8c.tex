@@ -1,76 +1,77 @@
-\hypertarget{main_8c}{\section{src/main.c \-File \-Reference}
+\hypertarget{main_8c}{\section{src/main.c File Reference}
 \label{main_8c}\index{src/main.\-c@{src/main.\-c}}
 }
 
 
-\-Main file of \-Super\-Derpy engine.  
+Main file of Super\-Derpy engine.  
 
 
-{\ttfamily \#include $<$stdio.\-h$>$}\*
-{\ttfamily \#include $<$math.\-h$>$}\*
-{\ttfamily \#include $<$getopt.\-h$>$}\*
-{\ttfamily \#include $<$locale.\-h$>$}\*
-{\ttfamily \#include \char`\"{}menu.\-h\char`\"{}}\*
-{\ttfamily \#include \char`\"{}loading.\-h\char`\"{}}\*
-{\ttfamily \#include \char`\"{}about.\-h\char`\"{}}\*
-{\ttfamily \#include \char`\"{}intro.\-h\char`\"{}}\*
-{\ttfamily \#include \char`\"{}map.\-h\char`\"{}}\*
-{\ttfamily \#include \char`\"{}level.\-h\char`\"{}}\*
-{\ttfamily \#include \char`\"{}pause.\-h\char`\"{}}\*
-{\ttfamily \#include \char`\"{}config.\-h\char`\"{}}\*
-\subsection*{\-Defines}
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$math.\-h$>$}\\*
+{\ttfamily \#include $<$getopt.\-h$>$}\\*
+{\ttfamily \#include $<$locale.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}menu.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}loading.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}about.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}intro.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}map.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}level.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}pause.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}disclaimer.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}config.\-h\char`\"{}}\\*
+\subsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
-\#define \hyperlink{main_8c_a6f4cfa63173a94a303439c98b0529180}{\-P\-R\-E\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E}(state, name)
-\begin{DoxyCompactList}\small\item\em \-Macro for preloading gamestate. \end{DoxyCompactList}\item 
-\#define \hyperlink{main_8c_a914c1023fa675d05317561a3ba4270e9}{\-U\-N\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E}(state, name)
-\begin{DoxyCompactList}\small\item\em \-Macro for unloading gamestate. \end{DoxyCompactList}\item 
-\#define \hyperlink{main_8c_a8ee7a9c7e83c9bd4b69f5e96f368c7fb}{\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E}(state, name)
-\begin{DoxyCompactList}\small\item\em \-Macro for loading gamestate. \end{DoxyCompactList}\item 
-\hypertarget{main_8c_ad177e8b9a44bacebfe10168f6b6fb983}{\#define \hyperlink{main_8c_ad177e8b9a44bacebfe10168f6b6fb983}{\-K\-E\-Y\-D\-O\-W\-N\-\_\-\-S\-T\-A\-T\-E}(state, name)~else if (game.\-gamestate==state) \{ if (name \#\# \-\_\-\-Keydown(\&game, \&ev)) break; \}}\label{main_8c_ad177e8b9a44bacebfe10168f6b6fb983}
+\#define \hyperlink{main_8c_a6f4cfa63173a94a303439c98b0529180}{P\-R\-E\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E}(state, name)
+\begin{DoxyCompactList}\small\item\em Macro for preloading gamestate. \end{DoxyCompactList}\item 
+\#define \hyperlink{main_8c_a914c1023fa675d05317561a3ba4270e9}{U\-N\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E}(state, name)
+\begin{DoxyCompactList}\small\item\em Macro for unloading gamestate. \end{DoxyCompactList}\item 
+\#define \hyperlink{main_8c_a8ee7a9c7e83c9bd4b69f5e96f368c7fb}{L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E}(state, name)
+\begin{DoxyCompactList}\small\item\em Macro for loading gamestate. \end{DoxyCompactList}\item 
+\hypertarget{main_8c_ad177e8b9a44bacebfe10168f6b6fb983}{\#define \hyperlink{main_8c_ad177e8b9a44bacebfe10168f6b6fb983}{K\-E\-Y\-D\-O\-W\-N\-\_\-\-S\-T\-A\-T\-E}(state, name)~else if (game.\-gamestate==state) \{ if (name \#\# \-\_\-\-Keydown(\&game, \&ev)) break; \}}\label{main_8c_ad177e8b9a44bacebfe10168f6b6fb983}
 
-\begin{DoxyCompactList}\small\item\em \-Macro for sending keydown events to gamestate. \end{DoxyCompactList}\item 
-\#define \hyperlink{main_8c_a2073d7fa9facf2f65d7198e159714d28}{\-D\-R\-A\-W\-\_\-\-S\-T\-A\-T\-E}(state, name)
-\begin{DoxyCompactList}\small\item\em \-Macro for drawing active gamestate. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsection*{\-Functions}
+\begin{DoxyCompactList}\small\item\em Macro for sending keydown events to gamestate. \end{DoxyCompactList}\item 
+\#define \hyperlink{main_8c_a2073d7fa9facf2f65d7198e159714d28}{D\-R\-A\-W\-\_\-\-S\-T\-A\-T\-E}(state, name)
+\begin{DoxyCompactList}\small\item\em Macro for drawing active gamestate. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{main_8c_a83e9560a39a8b6beea953f69553dd28b}{\-Print\-Console} (struct \hyperlink{structGame}{\-Game} $\ast$game, char $\ast$format,...)
-\begin{DoxyCompactList}\small\item\em \-Print some message on game console. \end{DoxyCompactList}\item 
-\hypertarget{main_8c_a3a03870a3158c22e10b22d60822c190a}{void \hyperlink{main_8c_a3a03870a3158c22e10b22d60822c190a}{\-Draw\-Console} (struct \hyperlink{structGame}{\-Game} $\ast$game)}\label{main_8c_a3a03870a3158c22e10b22d60822c190a}
+void \hyperlink{main_8c_a83e9560a39a8b6beea953f69553dd28b}{Print\-Console} (struct \hyperlink{structGame}{Game} $\ast$game, char $\ast$format,...)
+\begin{DoxyCompactList}\small\item\em Print some message on game console. \end{DoxyCompactList}\item 
+\hypertarget{main_8c_a3a03870a3158c22e10b22d60822c190a}{void \hyperlink{main_8c_a3a03870a3158c22e10b22d60822c190a}{Draw\-Console} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{main_8c_a3a03870a3158c22e10b22d60822c190a}
 
-\begin{DoxyCompactList}\small\item\em \-Draws console bitmap on screen. \end{DoxyCompactList}\item 
-\hypertarget{main_8c_afd10ce18ae3e601a9c462e2bd552ed32}{void \hyperlink{main_8c_afd10ce18ae3e601a9c462e2bd552ed32}{\-Preload\-Game\-State} (struct \hyperlink{structGame}{\-Game} $\ast$game, void($\ast$progress)(struct \hyperlink{structGame}{\-Game} $\ast$, float))}\label{main_8c_afd10ce18ae3e601a9c462e2bd552ed32}
+\begin{DoxyCompactList}\small\item\em Draws console bitmap on screen. \end{DoxyCompactList}\item 
+\hypertarget{main_8c_afd10ce18ae3e601a9c462e2bd552ed32}{void \hyperlink{main_8c_afd10ce18ae3e601a9c462e2bd552ed32}{Preload\-Game\-State} (struct \hyperlink{structGame}{Game} $\ast$game, void($\ast$progress)(struct \hyperlink{structGame}{Game} $\ast$, float))}\label{main_8c_afd10ce18ae3e601a9c462e2bd552ed32}
 
-\begin{DoxyCompactList}\small\item\em \-Preloads gamestate set in game-\/$>$loadstate. \end{DoxyCompactList}\item 
-\hypertarget{main_8c_afbbdeccc0adc5c3a0c84461f51a45a5b}{void \hyperlink{main_8c_afbbdeccc0adc5c3a0c84461f51a45a5b}{\-Unload\-Game\-State} (struct \hyperlink{structGame}{\-Game} $\ast$game)}\label{main_8c_afbbdeccc0adc5c3a0c84461f51a45a5b}
+\begin{DoxyCompactList}\small\item\em Preloads gamestate set in game-\/$>$loadstate. \end{DoxyCompactList}\item 
+\hypertarget{main_8c_afbbdeccc0adc5c3a0c84461f51a45a5b}{void \hyperlink{main_8c_afbbdeccc0adc5c3a0c84461f51a45a5b}{Unload\-Game\-State} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{main_8c_afbbdeccc0adc5c3a0c84461f51a45a5b}
 
-\begin{DoxyCompactList}\small\item\em \-Unloads gamestate set in game-\/$>$gamestate. \end{DoxyCompactList}\item 
-\hypertarget{main_8c_afe84ca1b0107fe689f9d2987d83caea0}{void \hyperlink{main_8c_afe84ca1b0107fe689f9d2987d83caea0}{\-Load\-Game\-State} (struct \hyperlink{structGame}{\-Game} $\ast$game)}\label{main_8c_afe84ca1b0107fe689f9d2987d83caea0}
+\begin{DoxyCompactList}\small\item\em Unloads gamestate set in game-\/$>$gamestate. \end{DoxyCompactList}\item 
+\hypertarget{main_8c_afe84ca1b0107fe689f9d2987d83caea0}{void \hyperlink{main_8c_afe84ca1b0107fe689f9d2987d83caea0}{Load\-Game\-State} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{main_8c_afe84ca1b0107fe689f9d2987d83caea0}
 
-\begin{DoxyCompactList}\small\item\em \-Loads gamestate set in game-\/$>$loadstate. \end{DoxyCompactList}\item 
-\hypertarget{main_8c_aba8768911068b399b4118452eb3959ec}{void \hyperlink{main_8c_aba8768911068b399b4118452eb3959ec}{\-Draw\-Game\-State} (struct \hyperlink{structGame}{\-Game} $\ast$game)}\label{main_8c_aba8768911068b399b4118452eb3959ec}
+\begin{DoxyCompactList}\small\item\em Loads gamestate set in game-\/$>$loadstate. \end{DoxyCompactList}\item 
+\hypertarget{main_8c_aba8768911068b399b4118452eb3959ec}{void \hyperlink{main_8c_aba8768911068b399b4118452eb3959ec}{Draw\-Game\-State} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{main_8c_aba8768911068b399b4118452eb3959ec}
 
-\begin{DoxyCompactList}\small\item\em \-Draws frame from current gamestate. \end{DoxyCompactList}\item 
-\hypertarget{main_8c_a95f035fc3dfd7397ae24243d156c8195}{void \hyperlink{main_8c_a95f035fc3dfd7397ae24243d156c8195}{\-Scale\-Bitmap} (\-A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$source, int width, int height)}\label{main_8c_a95f035fc3dfd7397ae24243d156c8195}
+\begin{DoxyCompactList}\small\item\em Draws frame from current gamestate. \end{DoxyCompactList}\item 
+\hypertarget{main_8c_a95f035fc3dfd7397ae24243d156c8195}{void \hyperlink{main_8c_a95f035fc3dfd7397ae24243d156c8195}{Scale\-Bitmap} (A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$source, int width, int height)}\label{main_8c_a95f035fc3dfd7397ae24243d156c8195}
 
-\begin{DoxyCompactList}\small\item\em \-Scales bitmap using software linear filtering method to current target. \end{DoxyCompactList}\item 
-\hypertarget{main_8c_a83bf17fca7535cabf55e8fcffbf80c7c}{\-A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{main_8c_a83bf17fca7535cabf55e8fcffbf80c7c}{\-Load\-Scaled\-Bitmap} (char $\ast$filename, int width, int height)}\label{main_8c_a83bf17fca7535cabf55e8fcffbf80c7c}
+\begin{DoxyCompactList}\small\item\em Scales bitmap using software linear filtering method to current target. \end{DoxyCompactList}\item 
+\hypertarget{main_8c_a83bf17fca7535cabf55e8fcffbf80c7c}{A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{main_8c_a83bf17fca7535cabf55e8fcffbf80c7c}{Load\-Scaled\-Bitmap} (char $\ast$filename, int width, int height)}\label{main_8c_a83bf17fca7535cabf55e8fcffbf80c7c}
 
-\begin{DoxyCompactList}\small\item\em \-Loads bitmap into memory and scales it with software linear filtering. \end{DoxyCompactList}\item 
-\hypertarget{main_8c_a1f39d133bfa874d55703118487a186e6}{float \hyperlink{main_8c_a1f39d133bfa874d55703118487a186e6}{tps} (struct \hyperlink{structGame}{\-Game} $\ast$game, float t)}\label{main_8c_a1f39d133bfa874d55703118487a186e6}
+\begin{DoxyCompactList}\small\item\em Loads bitmap into memory and scales it with software linear filtering. \end{DoxyCompactList}\item 
+\hypertarget{main_8c_a1f39d133bfa874d55703118487a186e6}{float \hyperlink{main_8c_a1f39d133bfa874d55703118487a186e6}{tps} (struct \hyperlink{structGame}{Game} $\ast$game, float t)}\label{main_8c_a1f39d133bfa874d55703118487a186e6}
 
-\begin{DoxyCompactList}\small\item\em \-Draws console bitmap on screen. \end{DoxyCompactList}\item 
-\hypertarget{main_8c_ab0af27461c4e23c088670da5e6a971ef}{int \hyperlink{main_8c_ab0af27461c4e23c088670da5e6a971ef}{\-Shared\-\_\-\-Load} (struct \hyperlink{structGame}{\-Game} $\ast$game)}\label{main_8c_ab0af27461c4e23c088670da5e6a971ef}
+\begin{DoxyCompactList}\small\item\em Draws console bitmap on screen. \end{DoxyCompactList}\item 
+\hypertarget{main_8c_ab0af27461c4e23c088670da5e6a971ef}{int \hyperlink{main_8c_ab0af27461c4e23c088670da5e6a971ef}{Shared\-\_\-\-Load} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{main_8c_ab0af27461c4e23c088670da5e6a971ef}
 
-\begin{DoxyCompactList}\small\item\em \-Load shared resources. \end{DoxyCompactList}\item 
-\hypertarget{main_8c_af9010ebe7fc75fbd882a9a8bf7b32d0c}{void \hyperlink{main_8c_af9010ebe7fc75fbd882a9a8bf7b32d0c}{\-Shared\-\_\-\-Unload} (struct \hyperlink{structGame}{\-Game} $\ast$game)}\label{main_8c_af9010ebe7fc75fbd882a9a8bf7b32d0c}
+\begin{DoxyCompactList}\small\item\em Load shared resources. \end{DoxyCompactList}\item 
+\hypertarget{main_8c_af9010ebe7fc75fbd882a9a8bf7b32d0c}{void \hyperlink{main_8c_af9010ebe7fc75fbd882a9a8bf7b32d0c}{Shared\-\_\-\-Unload} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{main_8c_af9010ebe7fc75fbd882a9a8bf7b32d0c}
 
-\begin{DoxyCompactList}\small\item\em \-Unload shared resources. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Unload shared resources. \end{DoxyCompactList}\item 
 \hypertarget{main_8c_a3c04138a5bfe5d72780bb7e82a18e627}{int {\bfseries main} (int argc, char $\ast$$\ast$argv)}\label{main_8c_a3c04138a5bfe5d72780bb7e82a18e627}
 
 \end{DoxyCompactItemize}
-\subsection*{\-Variables}
+\subsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
 \hypertarget{main_8c_ab6b06128fdeb2efe40f07fbe6a8127ff}{double {\bfseries old\-\_\-time} = 0}\label{main_8c_ab6b06128fdeb2efe40f07fbe6a8127ff}
@@ -84,94 +85,97 @@ void \hyperlink{main_8c_a83e9560a39a8b6beea953f69553dd28b}{\-Print\-Console} (st
 \end{DoxyCompactItemize}
 
 
-\subsection{\-Detailed \-Description}
-\-Main file of \-Super\-Derpy engine. $\ast$ \-Contains basic functions shared by all views. 
+\subsection{Detailed Description}
+Main file of Super\-Derpy engine. 
+\begin{DoxyItemize}
+\item Contains basic functions shared by all views. 
+\end{DoxyItemize}
 
-\subsection{\-Define \-Documentation}
-\hypertarget{main_8c_a2073d7fa9facf2f65d7198e159714d28}{\index{main.\-c@{main.\-c}!\-D\-R\-A\-W\-\_\-\-S\-T\-A\-T\-E@{\-D\-R\-A\-W\-\_\-\-S\-T\-A\-T\-E}}
-\index{\-D\-R\-A\-W\-\_\-\-S\-T\-A\-T\-E@{\-D\-R\-A\-W\-\_\-\-S\-T\-A\-T\-E}!main.c@{main.\-c}}
-\subsubsection[{\-D\-R\-A\-W\-\_\-\-S\-T\-A\-T\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-D\-R\-A\-W\-\_\-\-S\-T\-A\-T\-E}(
+\subsection{Macro Definition Documentation}
+\hypertarget{main_8c_a2073d7fa9facf2f65d7198e159714d28}{\index{main.\-c@{main.\-c}!D\-R\-A\-W\-\_\-\-S\-T\-A\-T\-E@{D\-R\-A\-W\-\_\-\-S\-T\-A\-T\-E}}
+\index{D\-R\-A\-W\-\_\-\-S\-T\-A\-T\-E@{D\-R\-A\-W\-\_\-\-S\-T\-A\-T\-E}!main.c@{main.\-c}}
+\subsubsection[{D\-R\-A\-W\-\_\-\-S\-T\-A\-T\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\-R\-A\-W\-\_\-\-S\-T\-A\-T\-E(
 \begin{DoxyParamCaption}
 \item[{}]{state, }
 \item[{}]{name}
 \end{DoxyParamCaption}
 )}}\label{main_8c_a2073d7fa9facf2f65d7198e159714d28}
-{\bfseries \-Value\-:}
+{\bfseries Value\-:}
 \begin{DoxyCode}
-case state:\
-        name ## _Draw(game); break;
+\textcolor{keywordflow}{case} state:\(\backslash\)
+        name ## \_Draw(game); \textcolor{keywordflow}{break};
 \end{DoxyCode}
 
 
-\-Macro for drawing active gamestate. 
+Macro for drawing active gamestate. 
 
-\hypertarget{main_8c_a8ee7a9c7e83c9bd4b69f5e96f368c7fb}{\index{main.\-c@{main.\-c}!\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E@{\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E}}
-\index{\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E@{\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E}!main.c@{main.\-c}}
-\subsubsection[{\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E}(
+\hypertarget{main_8c_a8ee7a9c7e83c9bd4b69f5e96f368c7fb}{\index{main.\-c@{main.\-c}!L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E@{L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E}}
+\index{L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E@{L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E}!main.c@{main.\-c}}
+\subsubsection[{L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E(
 \begin{DoxyParamCaption}
 \item[{}]{state, }
 \item[{}]{name}
 \end{DoxyParamCaption}
 )}}\label{main_8c_a8ee7a9c7e83c9bd4b69f5e96f368c7fb}
-{\bfseries \-Value\-:}
+{\bfseries Value\-:}
 \begin{DoxyCode}
-case state:\
-        PrintConsole(game, "Load %s...", #state); name ## _Load(game); break;
+\textcolor{keywordflow}{case} state:\(\backslash\)
+        PrintConsole(game, \textcolor{stringliteral}{"Load %s..."}, #state); name ## \_Load(game); \textcolor{keywordflow}{break};
 \end{DoxyCode}
 
 
-\-Macro for loading gamestate. 
+Macro for loading gamestate. 
 
-\hyperlink{structLoading}{\-Loading} of state means setting it as active and running it. \hypertarget{main_8c_a6f4cfa63173a94a303439c98b0529180}{\index{main.\-c@{main.\-c}!\-P\-R\-E\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E@{\-P\-R\-E\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E}}
-\index{\-P\-R\-E\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E@{\-P\-R\-E\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E}!main.c@{main.\-c}}
-\subsubsection[{\-P\-R\-E\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-P\-R\-E\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E}(
+\hyperlink{structLoading}{Loading} of state means setting it as active and running it. \hypertarget{main_8c_a6f4cfa63173a94a303439c98b0529180}{\index{main.\-c@{main.\-c}!P\-R\-E\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E@{P\-R\-E\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E}}
+\index{P\-R\-E\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E@{P\-R\-E\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E}!main.c@{main.\-c}}
+\subsubsection[{P\-R\-E\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\-R\-E\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E(
 \begin{DoxyParamCaption}
 \item[{}]{state, }
 \item[{}]{name}
 \end{DoxyParamCaption}
 )}}\label{main_8c_a6f4cfa63173a94a303439c98b0529180}
-{\bfseries \-Value\-:}
+{\bfseries Value\-:}
 \begin{DoxyCode}
-case state:\
-        PrintConsole(game, "Preload %s...", #state); DrawConsole(game); 
-      al_flip_display(); name ## _Preload(game, progress); break;
+\textcolor{keywordflow}{case} state:\(\backslash\)
+        PrintConsole(game, \textcolor{stringliteral}{"Preload %s..."}, #state); \hyperlink{main_8c_a3a03870a3158c22e10b22d60822c190a}{DrawConsole}(
+      game); al\_flip\_display(); name ## \_Preload(game, progress); \textcolor{keywordflow}{break};
 \end{DoxyCode}
 
 
-\-Macro for preloading gamestate. 
+Macro for preloading gamestate. 
 
-\-Preloading of state happens when loading screen is displayed. \hypertarget{main_8c_a914c1023fa675d05317561a3ba4270e9}{\index{main.\-c@{main.\-c}!\-U\-N\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E@{\-U\-N\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E}}
-\index{\-U\-N\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E@{\-U\-N\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E}!main.c@{main.\-c}}
-\subsubsection[{\-U\-N\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-U\-N\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E}(
+Preloading of state happens when loading screen is displayed. \hypertarget{main_8c_a914c1023fa675d05317561a3ba4270e9}{\index{main.\-c@{main.\-c}!U\-N\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E@{U\-N\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E}}
+\index{U\-N\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E@{U\-N\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E}!main.c@{main.\-c}}
+\subsubsection[{U\-N\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\-N\-L\-O\-A\-D\-\_\-\-S\-T\-A\-T\-E(
 \begin{DoxyParamCaption}
 \item[{}]{state, }
 \item[{}]{name}
 \end{DoxyParamCaption}
 )}}\label{main_8c_a914c1023fa675d05317561a3ba4270e9}
-{\bfseries \-Value\-:}
+{\bfseries Value\-:}
 \begin{DoxyCode}
-case state:\
-        PrintConsole(game, "Unload %s...", #state); name ## _Unload(game); 
-      break;
+\textcolor{keywordflow}{case} state:\(\backslash\)
+        PrintConsole(game, \textcolor{stringliteral}{"Unload %s..."}, #state); name ## \_Unload(game); \textcolor{keywordflow}{
+      break};
 \end{DoxyCode}
 
 
-\-Macro for unloading gamestate. 
+Macro for unloading gamestate. 
 
-\-Unloading of state happens after it's fadeout. 
+Unloading of state happens after it's fadeout. 
 
-\subsection{\-Function \-Documentation}
-\hypertarget{main_8c_a83e9560a39a8b6beea953f69553dd28b}{\index{main.\-c@{main.\-c}!\-Print\-Console@{\-Print\-Console}}
-\index{\-Print\-Console@{\-Print\-Console}!main.c@{main.\-c}}
-\subsubsection[{\-Print\-Console}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Print\-Console} (
+\subsection{Function Documentation}
+\hypertarget{main_8c_a83e9560a39a8b6beea953f69553dd28b}{\index{main.\-c@{main.\-c}!Print\-Console@{Print\-Console}}
+\index{Print\-Console@{Print\-Console}!main.c@{main.\-c}}
+\subsubsection[{Print\-Console}]{\setlength{\rightskip}{0pt plus 5cm}void Print\-Console (
 \begin{DoxyParamCaption}
-\item[{struct {\bf \-Game} $\ast$}]{game, }
+\item[{struct {\bf Game} $\ast$}]{game, }
 \item[{char $\ast$}]{format, }
 \item[{}]{...}
 \end{DoxyParamCaption}
 )}}\label{main_8c_a83e9560a39a8b6beea953f69553dd28b}
 
 
-\-Print some message on game console. 
+Print some message on game console. 
 
-\-Draws message on console bitmap, so it'll be displayed when calling \-Draw\-Console. \-If game-\/$>$debug is true, then it also prints given message on stdout. \-It needs to be called in printf style. 
+Draws message on console bitmap, so it'll be displayed when calling Draw\-Console. If game-\/$>$debug is true, then it also prints given message on stdout. It needs to be called in printf style. 
