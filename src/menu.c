@@ -126,14 +126,23 @@ void Menu_Draw(struct Game *game) {
 	al_draw_scaled_bitmap(game->menu.cloud,0,0,al_get_bitmap_width(game->menu.cloud), al_get_bitmap_height(game->menu.cloud), al_get_display_width(game->display)*(sin((game->menu.cloud_position/40)-4.5)-0.3), al_get_display_height(game->display)*0.35, al_get_bitmap_width(game->menu.cloud)/2, al_get_bitmap_height(game->menu.cloud)/2,0);
 	al_draw_bitmap(game->menu.cloud2,al_get_display_width(game->display)*(game->menu.cloud2_position/100.0), al_get_display_height(game->display)/1.5,0);
 	al_draw_bitmap(game->menu.image,0, al_get_display_height(game->display)*0.55,0);
+
 	al_draw_bitmap(game->menu.pinkcloud_bitmap,(al_get_display_width(game->display)*0.12) + (cos((game->menu.cloud_position/25+80)*1.74444))*40, 0,0);
-	al_draw_bitmap(game->menu.cloud,al_get_display_width(game->display)*game->menu.cloud_position/100, 30,0);
+	al_draw_bitmap(game->menu.cloud,al_get_display_width(game->display)*game->menu.cloud_position/100, al_get_display_height(game->display)*0.1,0);
 
 	al_draw_bitmap(game->menu.pie_bitmap, al_get_display_width(game->display)/2, al_get_display_height(game->display)*(game->menu.cloud_position)/10,0);
 
 	/* GLASS EFFECT */
 	al_set_target_bitmap(game->menu.blurbg);
-	al_draw_bitmap_region(al_get_backbuffer(game->display), (al_get_display_width(game->display)/2)-(al_get_bitmap_width(game->menu.logo)/2), (al_get_display_height(game->display)*0.1), al_get_bitmap_width(game->menu.logo), al_get_bitmap_height(game->menu.logo), 0, 0, 0);
+
+	al_clear_to_color(al_map_rgb(183,234,193));
+	al_draw_scaled_bitmap(game->menu.cloud,0,0,al_get_bitmap_width(game->menu.cloud), al_get_bitmap_height(game->menu.cloud), al_get_display_width(game->display)*(sin((game->menu.cloud_position/40)-4.5)-0.3) - (al_get_display_width(game->display)/2)+(al_get_bitmap_width(game->menu.logo)/2), al_get_display_height(game->display)*0.35-(al_get_display_height(game->display)*0.1), al_get_bitmap_width(game->menu.cloud)/2, al_get_bitmap_height(game->menu.cloud)/2,0);
+	al_draw_bitmap(game->menu.pinkcloud_bitmap,(al_get_display_width(game->display)*0.12) + (cos((game->menu.cloud_position/25+80)*1.74444))*40 - (al_get_display_width(game->display)/2)+(al_get_bitmap_width(game->menu.logo)/2), -(al_get_display_height(game->display)*0.1),0);
+	al_draw_bitmap(game->menu.cloud,al_get_display_width(game->display)*game->menu.cloud_position/100 - (al_get_display_width(game->display)/2)+(al_get_bitmap_width(game->menu.logo)/2), al_get_display_height(game->display)*0.1-(al_get_display_height(game->display)*0.1),0);
+	al_draw_bitmap(game->menu.pie_bitmap, al_get_display_width(game->display)/2 - (al_get_display_width(game->display)/2)+(al_get_bitmap_width(game->menu.logo)/2), al_get_display_height(game->display)*(game->menu.cloud_position)/10 -(al_get_display_height(game->display)*0.1),0);
+
+	/*al_draw_bitmap_region(al_get_backbuffer(game->display), (al_get_display_width(game->display)/2)-(al_get_bitmap_width(game->menu.logo)/2), (al_get_display_height(game->display)*0.1), al_get_bitmap_width(game->menu.logo), al_get_bitmap_height(game->menu.logo), 0, 0, 0);*/
+
 	al_set_target_bitmap(game->menu.blurbg2);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 
