@@ -112,17 +112,17 @@ void About_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	draw_text("Voices:");
 	/*draw_text(" - BaldDumboRat");
 	draw_text("     Derpy Hooves");*/
-	draw_text(" - Meredith Sims");
-	draw_text("   http://emichwan88.tumblr.com/");
+	draw_text(" - MEMJ0123");
+	draw_text("   http://memj0123.tumblr.com/");
+	draw_text("     Princess Celestia");
+	draw_text(" - Meredith Sims (Emichwan88)");
+	draw_text("   http://www.youtube.com/Emichwan88");
+        draw_text("     Fluttershy");
 	draw_text("     Twilight Sparkle");
-	draw_text("     Fluttershy");
 	/*draw_text(" - Hnilmik");
 	draw_text("     Rarity");
 	draw_text(" - Karen VO");
 	draw_text("     Applejack");*/
-	draw_text(" - MEMJ0123");
-	draw_text("   http://memj0123.tumblr.com/");
-	draw_text("     Princess Celestia");
 /*	draw_text(" - Erica Mendez");
 	draw_text("     Rainbow Dash");
 	draw_text(" - Emily Fajardo");
@@ -151,12 +151,12 @@ void About_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	draw_text("   http://www.soundjay.com/");
 	draw_text("");
 	draw_text("Other graphics:");
+	draw_text(" - CptOfTheFriendship");
+	draw_text("   http://cptofthefriendship.deviantart.com/");
 	draw_text(" - hombre0");
 	draw_text("   http://hombre0.deviantart.com/");
 	draw_text(" - Siobhan Brewer");
 	draw_text("   http://boxdrink.deviantart.com/");
-	draw_text(" - CptOfTheFriendship");
-	draw_text("   http://cptofthefriendship.deviantart.com/");
 	draw_text("");
 	draw_text("Super Derpy: Muffin Attack comes");
 	draw_text("with ABSOLUTELY NO WARRANTY.");
