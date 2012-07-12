@@ -1,0 +1,1856 @@
+2012-07-12  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * SuperDerpy.sh, doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/actions_8c.html,
+  doc/html/actions_8h.html, doc/html/actions_8h_source.html,
+  doc/html/allegro__utils_8c.html, doc/html/allegro__utils_8h.html,
+  doc/html/allegro__utils_8h_source.html, doc/html/annotated.html,
+  doc/html/callbacks_8c.html, doc/html/callbacks_8h.html,
+  doc/html/callbacks_8h_source.html, doc/html/classes.html,
+  doc/html/config_8c.html, doc/html/config_8h.html,
+  doc/html/config_8h_source.html,
+  doc/html/dir_4989de145ff53abce397f1ec189271fe.html,
+  doc/html/dir_68267d1309a1af8e8297ef4c3efbcdba.html,
+  doc/html/disclaimer_8c.html, doc/html/disclaimer_8h.html,
+  doc/html/disclaimer_8h_source.html, doc/html/files.html,
+  doc/html/functions.html, doc/html/functions_vars.html, doc/html/globals.html,
+  doc/html/globals_defs.html, doc/html/globals_enum.html,
+  doc/html/globals_func.html, doc/html/index.html, doc/html/intro_8c.html,
+  doc/html/intro_8h.html, doc/html/intro_8h_source.html,
+  doc/html/level_8c.html, doc/html/level_8h.html,
+  doc/html/level_8h_source.html, doc/html/loading_8c.html,
+  doc/html/loading_8h.html, doc/html/loading_8h_source.html,
+  doc/html/main_8c.html, doc/html/main_8h.html, doc/html/main_8h_source.html,
+  doc/html/map_8c.html, doc/html/map_8h.html, doc/html/map_8h_source.html,
+  doc/html/menu_8c.html, doc/html/menu_8h.html, doc/html/menu_8h_source.html,
+  doc/html/moonwalk_8c.html, doc/html/moonwalk_8h.html,
+  doc/html/moonwalk_8h_source.html, doc/html/pause_8c.html,
+  doc/html/pause_8h.html, doc/html/pause_8h_source.html,
+  doc/html/structAbout-members.html, doc/html/structAbout.html,
+  doc/html/structGame-members.html, doc/html/structGame.html,
+  doc/html/structIntro-members.html, doc/html/structIntro.html,
+  doc/html/structLevel-members.html, doc/html/structLevel.html,
+  doc/html/structLoading-members.html, doc/html/structLoading.html,
+  doc/html/structMap-members.html, doc/html/structMap.html,
+  doc/html/structMenu-members.html, doc/html/structMenu.html,
+  doc/html/structMoonwalk-members.html, doc/html/structMoonwalk.html,
+  doc/html/structObstacle-members.html, doc/html/structObstacle.html,
+  doc/html/structPause-members.html, doc/html/structPause.html,
+  doc/html/structSpritesheet-members.html, doc/html/structSpritesheet.html,
+  doc/html/structTM__Action-members.html, doc/html/structTM__Action.html,
+  doc/html/structTM__Arguments-members.html, doc/html/structTM__Arguments.html,
+  doc/html/timeline_8c.html, doc/html/timeline_8h.html,
+  doc/html/timeline_8h_source.html, doc/latex/doxygen.sty,
+  doc/latex/refman.tex: prepare for release
+
+  * SuperDerpy.creator.user, data/levels/letter.flac, src/about.c,
+  src/levels/actions.c: add recording of Twilight's letter by Emichwan88
+
+2012-07-10  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * SuperDerpy.creator.user, doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/actions_8c.html,
+  doc/html/actions_8h.html, doc/html/actions_8h_source.html,
+  doc/html/allegro__utils_8c.html, doc/html/allegro__utils_8h.html,
+  doc/html/allegro__utils_8h_source.html, doc/html/annotated.html,
+  doc/html/callbacks_8c.html, doc/html/callbacks_8h.html,
+  doc/html/callbacks_8h_source.html, doc/html/classes.html,
+  doc/html/config_8c.html, doc/html/config_8h.html,
+  doc/html/config_8h_source.html,
+  doc/html/dir_4989de145ff53abce397f1ec189271fe.html,
+  doc/html/dir_68267d1309a1af8e8297ef4c3efbcdba.html,
+  doc/html/disclaimer_8c.html, doc/html/disclaimer_8h.html,
+  doc/html/disclaimer_8h_source.html, doc/html/files.html,
+  doc/html/functions.html, doc/html/functions_vars.html, doc/html/globals.html,
+  doc/html/globals_defs.html, doc/html/globals_enum.html,
+  doc/html/globals_func.html, doc/html/index.html, doc/html/intro_8c.html,
+  doc/html/intro_8h.html, doc/html/intro_8h_source.html,
+  doc/html/level_8c.html, doc/html/level_8h.html,
+  doc/html/level_8h_source.html, doc/html/loading_8c.html,
+  doc/html/loading_8h.html, doc/html/loading_8h_source.html,
+  doc/html/main_8c.html, doc/html/main_8h.html, doc/html/main_8h_source.html,
+  doc/html/map_8c.html, doc/html/map_8h.html, doc/html/map_8h_source.html,
+  doc/html/menu_8c.html, doc/html/menu_8h.html, doc/html/menu_8h_source.html,
+  doc/html/moonwalk_8c.html, doc/html/moonwalk_8h.html,
+  doc/html/moonwalk_8h_source.html, doc/html/pause_8c.html,
+  doc/html/pause_8h.html, doc/html/pause_8h_source.html,
+  doc/html/structAbout-members.html, doc/html/structAbout.html,
+  doc/html/structGame-members.html, doc/html/structGame.html,
+  doc/html/structIntro-members.html, doc/html/structIntro.html,
+  doc/html/structLevel-members.html, doc/html/structLevel.html,
+  doc/html/structLoading-members.html, doc/html/structLoading.html,
+  doc/html/structMap-members.html, doc/html/structMap.html,
+  doc/html/structMenu-members.html, doc/html/structMenu.html,
+  doc/html/structMoonwalk-members.html, doc/html/structMoonwalk.html,
+  doc/html/structObstacle-members.html, doc/html/structObstacle.html,
+  doc/html/structPause-members.html, doc/html/structPause.html,
+  doc/html/structSpritesheet-members.html, doc/html/structSpritesheet.html,
+  doc/html/structTM__Action-members.html, doc/html/structTM__Action.html,
+  doc/html/structTM__Arguments-members.html, doc/html/structTM__Arguments.html,
+  doc/html/timeline_8c.html, doc/html/timeline_8h.html,
+  doc/html/timeline_8h_source.html, doc/latex/doxygen.sty,
+  doc/latex/refman.tex: update docs
+
+  * SuperDerpy.creator.user, src/menu.c: fix laggy glass effect on some shitty
+  platforms
+
+2012-07-09  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/actions_8c.html,
+  doc/html/actions_8h.html, doc/html/actions_8h_source.html,
+  doc/html/allegro__utils_8c.html, doc/html/allegro__utils_8h.html,
+  doc/html/allegro__utils_8h_source.html, doc/html/annotated.html,
+  doc/html/bc_s.png, doc/html/bdwn.png, doc/html/callbacks_8c.html,
+  doc/html/callbacks_8h.html, doc/html/callbacks_8h_source.html,
+  doc/html/classes.html, doc/html/closed.png, doc/html/config_8c.html,
+  doc/html/config_8h.html, doc/html/config_8h_source.html,
+  doc/html/dir_4989de145ff53abce397f1ec189271fe.html,
+  doc/html/dir_68267d1309a1af8e8297ef4c3efbcdba.html,
+  doc/html/disclaimer_8c.html, doc/html/disclaimer_8h.html,
+  doc/html/disclaimer_8h_source.html, doc/html/doxygen.css,
+  doc/html/doxygen.png, doc/html/dynsections.js, doc/html/files.html,
+  doc/html/ftv2blank.png, doc/html/ftv2cl.png, doc/html/ftv2doc.png,
+  doc/html/ftv2folderclosed.png, doc/html/ftv2folderopen.png,
+  doc/html/ftv2lastnode.png, doc/html/ftv2link.png, doc/html/ftv2mlastnode.png,
+  doc/html/ftv2mnode.png, doc/html/ftv2mo.png, doc/html/ftv2node.png,
+  doc/html/ftv2ns.png, doc/html/ftv2plastnode.png, doc/html/ftv2pnode.png,
+  doc/html/ftv2splitbar.png, doc/html/ftv2vertline.png,
+  doc/html/functions.html, doc/html/functions_vars.html, doc/html/globals.html,
+  doc/html/globals_defs.html, doc/html/globals_enum.html,
+  doc/html/globals_func.html, doc/html/index.html, doc/html/installdox,
+  doc/html/intro_8c.html, doc/html/intro_8h.html,
+  doc/html/intro_8h_source.html, doc/html/jquery.js, doc/html/level_8c.html,
+  doc/html/level_8h.html, doc/html/level_8h_source.html,
+  doc/html/loading_8c.html, doc/html/loading_8h.html,
+  doc/html/loading_8h_source.html, doc/html/main_8c.html,
+  doc/html/main_8h.html, doc/html/main_8h_source.html, doc/html/map_8c.html,
+  doc/html/map_8h.html, doc/html/map_8h_source.html, doc/html/menu_8c.html,
+  doc/html/menu_8h.html, doc/html/menu_8h_source.html,
+  doc/html/moonwalk_8c.html, doc/html/moonwalk_8h.html,
+  doc/html/moonwalk_8h_source.html, doc/html/nav_f.png, doc/html/nav_g.png,
+  doc/html/nav_h.png, doc/html/open.png, doc/html/pause_8c.html,
+  doc/html/pause_8h.html, doc/html/pause_8h_source.html,
+  doc/html/search/all_62.js, doc/html/search/all_64.js,
+  doc/html/search/all_67.js, doc/html/search/all_6c.js,
+  doc/html/search/files_64.html, doc/html/search/files_64.js,
+  doc/html/search/search.js, doc/html/search/variables_62.js,
+  doc/html/search/variables_64.js, doc/html/search/variables_67.js,
+  doc/html/search/variables_6c.js, doc/html/structAbout-members.html,
+  doc/html/structAbout.html, doc/html/structGame-members.html,
+  doc/html/structGame.html, doc/html/structIntro-members.html,
+  doc/html/structIntro.html, doc/html/structLevel-members.html,
+  doc/html/structLevel.html, doc/html/structLoading-members.html,
+  doc/html/structLoading.html, doc/html/structMap-members.html,
+  doc/html/structMap.html, doc/html/structMenu-members.html,
+  doc/html/structMenu.html, doc/html/structMoonwalk-members.html,
+  doc/html/structMoonwalk.html, doc/html/structObstacle-members.html,
+  doc/html/structObstacle.html, doc/html/structPause-members.html,
+  doc/html/structPause.html, doc/html/structSpritesheet-members.html,
+  doc/html/structSpritesheet.html, doc/html/structTM__Action-members.html,
+  doc/html/structTM__Action.html, doc/html/structTM__Arguments-members.html,
+  doc/html/structTM__Arguments.html, doc/html/tab_a.png, doc/html/tab_b.png,
+  doc/html/tab_h.png, doc/html/tab_s.png, doc/html/timeline_8c.html,
+  doc/html/timeline_8h.html, doc/html/timeline_8h_source.html,
+  doc/latex/Makefile, doc/latex/about_8c.tex, doc/latex/about_8h.tex,
+  doc/latex/actions_8c.tex, doc/latex/actions_8h.tex,
+  doc/latex/allegro__utils_8c.tex, doc/latex/allegro__utils_8h.tex,
+  doc/latex/annotated.tex, doc/latex/callbacks_8c.tex,
+  doc/latex/callbacks_8h.tex, doc/latex/config_8c.tex, doc/latex/config_8h.tex,
+  doc/latex/dir_4989de145ff53abce397f1ec189271fe.tex,
+  doc/latex/dir_68267d1309a1af8e8297ef4c3efbcdba.tex,
+  doc/latex/disclaimer_8c.tex, doc/latex/disclaimer_8h.tex,
+  doc/latex/doxygen.sty, doc/latex/files.tex, doc/latex/intro_8c.tex,
+  doc/latex/intro_8h.tex, doc/latex/level_8c.tex, doc/latex/level_8h.tex,
+  doc/latex/loading_8c.tex, doc/latex/loading_8h.tex, doc/latex/main_8c.tex,
+  doc/latex/main_8h.tex, doc/latex/map_8c.tex, doc/latex/map_8h.tex,
+  doc/latex/menu_8c.tex, doc/latex/menu_8h.tex, doc/latex/moonwalk_8c.tex,
+  doc/latex/moonwalk_8h.tex, doc/latex/pause_8c.tex, doc/latex/pause_8h.tex,
+  doc/latex/refman.tex, doc/latex/structAbout.tex, doc/latex/structGame.tex,
+  doc/latex/structIntro.tex, doc/latex/structLevel.tex,
+  doc/latex/structLoading.tex, doc/latex/structMap.tex,
+  doc/latex/structMenu.tex, doc/latex/structMoonwalk.tex,
+  doc/latex/structObstacle.tex, doc/latex/structPause.tex,
+  doc/latex/structSpritesheet.tex, doc/latex/structTM__Action.tex,
+  doc/latex/structTM__Arguments.tex, doc/latex/timeline_8c.tex,
+  doc/latex/timeline_8h.tex: update docs
+
+  * data/about/letter.png, data/intro/1.png, data/intro/2.png,
+  data/intro/3.png, data/intro/4.png, data/intro/5.png, data/intro/discord.png,
+  data/intro/paper.png, data/levels/badmuffin.png, data/levels/cherry.png,
+  data/levels/derpy/fly.png, data/levels/derpy/run.png,
+  data/levels/derpy/stand.png, data/levels/derpy/walk.png,
+  data/levels/derpy_pause.png, data/levels/letter.png, data/levels/meter.png,
+  data/levels/muffin.png, data/levels/owl.png, data/levels/pie1.png,
+  data/levels/pie2.png, data/levels/pig.png, data/levels/screwball.png,
+  data/logo.png, data/map/background.png, data/map/highlight1.png,
+  data/map/highlight2.png, data/map/highlight3.png, data/map/highlight4.png,
+  data/map/highlight5.png, data/map/highlight6.png, data/menu/glass.png,
+  data/menu/logo.png, data/menu/menu.png, data/menu/mountain.png,
+  data/menu/pinkcloud.png, data/menu/rain.png, src/data/Derpy_Fly.swf,
+  src/data/Derpy_Run.swf, src/data/Derpy_Trot.swf, src/data/Derpy_Walk.swf,
+  src/data/derpcycle.xcf, src/data/derpcycle2.xcf,
+  .../fluttershy_house_by_kamikadzew-d56gvd0.png, src/data/intro1anim/1-1.png,
+  src/data/intro1anim/1-2.png, src/data/intro1anim/1-3.png,
+  src/data/intro1anim/1-4.png, src/data/map.xcf, src/data/rd.png,
+  src/data/rockfarm/background.svg, src/data/rockfarm/clouds.svg,
+  src/data/rockfarm/foreground.svg, src/data/rockfarm/stage.svg,
+  src/data/runcycle.xcf, src/data/s4d2.ai, src/data/zombie.xcf, src/map.c:
+  preparing for release
+
+  * SuperDerpy.creator.user, data/map/background.png, data/map/highlight1.png,
+  data/map/highlight2.png, data/map/highlight3.png, data/map/highlight4.png,
+  data/map/highlight5.png, data/map/highlight6.png, src/data/map.xcf: add
+  Rainbow Dash's house to map
+
+2012-07-08  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * src/disclaimer.c, src/main.c: add command line option for selecting initial
+  gamestate
+
+  * README.md, src/about.c: prepare for first release
+
+  * Makefile, SuperDerpy.files, src/disclaimer.c, src/disclaimer.h, src/main.c,
+  src/main.h, src/menu.c: add disclaimer screen about early development preview
+
+  * SuperDerpy.creator.user, data/map/background.png, data/map/highlight1.png,
+  data/map/highlight2.png, data/map/highlight3.png, data/map/highlight4.png,
+  data/map/highlight5.png, data/map/highlight6.png,
+  .../fluttershy_house_by_kamikadzew-d56gvd0.png, src/data/map.xcf,
+  src/data/s4d.ai: add Fluttershy's house to map
+
+  * data/levels/letter.png, src/data/letter.xcf, src/level.c: add "Press enter
+  to continue..." text to letter screen
+
+  * data/DejaVuSans.ttf, src/level.c, src/levels/actions.c, src/main.h: letter
+  from Twilight: add proper text
+
+2012-07-06  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * data/intro/2.png, src/intro.c: add last animation from Anna Karlik to intro
+
+2012-07-03  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * SuperDerpy.creator.user, src/main.c, src/main.h, src/menu.c: glass
+  performance tweaks
+
+  * SuperDerpy.creator.user, data/menu/glass.png, data/menu/logo.png,
+  src/main.h, src/menu.c: add logo to main menu, with glass effect
+
+2012-06-19  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * SuperDerpy.creator.user, src/level.c, src/levels/actions.c, src/main.h:
+  make Derpy more controllable
+
+2012-05-27  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * .gitignore, SuperDerpy.creator.user, data/intro/5.png, src/intro.c: add
+  jumping Derpy animation for intro from Anna Karlik
+
+2012-05-25  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * SuperDerpy.creator.user, data/intro/1.png, data/intro/4.png, src/intro.c:
+  update intro animations from Anna Karlik
+
+  * doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/actions_8c.html,
+  doc/html/actions_8h.html, doc/html/actions_8h_source.html,
+  doc/html/allegro__utils_8c.html, doc/html/allegro__utils_8h.html,
+  doc/html/allegro__utils_8h_source.html, doc/html/annotated.html,
+  doc/html/callbacks_8c.html, doc/html/callbacks_8h.html,
+  doc/html/callbacks_8h_source.html, doc/html/classes.html,
+  doc/html/config_8c.html, doc/html/config_8h.html,
+  doc/html/config_8h_source.html, doc/html/files.html, doc/html/functions.html,
+  doc/html/functions_vars.html, doc/html/globals.html,
+  doc/html/globals_defs.html, doc/html/globals_enum.html,
+  doc/html/globals_func.html, doc/html/index.html, doc/html/intro_8c.html,
+  doc/html/intro_8h.html, doc/html/intro_8h_source.html,
+  doc/html/level_8c.html, doc/html/level_8h.html,
+  doc/html/level_8h_source.html, doc/html/loading_8c.html,
+  doc/html/loading_8h.html, doc/html/loading_8h_source.html,
+  doc/html/main_8c.html, doc/html/main_8h.html, doc/html/main_8h_source.html,
+  doc/html/map_8c.html, doc/html/map_8h.html, doc/html/map_8h_source.html,
+  doc/html/menu_8c.html, doc/html/menu_8h.html, doc/html/menu_8h_source.html,
+  doc/html/moonwalk_8c.html, doc/html/moonwalk_8h.html,
+  doc/html/moonwalk_8h_source.html, doc/html/pause_8c.html,
+  doc/html/pause_8h.html, doc/html/pause_8h_source.html,
+  doc/html/search/all_63.js, doc/html/search/variables_63.js,
+  doc/html/structAbout-members.html, doc/html/structAbout.html,
+  doc/html/structGame-members.html, doc/html/structGame.html,
+  doc/html/structIntro-members.html, doc/html/structIntro.html,
+  doc/html/structLevel-members.html, doc/html/structLevel.html,
+  doc/html/structLoading-members.html, doc/html/structLoading.html,
+  doc/html/structMap-members.html, doc/html/structMap.html,
+  doc/html/structMenu-members.html, doc/html/structMenu.html,
+  doc/html/structMoonwalk-members.html, doc/html/structMoonwalk.html,
+  doc/html/structObstacle-members.html, doc/html/structObstacle.html,
+  doc/html/structPause-members.html, doc/html/structPause.html,
+  doc/html/structSpritesheet-members.html, doc/html/structSpritesheet.html,
+  doc/html/structTM__Action-members.html, doc/html/structTM__Action.html,
+  doc/html/structTM__Arguments-members.html, doc/html/structTM__Arguments.html,
+  doc/html/timeline_8c.html, doc/html/timeline_8h.html,
+  doc/html/timeline_8h_source.html, doc/latex/doxygen.sty,
+  doc/latex/refman.tex, doc/latex/structLevel.tex: update docs
+
+2012-05-23  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * src/level.c, src/levels/actions.c, src/main.h: add cherries
+
+2012-05-22  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/actions_8c.html,
+  doc/html/actions_8h.html, doc/html/actions_8h_source.html,
+  doc/html/allegro__utils_8c.html, doc/html/allegro__utils_8h.html,
+  doc/html/allegro__utils_8h_source.html, doc/html/annotated.html,
+  doc/html/callbacks_8c.html, doc/html/callbacks_8h.html,
+  doc/html/callbacks_8h_source.html, doc/html/classes.html,
+  doc/html/config_8c.html, doc/html/config_8h.html,
+  doc/html/config_8h_source.html, doc/html/files.html, doc/html/functions.html,
+  doc/html/functions_vars.html, doc/html/globals.html,
+  doc/html/globals_defs.html, doc/html/globals_enum.html,
+  doc/html/globals_func.html, doc/html/index.html, doc/html/intro_8c.html,
+  doc/html/intro_8h.html, doc/html/intro_8h_source.html,
+  doc/html/level_8c.html, doc/html/level_8h.html,
+  doc/html/level_8h_source.html, doc/html/loading_8c.html,
+  doc/html/loading_8h.html, doc/html/loading_8h_source.html,
+  doc/html/main_8c.html, doc/html/main_8h.html, doc/html/main_8h_source.html,
+  doc/html/map_8c.html, doc/html/map_8h.html, doc/html/map_8h_source.html,
+  doc/html/menu_8c.html, doc/html/menu_8h.html, doc/html/menu_8h_source.html,
+  doc/html/moonwalk_8c.html, doc/html/moonwalk_8h.html,
+  doc/html/moonwalk_8h_source.html, doc/html/pause_8c.html,
+  doc/html/pause_8h.html, doc/html/pause_8h_source.html,
+  doc/html/search/all_70.js, doc/html/search/variables_70.js,
+  doc/html/structAbout-members.html, doc/html/structAbout.html,
+  doc/html/structGame-members.html, doc/html/structGame.html,
+  doc/html/structIntro-members.html, doc/html/structIntro.html,
+  doc/html/structLevel-members.html, doc/html/structLevel.html,
+  doc/html/structLoading-members.html, doc/html/structLoading.html,
+  doc/html/structMap-members.html, doc/html/structMap.html,
+  doc/html/structMenu-members.html, doc/html/structMenu.html,
+  doc/html/structMoonwalk-members.html, doc/html/structMoonwalk.html,
+  doc/html/structObstacle-members.html, doc/html/structObstacle.html,
+  doc/html/structPause-members.html, doc/html/structPause.html,
+  doc/html/structSpritesheet-members.html, doc/html/structSpritesheet.html,
+  doc/html/structTM__Action-members.html, doc/html/structTM__Action.html,
+  doc/html/structTM__Arguments-members.html, doc/html/structTM__Arguments.html,
+  doc/html/timeline_8c.html, doc/html/timeline_8h.html,
+  doc/html/timeline_8h_source.html, doc/latex/doxygen.sty,
+  doc/latex/refman.tex, doc/latex/structLevel.tex: update docs
+
+  * SuperDerpy.creator.user, data/about/letter.png, data/levels/cherry.png,
+  data/levels/letter.png, data/levels/pie1.png, data/levels/pie2.png,
+  data/menu/pie.png, src/about.c, src/level.c, src/levels/actions.c,
+  src/main.h, src/menu.c: lots of cosmetic things
+
+2012-05-21  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/actions_8c.html,
+  doc/html/actions_8h.html, doc/html/actions_8h_source.html,
+  doc/html/allegro__utils_8c.html, doc/html/allegro__utils_8h.html,
+  doc/html/allegro__utils_8h_source.html, doc/html/annotated.html,
+  doc/html/callbacks_8c.html, doc/html/callbacks_8h.html,
+  doc/html/callbacks_8h_source.html, doc/html/classes.html,
+  doc/html/config_8c.html, doc/html/config_8h.html,
+  doc/html/config_8h_source.html, doc/html/files.html, doc/html/functions.html,
+  doc/html/functions_vars.html, doc/html/globals.html,
+  doc/html/globals_defs.html, doc/html/globals_enum.html,
+  doc/html/globals_func.html, doc/html/index.html, doc/html/intro_8c.html,
+  doc/html/intro_8h.html, doc/html/intro_8h_source.html,
+  doc/html/level_8c.html, doc/html/level_8h.html,
+  doc/html/level_8h_source.html, doc/html/loading_8c.html,
+  doc/html/loading_8h.html, doc/html/loading_8h_source.html,
+  doc/html/main_8c.html, doc/html/main_8h.html, doc/html/main_8h_source.html,
+  doc/html/map_8c.html, doc/html/map_8h.html, doc/html/map_8h_source.html,
+  doc/html/menu_8c.html, doc/html/menu_8h.html, doc/html/menu_8h_source.html,
+  doc/html/moonwalk_8c.html, doc/html/moonwalk_8h.html,
+  doc/html/moonwalk_8h_source.html, doc/html/pause_8c.html,
+  doc/html/pause_8h.html, doc/html/pause_8h_source.html,
+  doc/html/search/all_6c.js, doc/html/search/all_72.js,
+  doc/html/search/functions_72.js, doc/html/search/variables_6c.js,
+  doc/html/structAbout-members.html, doc/html/structAbout.html,
+  doc/html/structGame-members.html, doc/html/structGame.html,
+  doc/html/structIntro-members.html, doc/html/structIntro.html,
+  doc/html/structLevel-members.html, doc/html/structLevel.html,
+  doc/html/structLoading-members.html, doc/html/structLoading.html,
+  doc/html/structMap-members.html, doc/html/structMap.html,
+  doc/html/structMenu-members.html, doc/html/structMenu.html,
+  doc/html/structMoonwalk-members.html, doc/html/structMoonwalk.html,
+  doc/html/structObstacle-members.html, doc/html/structObstacle.html,
+  doc/html/structPause-members.html, doc/html/structPause.html,
+  doc/html/structSpritesheet-members.html, doc/html/structSpritesheet.html,
+  doc/html/structTM__Action-members.html, doc/html/structTM__Action.html,
+  doc/html/structTM__Arguments-members.html, doc/html/structTM__Arguments.html,
+  doc/html/timeline_8c.html, doc/html/timeline_8h.html,
+  doc/html/timeline_8h_source.html, doc/latex/actions_8c.tex,
+  doc/latex/actions_8h.tex, doc/latex/doxygen.sty, doc/latex/refman.tex,
+  doc/latex/structLevel.tex: update docs
+
+  * data/levels/letter.png, src/level.c, src/levels/actions.c, src/main.h: add
+  bitmap for a letter from Twilight
+
+  * data/levels/derpy/run.ini, src/level.c, src/levels/actions.c,
+  src/levels/actions.h: little animation at the end of the level
+
+  * doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/actions_8c.html,
+  doc/html/actions_8h.html, doc/html/actions_8h_source.html,
+  doc/html/allegro__utils_8c.html, doc/html/allegro__utils_8h.html,
+  doc/html/allegro__utils_8h_source.html, doc/html/annotated.html,
+  doc/html/callbacks_8c.html, doc/html/callbacks_8h.html,
+  doc/html/callbacks_8h_source.html, doc/html/classes.html,
+  doc/html/config_8c.html, doc/html/config_8h.html,
+  doc/html/config_8h_source.html, doc/html/files.html, doc/html/functions.html,
+  doc/html/functions_vars.html, doc/html/globals.html,
+  doc/html/globals_defs.html, doc/html/globals_enum.html,
+  doc/html/globals_func.html, doc/html/index.html, doc/html/intro_8c.html,
+  doc/html/intro_8h.html, doc/html/intro_8h_source.html,
+  doc/html/level_8c.html, doc/html/level_8h.html,
+  doc/html/level_8h_source.html, doc/html/loading_8c.html,
+  doc/html/loading_8h.html, doc/html/loading_8h_source.html,
+  doc/html/main_8c.html, doc/html/main_8h.html, doc/html/main_8h_source.html,
+  doc/html/map_8c.html, doc/html/map_8h.html, doc/html/map_8h_source.html,
+  doc/html/menu_8c.html, doc/html/menu_8h.html, doc/html/menu_8h_source.html,
+  doc/html/moonwalk_8c.html, doc/html/moonwalk_8h.html,
+  doc/html/moonwalk_8h_source.html, doc/html/pause_8c.html,
+  doc/html/pause_8h.html, doc/html/pause_8h_source.html,
+  doc/html/search/all_61.js, doc/html/search/all_62.js,
+  doc/html/search/all_6f.js, doc/html/search/all_73.js,
+  doc/html/search/functions_6f.js, doc/html/search/variables_61.js,
+  doc/html/search/variables_62.js, doc/html/search/variables_73.js,
+  doc/html/structAbout-members.html, doc/html/structAbout.html,
+  doc/html/structGame-members.html, doc/html/structGame.html,
+  doc/html/structIntro-members.html, doc/html/structIntro.html,
+  doc/html/structLevel-members.html, doc/html/structLevel.html,
+  doc/html/structLoading-members.html, doc/html/structLoading.html,
+  doc/html/structMap-members.html, doc/html/structMap.html,
+  doc/html/structMenu-members.html, doc/html/structMenu.html,
+  doc/html/structMoonwalk-members.html, doc/html/structMoonwalk.html,
+  doc/html/structObstacle-members.html, doc/html/structObstacle.html,
+  doc/html/structPause-members.html, doc/html/structPause.html,
+  doc/html/structSpritesheet-members.html, doc/html/structSpritesheet.html,
+  doc/html/structTM__Action-members.html, doc/html/structTM__Action.html,
+  doc/html/structTM__Arguments-members.html, doc/html/structTM__Arguments.html,
+  doc/html/timeline_8c.html, doc/html/timeline_8h.html,
+  doc/html/timeline_8h_source.html, doc/latex/callbacks_8c.tex,
+  doc/latex/callbacks_8h.tex, doc/latex/doxygen.sty, doc/latex/refman.tex,
+  doc/latex/structLevel.tex, doc/latex/structObstacle.tex: update docs
+
+  * src/levels/actions.c, src/levels/callbacks.c: some tweaks for obstacles
+
+  * data/levels/badmuffin.png, data/levels/screwball.png, src/level.c,
+  src/levels/actions.c, src/levels/callbacks.c, src/levels/callbacks.h,
+  src/main.h: more obstacles
+
+  * src/intro.c, src/level.c, src/levels/actions.c, src/levels/callbacks.c,
+  src/levels/callbacks.h, src/main.c, src/main.h: rotating muffins
+
+  * doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/actions_8c.html,
+  doc/html/actions_8h.html, doc/html/actions_8h_source.html,
+  doc/html/allegro__utils_8c.html, doc/html/allegro__utils_8h.html,
+  doc/html/allegro__utils_8h_source.html, doc/html/annotated.html,
+  doc/html/callbacks_8c.html, doc/html/callbacks_8h.html,
+  doc/html/callbacks_8h_source.html, doc/html/classes.html,
+  doc/html/config_8c.html, doc/html/config_8h.html,
+  doc/html/config_8h_source.html, doc/html/files.html, doc/html/functions.html,
+  doc/html/functions_vars.html, doc/html/globals.html,
+  doc/html/globals_defs.html, doc/html/globals_enum.html,
+  doc/html/globals_func.html, doc/html/index.html, doc/html/intro_8c.html,
+  doc/html/intro_8h.html, doc/html/intro_8h_source.html,
+  doc/html/level_8c.html, doc/html/level_8h.html,
+  doc/html/level_8h_source.html, doc/html/loading_8c.html,
+  doc/html/loading_8h.html, doc/html/loading_8h_source.html,
+  doc/html/main_8c.html, doc/html/main_8h.html, doc/html/main_8h_source.html,
+  doc/html/map_8c.html, doc/html/map_8h.html, doc/html/map_8h_source.html,
+  doc/html/menu_8c.html, doc/html/menu_8h.html, doc/html/menu_8h_source.html,
+  doc/html/moonwalk_8c.html, doc/html/moonwalk_8h.html,
+  doc/html/moonwalk_8h_source.html, doc/html/pause_8c.html,
+  doc/html/pause_8h.html, doc/html/pause_8h_source.html,
+  doc/html/structAbout-members.html, doc/html/structAbout.html,
+  doc/html/structGame-members.html, doc/html/structGame.html,
+  doc/html/structIntro-members.html, doc/html/structIntro.html,
+  doc/html/structLevel-members.html, doc/html/structLevel.html,
+  doc/html/structLoading-members.html, doc/html/structLoading.html,
+  doc/html/structMap-members.html, doc/html/structMap.html,
+  doc/html/structMenu-members.html, doc/html/structMenu.html,
+  doc/html/structMoonwalk-members.html, doc/html/structMoonwalk.html,
+  doc/html/structObstacle-members.html, doc/html/structObstacle.html,
+  doc/html/structPause-members.html, doc/html/structPause.html,
+  doc/html/structSpritesheet-members.html, doc/html/structSpritesheet.html,
+  doc/html/structTM__Action-members.html, doc/html/structTM__Action.html,
+  doc/html/structTM__Arguments-members.html, doc/html/structTM__Arguments.html,
+  doc/html/timeline_8c.html, doc/html/timeline_8h.html,
+  doc/html/timeline_8h_source.html, doc/latex/actions_8c.tex,
+  doc/latex/actions_8h.tex, doc/latex/doxygen.sty, doc/latex/refman.tex,
+  src/levels/actions.h: typo
+
+  * Doxyfile, doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/actions_8c.html,
+  doc/html/actions_8h.html, doc/html/actions_8h_source.html,
+  doc/html/allegro__utils_8c.html, doc/html/allegro__utils_8h.html,
+  doc/html/allegro__utils_8h_source.html, doc/html/annotated.html,
+  doc/html/callbacks_8c.html, doc/html/callbacks_8h.html,
+  doc/html/callbacks_8h_source.html, doc/html/classes.html,
+  doc/html/config_8c.html, doc/html/config_8h.html,
+  doc/html/config_8h_source.html, doc/html/files.html, doc/html/functions.html,
+  doc/html/functions_vars.html, doc/html/globals.html,
+  doc/html/globals_defs.html, doc/html/globals_enum.html,
+  doc/html/globals_func.html, doc/html/index.html, doc/html/intro_8c.html,
+  doc/html/intro_8h.html, doc/html/intro_8h_source.html,
+  doc/html/level_8c.html, doc/html/level_8h.html,
+  doc/html/level_8h_source.html, doc/html/loading_8c.html,
+  doc/html/loading_8h.html, doc/html/loading_8h_source.html,
+  doc/html/main_8c.html, doc/html/main_8h.html, doc/html/main_8h_source.html,
+  doc/html/map_8c.html, doc/html/map_8h.html, doc/html/map_8h_source.html,
+  doc/html/menu_8c.html, doc/html/menu_8h.html, doc/html/menu_8h_source.html,
+  doc/html/moonwalk_8c.html, doc/html/moonwalk_8h.html,
+  doc/html/moonwalk_8h_source.html, doc/html/pause_8c.html,
+  doc/html/pause_8h.html, doc/html/pause_8h_source.html,
+  doc/html/search/all_61.js, doc/html/search/all_63.js,
+  doc/html/search/all_66.js, doc/html/search/all_67.js,
+  doc/html/search/all_6c.js, doc/html/search/all_6d.js,
+  doc/html/search/all_6f.js, doc/html/search/all_70.js,
+  doc/html/search/all_72.js, doc/html/search/all_73.js,
+  doc/html/search/all_77.js, doc/html/search/files_61.js,
+  doc/html/search/files_63.js, doc/html/search/functions_61.js,
+  doc/html/search/functions_66.html, doc/html/search/functions_66.js,
+  doc/html/search/functions_67.js, doc/html/search/functions_6c.js,
+  doc/html/search/functions_6d.html, doc/html/search/functions_6d.js,
+  doc/html/search/functions_6f.html, doc/html/search/functions_6f.js,
+  doc/html/search/functions_70.js, doc/html/search/functions_72.html,
+  doc/html/search/functions_72.js, doc/html/search/functions_73.js,
+  doc/html/search/functions_77.html, doc/html/search/functions_77.js,
+  doc/html/search/search.js, doc/html/structAbout-members.html,
+  doc/html/structAbout.html, doc/html/structGame-members.html,
+  doc/html/structGame.html, doc/html/structIntro-members.html,
+  doc/html/structIntro.html, doc/html/structLevel-members.html,
+  doc/html/structLevel.html, doc/html/structLoading-members.html,
+  doc/html/structLoading.html, doc/html/structMap-members.html,
+  doc/html/structMap.html, doc/html/structMenu-members.html,
+  doc/html/structMenu.html, doc/html/structMoonwalk-members.html,
+  doc/html/structMoonwalk.html, doc/html/structObstacle-members.html,
+  doc/html/structObstacle.html, doc/html/structPause-members.html,
+  doc/html/structPause.html, doc/html/structSpritesheet-members.html,
+  doc/html/structSpritesheet.html, doc/html/structTM__Action-members.html,
+  doc/html/structTM__Action.html, doc/html/structTM__Arguments-members.html,
+  doc/html/structTM__Arguments.html, doc/html/timeline_8c.html,
+  doc/html/timeline_8h.html, doc/html/timeline_8h_source.html,
+  doc/latex/actions_8c.tex, doc/latex/actions_8h.tex,
+  doc/latex/callbacks_8c.tex, doc/latex/callbacks_8h.tex,
+  doc/latex/doxygen.sty, doc/latex/files.tex, doc/latex/level_8c.tex,
+  doc/latex/main_8c.tex, doc/latex/refman.tex, doc/latex/timeline_8c.tex,
+  src/levels/actions.h, src/levels/callbacks.h, src/main.c, src/timeline.c:
+  moar documentation
+
+  * doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/allegro__utils_8c.html,
+  doc/html/allegro__utils_8h.html, doc/html/allegro__utils_8h_source.html,
+  doc/html/annotated.html, doc/html/classes.html, doc/html/config_8c.html,
+  doc/html/config_8h.html, doc/html/config_8h_source.html, doc/html/files.html,
+  doc/html/functions.html, doc/html/functions_vars.html, doc/html/globals.html,
+  doc/html/globals_defs.html, doc/html/globals_enum.html,
+  doc/html/globals_func.html, doc/html/index.html, doc/html/intro_8c.html,
+  doc/html/intro_8h.html, doc/html/intro_8h_source.html,
+  doc/html/level_8c.html, doc/html/level_8h.html,
+  doc/html/level_8h_source.html, doc/html/loading_8c.html,
+  doc/html/loading_8h.html, doc/html/loading_8h_source.html,
+  doc/html/main_8c.html, doc/html/main_8h.html, doc/html/main_8h_source.html,
+  doc/html/map_8c.html, doc/html/map_8h.html, doc/html/map_8h_source.html,
+  doc/html/menu_8c.html, doc/html/menu_8h.html, doc/html/menu_8h_source.html,
+  doc/html/moonwalk_8c.html, doc/html/moonwalk_8h.html,
+  doc/html/moonwalk_8h_source.html, doc/html/pause_8c.html,
+  doc/html/pause_8h.html, doc/html/pause_8h_source.html,
+  doc/html/search/all_61.js, doc/html/search/all_62.js,
+  doc/html/search/all_63.js, doc/html/search/all_64.js,
+  doc/html/search/all_65.html, doc/html/search/all_65.js,
+  doc/html/search/all_66.js, doc/html/search/all_67.js,
+  doc/html/search/all_68.js, doc/html/search/all_69.js,
+  doc/html/search/all_6c.js, doc/html/search/all_6d.js,
+  doc/html/search/all_6e.js, doc/html/search/all_6f.js,
+  doc/html/search/all_70.js, doc/html/search/all_72.js,
+  doc/html/search/all_73.js, doc/html/search/all_74.js,
+  doc/html/search/all_76.html, doc/html/search/all_76.js,
+  doc/html/search/all_77.js, doc/html/search/search.js,
+  doc/html/search/variables_61.js, doc/html/search/variables_62.js,
+  doc/html/search/variables_63.js, doc/html/search/variables_64.js,
+  doc/html/search/variables_65.html, doc/html/search/variables_65.js,
+  doc/html/search/variables_66.js, doc/html/search/variables_67.html,
+  doc/html/search/variables_67.js, doc/html/search/variables_68.js,
+  doc/html/search/variables_69.js, doc/html/search/variables_6c.js,
+  doc/html/search/variables_6d.js, doc/html/search/variables_6e.js,
+  doc/html/search/variables_6f.js, doc/html/search/variables_70.js,
+  doc/html/search/variables_72.js, doc/html/search/variables_73.js,
+  doc/html/search/variables_74.js, doc/html/search/variables_76.html,
+  doc/html/search/variables_76.js, doc/html/search/variables_77.js,
+  doc/html/structAbout-members.html, doc/html/structAbout.html,
+  doc/html/structGame-members.html, doc/html/structGame.html,
+  doc/html/structIntro-members.html, doc/html/structIntro.html,
+  doc/html/structLevel-members.html, doc/html/structLevel.html,
+  doc/html/structLoading-members.html, doc/html/structLoading.html,
+  doc/html/structMap-members.html, doc/html/structMap.html,
+  doc/html/structMenu-members.html, doc/html/structMenu.html,
+  doc/html/structMoonwalk-members.html, doc/html/structMoonwalk.html,
+  doc/html/structObstacle-members.html, doc/html/structObstacle.html,
+  doc/html/structPause-members.html, doc/html/structPause.html,
+  doc/html/structSpritesheet-members.html, doc/html/structSpritesheet.html,
+  doc/html/structTM__Action-members.html, doc/html/structTM__Action.html,
+  doc/html/structTM__Arguments-members.html, doc/html/structTM__Arguments.html,
+  doc/html/timeline_8c.html, doc/html/timeline_8h.html,
+  doc/html/timeline_8h_source.html, doc/latex/doxygen.sty,
+  doc/latex/level_8c.tex, doc/latex/refman.tex, doc/latex/structGame.tex,
+  doc/latex/structIntro.tex, doc/latex/structLevel.tex,
+  doc/latex/structMap.tex, doc/latex/structMenu.tex,
+  doc/latex/structObstacle.tex, doc/latex/structTM__Action.tex,
+  doc/latex/structTM__Arguments.tex, src/main.h, src/timeline.h: moar docs
+
+2012-05-20  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * data/levels/owl.png, src/level.c, src/main.h: implement owl :D
+
+  * src/level.c, src/levels/actions.c: hide muffin when eated, tweaks for level
+  length and hardness
+
+  * Makefile, SuperDerpy.files, obj/levels/.gitignore, src/level.c,
+  src/levels/actions.c, src/levels/actions.h, src/levels/callbacks.c,
+  src/levels/callbacks.h, src/timeline.h: move timeline actions and obstacle
+  callbacks to separate files
+
+  * src/level.c, src/main.h: PIGS!!!
+
+2012-05-19  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * src/level.c, src/main.h: allow player to change Derpy speed with arrows
+
+  * src/level.c, src/main.h: fine tune of collision handling
+
+  * doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/allegro__utils_8c.html,
+  doc/html/allegro__utils_8h.html, doc/html/allegro__utils_8h_source.html,
+  doc/html/annotated.html, doc/html/classes.html, doc/html/config_8c.html,
+  doc/html/config_8h.html, doc/html/config_8h_source.html, doc/html/files.html,
+  doc/html/functions.html, doc/html/functions_vars.html, doc/html/globals.html,
+  doc/html/globals_defs.html, doc/html/globals_enum.html,
+  doc/html/globals_func.html, doc/html/index.html, doc/html/intro_8c.html,
+  doc/html/intro_8h.html, doc/html/intro_8h_source.html,
+  doc/html/level_8c.html, doc/html/level_8h.html,
+  doc/html/level_8h_source.html, doc/html/loading_8c.html,
+  doc/html/loading_8h.html, doc/html/loading_8h_source.html,
+  doc/html/main_8c.html, doc/html/main_8h.html, doc/html/main_8h_source.html,
+  doc/html/map_8c.html, doc/html/map_8h.html, doc/html/map_8h_source.html,
+  doc/html/menu_8c.html, doc/html/menu_8h.html, doc/html/menu_8h_source.html,
+  doc/html/moonwalk_8c.html, doc/html/moonwalk_8h.html,
+  doc/html/moonwalk_8h_source.html, doc/html/pause_8c.html,
+  doc/html/pause_8h.html, doc/html/pause_8h_source.html,
+  doc/html/search/all_61.js, doc/html/search/all_6d.js,
+  doc/html/search/all_74.js, doc/html/search/enums_74.html,
+  doc/html/search/enums_74.js, doc/html/search/files_61.js,
+  doc/html/search/files_6d.js, doc/html/search/functions_61.html,
+  doc/html/search/functions_61.js, doc/html/search/functions_74.js,
+  doc/html/search/search.js, doc/html/structAbout-members.html,
+  doc/html/structAbout.html, doc/html/structGame-members.html,
+  doc/html/structGame.html, doc/html/structIntro-members.html,
+  doc/html/structIntro.html, doc/html/structLevel-members.html,
+  doc/html/structLevel.html, doc/html/structLoading-members.html,
+  doc/html/structLoading.html, doc/html/structMap-members.html,
+  doc/html/structMap.html, doc/html/structMenu-members.html,
+  doc/html/structMenu.html, doc/html/structMoonwalk-members.html,
+  doc/html/structMoonwalk.html, doc/html/structObstacle-members.html,
+  doc/html/structObstacle.html, doc/html/structPause-members.html,
+  doc/html/structPause.html, doc/html/structSpritesheet-members.html,
+  doc/html/structSpritesheet.html, doc/html/structTM__Action-members.html,
+  doc/html/structTM__Action.html, doc/html/structTM__Arguments-members.html,
+  doc/html/structTM__Arguments.html, doc/html/timeline_8c.html,
+  doc/html/timeline_8h.html, doc/html/timeline_8h_source.html,
+  doc/latex/allegro__utils_8c.tex, doc/latex/allegro__utils_8h.tex,
+  doc/latex/annotated.tex, doc/latex/doxygen.sty, doc/latex/files.tex,
+  doc/latex/level_8c.tex, doc/latex/main_8h.tex, doc/latex/moonwalk_8c.tex,
+  doc/latex/moonwalk_8h.tex, doc/latex/refman.tex,
+  doc/latex/structSpritesheet.tex, doc/latex/structTM__Action.tex,
+  doc/latex/structTM__Arguments.tex, doc/latex/timeline_8c.tex,
+  doc/latex/timeline_8h.tex, src/allegro_utils.c, src/allegro_utils.h,
+  src/main.h, src/moonwalk.c, src/moonwalk.h, src/timeline.h: moar
+  documentation
+
+  * doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/allegro__utils_8h_source.html,
+  doc/html/annotated.html, doc/html/classes.html, doc/html/config_8c.html,
+  doc/html/config_8h.html, doc/html/config_8h_source.html, doc/html/files.html,
+  doc/html/functions.html, doc/html/functions_vars.html, doc/html/globals.html,
+  doc/html/globals_defs.html, doc/html/globals_enum.html,
+  doc/html/globals_func.html, doc/html/index.html, doc/html/intro_8c.html,
+  doc/html/intro_8h.html, doc/html/intro_8h_source.html,
+  doc/html/level_8c.html, doc/html/level_8h.html,
+  doc/html/level_8h_source.html, doc/html/loading_8c.html,
+  doc/html/loading_8h.html, doc/html/loading_8h_source.html,
+  doc/html/main_8c.html, doc/html/main_8h.html, doc/html/main_8h_source.html,
+  doc/html/map_8c.html, doc/html/map_8h.html, doc/html/map_8h_source.html,
+  doc/html/menu_8c.html, doc/html/menu_8h.html, doc/html/menu_8h_source.html,
+  doc/html/moonwalk_8h_source.html, doc/html/pause_8c.html,
+  doc/html/pause_8h.html, doc/html/pause_8h_source.html,
+  doc/html/search/all_61.js, doc/html/search/all_62.html,
+  doc/html/search/all_62.js, doc/html/search/all_63.js,
+  doc/html/search/all_64.js, doc/html/search/all_66.js,
+  doc/html/search/all_68.html, doc/html/search/all_68.js,
+  doc/html/search/all_69.js, doc/html/search/all_6c.js,
+  doc/html/search/all_6d.js, doc/html/search/all_6e.html,
+  doc/html/search/all_6e.js, doc/html/search/all_6f.js,
+  doc/html/search/all_70.js, doc/html/search/all_72.js,
+  doc/html/search/all_73.js, doc/html/search/all_74.js,
+  doc/html/search/all_77.html, doc/html/search/all_77.js,
+  doc/html/search/all_78.html, doc/html/search/all_78.js,
+  doc/html/search/all_79.html, doc/html/search/all_79.js,
+  doc/html/search/defines_70.js, doc/html/search/functions_61.html,
+  doc/html/search/functions_61.js, doc/html/search/functions_64.js,
+  doc/html/search/functions_6c.js, doc/html/search/functions_73.js,
+  doc/html/search/functions_74.html, doc/html/search/functions_74.js,
+  doc/html/search/search.js, doc/html/search/variables_61.html,
+  doc/html/search/variables_61.js, doc/html/search/variables_62.html,
+  doc/html/search/variables_62.js, doc/html/search/variables_63.js,
+  doc/html/search/variables_64.js, doc/html/search/variables_66.js,
+  doc/html/search/variables_68.html, doc/html/search/variables_68.js,
+  doc/html/search/variables_69.js, doc/html/search/variables_6c.html,
+  doc/html/search/variables_6c.js, doc/html/search/variables_6d.js,
+  doc/html/search/variables_6e.html, doc/html/search/variables_6e.js,
+  doc/html/search/variables_6f.html, doc/html/search/variables_6f.js,
+  doc/html/search/variables_70.js, doc/html/search/variables_72.js,
+  doc/html/search/variables_73.js, doc/html/search/variables_74.html,
+  doc/html/search/variables_74.js, doc/html/search/variables_77.html,
+  doc/html/search/variables_77.js, doc/html/search/variables_78.html,
+  doc/html/search/variables_78.js, doc/html/search/variables_79.html,
+  doc/html/search/variables_79.js, doc/html/structAbout-members.html,
+  doc/html/structAbout.html, doc/html/structGame-members.html,
+  doc/html/structGame.html, doc/html/structIntro-members.html,
+  doc/html/structIntro.html, doc/html/structLevel-members.html,
+  doc/html/structLevel.html, doc/html/structLoading-members.html,
+  doc/html/structLoading.html, doc/html/structMap-members.html,
+  doc/html/structMap.html, doc/html/structMenu-members.html,
+  doc/html/structMenu.html, doc/html/structMoonwalk-members.html,
+  doc/html/structMoonwalk.html, doc/html/structObstacle-members.html,
+  doc/html/structObstacle.html, doc/html/structPause-members.html,
+  doc/html/structPause.html, doc/html/structSpritesheet-members.html,
+  doc/html/structSpritesheet.html, doc/html/structTM__Action-members.html,
+  doc/html/structTM__Action.html, doc/html/structTM__Arguments-members.html,
+  doc/html/structTM__Arguments.html, doc/html/timeline_8c.html,
+  doc/html/timeline_8h.html, doc/html/timeline_8h_source.html,
+  doc/latex/annotated.tex, doc/latex/doxygen.sty, doc/latex/main_8c.tex,
+  doc/latex/main_8h.tex, doc/latex/refman.tex, doc/latex/structAbout.tex,
+  doc/latex/structLevel.tex, doc/latex/structLoading.tex,
+  doc/latex/structMap.tex, doc/latex/structObstacle.tex,
+  doc/latex/structPause.tex, doc/latex/structSpritesheet.tex,
+  src/allegro_utils.h, src/main.h: moar documentation
+
+  * doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/allegro__utils_8h_source.html,
+  doc/html/annotated.html, doc/html/classes.html, doc/html/config_8c.html,
+  doc/html/config_8h.html, doc/html/config_8h_source.html, doc/html/files.html,
+  doc/html/functions.html, doc/html/functions_vars.html, doc/html/globals.html,
+  doc/html/globals_defs.html, doc/html/globals_enum.html,
+  doc/html/globals_func.html, doc/html/globals_vars.html, doc/html/index.html,
+  doc/html/intro_8c.html, doc/html/intro_8h.html,
+  doc/html/intro_8h_source.html, doc/html/level_8c.html,
+  doc/html/level_8h.html, doc/html/level_8h_source.html,
+  doc/html/loading_8c.html, doc/html/loading_8h.html,
+  doc/html/loading_8h_source.html, doc/html/main_8c.html,
+  doc/html/main_8h.html, doc/html/main_8h_source.html, doc/html/map_8c.html,
+  doc/html/map_8h.html, doc/html/map_8h_source.html, doc/html/menu_8c.html,
+  doc/html/menu_8h.html, doc/html/menu_8h_source.html,
+  doc/html/moonwalk_8h_source.html, doc/html/pause_8c.html,
+  doc/html/pause_8h.html, doc/html/pause_8h_source.html,
+  doc/html/search/all_6e.html, doc/html/search/all_6e.js,
+  doc/html/search/all_6f.js, doc/html/search/all_76.html,
+  doc/html/search/all_76.js, doc/html/search/classes_63.html,
+  doc/html/search/classes_63.js, doc/html/search/classes_6f.js,
+  doc/html/search/variables_6e.html, doc/html/search/variables_6e.js,
+  doc/html/search/variables_76.html, doc/html/search/variables_76.js,
+  doc/html/structAbout-members.html, doc/html/structAbout.html,
+  doc/html/structConfigOption-members.html, doc/html/structConfigOption.html,
+  doc/html/structGame-members.html, doc/html/structGame.html,
+  doc/html/structIntro-members.html, doc/html/structIntro.html,
+  doc/html/structLevel-members.html, doc/html/structLevel.html,
+  doc/html/structLoading-members.html, doc/html/structLoading.html,
+  doc/html/structMap-members.html, doc/html/structMap.html,
+  doc/html/structMenu-members.html, doc/html/structMenu.html,
+  doc/html/structMoonwalk-members.html, doc/html/structMoonwalk.html,
+  doc/html/structObstacle-members.html, doc/html/structObstacle.html,
+  doc/html/structObstracle-members.html, doc/html/structObstracle.html,
+  doc/html/structPause-members.html, doc/html/structPause.html,
+  doc/html/structSpritesheet-members.html, doc/html/structSpritesheet.html,
+  doc/html/structTM__Action-members.html, doc/html/structTM__Action.html,
+  doc/html/structTM__Arguments-members.html, doc/html/structTM__Arguments.html,
+  doc/html/timeline_8c.html, doc/html/timeline_8h.html,
+  doc/html/timeline_8h_source.html, doc/latex/annotated.tex,
+  doc/latex/doxygen.sty, doc/latex/level_8c.tex, doc/latex/main_8h.tex,
+  doc/latex/refman.tex, doc/latex/structConfigOption.tex,
+  doc/latex/structLevel.tex, doc/latex/structObstacle.tex,
+  doc/latex/structObstracle.tex, src/level.c, src/main.h: s/obstracle/obstacle/
+  :D
+
+  * doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/allegro__utils_8h_source.html,
+  doc/html/annotated.html, doc/html/classes.html, doc/html/config_8c.html,
+  doc/html/config_8h.html, doc/html/config_8h_source.html, doc/html/files.html,
+  doc/html/functions.html, doc/html/functions_vars.html, doc/html/globals.html,
+  doc/html/globals_defs.html, doc/html/globals_enum.html,
+  doc/html/globals_func.html, doc/html/index.html, doc/html/intro_8c.html,
+  doc/html/intro_8h.html, doc/html/intro_8h_source.html,
+  doc/html/level_8c.html, doc/html/level_8h.html,
+  doc/html/level_8h_source.html, doc/html/loading_8c.html,
+  doc/html/loading_8h.html, doc/html/loading_8h_source.html,
+  doc/html/main_8c.html, doc/html/main_8h.html, doc/html/main_8h_source.html,
+  doc/html/map_8c.html, doc/html/map_8h.html, doc/html/map_8h_source.html,
+  doc/html/menu_8c.html, doc/html/menu_8h.html, doc/html/menu_8h_source.html,
+  doc/html/moonwalk_8h_source.html, doc/html/pause_8c.html,
+  doc/html/pause_8h.html, doc/html/pause_8h_source.html,
+  doc/html/search/all_61.js, doc/html/search/all_70.js,
+  doc/html/search/functions_61.js, doc/html/search/functions_70.js,
+  doc/html/structAbout-members.html, doc/html/structAbout.html,
+  doc/html/structGame-members.html, doc/html/structGame.html,
+  doc/html/structIntro-members.html, doc/html/structIntro.html,
+  doc/html/structLevel-members.html, doc/html/structLevel.html,
+  doc/html/structLoading-members.html, doc/html/structLoading.html,
+  doc/html/structMap-members.html, doc/html/structMap.html,
+  doc/html/structMenu-members.html, doc/html/structMenu.html,
+  doc/html/structMoonwalk-members.html, doc/html/structMoonwalk.html,
+  doc/html/structObstracle-members.html, doc/html/structObstracle.html,
+  doc/html/structPause-members.html, doc/html/structPause.html,
+  doc/html/structSpritesheet-members.html, doc/html/structSpritesheet.html,
+  doc/html/structTM__Action-members.html, doc/html/structTM__Action.html,
+  doc/html/structTM__Arguments-members.html, doc/html/structTM__Arguments.html,
+  doc/html/timeline_8c.html, doc/html/timeline_8h.html,
+  doc/html/timeline_8h_source.html, doc/latex/about_8c.tex,
+  doc/latex/about_8h.tex, doc/latex/doxygen.sty, doc/latex/files.tex,
+  doc/latex/intro_8c.tex, doc/latex/intro_8h.tex, doc/latex/level_8c.tex,
+  doc/latex/level_8h.tex, doc/latex/loading_8c.tex, doc/latex/loading_8h.tex,
+  doc/latex/main_8c.tex, doc/latex/main_8h.tex, doc/latex/map_8c.tex,
+  doc/latex/map_8h.tex, doc/latex/menu_8c.tex, doc/latex/menu_8h.tex,
+  doc/latex/refman.tex, doc/latex/structLevel.tex,
+  doc/latex/structObstracle.tex, doc/latex/structSpritesheet.tex: update docs
+
+  * README, README.md: use Markdown in README
+
+2012-05-18  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * data/levels/muffin.png, src/data/muffin.svg, src/level.c, src/main.h: add
+  muffins :D (for now as obstracles)
+
+  * src/level.c, src/main.h: introducing: brand-new ability to FAIL LEVEL! :)
+  also, debug mode cheats and fine-tuning of HP meter
+
+  * SuperDerpy.creator.user, src/about.c, src/about.h, src/intro.c,
+  src/intro.h, src/level.c, src/level.h, src/loading.c, src/loading.h,
+  src/main.c, src/main.h, src/map.c, src/map.h, src/menu.c, src/menu.h,
+  src/pause.c: implement progress bar on loading screen
+
+  * src/allegro_utils.c, src/allegro_utils.h, src/level.c, src/main.h: some
+  work on playability
+
+2012-05-17  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * SuperDerpy.creator.user, src/level.c, src/main.c, src/main.h: some work on
+  health meter
+
+2012-05-16  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * Makefile, SuperDerpy.config, SuperDerpy.creator, SuperDerpy.files,
+  SuperDerpy.includes, data/intro/1.png, data/intro/3.png,
+  data/intro/zombie.png, src/data/intro1anim/1-1.png,
+  src/data/intro1anim/1-2.png, src/data/intro1anim/1-3.png,
+  src/data/intro1anim/1-4.png, src/intro.c, src/loading.c, src/main.c:
+  Discord-rock animation in intro, Qt Creator project files, better vsync
+  handling
+
+2012-05-10  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * TODO, src/level.c, src/main.h: fix bug with spritesheets derped when
+  toggling fullscreen
+
+2012-05-09  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * data/levels/derpy/run.ini, data/levels/meter.png, src/level.c, src/main.h:
+  add some basic HUD
+
+  * Makefile, src/allegro_utils.c, src/allegro_utils.h, src/level.c,
+  src/main.c, src/main.h: add "power meter"
+
+2012-05-08  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * data/levels/derpy/fly.ini, data/levels/derpy/fly.png,
+  data/levels/derpy/run.ini, data/levels/derpy/stand.ini,
+  data/levels/derpy/walk.ini, src/level.c, src/main.h: add fly animation by
+  Yudhaikeledai
+
+2012-05-07  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * .gitignore, data/levels/derpy/run.ini, data/levels/derpy/run.png,
+  src/data/runcycle.xcf, src/main.c: add new Derpy run cycle by Yudhaikeledai
+
+  * .gitignore, src/data/logo.svg, src/level.c: fixes for fps vs. speed
+  handling in level code
+
+2012-05-04  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * data/intro/zombie.png, data/logo.png: small updates in graphics
+
+  * doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/annotated.html,
+  doc/html/classes.html, doc/html/config_8c.html, doc/html/config_8h.html,
+  doc/html/config_8h_source.html, doc/html/files.html, doc/html/functions.html,
+  doc/html/functions_vars.html, doc/html/globals.html,
+  doc/html/globals_defs.html, doc/html/globals_enum.html,
+  doc/html/globals_func.html, doc/html/index.html, doc/html/intro_8c.html,
+  doc/html/intro_8h.html, doc/html/intro_8h_source.html,
+  doc/html/level_8c.html, doc/html/level_8h.html,
+  doc/html/level_8h_source.html, doc/html/loading_8c.html,
+  doc/html/loading_8h.html, doc/html/loading_8h_source.html,
+  doc/html/main_8c.html, doc/html/main_8h.html, doc/html/main_8h_source.html,
+  doc/html/map_8c.html, doc/html/map_8h.html, doc/html/map_8h_source.html,
+  doc/html/menu_8c.html, doc/html/menu_8h.html, doc/html/menu_8h_source.html,
+  doc/html/moonwalk_8h_source.html, doc/html/pause_8c.html,
+  doc/html/pause_8h.html, doc/html/pause_8h_source.html,
+  doc/html/structAbout-members.html, doc/html/structAbout.html,
+  doc/html/structGame-members.html, doc/html/structGame.html,
+  doc/html/structIntro-members.html, doc/html/structIntro.html,
+  doc/html/structLevel-members.html, doc/html/structLevel.html,
+  doc/html/structLoading-members.html, doc/html/structLoading.html,
+  doc/html/structMap-members.html, doc/html/structMap.html,
+  doc/html/structMenu-members.html, doc/html/structMenu.html,
+  doc/html/structMoonwalk-members.html, doc/html/structMoonwalk.html,
+  doc/html/structObstracle-members.html, doc/html/structObstracle.html,
+  doc/html/structPause-members.html, doc/html/structPause.html,
+  doc/html/structSpritesheet-members.html, doc/html/structSpritesheet.html,
+  doc/html/structTM__Action-members.html, doc/html/structTM__Action.html,
+  doc/html/structTM__Arguments-members.html, doc/html/structTM__Arguments.html,
+  doc/html/timeline_8c.html, doc/html/timeline_8h.html,
+  doc/html/timeline_8h_source.html, doc/latex/doxygen.sty,
+  doc/latex/refman.tex, src/level.c: fix "nigger derpy"
+
+  * doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/annotated.html,
+  doc/html/classes.html, doc/html/config_8c.html, doc/html/config_8h.html,
+  doc/html/config_8h_source.html, doc/html/files.html, doc/html/functions.html,
+  doc/html/functions_vars.html, doc/html/globals.html,
+  doc/html/globals_defs.html, doc/html/globals_enum.html,
+  doc/html/globals_func.html, doc/html/index.html, doc/html/intro_8c.html,
+  doc/html/intro_8h.html, doc/html/intro_8h_source.html,
+  doc/html/level_8c.html, doc/html/level_8h.html,
+  doc/html/level_8h_source.html, doc/html/loading_8c.html,
+  doc/html/loading_8h.html, doc/html/loading_8h_source.html,
+  doc/html/main_8c.html, doc/html/main_8h.html, doc/html/main_8h_source.html,
+  doc/html/map_8c.html, doc/html/map_8h.html, doc/html/map_8h_source.html,
+  doc/html/menu_8c.html, doc/html/menu_8h.html, doc/html/menu_8h_source.html,
+  doc/html/moonwalk_8h_source.html, doc/html/pause_8c.html,
+  doc/html/pause_8h.html, doc/html/pause_8h_source.html,
+  doc/html/structAbout-members.html, doc/html/structAbout.html,
+  doc/html/structGame-members.html, doc/html/structGame.html,
+  doc/html/structIntro-members.html, doc/html/structIntro.html,
+  doc/html/structLevel-members.html, doc/html/structLevel.html,
+  doc/html/structLoading-members.html, doc/html/structLoading.html,
+  doc/html/structMap-members.html, doc/html/structMap.html,
+  doc/html/structMenu-members.html, doc/html/structMenu.html,
+  doc/html/structMoonwalk-members.html, doc/html/structMoonwalk.html,
+  doc/html/structObstracle-members.html, doc/html/structObstracle.html,
+  doc/html/structPause-members.html, doc/html/structPause.html,
+  doc/html/structSpritesheet-members.html, doc/html/structSpritesheet.html,
+  doc/html/structTM__Action-members.html, doc/html/structTM__Action.html,
+  doc/html/structTM__Arguments-members.html, doc/html/structTM__Arguments.html,
+  doc/html/timeline_8c.html, doc/html/timeline_8h.html,
+  doc/html/timeline_8h_source.html, doc/latex/doxygen.sty,
+  doc/latex/intro_8c.tex, doc/latex/main_8c.tex, doc/latex/refman.tex,
+  doc/latex/structIntro.tex: update docs
+
+  * src/intro.c, src/main.h: another attempt to fix animation in intro
+
+  * src/about.c, src/intro.c, src/level.c, src/map.c, src/moonwalk.c: fix rest
+  fadeloops
+
+  * src/level.c, src/main.c: some other performance tweaks
+
+  * src/intro.c, src/level.c, src/main.h: performance fixes for intro gamestate
+
+  * TODO, src/main.c, src/pause.c: implement fps counter
+
+2012-05-03  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/annotated.html,
+  doc/html/classes.html, doc/html/config_8c.html, doc/html/config_8h.html,
+  doc/html/config_8h_source.html, doc/html/files.html, doc/html/functions.html,
+  doc/html/functions_vars.html, doc/html/globals.html,
+  doc/html/globals_defs.html, doc/html/globals_enum.html,
+  doc/html/globals_func.html, doc/html/index.html, doc/html/intro_8c.html,
+  doc/html/intro_8h.html, doc/html/intro_8h_source.html,
+  doc/html/level_8c.html, doc/html/level_8h.html,
+  doc/html/level_8h_source.html, doc/html/loading_8c.html,
+  doc/html/loading_8h.html, doc/html/loading_8h_source.html,
+  doc/html/main_8c.html, doc/html/main_8h.html, doc/html/main_8h_source.html,
+  doc/html/map_8c.html, doc/html/map_8h.html, doc/html/map_8h_source.html,
+  doc/html/menu_8c.html, doc/html/menu_8h.html, doc/html/menu_8h_source.html,
+  doc/html/moonwalk_8h_source.html, doc/html/pause_8c.html,
+  doc/html/pause_8h.html, doc/html/pause_8h_source.html,
+  doc/html/search/all_63.js, doc/html/search/all_64.js,
+  doc/html/search/all_6f.html, doc/html/search/all_6f.js,
+  doc/html/search/all_70.js, doc/html/search/all_73.js,
+  doc/html/search/classes_6f.html, doc/html/search/classes_6f.js,
+  doc/html/search/classes_73.html, doc/html/search/classes_73.js,
+  doc/html/search/search.js, doc/html/search/variables_63.js,
+  doc/html/search/variables_64.js, doc/html/search/variables_70.html,
+  doc/html/search/variables_70.js, doc/html/structAbout-members.html,
+  doc/html/structAbout.html, doc/html/structGame-members.html,
+  doc/html/structGame.html, doc/html/structIntro-members.html,
+  doc/html/structIntro.html, doc/html/structLevel-members.html,
+  doc/html/structLevel.html, doc/html/structLoading-members.html,
+  doc/html/structLoading.html, doc/html/structMap-members.html,
+  doc/html/structMap.html, doc/html/structMenu-members.html,
+  doc/html/structMenu.html, doc/html/structMoonwalk-members.html,
+  doc/html/structMoonwalk.html, doc/html/structObstracle-members.html,
+  doc/html/structObstracle.html, doc/html/structPause-members.html,
+  doc/html/structPause.html, doc/html/structSpritesheet-members.html,
+  doc/html/structSpritesheet.html, doc/html/structTM__Action-members.html,
+  doc/html/structTM__Action.html, doc/html/structTM__Arguments-members.html,
+  doc/html/structTM__Arguments.html, doc/html/timeline_8c.html,
+  doc/html/timeline_8h.html, doc/html/timeline_8h_source.html,
+  doc/latex/annotated.tex, doc/latex/doxygen.sty, doc/latex/level_8c.tex,
+  doc/latex/level_8h.tex, doc/latex/main_8h.tex, doc/latex/refman.tex,
+  doc/latex/structGame.tex, doc/latex/structIntro.tex,
+  doc/latex/structLevel.tex, doc/latex/structMenu.tex,
+  doc/latex/structMoonwalk.tex, doc/latex/structObstracle.tex,
+  doc/latex/structSpritesheet.tex: update documentation
+
+  * src/intro.c, src/level.c: fix missing file in intro, few tweaks for
+  animation speed in spritesheets
+
+  * build, data/levels/derpcycle.png, data/levels/derpy/fly.ini,
+  data/levels/derpy/fly.png, data/levels/derpy/run.ini,
+  data/levels/derpy/run.png, data/levels/derpy/stand.ini,
+  data/levels/derpy/stand.png, data/levels/derpy/walk.ini,
+  data/levels/derpy/walk.png, src/about.c, src/level.c, src/level.h,
+  src/main.h, src/moonwalk.c: implement spritesheet managament
+
+  * src/level.c, src/main.h: fix fullscreen switching with obstracles rendered
+
+  * src/level.c, src/main.h: implement obstracles callbacks
+
+2012-05-01  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * data/levels/disco.jpg, src/level.c, src/main.h, src/moonwalk.c: some work
+  on levels
+
+  * data/intro/frame.png, src/intro.c, src/main.h: add book frame to intro
+  story
+
+  * data/map/background.png, data/table.png, src/data/map.xcf,
+  src/data/table.xcf: darken a bit table and map bitmaps
+
+2012-04-30  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * data/intro/zombie.png, data/levels/1/background.png,
+  data/levels/1/clouds.png, data/levels/1/foreground.png,
+  data/levels/1/stage.png, data/loading.png, data/map/background.png,
+  data/map/highlight1.png, data/map/highlight2.png, data/map/highlight3.png,
+  data/map/highlight4.png, data/map/highlight5.png, data/map/highlight6.png,
+  data/table.png, src/data/drawings.xcf, src/data/map.xcf, src/data/table.xcf,
+  src/main.h, src/map.c: update map and other graphics
+
+  * doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/annotated.html,
+  doc/html/classes.html, doc/html/config_8c.html, doc/html/config_8h.html,
+  doc/html/config_8h_source.html, doc/html/files.html, doc/html/functions.html,
+  doc/html/functions_vars.html, doc/html/globals.html,
+  doc/html/globals_defs.html, doc/html/globals_enum.html,
+  doc/html/globals_func.html, doc/html/index.html, doc/html/intro_8c.html,
+  doc/html/intro_8h.html, doc/html/intro_8h_source.html,
+  doc/html/level_8c.html, doc/html/level_8h.html,
+  doc/html/level_8h_source.html, doc/html/loading_8c.html,
+  doc/html/loading_8h.html, doc/html/loading_8h_source.html,
+  doc/html/main_8c.html, doc/html/main_8h.html, doc/html/main_8h_source.html,
+  doc/html/map_8c.html, doc/html/map_8h.html, doc/html/map_8h_source.html,
+  doc/html/menu_8c.html, doc/html/menu_8h.html, doc/html/menu_8h_source.html,
+  doc/html/moonwalk_8h_source.html, doc/html/pause_8c.html,
+  doc/html/pause_8h.html, doc/html/pause_8h_source.html,
+  doc/html/search/all_63.js, doc/html/search/all_64.js,
+  doc/html/search/all_66.js, doc/html/search/all_69.js,
+  doc/html/search/all_6d.js, doc/html/search/all_74.html,
+  doc/html/search/all_74.js, doc/html/search/classes_6d.js,
+  doc/html/search/classes_74.html, doc/html/search/classes_74.js,
+  doc/html/search/enums_6d.html, doc/html/search/enums_6d.js,
+  doc/html/search/files_74.html, doc/html/search/files_74.js,
+  doc/html/search/search.js, doc/html/search/variables_63.js,
+  doc/html/search/variables_64.js, doc/html/search/variables_66.js,
+  doc/html/search/variables_69.js, doc/html/structAbout-members.html,
+  doc/html/structAbout.html, doc/html/structGame-members.html,
+  doc/html/structGame.html, doc/html/structIntro-members.html,
+  doc/html/structIntro.html, doc/html/structLevel-members.html,
+  doc/html/structLevel.html, doc/html/structLoading-members.html,
+  doc/html/structLoading.html, doc/html/structMap-members.html,
+  doc/html/structMap.html, doc/html/structMenu-members.html,
+  doc/html/structMenu.html, doc/html/structMoonwalk-members.html,
+  doc/html/structMoonwalk.html, doc/html/structPause-members.html,
+  doc/html/structPause.html, doc/html/structTM__Action-members.html,
+  doc/html/structTM__Action.html, doc/html/structTM__Arguments-members.html,
+  doc/html/structTM__Arguments.html, doc/html/timeline_8c.html,
+  doc/html/timeline_8h.html, doc/html/timeline_8h_source.html,
+  doc/latex/annotated.tex, doc/latex/doxygen.sty, doc/latex/files.tex,
+  doc/latex/intro_8c.tex, doc/latex/level_8c.tex, doc/latex/level_8h.tex,
+  doc/latex/main_8c.tex, doc/latex/main_8h.tex, doc/latex/menu_8c.tex,
+  doc/latex/menu_8h.tex, doc/latex/pause_8c.tex, doc/latex/refman.tex,
+  doc/latex/structAbout.tex, doc/latex/structGame.tex,
+  doc/latex/structIntro.tex, doc/latex/structLevel.tex,
+  doc/latex/structMenu.tex, doc/latex/structMoonwalk.tex,
+  doc/latex/structPause.tex, doc/latex/structTM__Action.tex,
+  doc/latex/structTM__Arguments.tex, doc/latex/timeline_8c.tex,
+  doc/latex/timeline_8h.tex: update docs
+
+  * data/about.flac, data/about/about.flac, data/about/letter.png,
+  data/arrow.png, data/click.flac, data/cloud.png, data/cloud2.png,
+  data/derpcycle.png, data/derpy_pause.png, data/discord.png, data/intro.flac,
+  data/intro/discord.png, data/intro/intro.flac, data/intro/paper.png,
+  data/intro/zombie.png, data/letter.png, data/levels/derpcycle.png,
+  data/levels/derpy_pause.png, data/levels/moonwalk.flac, data/map-night.flac,
+  data/map.flac, data/map/arrow.png, data/map/map-night.flac,
+  data/map/map.flac, data/map/map.xcf, data/menu.flac, data/menu.png,
+  data/menu/click.flac, data/menu/cloud.png, data/menu/cloud2.png,
+  data/menu/menu.flac, data/menu/menu.png, data/menu/mountain.png,
+  data/menu/pie.png, data/menu/pinkcloud.png, data/menu/rain.flac,
+  data/menu/rain.png, data/moonwalk.flac, data/mountain.png, data/paper.png,
+  data/pie.png, data/pinkcloud.png, data/rain.flac, data/rain.png,
+  data/src/derpcycle.xcf, data/src/derpcycle2.xcf, data/src/letter.xcf,
+  data/src/menu.xcf, data/src/zombie.xcf, data/zombie.png, src/about.c,
+  src/data/derpcycle.xcf, src/data/derpcycle2.xcf, src/data/letter.xcf,
+  src/data/map.xcf, src/data/menu.xcf, src/data/zombie.xcf, src/intro.c,
+  src/level.c, src/map.c, src/menu.c, src/moonwalk.c, src/pause.c: cleaning up
+  mess in data directory
+
+2012-04-28  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * data/derpcycle.xcf, data/derpcycle2.xcf, data/letter.xcf, data/menu.xcf,
+  data/src/derpcycle.xcf, data/src/derpcycle2.xcf, data/src/letter.xcf,
+  data/src/menu.xcf, data/src/zombie.xcf, data/voice/Fluttershy-01.flac,
+  data/voice/Fluttershy-02.flac, data/voice/Fluttershy-03.flac,
+  data/voice/Fluttershy-04.flac, data/voice/Fluttershy-05.flac,
+  data/voice/Fluttershy-06.flac, data/voice/Fluttershy-07.flac,
+  data/voice/Fluttershy-08.flac, data/voice/Fluttershy-09.flac,
+  data/zombie.xcf: add Fluttershy lines recored by Meredith Sims
+
+2012-04-21  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * data/intro/1.flac, data/intro/2.flac, data/intro/3.flac, data/intro/4.flac,
+  data/intro/5.flac, src/intro.c: replace intro lines with Princess Celestia
+  voice recorded by MEMJ0123
+
+2012-04-14  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * Makefile, src/about.c, src/intro.c, src/level.c, src/loading.c, src/main.c,
+  src/main.h, src/map.c, src/menu.c, src/moonwalk.c, src/pause.c,
+  src/timeline.c, src/timeline.h: use ANSI C gcc mode
+
+2012-04-09  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * src/level.c, src/timeline.c, src/timeline.h: support action names in
+  timeline manager
+
+  * build, src/about.c, src/main.c: support "-l NR" commandline argument
+
+  * src/level.c, src/moonwalk.c: fix sound in moonwalk
+
+  * data/levels/1/music.flac, src/level.c, src/main.h, src/moonwalk.c: add
+  music to level 1
+
+  * src/level.c, src/main.h: some work on spritesheed speed
+
+  * src/level.c, src/timeline.c, src/timeline.h: implement and use
+  TM_AddQueuedBackgroundAction
+
+2012-04-08  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * src/level.c, src/main.h: add some very basic keyboard handling in level
+
+  * data/levels/1/background.png, data/levels/1/foreground.png,
+  data/levels/1/stage.png, src/level.c, src/main.h, src/moonwalk.c,
+  src/timeline.c, src/timeline.h: more work on first level
+
+  * data/levels/1/background.png, data/levels/1/clouds.png,
+  data/levels/1/foreground.png, data/levels/1/stage.png, src/level.c,
+  src/main.h, src/moonwalk.c: some first demo sidescrolling level
+
+2012-04-07  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * src/level.c, src/timeline.c, src/timeline.h: implement delays in timeline
+  manager
+
+  * src/level.c, src/timeline.c: implement TM_AddToArgs
+
+  * src/level.c, src/timeline.c: moar destroyin!
+
+  * src/level.c, src/timeline.c: implement timeline destroying
+
+  * src/level.c, src/timeline.c, src/timeline.h: revamp argument handling of
+  timeline actions
+
+2012-04-06  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * src/level.c, src/level.h, src/main.c, src/timeline.c, src/timeline.h: moar
+  work on timeline
+
+  * src/level.c, src/level.h, src/moonwalk.c: better structure of
+  level-moonwalk relationship
+
+  * Makefile, src/level.c, src/main.h, src/moonwalk.c, src/moonwalk.h,
+  src/timeline.c, src/timeline.h: introduce timeline manager, split moonwalk
+  code from level code
+
+2012-04-04  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * build, data/zombie.png, data/zombie.xcf, src/intro.c, src/main.h: implement
+  animations in intro state
+
+2012-04-03  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * data/about.flac, data/map-night.flac, src/about.c, src/main.h: update about
+  screen
+
+2012-03-13  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * src/menu.c, src/menu.h, src/pause.c: little cleanup in menu handling code
+
+  * TODO, src/intro.c, src/main.c, src/main.h, src/menu.c: sound volume
+  settings
+
+2012-03-10  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * src/main.c, src/pause.c: display "Loading" when switching to new resolution
+
+2012-03-08  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * src/level.c, src/level.h, src/main.c, src/main.h, src/menu.c, src/pause.c:
+  implement fullscreen setting from pause menu
+
+  * Makefile, src/level.c: link to release version of allegro
+
+  * TODO, src/main.c, src/menu.c: use mixer gain to enable/disable music/fx
+
+  * src/main.c, src/main.h, src/menu.c: add video options, implement fullscreen
+  switching
+
+2012-03-07  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * src/menu.c, src/pause.c: clean up of menu keydown handling (pause now
+  shares code with menu)
+
+  * TODO, src/main.h, src/menu.c, src/menu.h, src/pause.c: introduce menustates
+
+  * data/click.flac, src/pause.c: update click sound, play it in few more
+  places
+
+  * doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/annotated.html,
+  doc/html/classes.html, doc/html/config_8c.html, doc/html/config_8h.html,
+  doc/html/config_8h_source.html, doc/html/files.html, doc/html/functions.html,
+  doc/html/functions_vars.html, doc/html/globals.html,
+  doc/html/globals_defs.html, doc/html/globals_enum.html,
+  doc/html/globals_func.html, doc/html/index.html, doc/html/intro_8c.html,
+  doc/html/intro_8h.html, doc/html/intro_8h_source.html,
+  doc/html/level_8c.html, doc/html/level_8h.html,
+  doc/html/level_8h_source.html, doc/html/loading_8c.html,
+  doc/html/loading_8h.html, doc/html/loading_8h_source.html,
+  doc/html/main_8c.html, doc/html/main_8h.html, doc/html/main_8h_source.html,
+  doc/html/map_8c.html, doc/html/map_8h.html, doc/html/map_8h_source.html,
+  doc/html/menu_8c.html, doc/html/menu_8h.html, doc/html/menu_8h_source.html,
+  doc/html/pause_8c.html, doc/html/pause_8h.html,
+  doc/html/pause_8h_source.html, doc/html/search/all_63.js,
+  doc/html/search/all_6d.js, doc/html/search/all_72.html,
+  doc/html/search/all_72.js, doc/html/search/search.js,
+  doc/html/search/variables_63.js, doc/html/search/variables_6d.js,
+  doc/html/search/variables_72.html, doc/html/search/variables_72.js,
+  doc/html/structAbout-members.html, doc/html/structAbout.html,
+  doc/html/structGame-members.html, doc/html/structGame.html,
+  doc/html/structIntro-members.html, doc/html/structIntro.html,
+  doc/html/structLevel-members.html, doc/html/structLevel.html,
+  doc/html/structLoading-members.html, doc/html/structLoading.html,
+  doc/html/structMap-members.html, doc/html/structMap.html,
+  doc/html/structMenu-members.html, doc/html/structMenu.html,
+  doc/html/structPause-members.html, doc/html/structPause.html,
+  doc/latex/config_8c.tex, doc/latex/doxygen.sty, doc/latex/menu_8c.tex,
+  doc/latex/refman.tex, doc/latex/structAbout.tex, doc/latex/structGame.tex,
+  doc/latex/structIntro.tex, doc/latex/structMap.tex, doc/latex/structMenu.tex,
+  src/menu.c, src/pause.c: fix loading menu when starting with other gamestate
+
+2012-03-05  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * TODO, src/about.c, src/intro.c, src/level.c, src/main.c, src/main.h,
+  src/map.c, src/menu.c, src/pause.c: use mixers for audio
+
+  * src/config.c, src/main.c, src/main.h: create separate mixers for music and
+  fx
+
+  * TODO, doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/annotated.html,
+  doc/html/classes.html, doc/html/config_8c.html, doc/html/config_8h.html,
+  doc/html/config_8h_source.html, doc/html/files.html, doc/html/functions.html,
+  doc/html/functions_vars.html, doc/html/globals.html,
+  doc/html/globals_defs.html, doc/html/globals_enum.html,
+  doc/html/globals_func.html, doc/html/index.html, doc/html/intro_8c.html,
+  doc/html/intro_8h.html, doc/html/intro_8h_source.html,
+  doc/html/level_8c.html, doc/html/level_8h.html,
+  doc/html/level_8h_source.html, doc/html/loading_8c.html,
+  doc/html/loading_8h.html, doc/html/loading_8h_source.html,
+  doc/html/main_8c.html, doc/html/main_8h.html, doc/html/main_8h_source.html,
+  doc/html/map_8c.html, doc/html/map_8h.html, doc/html/map_8h_source.html,
+  doc/html/menu_8c.html, doc/html/menu_8h.html, doc/html/menu_8h_source.html,
+  doc/html/pause_8c.html, doc/html/pause_8h.html,
+  doc/html/pause_8h_source.html, doc/html/search/all_61.js,
+  doc/html/search/all_63.js, doc/html/search/all_67.js,
+  doc/html/search/all_73.js, doc/html/search/functions_61.js,
+  doc/html/search/functions_67.js, doc/html/search/search.js,
+  doc/html/search/variables_63.js, doc/html/search/variables_73.js,
+  doc/html/structAbout-members.html, doc/html/structAbout.html,
+  doc/html/structGame-members.html, doc/html/structGame.html,
+  doc/html/structIntro-members.html, doc/html/structIntro.html,
+  doc/html/structLevel-members.html, doc/html/structLevel.html,
+  doc/html/structLoading-members.html, doc/html/structLoading.html,
+  doc/html/structMap-members.html, doc/html/structMap.html,
+  doc/html/structMenu-members.html, doc/html/structMenu.html,
+  doc/html/structPause-members.html, doc/html/structPause.html,
+  doc/latex/annotated.tex, doc/latex/config_8c.tex, doc/latex/config_8h.tex,
+  doc/latex/doxygen.sty, doc/latex/main_8c.tex, doc/latex/main_8h.tex,
+  doc/latex/pause_8c.tex, doc/latex/refman.tex, doc/latex/structAbout.tex,
+  doc/latex/structIntro.tex, doc/latex/structMenu.tex, src/config.c,
+  src/config.h, src/main.c, src/map.c, src/menu.c, src/pause.c: rewrite config
+  handling using allegro routines
+
+2012-03-04  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * data/intro/1.flac, data/intro/2.flac, data/intro/3.flac, data/intro/4.flac,
+  data/intro/5.flac, src/intro.c, src/main.c, src/main.h: implement voice
+  reading intro
+
+  * src/level.c, src/map.c: better moonwalk synchronization :D
+
+  * src/level.c, src/map.c, src/menu.c, src/pause.c: fix segfaults in pause
+
+  * data/cache/.gitignore, doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/annotated.html,
+  doc/html/classes.html, doc/html/config_8c.html, doc/html/config_8h.html,
+  doc/html/config_8h_source.html, doc/html/files.html, doc/html/functions.html,
+  doc/html/functions_vars.html, doc/html/globals.html,
+  doc/html/globals_defs.html, doc/html/globals_enum.html,
+  doc/html/globals_func.html, doc/html/globals_vars.html, doc/html/index.html,
+  doc/html/intro_8c.html, doc/html/intro_8h.html,
+  doc/html/intro_8h_source.html, doc/html/level_8c.html,
+  doc/html/level_8h.html, doc/html/level_8h_source.html,
+  doc/html/loading_8c.html, doc/html/loading_8h.html,
+  doc/html/loading_8h_source.html, doc/html/main_8c.html,
+  doc/html/main_8h.html, doc/html/main_8h_source.html, doc/html/map_8c.html,
+  doc/html/map_8h.html, doc/html/map_8h_source.html, doc/html/menu_8c.html,
+  doc/html/menu_8h.html, doc/html/menu_8h_source.html, doc/html/pause_8c.html,
+  doc/html/pause_8h.html, doc/html/pause_8h_source.html,
+  doc/html/search/all_6d.js, doc/html/search/all_70.js,
+  doc/html/search/classes_70.html, doc/html/search/classes_70.js,
+  doc/html/search/files_70.html, doc/html/search/files_70.js,
+  doc/html/search/search.js, doc/html/search/variables_6d.html,
+  doc/html/search/variables_6d.js, doc/html/structAbout-members.html,
+  doc/html/structAbout.html, doc/html/structConfigOption-members.html,
+  doc/html/structConfigOption.html, doc/html/structGame-members.html,
+  doc/html/structGame.html, doc/html/structIntro-members.html,
+  doc/html/structIntro.html, doc/html/structLevel-members.html,
+  doc/html/structLevel.html, doc/html/structLoading-members.html,
+  doc/html/structLoading.html, doc/html/structMap-members.html,
+  doc/html/structMap.html, doc/html/structMenu-members.html,
+  doc/html/structMenu.html, doc/html/structPause-members.html,
+  doc/html/structPause.html, doc/latex/annotated.tex, doc/latex/doxygen.sty,
+  doc/latex/files.tex, doc/latex/level_8c.tex, doc/latex/main_8c.tex,
+  doc/latex/main_8h.tex, doc/latex/pause_8c.tex, doc/latex/pause_8h.tex,
+  doc/latex/refman.tex, doc/latex/structGame.tex, doc/latex/structLevel.tex,
+  doc/latex/structMenu.tex, doc/latex/structPause.tex, src/about.c,
+  src/intro.c, src/level.c, src/loading.c, src/main.c, src/main.h, src/map.c,
+  src/menu.c, src/pause.c: remove image cache, cleanup
+
+  * .gitignore, src/about.c: fix cutted text in about screen
+
+  * src/about.c, src/about.h, src/config.c, src/config.h, src/intro.c,
+  src/intro.h, src/level.c, src/level.h, src/loading.c, src/loading.h,
+  src/main.c, src/main.h, src/map.c, src/map.h, src/menu.c, src/menu.h,
+  src/pause.c, src/pause.h: add license information
+
+  * data/derpy_pause.png, src/about.c, src/level.c, src/main.h, src/pause.c,
+  src/pause.h: add Derpy to pause screen :D
+
+2012-03-03  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * src/level.c, src/main.h, src/pause.c: implement menu while paused
+
+  * TODO, src/about.c, src/main.c, src/main.h, src/map.c, src/menu.c: little
+  cleanup
+
+  * src/loading.c, src/main.c: use proper linear filtering for image scaling
+
+2012-03-02  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * TODO, src/level.c, src/main.h, src/pause.c: pause music on pause :D
+
+  * Makefile, src/level.c, src/main.c, src/main.h, src/pause.c, src/pause.h:
+  implement pause
+
+  * TODO, src/map.c: fix map drawing
+
+  * src/main.h, src/menu.c: performance fixes on menu fades
+
+2012-03-01  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * TODO, doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/annotated.html,
+  doc/html/classes.html, doc/html/config_8c.html, doc/html/config_8h.html,
+  doc/html/config_8h_source.html, doc/html/files.html, doc/html/functions.html,
+  doc/html/functions_vars.html, doc/html/globals.html,
+  doc/html/globals_defs.html, doc/html/globals_enum.html,
+  doc/html/globals_func.html, doc/html/globals_vars.html, doc/html/index.html,
+  doc/html/intro_8c.html, doc/html/intro_8h.html,
+  doc/html/intro_8h_source.html, doc/html/level_8c.html,
+  doc/html/level_8h.html, doc/html/level_8h_source.html,
+  doc/html/loading_8c.html, doc/html/loading_8h.html,
+  doc/html/loading_8h_source.html, doc/html/main_8c.html,
+  doc/html/main_8h.html, doc/html/main_8h_source.html, doc/html/map_8c.html,
+  doc/html/map_8h.html, doc/html/map_8h_source.html, doc/html/menu_8c.html,
+  doc/html/menu_8h.html, doc/html/menu_8h_source.html,
+  doc/html/search/all_64.js, doc/html/search/variables_64.js,
+  doc/html/structAbout-members.html, doc/html/structAbout.html,
+  doc/html/structConfigOption-members.html, doc/html/structConfigOption.html,
+  doc/html/structGame-members.html, doc/html/structGame.html,
+  doc/html/structIntro-members.html, doc/html/structIntro.html,
+  doc/html/structLevel-members.html, doc/html/structLevel.html,
+  doc/html/structLoading-members.html, doc/html/structLoading.html,
+  doc/html/structMap-members.html, doc/html/structMap.html,
+  doc/html/structMenu-members.html, doc/html/structMenu.html,
+  doc/latex/doxygen.sty, doc/latex/refman.tex, doc/latex/structLevel.tex,
+  src/level.c, src/main.h: cache derpy spritesheet
+
+  * Makefile, src/main.c: :o
+
+  * doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/annotated.html,
+  doc/html/classes.html, doc/html/config_8c.html, doc/html/config_8h.html,
+  doc/html/config_8h_source.html, doc/html/files.html, doc/html/functions.html,
+  doc/html/functions_vars.html, doc/html/globals.html,
+  doc/html/globals_defs.html, doc/html/globals_enum.html,
+  doc/html/globals_func.html, doc/html/globals_vars.html, doc/html/index.html,
+  doc/html/intro_8c.html, doc/html/intro_8h.html,
+  doc/html/intro_8h_source.html, doc/html/level_8c.html,
+  doc/html/level_8h.html, doc/html/level_8h_source.html,
+  doc/html/loading_8c.html, doc/html/loading_8h.html,
+  doc/html/loading_8h_source.html, doc/html/main_8c.html,
+  doc/html/main_8h.html, doc/html/main_8h_source.html, doc/html/map_8c.html,
+  doc/html/map_8h.html, doc/html/map_8h_source.html, doc/html/menu_8c.html,
+  doc/html/menu_8h.html, doc/html/menu_8h_source.html,
+  doc/html/structAbout-members.html, doc/html/structAbout.html,
+  doc/html/structConfigOption-members.html, doc/html/structConfigOption.html,
+  doc/html/structGame-members.html, doc/html/structGame.html,
+  doc/html/structIntro-members.html, doc/html/structIntro.html,
+  doc/html/structLevel-members.html, doc/html/structLevel.html,
+  doc/html/structLoading-members.html, doc/html/structLoading.html,
+  doc/html/structMap-members.html, doc/html/structMap.html,
+  doc/html/structMenu-members.html, doc/html/structMenu.html,
+  doc/latex/doxygen.sty, doc/latex/intro_8c.tex, doc/latex/refman.tex,
+  src/main.c: don't force opengl on windows
+
+  * TODO, doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/annotated.html,
+  doc/html/classes.html, doc/html/config_8c.html, doc/html/config_8h.html,
+  doc/html/config_8h_source.html, doc/html/files.html, doc/html/functions.html,
+  doc/html/functions_vars.html, doc/html/globals.html,
+  doc/html/globals_defs.html, doc/html/globals_enum.html,
+  doc/html/globals_func.html, doc/html/globals_vars.html, doc/html/index.html,
+  doc/html/intro_8c.html, doc/html/intro_8h.html,
+  doc/html/intro_8h_source.html, doc/html/level_8c.html,
+  doc/html/level_8h.html, doc/html/level_8h_source.html,
+  doc/html/loading_8c.html, doc/html/loading_8h.html,
+  doc/html/loading_8h_source.html, doc/html/main_8c.html,
+  doc/html/main_8h.html, doc/html/main_8h_source.html, doc/html/map_8c.html,
+  doc/html/map_8h.html, doc/html/map_8h_source.html, doc/html/menu_8c.html,
+  doc/html/menu_8h.html, doc/html/menu_8h_source.html,
+  doc/html/structAbout-members.html, doc/html/structAbout.html,
+  doc/html/structConfigOption-members.html, doc/html/structConfigOption.html,
+  doc/html/structGame-members.html, doc/html/structGame.html,
+  doc/html/structIntro-members.html, doc/html/structIntro.html,
+  doc/html/structLevel-members.html, doc/html/structLevel.html,
+  doc/html/structLoading-members.html, doc/html/structLoading.html,
+  doc/html/structMap-members.html, doc/html/structMap.html,
+  doc/html/structMenu-members.html, doc/html/structMenu.html,
+  doc/latex/doxygen.sty, doc/latex/level_8c.tex, doc/latex/main_8c.tex,
+  doc/latex/main_8h.tex, doc/latex/menu_8c.tex, doc/latex/menu_8h.tex,
+  doc/latex/refman.tex, doc/latex/structAbout.tex, doc/latex/structGame.tex,
+  doc/latex/structMenu.tex: non-code updates
+
+  * src/about.c, src/main.h: scale letter bitmap with linear filtering in about
+  screen
+
+  * TODO, src/about.c, src/intro.c, src/level.c, src/loading.c, src/main.c,
+  src/main.h, src/map.c, src/menu.c: FPS independent timings
+
+  * src/about.c, src/main.c: small fixes
+
+  * TODO, src/loading.c: ;3
+
+  * src/about.c, src/intro.c, src/level.c, src/loading.c, src/main.c,
+  src/main.h, src/map.c, src/menu.c: moar caching
+
+  * data/menu.png, data/pinkcloud.png, src/loading.c, src/main.c, src/main.h,
+  src/menu.c: moar memory bitmaps
+
+2012-02-29  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * src/loading.c, src/menu.c: reset menu state on each load
+
+  * data/cache/.gitignore, src/loading.c: use pregenerated bitmap in loading
+  screen
+
+  * data/loading.png, data/menu.png, data/menu.xcf, data/mountain.png,
+  data/pinkcloud.png, data/rain.png, src/about.c, src/level.c, src/loading.c,
+  src/main.c, src/main.h, src/map.c, src/menu.c, src/menu.h: memory bitmaps,
+  linear filtering, menu stopping instead of unloading and other stuff...
+
+  * Makefile, doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/annotated.html,
+  doc/html/classes.html, doc/html/config_8c.html, doc/html/config_8h.html,
+  doc/html/config_8h_source.html, doc/html/files.html, doc/html/functions.html,
+  doc/html/functions_vars.html, doc/html/globals.html,
+  doc/html/globals_defs.html, doc/html/globals_enum.html,
+  doc/html/globals_func.html, doc/html/globals_vars.html, doc/html/index.html,
+  doc/html/intro_8c.html, doc/html/intro_8h.html,
+  doc/html/intro_8h_source.html, doc/html/level_8c.html,
+  doc/html/level_8h.html, doc/html/level_8h_source.html,
+  doc/html/loading_8c.html, doc/html/loading_8h.html,
+  doc/html/loading_8h_source.html, doc/html/main_8c.html,
+  doc/html/main_8h.html, doc/html/main_8h_source.html, doc/html/map_8c.html,
+  doc/html/map_8h.html, doc/html/map_8h_source.html, doc/html/menu_8c.html,
+  doc/html/menu_8h.html, doc/html/menu_8h_source.html,
+  doc/html/structAbout-members.html, doc/html/structAbout.html,
+  doc/html/structConfigOption-members.html, doc/html/structConfigOption.html,
+  doc/html/structGame-members.html, doc/html/structGame.html,
+  doc/html/structIntro-members.html, doc/html/structIntro.html,
+  doc/html/structLevel-members.html, doc/html/structLevel.html,
+  doc/html/structLoading-members.html, doc/html/structLoading.html,
+  doc/html/structMap-members.html, doc/html/structMap.html,
+  doc/html/structMenu-members.html, doc/html/structMenu.html,
+  doc/latex/config_8c.tex, doc/latex/doxygen.sty, doc/latex/refman.tex,
+  src/about.c, src/config.c, src/intro.c, src/level.c, src/loading.c,
+  src/map.c, src/menu.c: don't require C99 standard
+
+2012-02-28  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * TODO, doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/annotated.html,
+  doc/html/classes.html, doc/html/config_8c.html, doc/html/config_8h.html,
+  doc/html/config_8h_source.html, doc/html/files.html, doc/html/functions.html,
+  doc/html/functions_vars.html, doc/html/globals.html,
+  doc/html/globals_defs.html, doc/html/globals_enum.html,
+  doc/html/globals_func.html, doc/html/globals_vars.html, doc/html/index.html,
+  doc/html/intro_8c.html, doc/html/intro_8h.html,
+  doc/html/intro_8h_source.html, doc/html/level_8c.html,
+  doc/html/level_8h.html, doc/html/level_8h_source.html,
+  doc/html/loading_8c.html, doc/html/loading_8h.html,
+  doc/html/loading_8h_source.html, doc/html/main_8c.html,
+  doc/html/main_8h.html, doc/html/main_8h_source.html, doc/html/map_8c.html,
+  doc/html/map_8h.html, doc/html/map_8h_source.html, doc/html/menu_8c.html,
+  doc/html/menu_8h.html, doc/html/menu_8h_source.html,
+  doc/html/search/all_61.js, doc/html/search/all_63.js,
+  doc/html/search/all_64.js, doc/html/search/all_66.html,
+  doc/html/search/all_66.js, doc/html/search/all_67.js,
+  doc/html/search/all_69.js, doc/html/search/all_6e.html,
+  doc/html/search/all_6e.js, doc/html/search/all_73.html,
+  doc/html/search/all_73.js, doc/html/search/all_76.html,
+  doc/html/search/all_76.js, doc/html/search/functions_61.js,
+  doc/html/search/functions_64.js, doc/html/search/functions_67.html,
+  doc/html/search/functions_67.js, doc/html/search/functions_69.html,
+  doc/html/search/functions_69.js, doc/html/search/functions_73.html,
+  doc/html/search/functions_73.js, doc/html/search/search.js,
+  doc/html/search/variables_63.html, doc/html/search/variables_63.js,
+  doc/html/search/variables_64.html, doc/html/search/variables_64.js,
+  doc/html/search/variables_66.html, doc/html/search/variables_66.js,
+  doc/html/search/variables_69.html, doc/html/search/variables_69.js,
+  doc/html/search/variables_6e.html, doc/html/search/variables_6e.js,
+  doc/html/search/variables_73.html, doc/html/search/variables_73.js,
+  doc/html/search/variables_76.html, doc/html/search/variables_76.js,
+  doc/html/structAbout-members.html, doc/html/structAbout.html,
+  doc/html/structConfigOption-members.html, doc/html/structConfigOption.html,
+  doc/html/structGame-members.html, doc/html/structGame.html,
+  doc/html/structIntro-members.html, doc/html/structIntro.html,
+  doc/html/structLevel-members.html, doc/html/structLevel.html,
+  doc/html/structLoading-members.html, doc/html/structLoading.html,
+  doc/html/structMap-members.html, doc/html/structMap.html,
+  doc/html/structMenu-members.html, doc/html/structMenu.html,
+  doc/latex/annotated.tex, doc/latex/config_8c.tex, doc/latex/config_8h.tex,
+  doc/latex/doxygen.sty, doc/latex/refman.tex,
+  doc/latex/structConfigOption.tex, doc/latex/structLevel.tex,
+  doc/latex/structMenu.tex, src/config.c, src/config.h, src/main.h: moar docs
+
+  * src/main.h, src/menu.c: add menu_draw_while_fading option for weak PCs
+
+  * data/moonwalk.flac, doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/annotated.html,
+  doc/html/classes.html, doc/html/config_8c.html, doc/html/config_8h.html,
+  doc/html/config_8h_source.html, doc/html/files.html, doc/html/globals.html,
+  doc/html/globals_defs.html, doc/html/globals_enum.html,
+  doc/html/globals_func.html, doc/html/index.html, doc/html/intro_8c.html,
+  doc/html/intro_8h.html, doc/html/intro_8h_source.html,
+  doc/html/level_8c.html, doc/html/level_8h.html,
+  doc/html/level_8h_source.html, doc/html/loading_8c.html,
+  doc/html/loading_8h.html, doc/html/loading_8h_source.html,
+  doc/html/main_8c.html, doc/html/main_8h.html, doc/html/main_8h_source.html,
+  doc/html/map_8c.html, doc/html/map_8h.html, doc/html/map_8h_source.html,
+  doc/html/menu_8c.html, doc/html/menu_8h.html, doc/html/menu_8h_source.html,
+  doc/html/structAbout-members.html, doc/html/structAbout.html,
+  doc/html/structConfigOption-members.html, doc/html/structConfigOption.html,
+  doc/html/structGame-members.html, doc/html/structGame.html,
+  doc/html/structIntro-members.html, doc/html/structIntro.html,
+  doc/html/structLevel-members.html, doc/html/structLevel.html,
+  doc/html/structLoading-members.html, doc/html/structLoading.html,
+  doc/html/structMap-members.html, doc/html/structMap.html,
+  doc/html/structMenu-members.html, doc/html/structMenu.html,
+  doc/latex/doxygen.sty, doc/latex/refman.tex, doc/latex/structAbout.tex,
+  doc/latex/structGame.tex, doc/latex/structIntro.tex,
+  doc/latex/structLevel.tex, doc/latex/structLoading.tex,
+  doc/latex/structMap.tex, doc/latex/structMenu.tex, src/level.c: moonwalk :D
+
+  * Doxyfile, doc/html/about_8c.html, doc/html/about_8h.html,
+  doc/html/about_8h_source.html, doc/html/annotated.html, doc/html/bc_s.png,
+  doc/html/classes.html, doc/html/closed.png, doc/html/config_8c.html,
+  doc/html/config_8h.html, doc/html/config_8h_source.html,
+  doc/html/doxygen.css, doc/html/doxygen.png, doc/html/files.html,
+  doc/html/globals.html, doc/html/globals_defs.html,
+  doc/html/globals_enum.html, doc/html/globals_func.html, doc/html/index.html,
+  doc/html/installdox, doc/html/intro_8c.html, doc/html/intro_8h.html,
+  doc/html/intro_8h_source.html, doc/html/jquery.js, doc/html/level_8c.html,
+  doc/html/level_8h.html, doc/html/level_8h_source.html,
+  doc/html/loading_8c.html, doc/html/loading_8h.html,
+  doc/html/loading_8h_source.html, doc/html/main_8c.html,
+  doc/html/main_8h.html, doc/html/main_8h_source.html, doc/html/map_8c.html,
+  doc/html/map_8h.html, doc/html/map_8h_source.html, doc/html/menu_8c.html,
+  doc/html/menu_8h.html, doc/html/menu_8h_source.html, doc/html/nav_f.png,
+  doc/html/nav_h.png, doc/html/open.png, doc/html/search/all_61.html,
+  doc/html/search/all_61.js, doc/html/search/all_63.html,
+  doc/html/search/all_63.js, doc/html/search/all_64.html,
+  doc/html/search/all_64.js, doc/html/search/all_67.html,
+  doc/html/search/all_67.js, doc/html/search/all_69.html,
+  doc/html/search/all_69.js, doc/html/search/all_6b.html,
+  doc/html/search/all_6b.js, doc/html/search/all_6c.html,
+  doc/html/search/all_6c.js, doc/html/search/all_6d.html,
+  doc/html/search/all_6d.js, doc/html/search/all_70.html,
+  doc/html/search/all_70.js, doc/html/search/all_75.html,
+  doc/html/search/all_75.js, doc/html/search/classes_61.html,
+  doc/html/search/classes_61.js, doc/html/search/classes_63.html,
+  doc/html/search/classes_63.js, doc/html/search/classes_67.html,
+  doc/html/search/classes_67.js, doc/html/search/classes_69.html,
+  doc/html/search/classes_69.js, doc/html/search/classes_6c.html,
+  doc/html/search/classes_6c.js, doc/html/search/classes_6d.html,
+  doc/html/search/classes_6d.js, doc/html/search/close.png,
+  doc/html/search/defines_64.html, doc/html/search/defines_64.js,
+  doc/html/search/defines_6b.html, doc/html/search/defines_6b.js,
+  doc/html/search/defines_6c.html, doc/html/search/defines_6c.js,
+  doc/html/search/defines_70.html, doc/html/search/defines_70.js,
+  doc/html/search/defines_75.html, doc/html/search/defines_75.js,
+  doc/html/search/enums_67.html, doc/html/search/enums_67.js,
+  doc/html/search/files_61.html, doc/html/search/files_61.js,
+  doc/html/search/files_63.html, doc/html/search/files_63.js,
+  doc/html/search/files_69.html, doc/html/search/files_69.js,
+  doc/html/search/files_6c.html, doc/html/search/files_6c.js,
+  doc/html/search/files_6d.html, doc/html/search/files_6d.js,
+  doc/html/search/functions_61.html, doc/html/search/functions_61.js,
+  doc/html/search/functions_64.html, doc/html/search/functions_64.js,
+  doc/html/search/functions_6c.html, doc/html/search/functions_6c.js,
+  doc/html/search/functions_70.html, doc/html/search/functions_70.js,
+  doc/html/search/functions_75.html, doc/html/search/functions_75.js,
+  doc/html/search/mag_sel.png, doc/html/search/nomatches.html,
+  doc/html/search/search.css, doc/html/search/search.js,
+  doc/html/search/search_l.png, doc/html/search/search_m.png,
+  doc/html/search/search_r.png, doc/html/structAbout-members.html,
+  doc/html/structAbout.html, doc/html/structConfigOption-members.html,
+  doc/html/structConfigOption.html, doc/html/structGame-members.html,
+  doc/html/structGame.html, doc/html/structIntro-members.html,
+  doc/html/structIntro.html, doc/html/structLevel-members.html,
+  doc/html/structLevel.html, doc/html/structLoading-members.html,
+  doc/html/structLoading.html, doc/html/structMap-members.html,
+  doc/html/structMap.html, doc/html/structMenu-members.html,
+  doc/html/structMenu.html, doc/html/tab_a.png, doc/html/tab_b.png,
+  doc/html/tab_h.png, doc/html/tab_s.png, doc/html/tabs.css,
+  doc/latex/Makefile, doc/latex/about_8c.tex, doc/latex/about_8h.tex,
+  doc/latex/annotated.tex, doc/latex/config_8c.tex, doc/latex/config_8h.tex,
+  doc/latex/doxygen.sty, doc/latex/files.tex, doc/latex/intro_8c.tex,
+  doc/latex/intro_8h.tex, doc/latex/level_8c.tex, doc/latex/level_8h.tex,
+  doc/latex/loading_8c.tex, doc/latex/loading_8h.tex, doc/latex/main_8c.tex,
+  doc/latex/main_8h.tex, doc/latex/map_8c.tex, doc/latex/map_8h.tex,
+  doc/latex/menu_8c.tex, doc/latex/menu_8h.tex, doc/latex/refman.tex,
+  doc/latex/structAbout.tex, doc/latex/structConfigOption.tex,
+  doc/latex/structGame.tex, doc/latex/structIntro.tex,
+  doc/latex/structLevel.tex, doc/latex/structLoading.tex,
+  doc/latex/structMap.tex, doc/latex/structMenu.tex, src/about.c, src/about.h,
+  src/config.c, src/config.h, src/intro.c, src/intro.h, src/level.c,
+  src/level.h, src/loading.c, src/loading.h, src/main.c, src/main.h, src/map.c,
+  src/map.h, src/menu.c, src/menu.h: first batch of documentation
+
+2012-02-26  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * src/about.c, src/map.c: little fixes
+
+  * src/about.c, src/intro.c, src/level.c, src/map.c, src/menu.c: options menu
+  reorganization; music and fx config now works
+
+  * src/about.c, src/intro.c: fixes for different screen aspects
+
+  * src/config.c, src/loading.c, src/main.c, src/main.h, src/map.c: read and
+  respect first batch of config options
+
+  * src/about.h, src/config.c, src/config.h, src/intro.h, src/level.h,
+  src/loading.h, src/main.c, src/main.h, src/map.h, src/menu.h: more work on
+  config
+
+2012-02-25  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * src/about.c, src/intro.c, src/level.c, src/loading.c, src/main.c,
+  src/map.c, src/menu.c: header wrap-up, header wrap-uuuuup!
+
+  * src/about.c, src/intro.c, src/level.c, src/main.c, src/map.c, src/menu.c:
+  code wrap-up, code wrap-uuuuup!
+
+  * data/derpcycle.png, data/derpcycle.xcf, data/derpcycle2.xcf, src/level.c,
+  src/main.h, src/map.c: add Derpy to "level not implemented" screen :D
+
+2012-02-24  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * data/paper.png, data/table.png, src/about.c, src/intro.c, src/level.c,
+  src/loading.c, src/main.c, src/main.h, src/menu.c: few textures replaced,
+  added shadows to texts
+
+  * src/config.c, src/main.c: a little reorganization of config manager
+  structure
+
+  * .gitignore, Makefile, src/config.c, src/config.h, src/main.c: add config
+  manager
+
+2012-02-22  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * src/about.c, src/level.c: fix compiler warnings
+
+  * data/arrow.png, data/cloud.png, data/cloud2.png, data/discord.png,
+  data/letter.png, data/letter.xcf, data/loading.png, data/map/background.png,
+  data/map/highlight1.png, data/map/highlight2.png, data/map/highlight3.png,
+  data/map/highlight4.png, data/map/highlight5.png, data/map/highlight6.png,
+  data/menu.png, data/mountain.png, data/pie.png, data/pinkcloud.png,
+  data/rain.png, data/table.png, src/about.c, src/intro.c, src/main.c,
+  src/main.h: add proper text in about view (and optimize png images)
+
+  * src/about.c, src/main.c, src/main.h: work on about screen
+
+  * Makefile, src/level.c, src/level.h, src/main.c, src/main.h, src/map.c: add
+  level gamestate
+
+  * Makefile, src/intro.c: don't load map state again when reaching last page
+  of intro
+
+2012-02-21  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * data/arrow.png, src/main.c, src/main.h, src/map.c: work on map state
+
+2012-02-19  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * bin/.gitignore, src/intro.c, src/main.c, src/main.h, src/menu.c: make
+  string formatting in PrintConsole possible and use it
+
+  * data/rain.png, src/about.c, src/intro.c, src/loading.c, src/main.c,
+  src/map.c, src/menu.c: fix console blinking on loading states
+
+  * .gitignore, Makefile, bin/.gitignore: add bin directory to repo
+
+  * Makefile, build, make, obj/.gitignore: add makefile
+
+  * .gitignore, about.c, about.h, intro.c, intro.h, loading.c, loading.h,
+  main.c, main.h, make, map.c, map.h, menu.c, menu.h, src/about.c, src/about.h,
+  src/intro.c, src/intro.h, src/loading.c, src/loading.h, src/main.c,
+  src/main.h, src/map.c, src/map.h, src/menu.c, src/menu.h: move source files
+  to src dir
+
+  * about.c, data/about.flac, data/click.flac, data/intro.flac, data/map.flac,
+  intro.c, main.c, main.h, make, map.c, menu.c: moar sounds
+
+  * .gitignore, data/map/map.xcf, data/menu.flac, data/menu.wav,
+  data/rain.flac, data/rain.wav, main.c, make, menu.c: replace sounds with flac
+  files
+
+  * DejaVuSansMono.ttf, ShadowsIntoLight.ttf, about.c, cloud.png, cloud2.png,
+  data/DejaVuSansMono.ttf, data/ShadowsIntoLight.ttf, data/cloud.png,
+  data/cloud2.png, data/discord.png, data/loading.png, data/map/background.png,
+  data/map/highlight1.png, data/map/highlight2.png, data/map/highlight3.png,
+  data/map/highlight4.png, data/map/highlight5.png, data/map/highlight6.png,
+  data/menu.png, data/menu.wav, data/mountain.png, data/pie.png,
+  data/pinkcloud.png, data/rain.png, data/rain.wav, data/table.png,
+  discord.png, intro.c, loading.c, loading.png, main.c, map.c,
+  map/background.png, map/highlight1.png, map/highlight2.png,
+  map/highlight3.png, map/highlight4.png, map/highlight5.png,
+  map/highlight6.png, menu.c, menu.png, menu.wav, mountain.png, pie.png,
+  pinkcloud.png, rain.png, rain.wav, table.png: file structure reorganization
+
+2012-02-18  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * main.h, map.c, map/background.png, map/highlight1.png, map/highlight2.png,
+  map/highlight3.png, map/highlight4.png, map/highlight5.png,
+  map/highlight6.png: some initial implementation of map state
+
+  * intro.c, map.c: some initial work on texts on intro screen
+
+  * about.c, intro.c: fix background scaling in intro and about states
+
+  * discord.png, intro.c: DISCORD
+
+  * about.c, main.h: little bit of work on about screen
+
+  * intro.c, main.c, main.h, make, map.c, map.h: added map state (not
+  implemented yet :D)
+
+  * intro.c, menu.c: fade in/out in intro, and adjustment of pink cloud
+  position on fadein/out menu screen
+
+  * intro.c, main.c, main.h, menu.c, table.png: lots of random changes
+
+2012-02-17  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * intro.c, intro.h, main.c, make, menu.c: add intro state
+
+  * Courier_New.ttf, DejaVuSansMono.ttf, main.c, menu.c: more msgs on console
+  and changed font to DejaVu Sans Mono
+
+  * main.c, main.h: print console output to stdout only if debug mode is
+  enabled
+
+  * Courier_New.ttf, about.c, loading.c, main.c, main.h, menu.c: console
+
+  * menu.c, rain.wav: update rain sound effect for better loop and stereo
+  panning
+
+  * about.c, about.h, loading.c, loading.h, main.c, main.h, make, menu.c: add
+  about state (with "not implemented yet" text :D)
+
+  * main.h, menu.c: options stub
+
+2012-02-16  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * loading.c, loading.h, main.c, main.h, menu.c, menu.h: menu is now really
+  menu (but all of options lead to exit :))
+
+  * main.h, menu.c, pie.png: add pies
+
+  * main.c, main.h, menu.c, rain.wav: add rain sound
+
+  * main.c, menu.c: more destruction!
+
+  * main.h, menu.c, rain.png: rain and subtitle
+
+  * loading.c, main.c: make font scalable
+
+  * cloud2.png, main.c, main.h, menu.c: cloud rework
+
+  * main.c, main.h, menu.c, menu.png, mountain.png: random mountain in menu
+
+  * loading.c, menu.c: limit fade-in/out to framerate
+
+  * loading.c, loading.h, main.c, main.h, make, menu.c, menu.h: move gamestates
+  into separate files
