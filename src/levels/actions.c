@@ -210,7 +210,7 @@ bool Stop(struct Game *game, struct TM_Action *action, enum TM_ActionState state
 bool Letter(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
     if (state == TM_ACTIONSTATE_INIT) action->arguments = NULL;
     if (state == TM_ACTIONSTATE_DESTROY) {
-      ALLEGRO_AUDIO_STREAM** stream = (ALLEGRO_AUDIO_STREAM**)action->arguments->next;
+      ALLEGRO_AUDIO_STREAM** stream = (ALLEGRO_AUDIO_STREAM**)action->arguments->next->value;
       al_set_audio_stream_playing(*stream, false);
       al_destroy_audio_stream(*stream);
     }
@@ -220,7 +220,7 @@ bool Letter(struct Game *game, struct TM_Action *action, enum TM_ActionState sta
       float* f = (float*)action->arguments->value;
       *f = 0;
       action->arguments->next = TM_AddToArgs(action->arguments, malloc(sizeof(ALLEGRO_AUDIO_STREAM*)));
-      ALLEGRO_AUDIO_STREAM** stream = (ALLEGRO_AUDIO_STREAM**)action->arguments->next;
+      ALLEGRO_AUDIO_STREAM** stream = (ALLEGRO_AUDIO_STREAM**)action->arguments->next->value;
       *stream = al_load_audio_stream("data/levels/letter.flac", 4, 1024);
       al_attach_audio_stream_to_mixer(*stream, game->audio.voice);
       al_set_audio_stream_playing(*stream, true);
