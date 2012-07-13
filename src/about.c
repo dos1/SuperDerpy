@@ -93,7 +93,7 @@ void About_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	al_set_target_bitmap(game->about.text_bitmap);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 	al_draw_text(game->about.font, al_map_rgb(0,0,0), 0.5*al_get_bitmap_width(game->about.text_bitmap), 0.015*al_get_bitmap_height(game->about.text_bitmap), ALLEGRO_ALIGN_CENTRE, "Super Derpy: Muffin Attack");
-	al_draw_text(game->about.font, al_map_rgb(0,0,0), 0.5*al_get_bitmap_width(game->about.text_bitmap), 0.035*al_get_bitmap_height(game->about.text_bitmap), ALLEGRO_ALIGN_CENTRE, "Version 0.1 (prealpha)");
+	al_draw_text(game->about.font, al_map_rgb(0,0,0), 0.5*al_get_bitmap_width(game->about.text_bitmap), 0.035*al_get_bitmap_height(game->about.text_bitmap), ALLEGRO_ALIGN_CENTRE, "Version 0.1a (Development Preview)");
 	
 	float y=0.07;
 	void draw_text(char* text) {
@@ -113,7 +113,7 @@ void About_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	/*draw_text(" - BaldDumboRat");
 	draw_text("     Derpy Hooves");*/
 	draw_text(" - MEMJ0123");
-	draw_text("   http://memj0123.tumblr.com/");
+	draw_text("   http://www.youtube.com/user/MEMJ0123");
 	draw_text("     Princess Celestia");
 	draw_text(" - Meredith Sims (Emichwan88)");
 	draw_text("   http://www.youtube.com/Emichwan88");

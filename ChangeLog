@@ -1,3 +1,7 @@
+2012-07-13  Sebastian Krzyszkowiak <dos@dosowisko.net>
+
+  * src/levels/actions.c: fix crash on displaying letter from Twilight
+
 2012-07-12  Sebastian Krzyszkowiak <dos@dosowisko.net>
 
   * SuperDerpy.sh, doc/html/about_8c.html, doc/html/about_8h.html,

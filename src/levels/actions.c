@@ -213,18 +213,22 @@ bool Letter(struct Game *game, struct TM_Action *action, enum TM_ActionState sta
       ALLEGRO_AUDIO_STREAM** stream = (ALLEGRO_AUDIO_STREAM**)action->arguments->next->value;
       al_set_audio_stream_playing(*stream, false);
       al_destroy_audio_stream(*stream);
+      free(action->arguments->next->value);
+      free(action->arguments->value);
+      TM_DestroyArgs(action->arguments);
     }
     if (state != TM_ACTIONSTATE_RUNNING) return false;
     if (!action->arguments) {
       action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(float)));
       float* f = (float*)action->arguments->value;
       *f = 0;
-      action->arguments->next = TM_AddToArgs(action->arguments, malloc(sizeof(ALLEGRO_AUDIO_STREAM*)));
+      action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(ALLEGRO_AUDIO_STREAM*)));
       ALLEGRO_AUDIO_STREAM** stream = (ALLEGRO_AUDIO_STREAM**)action->arguments->next->value;
       *stream = al_load_audio_stream("data/levels/letter.flac", 4, 1024);
       al_attach_audio_stream_to_mixer(*stream, game->audio.voice);
       al_set_audio_stream_playing(*stream, true);
-      al_set_audio_stream_gain(*stream, 1.75);
+      al_set_audio_stream_gain(*stream, 2.00);
+      action->arguments->next->next = NULL;
     }
     float* f = (float*)action->arguments->value;
     *f+=tps(game,350);
