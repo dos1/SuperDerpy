@@ -446,6 +446,25 @@ int main(int argc, char **argv){
 				break;
 		}
 
+	if (atoi(GetConfigOptionDefault("SuperDerpy", "letterbox", "0"))) {
+		float const aspectRatio = (float)800 / (float)500;
+		int clipWidth = al_get_display_width(game.display), clipHeight = al_get_display_width(game.display) / aspectRatio;
+		int clipX = 0, clipY = (al_get_display_height(game.display) - clipHeight) / 2;
+		if (clipY <= 0) {
+			clipHeight = al_get_display_height(game.display);
+			clipWidth = al_get_display_height(game.display) * aspectRatio;
+			clipX = (al_get_display_width(game.display) - clipWidth) / 2;
+			clipY = 0;
+		}
+		al_set_clipping_rectangle(clipX, clipY, clipWidth, clipHeight);
+
+		float scaleX = (float)clipWidth  / (float)800,
+					scaleY = (float)clipHeight / (float)500;
+		ALLEGRO_TRANSFORM projection;
+		al_build_transform(&projection, clipX, clipY, scaleX, scaleY, 0.0f);
+		al_use_transform(&projection);
+	}
+
 	while(1) {
 		ALLEGRO_EVENT ev;
 		bool event = false;
