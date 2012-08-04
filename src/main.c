@@ -411,9 +411,9 @@ int main(int argc, char **argv){
 		}
 	} else if (game.fps == 0) game.fps = mode.refresh_rate;
 	if (game.fps>600) game.fps = 600;
-	al_clear_to_color(al_map_rgb(0,0,0));
-	al_flip_display();
 
+	al_flip_display();
+	al_clear_to_color(al_map_rgb(0,0,0));
 	if (game.fps>0) game.timer = al_create_timer(ALLEGRO_BPS_TO_SECS(game.fps));
 	else game.timer = al_create_timer(ALLEGRO_BPS_TO_SECS(600));
 	if(!game.timer) {
