@@ -27,8 +27,8 @@ bool LevelFailed(struct Game *game, struct TM_Action *action, enum TM_ActionStat
     if (state == TM_ACTIONSTATE_INIT) {
         TM_AddBackgroundAction(&FadeOut, NULL, 3000, "fadeout");
     } else if (state == TM_ACTIONSTATE_RUNNING) {
-        al_draw_filled_rectangle(0, 0, al_get_display_width(game->display), al_get_display_height(game->display), al_map_rgba(0,0,0,100));
-        al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.4, ALLEGRO_ALIGN_CENTRE, "Failed!");
+        al_draw_filled_rectangle(0, 0, game->viewportWidth, game->viewportHeight, al_map_rgba(0,0,0,100));
+        al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.4, ALLEGRO_ALIGN_CENTRE, "Failed!");
         game->level.speed-=0.00001;
         return false;
     }
@@ -233,7 +233,7 @@ bool Letter(struct Game *game, struct TM_Action *action, enum TM_ActionState sta
     float* f = (float*)action->arguments->value;
     *f+=tps(game,350);
     if (*f>255) *f=255;
-    al_draw_tinted_bitmap(game->level.letter, al_map_rgba(*f,*f,*f,*f), (al_get_display_width(game->display)-al_get_bitmap_width(game->level.letter))/2.0, al_get_bitmap_height(game->level.letter)*-0.05, 0);
+    al_draw_tinted_bitmap(game->level.letter, al_map_rgba(*f,*f,*f,*f), (game->viewportWidth-al_get_bitmap_width(game->level.letter))/2.0, al_get_bitmap_height(game->level.letter)*-0.05, 0);
     struct ALLEGRO_KEYBOARD_STATE keyboard;
     al_get_keyboard_state(&keyboard);
     if (al_key_down(&keyboard, ALLEGRO_KEY_ENTER)) {
@@ -245,7 +245,7 @@ bool Letter(struct Game *game, struct TM_Action *action, enum TM_ActionState sta
 bool FadeIn(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
     if (!action->arguments) {
         action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(float)));
-        action->arguments = TM_AddToArgs(action->arguments, (void*)al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display)));
+        action->arguments = TM_AddToArgs(action->arguments, (void*)al_create_bitmap(game->viewportWidth, game->viewportHeight));
     }
     float* fadeloop;
     ALLEGRO_BITMAP* fade_bitmap;
@@ -273,7 +273,7 @@ bool FadeIn(struct Game *game, struct TM_Action *action, enum TM_ActionState sta
 bool FadeOut(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
     if (!action->arguments) {
         action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(float)));
-        action->arguments = TM_AddToArgs(action->arguments, (void*)al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display)));
+        action->arguments = TM_AddToArgs(action->arguments, (void*)al_create_bitmap(game->viewportWidth, game->viewportHeight));
     }
     float* fadeloop;
     ALLEGRO_BITMAP* fade_bitmap;

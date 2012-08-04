@@ -46,7 +46,7 @@ void SelectDerpySpritesheet(struct Game *game, char* name) {
 			game->level.sheet_pos = 0;
 			game->level.sheet_scale = tmp->scale;
 			if (game->level.derpy) al_destroy_bitmap(game->level.derpy);
-			game->level.derpy = al_create_bitmap((al_get_display_height(game->display)*0.25)*tmp->aspect*tmp->scale, (al_get_display_height(game->display)*0.25)*tmp->scale);
+			game->level.derpy = al_create_bitmap((game->viewportHeight*0.25)*tmp->aspect*tmp->scale, (game->viewportHeight*0.25)*tmp->scale);
 			PrintConsole(game, "SUCCESS: Derpy spritesheet activated: %s (%dx%d)", name, al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy));
 			return;
 		}
@@ -141,17 +141,17 @@ void Level_Draw(struct Game *game) {
 		al_draw_bitmap(game->level.stage, (-game->level.st_pos)*al_get_bitmap_width(game->level.stage), 0 ,0);
 		al_draw_bitmap(game->level.stage, (1+(-game->level.st_pos))*al_get_bitmap_width(game->level.stage), 0 ,0);
 
-		int derpyx = game->level.derpy_x*al_get_display_width(game->display);
-		int derpyy = game->level.derpy_y*al_get_display_height(game->display);
+		int derpyx = game->level.derpy_x*game->viewportWidth;
+		int derpyy = game->level.derpy_y*game->viewportHeight;
 		int derpyw = al_get_bitmap_width(game->level.derpy);
 		int derpyh = al_get_bitmap_height(game->level.derpy);
-		int derpyo = al_get_display_width(game->display)*0.1953125-al_get_bitmap_width(game->level.derpy); /* offset */
+		int derpyo = game->viewportWidth*0.1953125-al_get_bitmap_width(game->level.derpy); /* offset */
 		bool colision = false;
 		struct Obstacle *tmp = game->level.obstacles;
 		while (tmp) {
 			/*PrintConsole(game, "DRAWING %f %f", tmp->x, tmp->y);*/
-			int x = (tmp->x/100.0)*al_get_display_width(game->display);
-			int y = (tmp->y/100.0)*al_get_display_height(game->display);
+			int x = (tmp->x/100.0)*game->viewportWidth;
+			int y = (tmp->y/100.0)*game->viewportHeight;
 			int w = 0, h = 0;
 			if (tmp->bitmap) {
 				w = al_get_bitmap_width(*(tmp->bitmap))/tmp->cols;
@@ -195,7 +195,7 @@ void Level_Draw(struct Game *game) {
 						TM_AddBackgroundAction(&LevelFailed, NULL, 0, "levelfailed");
 					}
 				}
-				tmp->x -= tps(game, game->level.speed*game->level.speed_modifier*60*tmp->speed)*100*al_get_bitmap_width(game->level.stage)/(float)al_get_display_width(game->display);
+				tmp->x -= tps(game, game->level.speed*game->level.speed_modifier*60*tmp->speed)*100*al_get_bitmap_width(game->level.stage)/(float)game->viewportWidth;
 				if (tmp->callback) tmp->callback(game, tmp);
 				tmp = tmp->next;
 			} else {
@@ -225,7 +225,7 @@ void Level_Draw(struct Game *game) {
 		}
 		al_set_target_bitmap(al_get_backbuffer(game->display));
 
-		al_draw_tinted_rotated_bitmap(game->level.derpy, al_map_rgba(255,255-colision*255,255-colision*255,255), al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy)/2, derpyx+al_get_display_width(game->display)*0.1953125, derpyy + al_get_bitmap_height(game->level.derpy)/2, game->level.derpy_angle, 0);
+		al_draw_tinted_rotated_bitmap(game->level.derpy, al_map_rgba(255,255-colision*255,255-colision*255,255), al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy)/2, derpyx+game->viewportWidth*0.1953125, derpyy + al_get_bitmap_height(game->level.derpy)/2, game->level.derpy_angle, 0);
 
 /*		if ((((x>=derpyx+0.36*derpyw) && (x<=derpyx+0.94*derpyw)) || ((x+w>=derpyx+0.36*derpyw) && (x+w<=derpyx+0.94*derpyw))) &&
 			(((y>=derpyy+0.26*derpyh) && (y<=derpyy+0.76*derpyh)) || ((y+h>=derpyy+0.26*derpyh) && (y+h<=derpyy+0.76*derpyh)))) {
@@ -254,12 +254,12 @@ void Level_Draw(struct Game *game) {
 		al_clear_to_color(al_map_rgba(0,0,0,0));
 		al_draw_filled_rounded_rectangle(al_get_bitmap_width(game->level.meter_bmp)*0.1, al_get_bitmap_height(game->level.meter_bmp)*0.34, al_get_bitmap_width(game->level.meter_bmp)*0.993, al_get_bitmap_height(game->level.meter_bmp)*0.66,
 																		 6,6, al_map_rgb(232,234,239));
-		al_draw_horizontal_gradient_rect(al_get_bitmap_width(game->level.meter_bmp)-al_get_display_width(game->display)*0.215, (al_get_bitmap_height(game->level.meter_bmp)-al_get_display_height(game->display)*0.025)/2, al_get_display_width(game->display)*0.215*0.975, al_get_display_height(game->display)*0.025, al_map_rgb(150,159,182), al_map_rgb(130,139,162));
-		al_draw_filled_rectangle(al_get_bitmap_width(game->level.meter_bmp)-al_get_display_width(game->display)*0.215, (al_get_bitmap_height(game->level.meter_bmp)-al_get_display_height(game->display)*0.025)/2, al_get_bitmap_width(game->level.meter_bmp)-al_get_display_width(game->display)*0.215+(al_get_display_width(game->display)*0.215*0.975)*game->level.hp, (al_get_bitmap_height(game->level.meter_bmp)-al_get_display_height(game->display)*0.025)/2+al_get_display_height(game->display)*0.025, al_map_rgb(214,172,55));
+		al_draw_horizontal_gradient_rect(al_get_bitmap_width(game->level.meter_bmp)-game->viewportWidth*0.215, (al_get_bitmap_height(game->level.meter_bmp)-game->viewportHeight*0.025)/2, game->viewportWidth*0.215*0.975, game->viewportHeight*0.025, al_map_rgb(150,159,182), al_map_rgb(130,139,162));
+		al_draw_filled_rectangle(al_get_bitmap_width(game->level.meter_bmp)-game->viewportWidth*0.215, (al_get_bitmap_height(game->level.meter_bmp)-game->viewportHeight*0.025)/2, al_get_bitmap_width(game->level.meter_bmp)-game->viewportWidth*0.215+(game->viewportWidth*0.215*0.975)*game->level.hp, (al_get_bitmap_height(game->level.meter_bmp)-game->viewportHeight*0.025)/2+game->viewportHeight*0.025, al_map_rgb(214,172,55));
 		al_draw_bitmap(game->level.meter_image, 0, 0, 0);
 		al_set_target_bitmap(al_get_backbuffer(game->display));
 
-		al_draw_tinted_bitmap(game->level.meter_bmp, al_map_rgba(game->level.meter_alpha,game->level.meter_alpha,game->level.meter_alpha,game->level.meter_alpha), al_get_display_width(game->display)*0.95-al_get_bitmap_width(game->level.meter_bmp), al_get_display_height(game->display)*0.975-al_get_bitmap_height(game->level.meter_bmp), 0);
+		al_draw_tinted_bitmap(game->level.meter_bmp, al_map_rgba(game->level.meter_alpha,game->level.meter_alpha,game->level.meter_alpha,game->level.meter_alpha), game->viewportWidth*0.95-al_get_bitmap_width(game->level.meter_bmp), game->viewportHeight*0.975-al_get_bitmap_height(game->level.meter_bmp), 0);
 
 		TM_Process();
 	}
@@ -482,7 +482,7 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 	while (tmp) {
 		char filename[255] = { };
 		sprintf(filename, "levels/derpy/%s.png", tmp->name);
-		tmp->bitmap = LoadScaledBitmap(filename, (int)(al_get_display_height(game->display)*0.25*tmp->aspect*tmp->scale)*tmp->cols, (int)(al_get_display_height(game->display)*0.25*tmp->scale)*tmp->rows);
+		tmp->bitmap = LoadScaledBitmap(filename, (int)(game->viewportHeight*0.25*tmp->aspect*tmp->scale)*tmp->cols, (int)(game->viewportHeight*0.25*tmp->scale)*tmp->rows);
 		PROGRESS;
 		tmp = tmp->next;
 	}
@@ -494,38 +494,38 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 	if (game->level.current_level!=1) Moonwalk_PreloadBitmaps(game);
 	else {
 		/* TODO: handle strange display aspects */
-		game->level.clouds = LoadScaledBitmap("levels/1/clouds.png", al_get_display_height(game->display)*4.73307291666666666667, al_get_display_height(game->display));
+		game->level.clouds = LoadScaledBitmap("levels/1/clouds.png", game->viewportHeight*4.73307291666666666667, game->viewportHeight);
 		PROGRESS;
-		game->level.foreground = LoadScaledBitmap("levels/1/foreground.png", al_get_display_height(game->display)*4.73307291666666666667, al_get_display_height(game->display));
+		game->level.foreground = LoadScaledBitmap("levels/1/foreground.png", game->viewportHeight*4.73307291666666666667, game->viewportHeight);
 		PROGRESS;
-		game->level.background = LoadScaledBitmap("levels/1/background.png", al_get_display_height(game->display)*4.73307291666666666667, al_get_display_height(game->display));
+		game->level.background = LoadScaledBitmap("levels/1/background.png", game->viewportHeight*4.73307291666666666667, game->viewportHeight);
 		PROGRESS;
-		game->level.stage = LoadScaledBitmap("levels/1/stage.png", al_get_display_height(game->display)*4.73307291666666666667, al_get_display_height(game->display));
+		game->level.stage = LoadScaledBitmap("levels/1/stage.png", game->viewportHeight*4.73307291666666666667, game->viewportHeight);
 		PROGRESS;
-		game->level.obst_bmps.pie1 = LoadScaledBitmap("levels/pie1.png", al_get_display_width(game->display)*0.1, al_get_display_height(game->display)*0.08);
+		game->level.obst_bmps.pie1 = LoadScaledBitmap("levels/pie1.png", game->viewportWidth*0.1, game->viewportHeight*0.08);
 		PROGRESS;
-		game->level.obst_bmps.pie2 = LoadScaledBitmap("levels/pie2.png", al_get_display_width(game->display)*0.1, al_get_display_height(game->display)*0.08);
+		game->level.obst_bmps.pie2 = LoadScaledBitmap("levels/pie2.png", game->viewportWidth*0.1, game->viewportHeight*0.08);
 		PROGRESS;
-		game->level.obst_bmps.pig = LoadScaledBitmap("levels/pig.png", (int)(al_get_display_width(game->display)*0.15)*3, (int)(al_get_display_height(game->display)*0.2)*3);
+		game->level.obst_bmps.pig = LoadScaledBitmap("levels/pig.png", (int)(game->viewportWidth*0.15)*3, (int)(game->viewportHeight*0.2)*3);
 		PROGRESS;
-		game->level.obst_bmps.screwball = LoadScaledBitmap("levels/screwball.png", (int)(al_get_display_height(game->display)*0.2)*4*1.4, (int)(al_get_display_height(game->display)*0.2)*4);
+		game->level.obst_bmps.screwball = LoadScaledBitmap("levels/screwball.png", (int)(game->viewportHeight*0.2)*4*1.4, (int)(game->viewportHeight*0.2)*4);
 		PROGRESS;
-		game->level.obst_bmps.muffin = LoadScaledBitmap("levels/muffin.png", al_get_display_width(game->display)*0.07, al_get_display_height(game->display)*0.1);
+		game->level.obst_bmps.muffin = LoadScaledBitmap("levels/muffin.png", game->viewportWidth*0.07, game->viewportHeight*0.1);
 		PROGRESS;
-		game->level.obst_bmps.cherry = LoadScaledBitmap("levels/cherry.png", al_get_display_width(game->display)*0.03, al_get_display_height(game->display)*0.08);
+		game->level.obst_bmps.cherry = LoadScaledBitmap("levels/cherry.png", game->viewportWidth*0.03, game->viewportHeight*0.08);
 		PROGRESS;
-		game->level.obst_bmps.badmuffin = LoadScaledBitmap("levels/badmuffin.png", al_get_display_width(game->display)*0.07, al_get_display_height(game->display)*0.1);
+		game->level.obst_bmps.badmuffin = LoadScaledBitmap("levels/badmuffin.png", game->viewportWidth*0.07, game->viewportHeight*0.1);
 		PROGRESS;
-		game->level.owl = LoadScaledBitmap("levels/owl.png", al_get_display_width(game->display)*0.08, al_get_display_width(game->display)*0.08);
+		game->level.owl = LoadScaledBitmap("levels/owl.png", game->viewportWidth*0.08, game->viewportWidth*0.08);
 		PROGRESS;
-		game->level.letter_font = al_load_ttf_font("data/DejaVuSans.ttf",al_get_display_height(game->display)*0.0225,0 );
+		game->level.letter_font = al_load_ttf_font("data/DejaVuSans.ttf",game->viewportHeight*0.0225,0 );
 		PROGRESS;
-		game->level.letter = LoadScaledBitmap("levels/letter.png", al_get_display_height(game->display)*1.3, al_get_display_height(game->display)*1.2);
+		game->level.letter = LoadScaledBitmap("levels/letter.png", game->viewportHeight*1.3, game->viewportHeight*1.2);
 		al_set_target_bitmap(game->level.letter);
 		float y = 0.20;
 		float x = 0.19;
 		void draw_text(char* text) {
-			al_draw_text(game->level.letter_font, al_map_rgb(0,0,0), al_get_bitmap_width(game->level.letter)*x, al_get_display_height(game->display)*y, ALLEGRO_ALIGN_LEFT, text);
+			al_draw_text(game->level.letter_font, al_map_rgb(0,0,0), al_get_bitmap_width(game->level.letter)*x, game->viewportHeight*y, ALLEGRO_ALIGN_LEFT, text);
 			y+=0.028;
 		}
 		draw_text("Dear Derpy,");
@@ -562,17 +562,17 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 		al_draw_text_with_shadow(game->menu.font, al_map_rgb(255,255,255), al_get_bitmap_width(game->level.letter)*0.5, al_get_bitmap_height(game->level.letter)*0.8, ALLEGRO_ALIGN_CENTRE, "Press enter to continue...");
 		al_set_target_bitmap(al_get_backbuffer(game->display));
 		PROGRESS;
-		game->level.welcome = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display)/2);
+		game->level.welcome = al_create_bitmap(game->viewportWidth, game->viewportHeight/2);
 		PROGRESS;
 		al_set_target_bitmap(game->level.welcome);
 		al_clear_to_color(al_map_rgba(0,0,0,0));
-		al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.1, ALLEGRO_ALIGN_CENTRE, "Level 1");
-		al_draw_text_with_shadow(game->menu.font_subtitle, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.275, ALLEGRO_ALIGN_CENTRE, "Fluttershy");
+		al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.1, ALLEGRO_ALIGN_CENTRE, "Level 1");
+		al_draw_text_with_shadow(game->menu.font_subtitle, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.275, ALLEGRO_ALIGN_CENTRE, "Fluttershy");
 		PROGRESS;
 
-		game->level.meter_image = LoadScaledBitmap("levels/meter.png", al_get_display_width(game->display)*0.075, al_get_display_width(game->display)*0.075*0.96470588235294117647);
+		game->level.meter_image = LoadScaledBitmap("levels/meter.png", game->viewportWidth*0.075, game->viewportWidth*0.075*0.96470588235294117647);
 		PROGRESS;
-		game->level.meter_bmp = al_create_bitmap(al_get_display_width(game->display)*0.2+al_get_bitmap_width(game->level.meter_image), al_get_bitmap_height(game->level.meter_image));
+		game->level.meter_bmp = al_create_bitmap(game->viewportWidth*0.2+al_get_bitmap_width(game->level.meter_image), al_get_bitmap_height(game->level.meter_image));
 
 		al_set_target_bitmap(al_get_backbuffer(game->display));
 	}

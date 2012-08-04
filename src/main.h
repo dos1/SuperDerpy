@@ -270,6 +270,8 @@ struct Game {
 	ALLEGRO_EVENT_QUEUE *event_queue; /*!< Main event queue. */
 	ALLEGRO_TIMER *timer; /*!< Main FPS timer. */
 	ALLEGRO_BITMAP *console; /*!< Bitmap with game console. */
+	int viewportWidth; /*!< Actual available width of viewport. */
+	int viewportHeight; /*!< Actual available height of viewport. */
 	bool showconsole; /*!< If true, game console is rendered on screen. */
 	int fx; /*!< Effects volume. */
 	int music; /*!< Music volume. */
@@ -331,5 +333,8 @@ int Shared_Load(struct Game *game);
 
 /*! \brief Unload shared resources. */
 void Shared_Unload(struct Game *game);
+
+/*! \brief Setups letterbox viewport if necessary. */
+void SetupViewport(struct Game *game);
 
 #endif

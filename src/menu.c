@@ -30,39 +30,39 @@ void DrawMenuState(struct Game *game) {
 	switch (game->menu.menustate) {
 		case MENUSTATE_MAIN:
 			font = game->menu.font; if (game->menu.selected==0) font = game->menu.font_selected;
-			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.5, ALLEGRO_ALIGN_CENTRE, "Start game");
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.5, ALLEGRO_ALIGN_CENTRE, "Start game");
 			font = game->menu.font; if (game->menu.selected==1) font = game->menu.font_selected;
-			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.6, ALLEGRO_ALIGN_CENTRE, "Options");
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.6, ALLEGRO_ALIGN_CENTRE, "Options");
 			font = game->menu.font; if (game->menu.selected==2) font = game->menu.font_selected;
-			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.7, ALLEGRO_ALIGN_CENTRE, "About");
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.7, ALLEGRO_ALIGN_CENTRE, "About");
 			font = game->menu.font; if (game->menu.selected==3) font = game->menu.font_selected;
-			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.8, ALLEGRO_ALIGN_CENTRE, "Exit");	
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.8, ALLEGRO_ALIGN_CENTRE, "Exit");	
 			break;
 		case MENUSTATE_OPTIONS:
 			font = game->menu.font; if (game->menu.selected==0) font = game->menu.font_selected;
-			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.5, ALLEGRO_ALIGN_CENTRE, "Control settings");
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.5, ALLEGRO_ALIGN_CENTRE, "Control settings");
 			font = game->menu.font; if (game->menu.selected==1) font = game->menu.font_selected;
-			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.6, ALLEGRO_ALIGN_CENTRE, "Video settings");
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.6, ALLEGRO_ALIGN_CENTRE, "Video settings");
 			font = game->menu.font; if (game->menu.selected==2) font = game->menu.font_selected;
-			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.7, ALLEGRO_ALIGN_CENTRE, "Audio settings");
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.7, ALLEGRO_ALIGN_CENTRE, "Audio settings");
 			font = game->menu.font; if (game->menu.selected==3) font = game->menu.font_selected;
-			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.8, ALLEGRO_ALIGN_CENTRE, "Back");
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.8, ALLEGRO_ALIGN_CENTRE, "Back");
 			break;
 		case MENUSTATE_AUDIO:
 			font = game->menu.font; if (game->menu.selected==0) font = game->menu.font_selected;
 			if (game->music) sprintf(text, "Music volume: %d0%%", game->music);
 			else sprintf(text, "Music disabled");
-			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.5, ALLEGRO_ALIGN_CENTRE, text);
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.5, ALLEGRO_ALIGN_CENTRE, text);
 			font = game->menu.font; if (game->menu.selected==1) font = game->menu.font_selected;
 			if (game->fx) sprintf(text, "Effects volume: %d0%%", game->fx);
 			else sprintf(text, "Effects disabled");
-			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.6, ALLEGRO_ALIGN_CENTRE, text);
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.6, ALLEGRO_ALIGN_CENTRE, text);
 			font = game->menu.font; if (game->menu.selected==2) font = game->menu.font_selected;
 			if (game->voice) sprintf(text, "Voice volume: %d0%%", game->voice);
 			else sprintf(text, "Voice disabled");
-			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.7, ALLEGRO_ALIGN_CENTRE, text);
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.7, ALLEGRO_ALIGN_CENTRE, text);
 			font = game->menu.font; if (game->menu.selected==3) font = game->menu.font_selected;
-			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.8, ALLEGRO_ALIGN_CENTRE, "Back");
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.8, ALLEGRO_ALIGN_CENTRE, "Back");
 			break;
 		case MENUSTATE_VIDEO:
 			if (game->menu.options.fullscreen) {
@@ -74,28 +74,28 @@ void DrawMenuState(struct Game *game) {
 				color = al_map_rgba(255,255,255,255);
 			}
 			font = game->menu.font; if (game->menu.selected==0) font = game->menu.font_selected;
-			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.5, ALLEGRO_ALIGN_CENTRE, text);
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.5, ALLEGRO_ALIGN_CENTRE, text);
 			font = game->menu.font; if (game->menu.selected==1) font = game->menu.font_selected;
-			al_draw_text_with_shadow(font, color, al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.6, ALLEGRO_ALIGN_CENTRE, "Resolution: 800x500");
+			al_draw_text_with_shadow(font, color, game->viewportWidth*0.5, game->viewportHeight*0.6, ALLEGRO_ALIGN_CENTRE, "Resolution: 800x500");
 			font = game->menu.font; if (game->menu.selected==2) font = game->menu.font_selected;
-			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.7, ALLEGRO_ALIGN_CENTRE, "FPS: 60");
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.7, ALLEGRO_ALIGN_CENTRE, "FPS: 60");
 			font = game->menu.font; if (game->menu.selected==3) font = game->menu.font_selected;
-			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.8, ALLEGRO_ALIGN_CENTRE, "Back");
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.8, ALLEGRO_ALIGN_CENTRE, "Back");
 			break;
 		case MENUSTATE_PAUSE:
 			font = game->menu.font; if (game->menu.selected==0) font = game->menu.font_selected;
-			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.5, ALLEGRO_ALIGN_CENTRE, "Resume game");
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.5, ALLEGRO_ALIGN_CENTRE, "Resume game");
 			font = game->menu.font; if (game->menu.selected==1) font = game->menu.font_selected;
-			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.6, ALLEGRO_ALIGN_CENTRE, "Return to map");
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.6, ALLEGRO_ALIGN_CENTRE, "Return to map");
 			font = game->menu.font; if (game->menu.selected==2) font = game->menu.font_selected;
-			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.7, ALLEGRO_ALIGN_CENTRE, "Options");
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.7, ALLEGRO_ALIGN_CENTRE, "Options");
 			font = game->menu.font; if (game->menu.selected==3) font = game->menu.font_selected;
-			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.8, ALLEGRO_ALIGN_CENTRE, "Exit");
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.8, ALLEGRO_ALIGN_CENTRE, "Exit");
 			break;
 		default:
 			game->menu.selected=0;
 			font = game->menu.font; if (game->menu.selected==0) font = game->menu.font_selected;
-			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.5, ALLEGRO_ALIGN_CENTRE, "Not implemented yet");
+			al_draw_text_with_shadow(font, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.5, ALLEGRO_ALIGN_CENTRE, "Not implemented yet");
 			break;
 	}
 	free(text);
@@ -121,27 +121,27 @@ void Menu_Draw(struct Game *game) {
 
 	al_clear_to_color(al_map_rgb(183,234,193));
 	float tint = (sin((game->menu.cloud_position-80)/15)+1)/2;
-	if (tint < 0.000004) { PrintConsole(game, "random tint %f", tint); game->menu.mountain_position = (al_get_display_width(game->display)*(rand()/(float)RAND_MAX)/2)+al_get_display_width(game->display)/2; }
+	if (tint < 0.000004) { PrintConsole(game, "random tint %f", tint); game->menu.mountain_position = (game->viewportWidth*(rand()/(float)RAND_MAX)/2)+game->viewportWidth/2; }
 	al_draw_tinted_bitmap(game->menu.mountain,al_map_rgba_f(tint,tint,tint,tint),game->menu.mountain_position, 0,0);
-	al_draw_scaled_bitmap(game->menu.cloud,0,0,al_get_bitmap_width(game->menu.cloud), al_get_bitmap_height(game->menu.cloud), al_get_display_width(game->display)*(sin((game->menu.cloud_position/40)-4.5)-0.3), al_get_display_height(game->display)*0.35, al_get_bitmap_width(game->menu.cloud)/2, al_get_bitmap_height(game->menu.cloud)/2,0);
-	al_draw_bitmap(game->menu.cloud2,al_get_display_width(game->display)*(game->menu.cloud2_position/100.0), al_get_display_height(game->display)/1.5,0);
-	al_draw_bitmap(game->menu.image,0, al_get_display_height(game->display)*0.55,0);
+	al_draw_scaled_bitmap(game->menu.cloud,0,0,al_get_bitmap_width(game->menu.cloud), al_get_bitmap_height(game->menu.cloud), game->viewportWidth*(sin((game->menu.cloud_position/40)-4.5)-0.3), game->viewportHeight*0.35, al_get_bitmap_width(game->menu.cloud)/2, al_get_bitmap_height(game->menu.cloud)/2,0);
+	al_draw_bitmap(game->menu.cloud2,game->viewportWidth*(game->menu.cloud2_position/100.0), game->viewportHeight/1.5,0);
+	al_draw_bitmap(game->menu.image,0, game->viewportHeight*0.55,0);
 
-	al_draw_bitmap(game->menu.pinkcloud_bitmap,(al_get_display_width(game->display)*0.12) + (cos((game->menu.cloud_position/25+80)*1.74444))*40, 0,0);
-	al_draw_bitmap(game->menu.cloud,al_get_display_width(game->display)*game->menu.cloud_position/100, al_get_display_height(game->display)*0.1,0);
+	al_draw_bitmap(game->menu.pinkcloud_bitmap,(game->viewportWidth*0.12) + (cos((game->menu.cloud_position/25+80)*1.74444))*40, 0,0);
+	al_draw_bitmap(game->menu.cloud,game->viewportWidth*game->menu.cloud_position/100, game->viewportHeight*0.1,0);
 
-	al_draw_bitmap(game->menu.pie_bitmap, al_get_display_width(game->display)/2, al_get_display_height(game->display)*(game->menu.cloud_position)/10,0);
+	al_draw_bitmap(game->menu.pie_bitmap, game->viewportWidth/2, game->viewportHeight*(game->menu.cloud_position)/10,0);
 
 	/* GLASS EFFECT */
 	al_set_target_bitmap(game->menu.blurbg);
 
 	al_clear_to_color(al_map_rgb(183,234,193));
-	al_draw_scaled_bitmap(game->menu.cloud,0,0,al_get_bitmap_width(game->menu.cloud), al_get_bitmap_height(game->menu.cloud), al_get_display_width(game->display)*(sin((game->menu.cloud_position/40)-4.5)-0.3) - (al_get_display_width(game->display)/2)+(al_get_bitmap_width(game->menu.logo)/2), al_get_display_height(game->display)*0.35-(al_get_display_height(game->display)*0.1), al_get_bitmap_width(game->menu.cloud)/2, al_get_bitmap_height(game->menu.cloud)/2,0);
-	al_draw_bitmap(game->menu.pinkcloud_bitmap,(al_get_display_width(game->display)*0.12) + (cos((game->menu.cloud_position/25+80)*1.74444))*40 - (al_get_display_width(game->display)/2)+(al_get_bitmap_width(game->menu.logo)/2), -(al_get_display_height(game->display)*0.1),0);
-	al_draw_bitmap(game->menu.cloud,al_get_display_width(game->display)*game->menu.cloud_position/100 - (al_get_display_width(game->display)/2)+(al_get_bitmap_width(game->menu.logo)/2), al_get_display_height(game->display)*0.1-(al_get_display_height(game->display)*0.1),0);
-	al_draw_bitmap(game->menu.pie_bitmap, al_get_display_width(game->display)/2 - (al_get_display_width(game->display)/2)+(al_get_bitmap_width(game->menu.logo)/2), al_get_display_height(game->display)*(game->menu.cloud_position)/10 -(al_get_display_height(game->display)*0.1),0);
+	al_draw_scaled_bitmap(game->menu.cloud,0,0,al_get_bitmap_width(game->menu.cloud), al_get_bitmap_height(game->menu.cloud), game->viewportWidth*(sin((game->menu.cloud_position/40)-4.5)-0.3) - (game->viewportWidth/2)+(al_get_bitmap_width(game->menu.logo)/2), game->viewportHeight*0.35-(game->viewportHeight*0.1), al_get_bitmap_width(game->menu.cloud)/2, al_get_bitmap_height(game->menu.cloud)/2,0);
+	al_draw_bitmap(game->menu.pinkcloud_bitmap,(game->viewportWidth*0.12) + (cos((game->menu.cloud_position/25+80)*1.74444))*40 - (game->viewportWidth/2)+(al_get_bitmap_width(game->menu.logo)/2), -(game->viewportHeight*0.1),0);
+	al_draw_bitmap(game->menu.cloud,game->viewportWidth*game->menu.cloud_position/100 - (game->viewportWidth/2)+(al_get_bitmap_width(game->menu.logo)/2), game->viewportHeight*0.1-(game->viewportHeight*0.1),0);
+	al_draw_bitmap(game->menu.pie_bitmap, game->viewportWidth/2 - (game->viewportWidth/2)+(al_get_bitmap_width(game->menu.logo)/2), game->viewportHeight*(game->menu.cloud_position)/10 -(game->viewportHeight*0.1),0);
 
-	/*al_draw_bitmap_region(al_get_backbuffer(game->display), (al_get_display_width(game->display)/2)-(al_get_bitmap_width(game->menu.logo)/2), (al_get_display_height(game->display)*0.1), al_get_bitmap_width(game->menu.logo), al_get_bitmap_height(game->menu.logo), 0, 0, 0);*/
+	/*al_draw_bitmap_region(al_get_backbuffer(game->display), (game->viewportWidth/2)-(al_get_bitmap_width(game->menu.logo)/2), (game->viewportHeight*0.1), al_get_bitmap_width(game->menu.logo), al_get_bitmap_height(game->menu.logo), 0, 0, 0);*/
 
 	al_set_target_bitmap(game->menu.blurbg2);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
@@ -160,14 +160,14 @@ void Menu_Draw(struct Game *game) {
 	al_draw_bitmap(game->menu.logo, 0, 0, 0);
 	al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
-	al_draw_bitmap(game->menu.blurbg2, (al_get_display_width(game->display)/2)-(al_get_bitmap_width(game->menu.logo)/2), (al_get_display_height(game->display)*0.1), 0);
+	al_draw_bitmap(game->menu.blurbg2, (game->viewportWidth/2)-(al_get_bitmap_width(game->menu.logo)/2), (game->viewportHeight*0.1), 0);
 
-	al_draw_bitmap(game->menu.logoblur, (al_get_display_width(game->display)/2)-(al_get_bitmap_width(game->menu.logo)/2)-2, (al_get_display_height(game->display)*0.1)-2, 0);
-	al_draw_tinted_bitmap(game->menu.logo, al_map_rgba_f(0.1, 0.1, 0.1, 0.1), (al_get_display_width(game->display)/2)-(al_get_bitmap_width(game->menu.logo)/2), (al_get_display_height(game->display)*0.1), 0);
+	al_draw_bitmap(game->menu.logoblur, (game->viewportWidth/2)-(al_get_bitmap_width(game->menu.logo)/2)-2, (game->viewportHeight*0.1)-2, 0);
+	al_draw_tinted_bitmap(game->menu.logo, al_map_rgba_f(0.1, 0.1, 0.1, 0.1), (game->viewportWidth/2)-(al_get_bitmap_width(game->menu.logo)/2), (game->viewportHeight*0.1), 0);
 	/* END OF GLASS EFFECT */
 
-	al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.1, ALLEGRO_ALIGN_CENTRE, "Super Derpy");
-	al_draw_text_with_shadow(game->menu.font_subtitle, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.275, ALLEGRO_ALIGN_CENTRE, "Muffin Attack");
+	al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.1, ALLEGRO_ALIGN_CENTRE, "Super Derpy");
+	al_draw_text_with_shadow(game->menu.font_subtitle, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.275, ALLEGRO_ALIGN_CENTRE, "Muffin Attack");
 
 	DrawMenuState(game);
 
@@ -185,19 +185,19 @@ void Menu_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	game->menu.options.width = game->width;
 	game->menu.options.height = game->height;
 	game->menu.loaded = true;
-	game->menu.image = LoadScaledBitmap( "menu/menu.png", al_get_display_width(game->display), al_get_display_height(game->display)*0.45);
+	game->menu.image = LoadScaledBitmap( "menu/menu.png", game->viewportWidth, game->viewportHeight*0.45);
 	PROGRESS;
-	game->menu.mountain = LoadScaledBitmap( "menu/mountain.png", al_get_display_width(game->display)*0.055, al_get_display_height(game->display)/9 );
+	game->menu.mountain = LoadScaledBitmap( "menu/mountain.png", game->viewportWidth*0.055, game->viewportHeight/9 );
 	PROGRESS;
-	game->menu.cloud = LoadScaledBitmap( "menu/cloud.png", al_get_display_width(game->display)*0.5, al_get_display_height(game->display)*0.25 );
+	game->menu.cloud = LoadScaledBitmap( "menu/cloud.png", game->viewportWidth*0.5, game->viewportHeight*0.25 );
 	PROGRESS;
-	game->menu.cloud2 = LoadScaledBitmap( "menu/cloud2.png", al_get_display_width(game->display)*0.2, al_get_display_height(game->display)*0.1 );
+	game->menu.cloud2 = LoadScaledBitmap( "menu/cloud2.png", game->viewportWidth*0.2, game->viewportHeight*0.1 );
 	PROGRESS;
-	game->menu.logo = LoadScaledBitmap( "menu/logo.png", al_get_display_width(game->display)*0.3, al_get_display_height(game->display)*0.35 );
-	game->menu.blurbg = al_create_bitmap(al_get_display_width(game->display)*0.3, al_get_display_height(game->display)*0.35);
-	game->menu.blurbg2 = al_create_bitmap(al_get_display_width(game->display)*0.3, al_get_display_height(game->display)*0.35);
+	game->menu.logo = LoadScaledBitmap( "menu/logo.png", game->viewportWidth*0.3, game->viewportHeight*0.35 );
+	game->menu.blurbg = al_create_bitmap(game->viewportWidth*0.3, game->viewportHeight*0.35);
+	game->menu.blurbg2 = al_create_bitmap(game->viewportWidth*0.3, game->viewportHeight*0.35);
 	PROGRESS;
-	game->menu.logoblur = al_create_bitmap(al_get_display_width(game->display)*0.3+4, al_get_display_height(game->display)*0.35+4);
+	game->menu.logoblur = al_create_bitmap(game->viewportWidth*0.3+4, game->viewportHeight*0.35+4);
 	al_set_target_bitmap(game->menu.logoblur);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 	float alpha = (1.0/40.0);
@@ -211,9 +211,9 @@ void Menu_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	}
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 	PROGRESS;
-	game->menu.glass = LoadScaledBitmap( "menu/glass.png", al_get_display_width(game->display)*0.3, al_get_display_height(game->display)*0.35 );
+	game->menu.glass = LoadScaledBitmap( "menu/glass.png", game->viewportWidth*0.3, game->viewportHeight*0.35 );
 	PROGRESS;
-	game->menu.pinkcloud = LoadScaledBitmap( "menu/pinkcloud.png", al_get_display_width(game->display)*0.33125, al_get_display_height(game->display)*0.8122);
+	game->menu.pinkcloud = LoadScaledBitmap( "menu/pinkcloud.png", game->viewportWidth*0.33125, game->viewportHeight*0.8122);
 	PROGRESS;
 	al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
 	game->menu.rain = al_load_bitmap( "data/menu/rain.png" );
@@ -228,7 +228,7 @@ void Menu_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	PROGRESS;
 	game->menu.click_sample = al_load_sample( "data/menu/click.flac" );
 	PROGRESS;
-	game->menu.mountain_position = al_get_display_width(game->display)*0.7;
+	game->menu.mountain_position = game->viewportWidth*0.7;
 
 	game->menu.music = al_create_sample_instance(game->menu.sample);
 	al_attach_sample_instance_to_mixer(game->menu.music, game->audio.music);
@@ -242,10 +242,10 @@ void Menu_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	al_attach_sample_instance_to_mixer(game->menu.click, game->audio.fx);
 	al_set_sample_instance_playmode(game->menu.click, ALLEGRO_PLAYMODE_ONCE);
 
-	game->menu.font_title = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.16,0 );
-	game->menu.font_subtitle = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.08,0 );
-	game->menu.font = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.05,0 );
-	game->menu.font_selected = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.065,0 );
+	game->menu.font_title = al_load_ttf_font("data/ShadowsIntoLight.ttf",game->viewportHeight*0.16,0 );
+	game->menu.font_subtitle = al_load_ttf_font("data/ShadowsIntoLight.ttf",game->viewportHeight*0.08,0 );
+	game->menu.font = al_load_ttf_font("data/ShadowsIntoLight.ttf",game->viewportHeight*0.05,0 );
+	game->menu.font_selected = al_load_ttf_font("data/ShadowsIntoLight.ttf",game->viewportHeight*0.065,0 );
 	PROGRESS;
 
 	if (!game->menu.sample){
@@ -263,14 +263,14 @@ void Menu_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 		exit(-1);
 	}
 
-	game->menu.pinkcloud_bitmap = al_create_bitmap(al_get_display_width(game->display)*0.33125, al_get_display_height(game->display));
+	game->menu.pinkcloud_bitmap = al_create_bitmap(game->viewportWidth*0.33125, game->viewportHeight);
 
-	game->menu.pie_bitmap = al_create_bitmap(al_get_display_width(game->display)/2, al_get_display_height(game->display));
+	game->menu.pie_bitmap = al_create_bitmap(game->viewportWidth/2, game->viewportHeight);
 	al_set_target_bitmap(game->menu.pie_bitmap);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
-	al_draw_scaled_bitmap(game->menu.pie, 0, 0, al_get_bitmap_width(game->menu.pie), al_get_bitmap_height(game->menu.pie), al_get_bitmap_width(game->menu.pie_bitmap)*0.5, 0, al_get_display_width(game->display)*0.11875, al_get_display_height(game->display)*0.0825, 0);
-	al_draw_scaled_bitmap(game->menu.pie, 0, 0, al_get_bitmap_width(game->menu.pie), al_get_bitmap_height(game->menu.pie), al_get_bitmap_width(game->menu.pie_bitmap)*0.1, al_get_bitmap_height(game->menu.pie_bitmap)*0.3, al_get_display_width(game->display)*0.09, al_get_display_height(game->display)*0.06, ALLEGRO_FLIP_HORIZONTAL);
-	al_draw_scaled_bitmap(game->menu.pie, 0, 0, al_get_bitmap_width(game->menu.pie), al_get_bitmap_height(game->menu.pie), al_get_bitmap_width(game->menu.pie_bitmap)*0.3, al_get_bitmap_height(game->menu.pie_bitmap)*0.6, al_get_display_width(game->display)*0.13, al_get_display_height(game->display)*0.1, 0);
+	al_draw_scaled_bitmap(game->menu.pie, 0, 0, al_get_bitmap_width(game->menu.pie), al_get_bitmap_height(game->menu.pie), al_get_bitmap_width(game->menu.pie_bitmap)*0.5, 0, game->viewportWidth*0.11875, game->viewportHeight*0.0825, 0);
+	al_draw_scaled_bitmap(game->menu.pie, 0, 0, al_get_bitmap_width(game->menu.pie), al_get_bitmap_height(game->menu.pie), al_get_bitmap_width(game->menu.pie_bitmap)*0.1, al_get_bitmap_height(game->menu.pie_bitmap)*0.3, game->viewportWidth*0.09, game->viewportHeight*0.06, ALLEGRO_FLIP_HORIZONTAL);
+	al_draw_scaled_bitmap(game->menu.pie, 0, 0, al_get_bitmap_width(game->menu.pie), al_get_bitmap_height(game->menu.pie), al_get_bitmap_width(game->menu.pie_bitmap)*0.3, al_get_bitmap_height(game->menu.pie_bitmap)*0.6, game->viewportWidth*0.13, game->viewportHeight*0.1, 0);
 	al_destroy_bitmap(game->menu.pie);
 	PROGRESS;
 
@@ -285,7 +285,7 @@ void Menu_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 }
 
 void Menu_Stop(struct Game* game) {
-	game->menu.menu_fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
+	game->menu.menu_fade_bitmap = al_create_bitmap(game->viewportWidth, game->viewportHeight);
 	al_set_target_bitmap(game->menu.menu_fade_bitmap);
 	al_clear_to_color(al_map_rgb(0,0,0));
 	al_set_target_bitmap(al_get_backbuffer(game->display));
@@ -347,7 +347,7 @@ void Menu_Load(struct Game *game) {
 
 	al_play_sample_instance(game->menu.music);
 	al_play_sample_instance(game->menu.rain_sound);
-	game->menu.menu_fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
+	game->menu.menu_fade_bitmap = al_create_bitmap(game->viewportWidth, game->viewportHeight);
 	al_set_target_bitmap(game->menu.menu_fade_bitmap);
 	al_clear_to_color(al_map_rgb(0,0,0));
 	al_set_target_bitmap(al_get_backbuffer(game->display));

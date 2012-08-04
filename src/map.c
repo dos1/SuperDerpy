@@ -52,7 +52,7 @@ void Map_Draw(struct Game *game) {
 			y=0.65;
 			break;
 	}
-	al_draw_scaled_bitmap(game->map.arrow, 0, 0, al_get_bitmap_width(game->map.arrow), al_get_bitmap_height(game->map.arrow), al_get_display_width(game->display)*x, al_get_display_height(game->display)*y + ((sin(game->map.arrowpos)+0.5)/20.0)*al_get_display_height(game->display), al_get_display_width(game->display)*0.1, al_get_display_height(game->display)*0.16, 0);
+	al_draw_scaled_bitmap(game->map.arrow, 0, 0, al_get_bitmap_width(game->map.arrow), al_get_bitmap_height(game->map.arrow), game->viewportWidth*x, game->viewportHeight*y + ((sin(game->map.arrowpos)+0.5)/20.0)*game->viewportHeight, game->viewportWidth*0.1, game->viewportHeight*0.16, 0);
 	game->map.arrowpos += tps(game, 0.1*60);
 }
 
@@ -106,11 +106,11 @@ void Map_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	PrintConsole(game, "Last level available: %d", game->map.selected);
 	game->map.arrowpos = 0;
 
-	game->map.map_bg = LoadScaledBitmap("map/background.png", al_get_display_width(game->display), al_get_display_height(game->display));
+	game->map.map_bg = LoadScaledBitmap("map/background.png", game->viewportWidth, game->viewportHeight);
 	PROGRESS;
 	char filename[30] = { };
 	sprintf(filename, "map/highlight%d.png", game->map.available);
-	game->map.highlight = LoadScaledBitmap(filename, al_get_display_width(game->display), al_get_display_height(game->display));
+	game->map.highlight = LoadScaledBitmap(filename, game->viewportWidth, game->viewportHeight);
 	PROGRESS;
 
 	game->map.arrow = al_load_bitmap( "data/map/arrow.png" );
@@ -138,7 +138,7 @@ void Map_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 		exit(-1);
 	}
 
-	game->map.map = LoadScaledBitmap("table.png", al_get_display_width(game->display), al_get_display_height(game->display));
+	game->map.map = LoadScaledBitmap("table.png", game->viewportWidth, game->viewportHeight);
 	PROGRESS;
 	al_set_target_bitmap(game->map.map);
 	al_draw_bitmap(game->map.map_bg, 0, 0 ,0);

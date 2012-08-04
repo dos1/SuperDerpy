@@ -71,7 +71,7 @@ void PrintConsole(struct Game *game, char* format, ...) {
 	al_set_target_bitmap(con);
 	al_clear_to_color(al_map_rgba(0,0,0,80));
 	al_draw_bitmap_region(game->console, 0, al_get_bitmap_height(game->console)*0.2, al_get_bitmap_width(game->console), al_get_bitmap_height(game->console)*0.8, 0, 0, 0);
-	al_draw_text(game->font_console, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.005, al_get_bitmap_height(game->console)*0.81, ALLEGRO_ALIGN_LEFT, text);
+	al_draw_text(game->font_console, al_map_rgb(255,255,255), game->viewportWidth*0.005, al_get_bitmap_height(game->console)*0.81, ALLEGRO_ALIGN_LEFT, text);
 	al_set_target_bitmap(game->console);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 	al_draw_bitmap(con, 0, 0, 0);
@@ -90,7 +90,7 @@ void DrawConsole(struct Game *game) {
 		}
 		char sfps[6] = { };
 		sprintf(sfps, "%.0f", fps);
-		al_draw_text_with_shadow(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.99, 0, ALLEGRO_ALIGN_RIGHT, sfps);
+		al_draw_text_with_shadow(game->font, al_map_rgb(255,255,255), game->viewportWidth*0.99, 0, ALLEGRO_ALIGN_RIGHT, sfps);
 	}
 	frames_done++;
 }
@@ -262,18 +262,43 @@ float tps(struct Game *game, float t) {
 	else return t/fps;
 }
 
+void SetupViewport(struct Game *game) {
+	game->viewportWidth = al_get_display_width(game->display);
+	game->viewportHeight = al_get_display_height(game->display);
+	if (atoi(GetConfigOptionDefault("SuperDerpy", "letterbox", "1"))) {
+		float const aspectRatio = (float)800 / (float)500;
+		int clipWidth = game->viewportWidth, clipHeight = game->viewportWidth / aspectRatio;
+		int clipX = 0, clipY = (game->viewportHeight - clipHeight) / 2;
+		if (clipY <= 0) {
+			clipHeight = game->viewportHeight;
+			clipWidth = game->viewportHeight * aspectRatio;
+			clipX = (game->viewportWidth - clipWidth) / 2;
+			clipY = 0;
+		}
+		al_set_clipping_rectangle(clipX, clipY, clipWidth, clipHeight);
+
+		/*float scaleX = (float)clipWidth  / (float)800,
+					scaleY = (float)clipHeight / (float)500;*/
+		ALLEGRO_TRANSFORM projection;
+		al_build_transform(&projection, clipX, clipY, 1, 1, 0.0f);
+		al_use_transform(&projection);
+		game->viewportWidth = clipWidth;
+		game->viewportHeight = clipHeight;
+	}
+}
+
 int Shared_Load(struct Game *game) {
-	game->font = al_load_ttf_font("data/ShadowsIntoLight.ttf",al_get_display_height(game->display)*0.09,0 );
+	game->font = al_load_ttf_font("data/ShadowsIntoLight.ttf",game->viewportHeight*0.09,0 );
 	if(!game->font) {
 		fprintf(stderr, "failed to load game font!\n");
 		return -1;
 	}
-	game->font_console = al_load_ttf_font("data/DejaVuSansMono.ttf",al_get_display_height(game->display)*0.018,0 );
+	game->font_console = al_load_ttf_font("data/DejaVuSansMono.ttf",game->viewportHeight*0.018,0 );
 	if(!game->font_console) {
 		fprintf(stderr, "failed to load console font!\n");
 		return -1;
 	}
-	game->console = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display)*0.12);
+	game->console = al_create_bitmap(game->viewportWidth, game->viewportHeight*0.12);
 	al_set_target_bitmap(game->console);
 	al_clear_to_color(al_map_rgba(0,0,0,80));
 	al_set_target_bitmap(al_get_backbuffer(game->display));
@@ -370,10 +395,14 @@ int main(int argc, char **argv){
 	if (game.fullscreen) al_hide_mouse_cursor(game.display);
 	al_inhibit_screensaver(true);
 
+	SetupViewport(&game);
+
 	al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR | ALLEGRO_MIN_LINEAR);
 
 	int ret = Shared_Load(&game);
 	if (ret!=0) return ret;
+
+	PrintConsole(&game, "Viewport %dx%d", game.viewportWidth, game.viewportHeight);
 
 	game.event_queue = al_create_event_queue();
 	if(!game.event_queue) {
@@ -445,25 +474,6 @@ int main(int argc, char **argv){
 				game.loadstate = optarg[0]-'0';
 				break;
 		}
-
-	if (atoi(GetConfigOptionDefault("SuperDerpy", "letterbox", "0"))) {
-		float const aspectRatio = (float)800 / (float)500;
-		int clipWidth = al_get_display_width(game.display), clipHeight = al_get_display_width(game.display) / aspectRatio;
-		int clipX = 0, clipY = (al_get_display_height(game.display) - clipHeight) / 2;
-		if (clipY <= 0) {
-			clipHeight = al_get_display_height(game.display);
-			clipWidth = al_get_display_height(game.display) * aspectRatio;
-			clipX = (al_get_display_width(game.display) - clipWidth) / 2;
-			clipY = 0;
-		}
-		al_set_clipping_rectangle(clipX, clipY, clipWidth, clipHeight);
-
-		float scaleX = (float)clipWidth  / (float)800,
-					scaleY = (float)clipHeight / (float)500;
-		ALLEGRO_TRANSFORM projection;
-		al_build_transform(&projection, clipX, clipY, scaleX, scaleY, 0.0f);
-		al_use_transform(&projection);
-	}
 
 	while(1) {
 		ALLEGRO_EVENT ev;

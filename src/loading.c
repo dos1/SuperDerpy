@@ -25,7 +25,7 @@ void Progress(struct Game *game, float p) {
 	if (game->debug) { printf("%f\n", p); fflush(stdout); }
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 	al_draw_bitmap(game->loading.loading_bitmap,0,0,0);
-	al_draw_filled_rectangle(0, al_get_display_height(game->display)*0.985, p*al_get_display_width(game->display), al_get_display_height(game->display), al_map_rgba(255,255,255,255));
+	al_draw_filled_rectangle(0, game->viewportHeight*0.985, p*game->viewportWidth, game->viewportHeight, al_map_rgba(255,255,255,255));
 	DrawConsole(game);
 	al_flip_display();
 }
@@ -52,7 +52,7 @@ void Loading_Draw(struct Game *game) {
 	for(fadeloop=255; fadeloop>0; fadeloop-=tps(game, 600)){
 		al_wait_for_event(game->event_queue, &ev);
 		al_draw_tinted_bitmap(game->loading.loading_bitmap,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
-		al_draw_filled_rectangle(0, al_get_display_height(game->display)*0.985, al_get_display_width(game->display), al_get_display_height(game->display), al_map_rgba(fadeloop,fadeloop,fadeloop,255));
+		al_draw_filled_rectangle(0, game->viewportHeight*0.985, game->viewportWidth, game->viewportHeight, al_map_rgba(fadeloop,fadeloop,fadeloop,255));
 		DrawConsole(game);
 		al_flip_display();
 	}
@@ -65,14 +65,14 @@ void Loading_Draw(struct Game *game) {
 void Loading_Load(struct Game *game) {
 	al_clear_to_color(al_map_rgb(0,0,0));
 
-	game->loading.loading_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
+	game->loading.loading_bitmap = al_create_bitmap(game->viewportWidth, game->viewportHeight);
 
-	game->loading.image = LoadScaledBitmap("loading.png", al_get_display_width(game->display), al_get_display_height(game->display));
+	game->loading.image = LoadScaledBitmap("loading.png", game->viewportWidth, game->viewportHeight);
 
 	al_set_target_bitmap(game->loading.loading_bitmap);
 	al_draw_bitmap(game->loading.image, 0, 0, 0);
-	al_draw_text_with_shadow(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)*0.0234, al_get_display_height(game->display)*0.84, ALLEGRO_ALIGN_LEFT, "Loading...");
-	al_draw_filled_rectangle(0, al_get_display_height(game->display)*0.985, al_get_display_width(game->display), al_get_display_height(game->display), al_map_rgba(128,128,128,128));
+	al_draw_text_with_shadow(game->font, al_map_rgb(255,255,255), game->viewportWidth*0.0234, game->viewportHeight*0.84, ALLEGRO_ALIGN_LEFT, "Loading...");
+	al_draw_filled_rectangle(0, game->viewportHeight*0.985, game->viewportWidth, game->viewportHeight, al_map_rgba(128,128,128,128));
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 	al_destroy_bitmap(game->loading.image);
 }

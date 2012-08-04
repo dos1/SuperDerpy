@@ -50,10 +50,10 @@ void Moonwalk_Draw(struct Game *game) {
 		if (game->level.moonwalk.derpy_frame>=24) game->level.moonwalk.derpy_frame=0;
 	}
 	}
-	al_draw_scaled_bitmap(game->level.moonwalk.image,0,0,al_get_bitmap_width(game->level.moonwalk.image),al_get_bitmap_height(game->level.moonwalk.image),0,0,al_get_display_width(game->display), al_get_display_height(game->display),0);
-	al_draw_bitmap(game->level.derpy, game->level.moonwalk.derpy_pos*al_get_display_width(game->display), al_get_display_height(game->display)*0.95-al_get_bitmap_height(game->level.derpy), ALLEGRO_FLIP_HORIZONTAL);
-	al_draw_textf(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)/2.2, ALLEGRO_ALIGN_CENTRE, "Level %d: Not implemented yet!", game->level.current_level);
-	al_draw_text(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)/1.8, ALLEGRO_ALIGN_CENTRE, "Have some moonwalk instead.");
+	al_draw_scaled_bitmap(game->level.moonwalk.image,0,0,al_get_bitmap_width(game->level.moonwalk.image),al_get_bitmap_height(game->level.moonwalk.image),0,0,game->viewportWidth, game->viewportHeight,0);
+	al_draw_bitmap(game->level.derpy, game->level.moonwalk.derpy_pos*game->viewportWidth, game->viewportHeight*0.95-al_get_bitmap_height(game->level.derpy), ALLEGRO_FLIP_HORIZONTAL);
+	al_draw_textf(game->font, al_map_rgb(255,255,255), game->viewportWidth/2, game->viewportHeight/2.2, ALLEGRO_ALIGN_CENTRE, "Level %d: Not implemented yet!", game->level.current_level);
+	al_draw_text(game->font, al_map_rgb(255,255,255), game->viewportWidth/2, game->viewportHeight/1.8, ALLEGRO_ALIGN_CENTRE, "Have some moonwalk instead.");
 }
 
 void Moonwalk_Load(struct Game *game) {
@@ -79,16 +79,16 @@ int Moonwalk_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 }
 
 void Moonwalk_PreloadBitmaps(struct Game *game) {
-	game->level.moonwalk.image =LoadScaledBitmap("levels/disco.jpg", al_get_display_width(game->display), al_get_display_height(game->display));
-	/*game->level.derpy_sheet = LoadScaledBitmap("levels/derpcycle.png", al_get_display_width(game->display)*0.1953125*6, al_get_display_height(game->display)*0.25*4);*/
+	game->level.moonwalk.image =LoadScaledBitmap("levels/disco.jpg", game->viewportWidth, game->viewportHeight);
+	/*game->level.derpy_sheet = LoadScaledBitmap("levels/derpcycle.png", game->viewportWidth*0.1953125*6, game->viewportHeight*0.25*4);*/
 
-	game->level.derpy = al_create_bitmap(al_get_display_width(game->display)*0.1953125, al_get_display_height(game->display)*0.25);
+	game->level.derpy = al_create_bitmap(game->viewportWidth*0.1953125, game->viewportHeight*0.25);
 	
-	game->level.moonwalk.fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
+	game->level.moonwalk.fade_bitmap = al_create_bitmap(game->viewportWidth, game->viewportHeight);
 	al_set_target_bitmap(game->level.moonwalk.fade_bitmap);
 	al_draw_bitmap(game->level.moonwalk.image,0,0,0);
-	al_draw_textf(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)/2.2, ALLEGRO_ALIGN_CENTRE, "Level %d: Not implemented yet!", game->level.current_level);
-	al_draw_text(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)/1.8, ALLEGRO_ALIGN_CENTRE, "Have some moonwalk instead.");
+	al_draw_textf(game->font, al_map_rgb(255,255,255), game->viewportWidth/2, game->viewportHeight/2.2, ALLEGRO_ALIGN_CENTRE, "Level %d: Not implemented yet!", game->level.current_level);
+	al_draw_text(game->font, al_map_rgb(255,255,255), game->viewportWidth/2, game->viewportHeight/1.8, ALLEGRO_ALIGN_CENTRE, "Have some moonwalk instead.");
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 }
 
@@ -111,12 +111,12 @@ void Moonwalk_UnloadBitmaps(struct Game *game) {
 
 void Moonwalk_Unload(struct Game *game) {
 	ALLEGRO_EVENT ev;
-	game->level.moonwalk.fade_bitmap = al_create_bitmap(al_get_display_width(game->display), al_get_display_height(game->display));
+	game->level.moonwalk.fade_bitmap = al_create_bitmap(game->viewportWidth, game->viewportHeight);
 	al_set_target_bitmap(game->level.moonwalk.fade_bitmap);
 	al_draw_bitmap(game->level.moonwalk.image,0,0,0);
-	al_draw_bitmap(game->level.derpy, game->level.moonwalk.derpy_pos*al_get_display_width(game->display), al_get_display_height(game->display)*0.95-al_get_bitmap_height(game->level.derpy), ALLEGRO_FLIP_HORIZONTAL);
-	al_draw_textf(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)/2.2, ALLEGRO_ALIGN_CENTRE, "Level %d: Not implemented yet!", game->level.current_level);
-	al_draw_text(game->font, al_map_rgb(255,255,255), al_get_display_width(game->display)/2, al_get_display_height(game->display)/1.8, ALLEGRO_ALIGN_CENTRE, "Have some moonwalk instead.");
+	al_draw_bitmap(game->level.derpy, game->level.moonwalk.derpy_pos*game->viewportWidth, game->viewportHeight*0.95-al_get_bitmap_height(game->level.derpy), ALLEGRO_FLIP_HORIZONTAL);
+	al_draw_textf(game->font, al_map_rgb(255,255,255), game->viewportWidth/2, game->viewportHeight/2.2, ALLEGRO_ALIGN_CENTRE, "Level %d: Not implemented yet!", game->level.current_level);
+	al_draw_text(game->font, al_map_rgb(255,255,255), game->viewportWidth/2, game->viewportHeight/1.8, ALLEGRO_ALIGN_CENTRE, "Have some moonwalk instead.");
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 	float fadeloop;
 	for(fadeloop=255; fadeloop>=0; fadeloop-=tps(game, 600)){
