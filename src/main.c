@@ -23,6 +23,7 @@
 #include <math.h>
 #include <getopt.h>
 #include <locale.h>
+#include <signal.h>
 #include "menu.h"
 #include "loading.h"
 #include "about.h"
@@ -311,7 +312,15 @@ void Shared_Unload(struct Game *game) {
 	al_destroy_bitmap(game->console);
 }
 
+void derp(int sig) {
+		write(STDERR_FILENO, "Segmentation fault\n", 19);
+		write(STDERR_FILENO, "I just don't know what went wrong!\n", 35);
+		abort();
+}
+
 int main(int argc, char **argv){
+	signal(SIGSEGV, derp);
+
 	srand(time(NULL));
 
 	al_set_org_name("Super Derpy");
