@@ -1,0 +1,5 @@
+#!/bin/sh
+echo run $@ > gdb.tmp
+cd build
+make -j12 && cd .. && gdb build/superderpy -x gdb.tmp
+rm gdb.tmp
