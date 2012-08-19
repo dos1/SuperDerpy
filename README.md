@@ -4,12 +4,14 @@ Equestria is again under Discord's attack! Now he's using an army of muffinzombi
 
 *Super Derpy: Muffin Attack* is written in C and requires Allegro 5.0.6. Works on Windows, GNU/Linux and Mac OS X.
 
-Compilation (on GNU/Linux):
+Compilation:
 
+	mkdir build; cd build
+	cmake ..
 	make
 
-Running:
+Running (from top directory):
 
-	bin/superderpy
+	build/superderpy
 
 Written by Sebastian Krzyszkowiak <dos@dosowisko.net>
