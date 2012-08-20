@@ -1,47 +1,22 @@
 # Try to find allegro 5
 #
 #  ALLEGRO5_TTF_FOUND - system has allegro5
-#  ALLEGRO5_TTF_INCLUDE_DIRS - the allrgo5 include directory
+#  ALLEGRO5_TTF_INCLUDE_DIR - the allrgo5 include directory
 #  ALLEGRO5_TTF_LIBRARIES - Link these to use allegro5
 #
 
-FIND_PATH(ALLEGRO5_TTF_INCLUDE_DIR allegro_ttf.h
-  HINTS
-  $ENV{LUA_DIR}
-  PATH_SUFFIXES include/allegro5 include/allegro include
-  PATHS
-  ~/Library/Frameworks
-  /Library/Frameworks
-  /usr/local
-  /usr
-  /sw
-  /opt/local
-  /opt/csw
-  /opt
-)
+FIND_PATH(ALLEGRO5_TTF_INCLUDE_DIR allegro5/allegro_ttf.h)
 
-FIND_LIBRARY(ALLEGRO5_TTF_LIBRARY
-  NAMES allegro_ttf
-  HINTS
-  $ENV{ALLEGRO5_DIR}
-  PATH_SUFFIXES lib64 lib
-  PATHS
-  ~/Library/Frameworks
-  /Library/Frameworks
-  /usr/local
-  /usr
-  /sw
-  /opt/local
-  /opt/csw
-  /opt
-)
+SET(ALLEGRO5_TTF_NAMES ${ALLEGRO5_TTF_NAMES} allegro_ttf allegro_ttf_static liballegro_ttf liballegro_ttf_static)
+FIND_LIBRARY(ALLEGRO5_TTF_LIBRARY NAMES ${ALLEGRO5_TTF_NAMES} )
 
-MESSAGE(STATUS "${ALLEGRO5_TTF_LIBRARY}")
+# handle the QUIETLY and REQUIRED arguments and set ALLEGRO5_TTF_FOUND to TRUE if
+# all listed variables are TRUE
+INCLUDE(FindPackageHandleStandardArgs)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(ALLEGRO5_TTF DEFAULT_MSG ALLEGRO5_TTF_LIBRARY ALLEGRO5_TTF_INCLUDE_DIR)
 
-IF(ALLEGRO5_TTF_LIBRARY)
-  SET(ALLEGRO5_TTF_LIBRARIES "${ALLEGRO5_TTF_LIBRARY}" CACHE STRING "Allegro5 Font Libraries")
-  SET(ALLEGRO5_TTF_INCLUDE_DIRS "${ALLEGRO5_TTF_INCLUDE_DIR}" CACHE STRING "Allegro5 Font Include Dirs")
-  SET(ALLEGRO5_TTF_FOUND TRUE)
-ENDIF(ALLEGRO5_TTF_LIBRARY)
+IF(ALLEGRO5_TTF_FOUND)
+  SET(ALLEGRO5_TTF_LIBRARIES ${ALLEGRO5_TTF_LIBRARY})
+ENDIF(ALLEGRO5_TTF_FOUND)
 
-MARK_AS_ADVANCED(ALLEGRO5_TTF_INCLUDE_DIR ALLEGRO5_TTF_INCLUDE_DIRS ALLEGRO5_TTF_LIBRARIES ALLEGRO5_TTF_LIBRARY)
+MARK_AS_ADVANCED(ALLEGRO5_TTF_LIBRARY ALLEGRO5_TTF_INCLUDE_DIR )

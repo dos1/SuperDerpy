@@ -1,47 +1,23 @@
 # Try to find allegro 5
 #
 #  ALLEGRO5_MAIN_FOUND - system has allegro5
-#  ALLEGRO5_MAIN_INCLUDE_DIRS - the allrgo5 include directory
+#  ALLEGRO5_MAIN_INCLUDE_DIR - the allrgo5 include directory
 #  ALLEGRO5_MAIN_LIBRARIES - Link these to use allegro5
 #
 
-FIND_PATH(ALLEGRO5_MAIN_INCLUDE_DIR allegro_main.h
-  HINTS
-  $ENV{LUA_DIR}
-  PATH_SUFFIXES include/allegro5 include/allegro include
-  PATHS
-  ~/Library/Frameworks
-  /Library/Frameworks
-  /usr/local
-  /usr
-  /sw
-  /opt/local
-  /opt/csw
-  /opt
-)
+FIND_PATH(ALLEGRO5_MAIN_INCLUDE_DIR allegro5/allegro_main.h)
 
-FIND_LIBRARY(ALLEGRO5_MAIN_LIBRARY
-  NAMES allegro_main
-  HINTS
-  $ENV{ALLEGRO5_DIR}
-  PATH_SUFFIXES lib64 lib
-  PATHS
-  ~/Library/Frameworks
-  /Library/Frameworks
-  /usr/local
-  /usr
-  /sw
-  /opt/local
-  /opt/csw
-  /opt
-)
+SET(ALLEGRO5_MAIN_NAMES ${ALLEGRO5_MAIN_NAMES} allegro_main allegro_main_static liballegro_main liballegro_main_static)
+FIND_LIBRARY(ALLEGRO5_MAIN_LIBRARY NAMES ${ALLEGRO5_MAIN_NAMES} )
 
-MESSAGE(STATUS "${ALLEGRO5_MAIN_LIBRARY}")
+# handle the QUIETLY and REQUIRED arguments and set ALLEGRO5_MAIN_FOUND to TRUE if
+# all listed variables are TRUE
+INCLUDE(FindPackageHandleStandardArgs)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(ALLEGRO5_MAIN DEFAULT_MSG ALLEGRO5_MAIN_LIBRARY ALLEGRO5_MAIN_INCLUDE_DIR)
 
-IF(ALLEGRO5_MAIN_LIBRARY)
-  SET(ALLEGRO5_MAIN_LIBRARIES "${ALLEGRO5_MAIN_LIBRARY}" CACHE STRING "Allegro5 Main Libraries")
-  SET(ALLEGRO5_MAIN_INCLUDE_DIRS "${ALLEGRO5_MAIN_INCLUDE_DIR}" CACHE STRING "Allegro5 Main Include Dirs")
-  SET(ALLEGRO5_MAIN_FOUND TRUE)
-ENDIF(ALLEGRO5_MAIN_LIBRARY)
+IF(ALLEGRO5_MAIN_FOUND)
+  SET(ALLEGRO5_MAIN_LIBRARIES ${ALLEGRO5_MAIN_LIBRARY})
+ENDIF(ALLEGRO5_MAIN_FOUND)
 
-MARK_AS_ADVANCED(ALLEGRO5_MAIN_INCLUDE_DIR ALLEGRO5_MAIN_INCLUDE_DIRS ALLEGRO5_MAIN_LIBRARIES ALLEGRO5_MAIN_LIBRARY)
+MARK_AS_ADVANCED(ALLEGRO5_MAIN_LIBRARY ALLEGRO5_MAIN_INCLUDE_DIR )
+
