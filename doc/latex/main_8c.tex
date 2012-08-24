@@ -10,6 +10,7 @@ Main file of Super\-Derpy engine.
 {\ttfamily \#include $<$math.\-h$>$}\\*
 {\ttfamily \#include $<$getopt.\-h$>$}\\*
 {\ttfamily \#include $<$locale.\-h$>$}\\*
+{\ttfamily \#include $<$signal.\-h$>$}\\*
 {\ttfamily \#include \char`\"{}menu.\-h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}loading.\-h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}about.\-h\char`\"{}}\\*
@@ -62,12 +63,18 @@ void \hyperlink{main_8c_a83e9560a39a8b6beea953f69553dd28b}{Print\-Console} (stru
 \hypertarget{main_8c_a1f39d133bfa874d55703118487a186e6}{float \hyperlink{main_8c_a1f39d133bfa874d55703118487a186e6}{tps} (struct \hyperlink{structGame}{Game} $\ast$game, float t)}\label{main_8c_a1f39d133bfa874d55703118487a186e6}
 
 \begin{DoxyCompactList}\small\item\em Draws console bitmap on screen. \end{DoxyCompactList}\item 
+\hypertarget{main_8c_a7026a8094d3ddca6f7a69b8b489515e7}{void \hyperlink{main_8c_a7026a8094d3ddca6f7a69b8b489515e7}{Setup\-Viewport} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{main_8c_a7026a8094d3ddca6f7a69b8b489515e7}
+
+\begin{DoxyCompactList}\small\item\em Setups letterbox viewport if necessary. \end{DoxyCompactList}\item 
 \hypertarget{main_8c_ab0af27461c4e23c088670da5e6a971ef}{int \hyperlink{main_8c_ab0af27461c4e23c088670da5e6a971ef}{Shared\-\_\-\-Load} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{main_8c_ab0af27461c4e23c088670da5e6a971ef}
 
 \begin{DoxyCompactList}\small\item\em Load shared resources. \end{DoxyCompactList}\item 
 \hypertarget{main_8c_af9010ebe7fc75fbd882a9a8bf7b32d0c}{void \hyperlink{main_8c_af9010ebe7fc75fbd882a9a8bf7b32d0c}{Shared\-\_\-\-Unload} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{main_8c_af9010ebe7fc75fbd882a9a8bf7b32d0c}
 
 \begin{DoxyCompactList}\small\item\em Unload shared resources. \end{DoxyCompactList}\item 
+\hypertarget{main_8c_aee04879d8e98ca91e54503418babd3a5}{void {\bfseries derp} (int sig)}\label{main_8c_aee04879d8e98ca91e54503418babd3a5}
+
+\item 
 \hypertarget{main_8c_a3c04138a5bfe5d72780bb7e82a18e627}{int {\bfseries main} (int argc, char $\ast$$\ast$argv)}\label{main_8c_a3c04138a5bfe5d72780bb7e82a18e627}
 
 \end{DoxyCompactItemize}

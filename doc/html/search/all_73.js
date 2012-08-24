@@ -6,6 +6,7 @@ var searchData=
   ['screwball',['screwball',['../structLevel.html#a40c90c0712efb86cd76d0dcae74f2cbd',1,'Level']]],
   ['selected',['selected',['../structMenu.html#a608e2768a5458057048bf1c7ab9a81aa',1,'Menu::selected()'],['../structMap.html#a07b3269191a003d517977da3adc7f0a4',1,'Map::selected()']]],
   ['setconfigoption',['SetConfigOption',['../config_8c.html#a68a5d186325286714ab452ad9eaaad84',1,'SetConfigOption(char *section, char *name, char *value):&#160;config.c'],['../config_8h.html#a68a5d186325286714ab452ad9eaaad84',1,'SetConfigOption(char *section, char *name, char *value):&#160;config.c']]],
+  ['setupviewport',['SetupViewport',['../main_8c.html#a7026a8094d3ddca6f7a69b8b489515e7',1,'SetupViewport(struct Game *game):&#160;main.c'],['../main_8h.html#a7026a8094d3ddca6f7a69b8b489515e7',1,'SetupViewport(struct Game *game):&#160;main.c']]],
   ['shared_5fload',['Shared_Load',['../main_8c.html#ab0af27461c4e23c088670da5e6a971ef',1,'Shared_Load(struct Game *game):&#160;main.c'],['../main_8h.html#ab0af27461c4e23c088670da5e6a971ef',1,'Shared_Load(struct Game *game):&#160;main.c']]],
   ['shared_5funload',['Shared_Unload',['../main_8c.html#af9010ebe7fc75fbd882a9a8bf7b32d0c',1,'Shared_Unload(struct Game *game):&#160;main.c'],['../main_8h.html#af9010ebe7fc75fbd882a9a8bf7b32d0c',1,'Shared_Unload(struct Game *game):&#160;main.c']]],
   ['sheet_5fblanks',['sheet_blanks',['../structLevel.html#aebaaba311e5d4842fdbd8c50edd40808',1,'Level']]],
