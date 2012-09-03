@@ -376,7 +376,7 @@ int main(int argc, char **argv){
 	struct Game game;
 
 	game.fullscreen = atoi(GetConfigOptionDefault("SuperDerpy", "fullscreen", "1"));
-	game.music = atoi(GetConfigOptionDefault("SuperDerpy", "music", "10"));
+	game.music = atoi(GetConfigOptionDefault("SuperDerpy", "music", "7"));
 	game.voice = atoi(GetConfigOptionDefault("SuperDerpy", "voice", "10"));
 	game.fx = atoi(GetConfigOptionDefault("SuperDerpy", "fx", "10"));
 	game.fps = atoi(GetConfigOptionDefault("SuperDerpy", "fps", "0"));
@@ -478,7 +478,7 @@ int main(int argc, char **argv){
 	ALLEGRO_DISPLAY_MODE mode;
 	al_get_display_mode(0, &mode);
 	if (mode.refresh_rate < game.fps) {
-		if (atoi(GetConfigOptionDefault("SuperDerpy", "lower_fps_to_refresh_rate", "1"))) {
+		if (atoi(GetConfigOptionDefault("SuperDerpy", "lower_fps_to_refresh_rate", "0"))) {
 			PrintConsole(&game, "Refresh rate %d lower than FPS %d, lowering", mode.refresh_rate, game.fps);
 			game.fps = mode.refresh_rate;
 		} else {
