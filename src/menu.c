@@ -216,17 +216,17 @@ void Menu_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	game->menu.pinkcloud = LoadScaledBitmap( "menu/pinkcloud.png", game->viewportWidth*0.33125, game->viewportHeight*0.8122);
 	PROGRESS;
 	al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
-	game->menu.rain = al_load_bitmap( "data/menu/rain.png" );
+    game->menu.rain = al_load_bitmap( GetDataFilePath("menu/rain.png") );
 	PROGRESS;
-	game->menu.pie = al_load_bitmap( "data/levels/pie1.png" );
+    game->menu.pie = al_load_bitmap( GetDataFilePath("levels/pie1.png") );
 	al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR | ALLEGRO_MIN_LINEAR);
 	PROGRESS;
 
-	game->menu.sample = al_load_sample( "data/menu/menu.flac" );
+    game->menu.sample = al_load_sample( GetDataFilePath("menu/menu.flac") );
 	PROGRESS;
-	game->menu.rain_sample = al_load_sample( "data/menu/rain.flac" );
+    game->menu.rain_sample = al_load_sample( GetDataFilePath("menu/rain.flac") );
 	PROGRESS;
-	game->menu.click_sample = al_load_sample( "data/menu/click.flac" );
+    game->menu.click_sample = al_load_sample( GetDataFilePath("menu/click.flac") );
 	PROGRESS;
 	game->menu.mountain_position = game->viewportWidth*0.7;
 
@@ -242,10 +242,10 @@ void Menu_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	al_attach_sample_instance_to_mixer(game->menu.click, game->audio.fx);
 	al_set_sample_instance_playmode(game->menu.click, ALLEGRO_PLAYMODE_ONCE);
 
-	game->menu.font_title = al_load_ttf_font("data/ShadowsIntoLight.ttf",game->viewportHeight*0.16,0 );
-	game->menu.font_subtitle = al_load_ttf_font("data/ShadowsIntoLight.ttf",game->viewportHeight*0.08,0 );
-	game->menu.font = al_load_ttf_font("data/ShadowsIntoLight.ttf",game->viewportHeight*0.05,0 );
-	game->menu.font_selected = al_load_ttf_font("data/ShadowsIntoLight.ttf",game->viewportHeight*0.065,0 );
+    game->menu.font_title = al_load_ttf_font(GetDataFilePath("ShadowsIntoLight.ttf"),game->viewportHeight*0.16,0 );
+    game->menu.font_subtitle = al_load_ttf_font(GetDataFilePath("ShadowsIntoLight.ttf"),game->viewportHeight*0.08,0 );
+    game->menu.font = al_load_ttf_font(GetDataFilePath("ShadowsIntoLight.ttf"),game->viewportHeight*0.05,0 );
+    game->menu.font_selected = al_load_ttf_font(GetDataFilePath("ShadowsIntoLight.ttf"),game->viewportHeight*0.065,0 );
 	PROGRESS;
 
 	if (!game->menu.sample){

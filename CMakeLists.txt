@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 
 project(SuperDerpy C)
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -ansi -g")
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -g")
 SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
 if(MINGW)
@@ -18,7 +18,7 @@ if(MINGW)
     # Search in MINGDIR for headers and libraries.
     set(CMAKE_PREFIX_PATH "${MINGDIR}")
 
-    set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -mwindows")
+    set(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -mwindows")
 
 endif(MINGW)
 

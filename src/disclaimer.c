@@ -54,8 +54,8 @@ int Disclaimer_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 
 void Disclaimer_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
     if (!game->menu.loaded) {
-        game->menu.font = al_load_ttf_font("data/ShadowsIntoLight.ttf",game->viewportHeight*0.05,0 );
-        game->menu.font_selected = al_load_ttf_font("data/ShadowsIntoLight.ttf",game->viewportHeight*0.065,0 );
+        game->menu.font = al_load_ttf_font(GetDataFilePath("ShadowsIntoLight.ttf"),game->viewportHeight*0.05,0 );
+        game->menu.font_selected = al_load_ttf_font(GetDataFilePath("ShadowsIntoLight.ttf"),game->viewportHeight*0.065,0 );
     }
     PrintConsole(game, "Preloading GAMESTATE_INTRO...");
     Intro_Preload(game, progress);

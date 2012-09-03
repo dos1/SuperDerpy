@@ -49,9 +49,9 @@ void AnimPage(struct Game *game, int page, ALLEGRO_COLOR tint) {
 
 void FillPage(struct Game *game, int page) {
 	char filename[30] = { };
-	sprintf(filename, "data/intro/%d.flac", page);
+    sprintf(filename, "intro/%d.flac", page);
 
-	game->intro.audiostream = al_load_audio_stream(filename, 4, 1024);
+    game->intro.audiostream = al_load_audio_stream(GetDataFilePath(filename), 4, 1024);
 	al_attach_audio_stream_to_mixer(game->intro.audiostream, game->audio.voice);
 	al_set_audio_stream_playing(game->intro.audiostream, false);
 	al_set_audio_stream_gain(game->intro.audiostream, 1.75);
@@ -240,7 +240,7 @@ void Intro_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	game->intro.frame =LoadScaledBitmap("intro/frame.png", game->viewportWidth, game->viewportHeight);
 	PROGRESS;
 
-	game->intro.sample = al_load_sample( "data/intro/intro.flac" );
+    game->intro.sample = al_load_sample( GetDataFilePath("intro/intro.flac") );
 	PROGRESS;
 
 	game->intro.music = al_create_sample_instance(game->intro.sample);
@@ -254,7 +254,7 @@ void Intro_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	}
 	game->intro.table = al_create_bitmap(game->viewportWidth*2, game->viewportHeight);
 
-	game->intro.font = al_load_ttf_font("data/ShadowsIntoLight.ttf",game->viewportHeight*0.04,0 );
+    game->intro.font = al_load_ttf_font(GetDataFilePath("ShadowsIntoLight.ttf"),game->viewportHeight*0.04,0 );
 
 	FillPage(game, 1);
 	PROGRESS;

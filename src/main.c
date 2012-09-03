@@ -61,6 +61,46 @@
 double old_time = 0, fps;
 int frames_done = 0;
 
+char* GetDataFilePath(char* filename) {
+
+    char *result = 0;
+
+    if (al_filename_exists(filename)) {
+        return strdup(filename);
+    }
+
+    char origfn[255] = "data/";
+    strcat(origfn, filename);
+
+    if (al_filename_exists(origfn)) {
+        return strdup(origfn);
+    }
+
+    void TestPath(char* subpath) {
+        ALLEGRO_PATH *tail = al_create_path(filename);
+        ALLEGRO_PATH *path = al_get_standard_path(ALLEGRO_RESOURCES_PATH);
+        ALLEGRO_PATH *data = al_create_path(subpath);
+        al_join_paths(path, data);
+        al_join_paths(path, tail);
+        //printf("Testing for %s\n", al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
+        if (al_filename_exists(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP))) {
+            result = strdup(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
+        }
+        al_destroy_path(tail);
+        al_destroy_path(data);
+        al_destroy_path(path);
+    }
+    TestPath("../share/superderpy/data/");
+    TestPath("../data/");
+    TestPath("data/");
+
+    if (!result) {
+        printf("FATAL: Could not find data file: %s!\n", filename);
+        exit(1);
+    }
+    return result;
+}
+
 void PrintConsole(struct Game *game, char* format, ...) {
 	va_list vl;
 	va_start(vl, format);
@@ -230,10 +270,7 @@ ALLEGRO_BITMAP* LoadScaledBitmap(char* filename, int width, int height) {
 	ALLEGRO_BITMAP *source, *target = al_create_bitmap(width, height);
 	al_set_target_bitmap(target);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
-	char origfn[255] = "data/";
-	/*char cachefn[255] = "data/cache/";*/
-	strcat(origfn, filename);
-	/*strcat(cachefn, filename);*/
+    char* origfn = GetDataFilePath(filename);
 	void GenerateBitmap() {
 		al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
 
@@ -251,6 +288,7 @@ ALLEGRO_BITMAP* LoadScaledBitmap(char* filename, int width, int height) {
 		if ((al_get_bitmap_width(source)!=width) || (al_get_bitmap_height(source)!=height)) {
 			al_destroy_bitmap(source);*/
 			GenerateBitmap();
+            free(origfn);
 			return target;
 	/*	}
 		return source;
@@ -289,12 +327,12 @@ void SetupViewport(struct Game *game) {
 }
 
 int Shared_Load(struct Game *game) {
-	game->font = al_load_ttf_font("data/ShadowsIntoLight.ttf",game->viewportHeight*0.09,0 );
+    game->font = al_load_ttf_font(GetDataFilePath("ShadowsIntoLight.ttf"),game->viewportHeight*0.09,0 );
 	if(!game->font) {
 		fprintf(stderr, "failed to load game font!\n");
 		return -1;
 	}
-	game->font_console = al_load_ttf_font("data/DejaVuSansMono.ttf",game->viewportHeight*0.018,0 );
+    game->font_console = al_load_ttf_font(GetDataFilePath("DejaVuSansMono.ttf"),game->viewportHeight*0.018,0 );
 	if(!game->font_console) {
 		fprintf(stderr, "failed to load console font!\n");
 		return -1;
@@ -326,7 +364,12 @@ int main(int argc, char **argv){
 	al_set_org_name("Super Derpy");
 	al_set_app_name("Muffin Attack");
 
-	InitConfig();
+    if(!al_init()) {
+        fprintf(stderr, "failed to initialize allegro!\n");
+        return -1;
+    }
+
+    InitConfig();
 
 	bool redraw = true;
 
@@ -342,12 +385,6 @@ int main(int argc, char **argv){
 	if (game.width<320) game.width=320;
 	game.height = atoi(GetConfigOptionDefault("SuperDerpy", "height", "500"));
 	if (game.height<200) game.height=200;
-
-	if(!al_init()) {
-		fprintf(stderr, "failed to initialize allegro!\n");
-		return -1;
-	}
-
 
 	if(!al_init_image_addon()) {
 		fprintf(stderr, "failed to initialize image addon!\n");

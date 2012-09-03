@@ -94,7 +94,7 @@ void Moonwalk_PreloadBitmaps(struct Game *game) {
 
 void Moonwalk_Preload(struct Game *game) {
 	PrintConsole(game, "Initializing level %d...", game->level.current_level);
-	game->level.sample = al_load_sample( "data/levels/moonwalk.flac" );
+    game->level.sample = al_load_sample( GetDataFilePath("levels/moonwalk.flac") );
 	game->level.music = al_create_sample_instance(game->level.sample);
 	al_attach_sample_instance_to_mixer(game->level.music, game->audio.music);
 	al_set_sample_instance_playmode(game->level.music, ALLEGRO_PLAYMODE_LOOP);

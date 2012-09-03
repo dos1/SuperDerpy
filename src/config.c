@@ -24,8 +24,13 @@
 ALLEGRO_CONFIG *config;
 
 void InitConfig() {
-	config = al_load_config_file("SuperDerpy.ini");
+    ALLEGRO_PATH *path = al_get_standard_path(ALLEGRO_USER_SETTINGS_PATH);
+    ALLEGRO_PATH *data = al_create_path("SuperDerpy.ini");
+    al_join_paths(path, data);
+    config = al_load_config_file(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
 	if (!config) config=al_create_config();
+    al_destroy_path(path);
+    al_destroy_path(data);
 }
 
 void SetConfigOption(char* section, char* name, char* value) {
@@ -42,6 +47,12 @@ const char* GetConfigOptionDefault(char* section, char* name, const char* def) {
 }
 
 void DeinitConfig() {
-	al_save_config_file("SuperDerpy.ini", config);
+    ALLEGRO_PATH *path = al_get_standard_path(ALLEGRO_USER_SETTINGS_PATH);
+    ALLEGRO_PATH *data = al_create_path("SuperDerpy.ini");
+    al_make_directory(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
+    al_join_paths(path, data);
+    al_save_config_file(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP), config);
+    al_destroy_path(path);
+    al_destroy_path(data);
 	al_destroy_config(config);
 }

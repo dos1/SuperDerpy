@@ -113,12 +113,12 @@ void Map_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	game->map.highlight = LoadScaledBitmap(filename, game->viewportWidth, game->viewportHeight);
 	PROGRESS;
 
-	game->map.arrow = al_load_bitmap( "data/map/arrow.png" );
+    game->map.arrow = al_load_bitmap( GetDataFilePath("map/arrow.png") );
 	PROGRESS;
 
-	game->map.click_sample = al_load_sample( "data/menu/click.flac" );
+    game->map.click_sample = al_load_sample( GetDataFilePath("menu/click.flac") );
 	PROGRESS;
-	game->map.sample = al_load_sample( "data/map/map.flac" );
+    game->map.sample = al_load_sample( GetDataFilePath("map/map.flac") );
 	PROGRESS;
 
 	game->map.music = al_create_sample_instance(game->map.sample);

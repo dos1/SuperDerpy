@@ -308,6 +308,9 @@ void UnloadGameState(struct Game *game);
 /*! \brief Loads gamestate set in game->loadstate. */
 void LoadGameState(struct Game *game);
 
+/*! \brief Finds path for data file. */
+char* GetDataFilePath(char* filename);
+
 /*! \brief Print some message on game console.
  * 
  * Draws message on console bitmap, so it'll be displayed when calling DrawConsole.

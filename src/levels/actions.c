@@ -224,7 +224,7 @@ bool Letter(struct Game *game, struct TM_Action *action, enum TM_ActionState sta
       *f = 0;
       action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(ALLEGRO_AUDIO_STREAM*)));
       ALLEGRO_AUDIO_STREAM** stream = (ALLEGRO_AUDIO_STREAM**)action->arguments->next->value;
-      *stream = al_load_audio_stream("data/levels/letter.flac", 4, 1024);
+      *stream = al_load_audio_stream(GetDataFilePath("levels/letter.flac"), 4, 1024);
       al_attach_audio_stream_to_mixer(*stream, game->audio.voice);
       al_set_audio_stream_playing(*stream, true);
       al_set_audio_stream_gain(*stream, 2.00);
