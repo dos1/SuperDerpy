@@ -40,9 +40,9 @@ void TM_Process() {
 	if (!game) return;
 	if (paused) return;
 	/*
-       process first element from queue
-	   if returns true, then delete it
-    */
+			 process first element from queue
+		 if returns true, then delete it
+		*/
 	if (queue) {
 		if (*queue->function) {
 			queue->active = true;
@@ -117,7 +117,7 @@ void TM_HandleEvent(ALLEGRO_EVENT *ev) {
 			queue->active=true;
 			al_destroy_timer(queue->timer);
 			queue->timer = NULL;
-			if (queue->function) { 
+			if (queue->function) {
 				PrintConsole(game, "Timeline Manager: queue: init action (%d - %s)", queue->id, queue->name);
 				(*queue->function)(game, queue, TM_ACTIONSTATE_INIT);
 			} else {
@@ -160,7 +160,7 @@ struct TM_Action* TM_AddAction(bool (*func)(struct Game*, struct TM_Action*, enu
 	action->active = false;
 	action->delay = 0;
 	action->id = ++lastid;
-	if (action->function) { 
+	if (action->function) {
 		PrintConsole(game, "Timeline Manager: queue: init action (%d - %s)", action->id, action->name);
 		(*action->function)(game, action, TM_ACTIONSTATE_INIT);
 	}
@@ -236,18 +236,18 @@ void TM_AddDelay(float delay) {
 void TM_Pause(bool pause) {
 	paused = pause;
 	PrintConsole(game, "Timeline Manager: pause %d", pause);
-	if (queue) { 
-		if (queue->timer) { 
-			if (pause) { 
+	if (queue) {
+		if (queue->timer) {
+			if (pause) {
 				al_stop_timer(queue->timer);
 			} else if (!queue->active) al_start_timer(queue->timer);
 		}
 	}
 	struct TM_Action* tmp = background;
 	while (tmp) {
-		if (tmp->timer) { 
-			if (pause) { 
-				al_stop_timer(tmp->timer); 
+		if (tmp->timer) {
+			if (pause) {
+				al_stop_timer(tmp->timer);
 			} else if (!tmp->active) al_start_timer(tmp->timer);
 		}
 		tmp = tmp->next;

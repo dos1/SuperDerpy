@@ -24,13 +24,13 @@
 #include "map.h"
 
 void AnimPage(struct Game *game, int page, ALLEGRO_COLOR tint) {
-    int offset = 0;
+	int offset = 0;
 	if (game->intro.in_animation) offset = -1*game->viewportWidth + (cos(((-1*((game->intro.position)%game->viewportWidth))/(float)game->viewportWidth)*(ALLEGRO_PI))/2.0)*game->viewportWidth + game->viewportWidth/2.0;
 
 	int amount1 = 2, amount2 = 2;
 	float anim = game->intro.anim;
 
-        if (page==2) { amount1=4; amount2=3; }
+	if (page==2) { amount1=4; amount2=3; }
 	if (page==3) { amount1=3; amount2=3; }
 	if (page==5) { amount1=5; amount2=3; anim*=2; }
 
@@ -38,7 +38,7 @@ void AnimPage(struct Game *game, int page, ALLEGRO_COLOR tint) {
 
 	amount1 = 2;
 	amount2 = 2;
-        if (page==1) { amount1=4; amount2=3; }
+	if (page==1) { amount1=4; amount2=3; }
 	if (page==2) { amount1=3; amount2=3; }
 	if (page==4) { amount1=5; amount2=3; anim*=2; }
 
@@ -49,9 +49,9 @@ void AnimPage(struct Game *game, int page, ALLEGRO_COLOR tint) {
 
 void FillPage(struct Game *game, int page) {
 	char filename[30] = { };
-    sprintf(filename, "intro/%d.flac", page);
+	sprintf(filename, "intro/%d.flac", page);
 
-    game->intro.audiostream = al_load_audio_stream(GetDataFilePath(filename), 4, 1024);
+	game->intro.audiostream = al_load_audio_stream(GetDataFilePath(filename), 4, 1024);
 	al_attach_audio_stream_to_mixer(game->intro.audiostream, game->audio.voice);
 	al_set_audio_stream_playing(game->intro.audiostream, false);
 	al_set_audio_stream_gain(game->intro.audiostream, 1.75);
@@ -240,7 +240,7 @@ void Intro_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	game->intro.frame =LoadScaledBitmap("intro/frame.png", game->viewportWidth, game->viewportHeight);
 	PROGRESS;
 
-    game->intro.sample = al_load_sample( GetDataFilePath("intro/intro.flac") );
+	game->intro.sample = al_load_sample( GetDataFilePath("intro/intro.flac") );
 	PROGRESS;
 
 	game->intro.music = al_create_sample_instance(game->intro.sample);
@@ -254,7 +254,7 @@ void Intro_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	}
 	game->intro.table = al_create_bitmap(game->viewportWidth*2, game->viewportHeight);
 
-    game->intro.font = al_load_ttf_font(GetDataFilePath("ShadowsIntoLight.ttf"),game->viewportHeight*0.04,0 );
+	game->intro.font = al_load_ttf_font(GetDataFilePath("ShadowsIntoLight.ttf"),game->viewportHeight*0.04,0 );
 
 	FillPage(game, 1);
 	PROGRESS;
@@ -269,7 +269,7 @@ void Intro_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 }
 
 void Intro_Unload(struct Game *game) {
-	if (game->intro.audiostream) { 
+	if (game->intro.audiostream) {
 		al_set_audio_stream_playing(game->intro.audiostream, false);
 		al_destroy_audio_stream(game->intro.audiostream);
 	}

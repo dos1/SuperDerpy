@@ -23,35 +23,35 @@
 #include "callbacks.h"
 
 void Obst_MoveUpDown(struct Game *game, struct Obstacle *obstacle) {
-    if (obstacle->data) {
-        obstacle->y -= 0.5;
-        if (obstacle->y<=0) {
-            obstacle->data=NULL;
-        }
-    } else {
-        obstacle->y += 0.5;
-        if (obstacle->y>=((game->viewportHeight-al_get_bitmap_height(*(obstacle->bitmap))/obstacle->rows)/(float)game->viewportHeight)*100) {
-            obstacle->data++;
-        }
-    }
+	if (obstacle->data) {
+		obstacle->y -= 0.5;
+		if (obstacle->y<=0) {
+			obstacle->data=NULL;
+		}
+	} else {
+		obstacle->y += 0.5;
+		if (obstacle->y>=((game->viewportHeight-al_get_bitmap_height(*(obstacle->bitmap))/obstacle->rows)/(float)game->viewportHeight)*100) {
+			obstacle->data++;
+		}
+	}
 }
 
 void Obst_MoveUp(struct Game *game, struct Obstacle *obstacle) {
-    float* a = (float*)obstacle->data;
-    obstacle->y -= *a;
+	float* a = (float*)obstacle->data;
+	obstacle->y -= *a;
 }
 
 void Obst_RotateSin(struct Game *game, struct Obstacle *obstacle) {
-    float* a = (float*)obstacle->data;
-    /*PrintConsole(game, "%p - %f", obstacle, obstacle->y);*/
-    obstacle->angle = sin(*a)/2.0;
-    *a+=tps(game, 4.5);
+	float* a = (float*)obstacle->data;
+	/*PrintConsole(game, "%p - %f", obstacle, obstacle->y);*/
+	obstacle->angle = sin(*a)/2.0;
+	*a+=tps(game, 4.5);
 }
 
 void Obst_MoveSin(struct Game *game, struct Obstacle *obstacle) {
-    float* a = (float*)obstacle->data;
-    /*PrintConsole(game, "%p - %f", obstacle, obstacle->y);*/
-    obstacle->y -= sin(*a)*4;
-    *a+=tps(game, 4.5);
-    obstacle->y += sin(*a)*4;
+	float* a = (float*)obstacle->data;
+	/*PrintConsole(game, "%p - %f", obstacle, obstacle->y);*/
+	obstacle->y -= sin(*a)*4;
+	*a+=tps(game, 4.5);
+	obstacle->y += sin(*a)*4;
 }

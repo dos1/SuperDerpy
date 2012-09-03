@@ -74,7 +74,7 @@ void About_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	game->about.letter = LoadScaledBitmap("about/letter.png", game->viewportHeight*1.3, game->viewportHeight*1.3 );
 	PROGRESS;
 
-    game->about.sample = al_load_sample( GetDataFilePath("about/about.flac") );
+	game->about.sample = al_load_sample( GetDataFilePath("about/about.flac") );
 	PROGRESS;
 
 	game->about.music = al_create_sample_instance(game->about.sample);
@@ -82,7 +82,7 @@ void About_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	al_set_sample_instance_playmode(game->about.music, ALLEGRO_PLAYMODE_LOOP);
 	al_set_sample_instance_position(game->about.music, game->music ? 420000 : 700000);
 
-    game->about.font = al_load_ttf_font(GetDataFilePath("ShadowsIntoLight.ttf"),game->viewportHeight*0.035,0 );
+	game->about.font = al_load_ttf_font(GetDataFilePath("ShadowsIntoLight.ttf"),game->viewportHeight*0.035,0 );
 	PROGRESS;
 	game->about.x = -0.1;
 	if (!game->about.sample){
@@ -117,13 +117,13 @@ void About_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	draw_text("     Princess Celestia");
 	draw_text(" - Meredith Sims (Emichwan88)");
 	draw_text("   http://www.youtube.com/Emichwan88");
-        draw_text("     Fluttershy");
+	draw_text("     Fluttershy");
 	draw_text("     Twilight Sparkle");
 	/*draw_text(" - Hnilmik");
 	draw_text("     Rarity");
 	draw_text(" - Karen VO");
 	draw_text("     Applejack");*/
-/*	draw_text(" - Erica Mendez");
+	/*	draw_text(" - Erica Mendez");
 	draw_text("     Rainbow Dash");
 	draw_text(" - Emily Fajardo");
 	draw_text("     Pinkie Pie");*/

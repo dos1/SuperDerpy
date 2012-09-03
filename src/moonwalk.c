@@ -42,13 +42,13 @@ void Moonwalk_Draw(struct Game *game) {
 		return; }
 	int i;
 	for (i = 0; i < tps(game, 60); i++ ) {
-	game->level.moonwalk.derpy_frame_tmp++;
-	if (game->level.moonwalk.derpy_frame_tmp%3==0) {
-		if (game->level.moonwalk.derpy_frame_tmp%5==0) game->level.moonwalk.derpy_frame++;
-                if (game->level.moonwalk.derpy_frame_tmp%22==21) game->level.moonwalk.derpy_frame--;
-		game->level.moonwalk.derpy_frame++;
-		if (game->level.moonwalk.derpy_frame>=24) game->level.moonwalk.derpy_frame=0;
-	}
+		game->level.moonwalk.derpy_frame_tmp++;
+		if (game->level.moonwalk.derpy_frame_tmp%3==0) {
+			if (game->level.moonwalk.derpy_frame_tmp%5==0) game->level.moonwalk.derpy_frame++;
+			if (game->level.moonwalk.derpy_frame_tmp%22==21) game->level.moonwalk.derpy_frame--;
+			game->level.moonwalk.derpy_frame++;
+			if (game->level.moonwalk.derpy_frame>=24) game->level.moonwalk.derpy_frame=0;
+		}
 	}
 	al_draw_scaled_bitmap(game->level.moonwalk.image,0,0,al_get_bitmap_width(game->level.moonwalk.image),al_get_bitmap_height(game->level.moonwalk.image),0,0,game->viewportWidth, game->viewportHeight,0);
 	al_draw_bitmap(game->level.derpy, game->level.moonwalk.derpy_pos*game->viewportWidth, game->viewportHeight*0.95-al_get_bitmap_height(game->level.derpy), ALLEGRO_FLIP_HORIZONTAL);
@@ -94,7 +94,7 @@ void Moonwalk_PreloadBitmaps(struct Game *game) {
 
 void Moonwalk_Preload(struct Game *game) {
 	PrintConsole(game, "Initializing level %d...", game->level.current_level);
-    game->level.sample = al_load_sample( GetDataFilePath("levels/moonwalk.flac") );
+	game->level.sample = al_load_sample( GetDataFilePath("levels/moonwalk.flac") );
 	game->level.music = al_create_sample_instance(game->level.sample);
 	al_attach_sample_instance_to_mixer(game->level.music, game->audio.music);
 	al_set_sample_instance_playmode(game->level.music, ALLEGRO_PLAYMODE_LOOP);

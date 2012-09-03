@@ -58,8 +58,8 @@ void SelectDerpySpritesheet(struct Game *game, char* name) {
 
 void RegisterDerpySpritesheet(struct Game *game, char* name) {
 	char filename[255] = { };
-    sprintf(filename, "levels/derpy/%s.ini", name);
-    ALLEGRO_CONFIG *config = al_load_config_file(GetDataFilePath(filename));
+	sprintf(filename, "levels/derpy/%s.ini", name);
+	ALLEGRO_CONFIG *config = al_load_config_file(GetDataFilePath(filename));
 	struct Spritesheet *s = malloc(sizeof(struct Spritesheet));
 	s->name = malloc((strlen(name)+1)*sizeof(char));
 	strcpy(s->name, name);
@@ -159,10 +159,10 @@ void Level_Draw(struct Game *game) {
 			}
 			if (x > -w) {
 				/*if (!tmp->hit)*/
-					if ((((x>=derpyx+0.38*derpyw+derpyo) && (x<=derpyx+0.94*derpyw+derpyo)) || ((x+w>=derpyx+0.38*derpyw+derpyo) && (x+w<=derpyx+0.94*derpyw+derpyo)) || ((x<=derpyx+0.38*derpyw+derpyo) && (x+w>=derpyx+0.94*derpyw+derpyo))) &&
+				if ((((x>=derpyx+0.38*derpyw+derpyo) && (x<=derpyx+0.94*derpyw+derpyo)) || ((x+w>=derpyx+0.38*derpyw+derpyo) && (x+w<=derpyx+0.94*derpyw+derpyo)) || ((x<=derpyx+0.38*derpyw+derpyo) && (x+w>=derpyx+0.94*derpyw+derpyo))) &&
 						(((y>=derpyy+0.26*derpyh) && (y<=derpyy+0.76*derpyh)) || ((y+h>=derpyy+0.26*derpyh) && (y+h<=derpyy+0.76*derpyh)) || ((y<=derpyy+0.26*derpyh) && (y+h>=derpyy+0.76*derpyh)))) {
-							tmp->hit=true;
-					}
+					tmp->hit=true;
+				}
 
 				if (tmp->bitmap) {
 					ALLEGRO_BITMAP* subbitmap = al_create_sub_bitmap(*(tmp->bitmap),w*(tmp->pos%tmp->cols), h*(tmp->pos/tmp->cols),w,h);
@@ -227,7 +227,7 @@ void Level_Draw(struct Game *game) {
 
 		al_draw_tinted_rotated_bitmap(game->level.derpy, al_map_rgba(255,255-colision*255,255-colision*255,255), al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy)/2, derpyx+game->viewportWidth*0.1953125, derpyy + al_get_bitmap_height(game->level.derpy)/2, game->level.derpy_angle, 0);
 
-/*		if ((((x>=derpyx+0.36*derpyw) && (x<=derpyx+0.94*derpyw)) || ((x+w>=derpyx+0.36*derpyw) && (x+w<=derpyx+0.94*derpyw))) &&
+		/*		if ((((x>=derpyx+0.36*derpyw) && (x<=derpyx+0.94*derpyw)) || ((x+w>=derpyx+0.36*derpyw) && (x+w<=derpyx+0.94*derpyw))) &&
 			(((y>=derpyy+0.26*derpyh) && (y<=derpyy+0.76*derpyh)) || ((y+h>=derpyy+0.26*derpyh) && (y+h<=derpyy+0.76*derpyh)))) {
 	*/
 		if (game->level.debug_show_sprite_frames) {
@@ -399,7 +399,7 @@ void Level_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	RegisterDerpySpritesheet(game, "stand");
 	if (game->level.current_level!=1) Moonwalk_Preload(game);
 	else {
-        game->level.sample = al_load_sample( GetDataFilePath("levels/1/music.flac") );
+		game->level.sample = al_load_sample( GetDataFilePath("levels/1/music.flac") );
 		game->level.music = al_create_sample_instance(game->level.sample);
 		al_attach_sample_instance_to_mixer(game->level.music, game->audio.music);
 		al_set_sample_instance_playmode(game->level.music, ALLEGRO_PLAYMODE_LOOP);
@@ -518,7 +518,7 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 		PROGRESS;
 		game->level.owl = LoadScaledBitmap("levels/owl.png", game->viewportWidth*0.08, game->viewportWidth*0.08);
 		PROGRESS;
-        game->level.letter_font = al_load_ttf_font(GetDataFilePath("DejaVuSans.ttf"),game->viewportHeight*0.0225,0 );
+		game->level.letter_font = al_load_ttf_font(GetDataFilePath("DejaVuSans.ttf"),game->viewportHeight*0.0225,0 );
 		PROGRESS;
 		game->level.letter = LoadScaledBitmap("levels/letter.png", game->viewportHeight*1.3, game->viewportHeight*1.2);
 		al_set_target_bitmap(game->level.letter);

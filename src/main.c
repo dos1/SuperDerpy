@@ -63,42 +63,42 @@ int frames_done = 0;
 
 char* GetDataFilePath(char* filename) {
 
-    char *result = 0;
+	char *result = 0;
 
-    if (al_filename_exists(filename)) {
-        return strdup(filename);
-    }
+	if (al_filename_exists(filename)) {
+		return strdup(filename);
+	}
 
-    char origfn[255] = "data/";
-    strcat(origfn, filename);
+	char origfn[255] = "data/";
+	strcat(origfn, filename);
 
-    if (al_filename_exists(origfn)) {
-        return strdup(origfn);
-    }
+	if (al_filename_exists(origfn)) {
+		return strdup(origfn);
+	}
 
-    void TestPath(char* subpath) {
-        ALLEGRO_PATH *tail = al_create_path(filename);
-        ALLEGRO_PATH *path = al_get_standard_path(ALLEGRO_RESOURCES_PATH);
-        ALLEGRO_PATH *data = al_create_path(subpath);
-        al_join_paths(path, data);
-        al_join_paths(path, tail);
-        //printf("Testing for %s\n", al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
-        if (al_filename_exists(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP))) {
-            result = strdup(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
-        }
-        al_destroy_path(tail);
-        al_destroy_path(data);
-        al_destroy_path(path);
-    }
-    TestPath("../share/superderpy/data/");
-    TestPath("../data/");
-    TestPath("data/");
+	void TestPath(char* subpath) {
+		ALLEGRO_PATH *tail = al_create_path(filename);
+		ALLEGRO_PATH *path = al_get_standard_path(ALLEGRO_RESOURCES_PATH);
+		ALLEGRO_PATH *data = al_create_path(subpath);
+		al_join_paths(path, data);
+		al_join_paths(path, tail);
+		//printf("Testing for %s\n", al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
+		if (al_filename_exists(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP))) {
+			result = strdup(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
+		}
+		al_destroy_path(tail);
+		al_destroy_path(data);
+		al_destroy_path(path);
+	}
+	TestPath("../share/superderpy/data/");
+	TestPath("../data/");
+	TestPath("data/");
 
-    if (!result) {
-        printf("FATAL: Could not find data file: %s!\n", filename);
-        exit(1);
-    }
-    return result;
+	if (!result) {
+		printf("FATAL: Could not find data file: %s!\n", filename);
+		exit(1);
+	}
+	return result;
 }
 
 void PrintConsole(struct Game *game, char* format, ...) {
@@ -147,15 +147,15 @@ void PreloadGameState(struct Game *game, void (*progress)(struct Game*, float)) 
 	}
 	switch (game->loadstate) {
 		PRELOAD_STATE(GAMESTATE_MENU, Menu)
-		PRELOAD_STATE(GAMESTATE_LOADING, Loading)
-		PRELOAD_STATE(GAMESTATE_ABOUT, About)
-		PRELOAD_STATE(GAMESTATE_INTRO, Intro)
-		PRELOAD_STATE(GAMESTATE_MAP, Map)
-		PRELOAD_STATE(GAMESTATE_LEVEL, Level)
-		PRELOAD_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
-		default:
+				PRELOAD_STATE(GAMESTATE_LOADING, Loading)
+				PRELOAD_STATE(GAMESTATE_ABOUT, About)
+				PRELOAD_STATE(GAMESTATE_INTRO, Intro)
+				PRELOAD_STATE(GAMESTATE_MAP, Map)
+				PRELOAD_STATE(GAMESTATE_LEVEL, Level)
+				PRELOAD_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
+				default:
 			PrintConsole(game, "ERROR: Attempted to preload unknown gamestate %d!", game->loadstate);
-			break;
+		break;
 	}
 	PrintConsole(game, "finished");
 }
@@ -169,15 +169,15 @@ void UnloadGameState(struct Game *game) {
 				PrintConsole(game, "Just stopping GAMESTATE_MENU..."); Menu_Stop(game);
 			}
 			break;
-		UNLOAD_STATE(GAMESTATE_PAUSE, Pause)
-		UNLOAD_STATE(GAMESTATE_LOADING, Loading)
-		UNLOAD_STATE(GAMESTATE_ABOUT, About)
-		UNLOAD_STATE(GAMESTATE_INTRO, Intro)
-		UNLOAD_STATE(GAMESTATE_MAP, Map)
-		UNLOAD_STATE(GAMESTATE_LEVEL, Level)
-		UNLOAD_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
-		default:
-			PrintConsole(game, "ERROR: Attempted to unload unknown gamestate %d!", game->gamestate);
+			UNLOAD_STATE(GAMESTATE_PAUSE, Pause)
+					UNLOAD_STATE(GAMESTATE_LOADING, Loading)
+					UNLOAD_STATE(GAMESTATE_ABOUT, About)
+					UNLOAD_STATE(GAMESTATE_INTRO, Intro)
+					UNLOAD_STATE(GAMESTATE_MAP, Map)
+					UNLOAD_STATE(GAMESTATE_LEVEL, Level)
+					UNLOAD_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
+				default:
+				PrintConsole(game, "ERROR: Attempted to unload unknown gamestate %d!", game->gamestate);
 			break;
 	}
 	PrintConsole(game, "finished");
@@ -186,13 +186,13 @@ void UnloadGameState(struct Game *game) {
 void LoadGameState(struct Game *game) {
 	switch (game->loadstate) {
 		LOAD_STATE(GAMESTATE_MENU, Menu)
-		LOAD_STATE(GAMESTATE_LOADING, Loading)
-		LOAD_STATE(GAMESTATE_ABOUT, About)
-		LOAD_STATE(GAMESTATE_INTRO, Intro)
-		LOAD_STATE(GAMESTATE_MAP, Map)
-		LOAD_STATE(GAMESTATE_LEVEL, Level)
-		LOAD_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
-		default:
+				LOAD_STATE(GAMESTATE_LOADING, Loading)
+				LOAD_STATE(GAMESTATE_ABOUT, About)
+				LOAD_STATE(GAMESTATE_INTRO, Intro)
+				LOAD_STATE(GAMESTATE_MAP, Map)
+				LOAD_STATE(GAMESTATE_LEVEL, Level)
+				LOAD_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
+				default:
 			PrintConsole(game, "ERROR: Attempted to load unknown gamestate %d!", game->loadstate);
 	}
 	PrintConsole(game, "finished");
@@ -203,24 +203,24 @@ void LoadGameState(struct Game *game) {
 void DrawGameState(struct Game *game) {
 	switch (game->gamestate) {
 		DRAW_STATE(GAMESTATE_MENU, Menu)
-		DRAW_STATE(GAMESTATE_PAUSE, Pause)
-		DRAW_STATE(GAMESTATE_LOADING, Loading)
-		DRAW_STATE(GAMESTATE_ABOUT, About)
-		DRAW_STATE(GAMESTATE_INTRO, Intro)
-		DRAW_STATE(GAMESTATE_MAP, Map)
-		DRAW_STATE(GAMESTATE_LEVEL, Level)
-		DRAW_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
-		default:
+				DRAW_STATE(GAMESTATE_PAUSE, Pause)
+				DRAW_STATE(GAMESTATE_LOADING, Loading)
+				DRAW_STATE(GAMESTATE_ABOUT, About)
+				DRAW_STATE(GAMESTATE_INTRO, Intro)
+				DRAW_STATE(GAMESTATE_MAP, Map)
+				DRAW_STATE(GAMESTATE_LEVEL, Level)
+				DRAW_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
+				default:
 			game->showconsole = true;
-			al_clear_to_color(al_map_rgb(0,0,0));
-			PrintConsole(game, "ERROR: Unknown gamestate %d reached! (5 sec sleep)", game->gamestate);
-			DrawConsole(game);
-			al_flip_display();
-			al_rest(5.0);
-			PrintConsole(game, "Returning to menu...");
-			game->gamestate = GAMESTATE_LOADING;
-			game->loadstate = GAMESTATE_MENU;
-			break;
+		al_clear_to_color(al_map_rgb(0,0,0));
+		PrintConsole(game, "ERROR: Unknown gamestate %d reached! (5 sec sleep)", game->gamestate);
+		DrawConsole(game);
+		al_flip_display();
+		al_rest(5.0);
+		PrintConsole(game, "Returning to menu...");
+		game->gamestate = GAMESTATE_LOADING;
+		game->loadstate = GAMESTATE_MENU;
+		break;
 	}
 }
 
@@ -238,9 +238,9 @@ void ScaleBitmap(ALLEGRO_BITMAP* source, int width, int height) {
 
 	ALLEGRO_COLOR interpolate(ALLEGRO_COLOR c1, ALLEGRO_COLOR c2, float frac) {
 		return al_map_rgba_f(c1.r + frac * (c2.r - c1.r),
-			c1.g + frac * (c2.g - c1.g),
-			c1.b + frac * (c2.b - c1.b),
-			c1.a + frac * (c2.a - c1.a));
+												 c1.g + frac * (c2.g - c1.g),
+												 c1.b + frac * (c2.b - c1.b),
+												 c1.a + frac * (c2.a - c1.a));
 	}
 
 	for (y = 0; y < height; y++) {
@@ -270,7 +270,7 @@ ALLEGRO_BITMAP* LoadScaledBitmap(char* filename, int width, int height) {
 	ALLEGRO_BITMAP *source, *target = al_create_bitmap(width, height);
 	al_set_target_bitmap(target);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
-    char* origfn = GetDataFilePath(filename);
+	char* origfn = GetDataFilePath(filename);
 	void GenerateBitmap() {
 		al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
 
@@ -287,9 +287,9 @@ ALLEGRO_BITMAP* LoadScaledBitmap(char* filename, int width, int height) {
 	if (source) {
 		if ((al_get_bitmap_width(source)!=width) || (al_get_bitmap_height(source)!=height)) {
 			al_destroy_bitmap(source);*/
-			GenerateBitmap();
-            free(origfn);
-			return target;
+	GenerateBitmap();
+	free(origfn);
+	return target;
 	/*	}
 		return source;
 	} else GenerateBitmap();
@@ -327,12 +327,12 @@ void SetupViewport(struct Game *game) {
 }
 
 int Shared_Load(struct Game *game) {
-    game->font = al_load_ttf_font(GetDataFilePath("ShadowsIntoLight.ttf"),game->viewportHeight*0.09,0 );
+	game->font = al_load_ttf_font(GetDataFilePath("ShadowsIntoLight.ttf"),game->viewportHeight*0.09,0 );
 	if(!game->font) {
 		fprintf(stderr, "failed to load game font!\n");
 		return -1;
 	}
-    game->font_console = al_load_ttf_font(GetDataFilePath("DejaVuSansMono.ttf"),game->viewportHeight*0.018,0 );
+	game->font_console = al_load_ttf_font(GetDataFilePath("DejaVuSansMono.ttf"),game->viewportHeight*0.018,0 );
 	if(!game->font_console) {
 		fprintf(stderr, "failed to load console font!\n");
 		return -1;
@@ -351,9 +351,9 @@ void Shared_Unload(struct Game *game) {
 }
 
 void derp(int sig) {
-		write(STDERR_FILENO, "Segmentation fault\n", 19);
-		write(STDERR_FILENO, "I just don't know what went wrong!\n", 35);
-		abort();
+	write(STDERR_FILENO, "Segmentation fault\n", 19);
+	write(STDERR_FILENO, "I just don't know what went wrong!\n", 35);
+	abort();
 }
 
 int main(int argc, char **argv){
@@ -364,12 +364,12 @@ int main(int argc, char **argv){
 	al_set_org_name("Super Derpy");
 	al_set_app_name("Muffin Attack");
 
-    if(!al_init()) {
-        fprintf(stderr, "failed to initialize allegro!\n");
-        return -1;
-    }
+	if(!al_init()) {
+		fprintf(stderr, "failed to initialize allegro!\n");
+		return -1;
+	}
 
-    InitConfig();
+	InitConfig();
 
 	bool redraw = true;
 
@@ -389,7 +389,7 @@ int main(int argc, char **argv){
 	if(!al_init_image_addon()) {
 		fprintf(stderr, "failed to initialize image addon!\n");
 		/*al_show_native_message_box(display, "Error", "Error", "Failed to initialize al_init_image_addon!",
-		                           NULL, ALLEGRO_MESSAGEBOX_ERROR);*/
+															 NULL, ALLEGRO_MESSAGEBOX_ERROR);*/
 		return 0;
 	}
 
@@ -413,7 +413,7 @@ int main(int argc, char **argv){
 		return -1;
 	}
 	
-/*	if (!al_reserve_samples(10)){
+	/*	if (!al_reserve_samples(10)){
 		fprintf(stderr, "failed to reserve samples!\n");
 		return -1;
 	}
@@ -540,11 +540,11 @@ int main(int argc, char **argv){
 		}
 		else if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
 			/*PrintConsole(&game, "KEYCODE: %s", al_keycode_to_name(ev.keyboard.keycode));*/
-			#ifdef ALLEGRO_MACOSX
+#ifdef ALLEGRO_MACOSX
 			if ((ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == 104)) {
-			#else
+#else
 			if ((ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_TILDE)) {
-			#endif
+#endif
 				game.showconsole = !game.showconsole;
 			}
 			else if ((game.debug) && (ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_F1)) {
@@ -564,14 +564,14 @@ int main(int argc, char **argv){
 				al_destroy_path(path);
 			}
 			KEYDOWN_STATE(GAMESTATE_PAUSE, Pause)
-			KEYDOWN_STATE(GAMESTATE_MENU, Menu)
-			KEYDOWN_STATE(GAMESTATE_LOADING, Loading)
-			KEYDOWN_STATE(GAMESTATE_ABOUT, About)
-			KEYDOWN_STATE(GAMESTATE_INTRO, Intro)
-			KEYDOWN_STATE(GAMESTATE_MAP, Map)
-			KEYDOWN_STATE(GAMESTATE_LEVEL, Level)
-			KEYDOWN_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
-			else {
+					KEYDOWN_STATE(GAMESTATE_MENU, Menu)
+					KEYDOWN_STATE(GAMESTATE_LOADING, Loading)
+					KEYDOWN_STATE(GAMESTATE_ABOUT, About)
+					KEYDOWN_STATE(GAMESTATE_INTRO, Intro)
+					KEYDOWN_STATE(GAMESTATE_MAP, Map)
+					KEYDOWN_STATE(GAMESTATE_LEVEL, Level)
+					KEYDOWN_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
+					else {
 				game.showconsole = true;
 				PrintConsole(&game, "ERROR: Keystroke in unknown (%d) gamestate! (5 sec sleep)", game.gamestate);
 				DrawConsole(&game);
@@ -618,11 +618,11 @@ int main(int argc, char **argv){
 	if (game.restart) {
 		al_shutdown_ttf_addon();
 		al_shutdown_font_addon();
-		#ifdef ALLEGRO_MACOSX
-			return _al_mangled_main(argc, argv);
-		#else
-			return main(argc, argv);
-		#endif
+#ifdef ALLEGRO_MACOSX
+		return _al_mangled_main(argc, argv);
+#else
+		return main(argc, argv);
+#endif
 	}
 	return 0;
 }

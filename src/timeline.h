@@ -32,20 +32,20 @@ enum TM_ActionState {
 
 /*! \brief Arguments for TM_Action. */
 struct TM_Arguments {
-	void *value; /*!< Value of argument. */
-	struct TM_Arguments *next; /*!< Pointer to next argument. */
+		void *value; /*!< Value of argument. */
+		struct TM_Arguments *next; /*!< Pointer to next argument. */
 };
 
 /*! \brief Timeline action. */
 struct TM_Action {
-	bool (*function)(struct Game*, struct TM_Action*, enum TM_ActionState); /*!< Function callback of the action. */
-	struct TM_Arguments *arguments; /*!< Arguments of the action. */
-	ALLEGRO_TIMER *timer; /*!< Delay timer. */
-	bool active; /*!< If false, then this action is waiting for it's delay to finish. */
-	int delay; /*!< Number of miliseconds to delay before action is started. */
-	struct TM_Action *next; /*!< Pointer to next action in queue. */
-	unsigned int id; /*!< ID of the action. */
-	char* name; /*!< "User friendly" name of the action. */
+		bool (*function)(struct Game*, struct TM_Action*, enum TM_ActionState); /*!< Function callback of the action. */
+		struct TM_Arguments *arguments; /*!< Arguments of the action. */
+		ALLEGRO_TIMER *timer; /*!< Delay timer. */
+		bool active; /*!< If false, then this action is waiting for it's delay to finish. */
+		int delay; /*!< Number of miliseconds to delay before action is started. */
+		struct TM_Action *next; /*!< Pointer to next action in queue. */
+		unsigned int id; /*!< ID of the action. */
+		char* name; /*!< "User friendly" name of the action. */
 };
 
 /*! \brief Init timeline. */
