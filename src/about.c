@@ -82,7 +82,7 @@ void About_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	al_set_sample_instance_playmode(game->about.music, ALLEGRO_PLAYMODE_LOOP);
 	al_set_sample_instance_position(game->about.music, game->music ? 420000 : 700000);
 
-	game->about.font = al_load_ttf_font(GetDataFilePath("ShadowsIntoLight.ttf"),game->viewportHeight*0.035,0 );
+	game->about.font = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewportHeight*0.035,0 );
 	PROGRESS;
 	game->about.x = -0.1;
 	if (!game->about.sample){

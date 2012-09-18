@@ -518,7 +518,7 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 		PROGRESS;
 		game->level.owl = LoadScaledBitmap("levels/owl.png", game->viewportWidth*0.08, game->viewportWidth*0.08);
 		PROGRESS;
-		game->level.letter_font = al_load_ttf_font(GetDataFilePath("DejaVuSans.ttf"),game->viewportHeight*0.0225,0 );
+		game->level.letter_font = al_load_ttf_font(GetDataFilePath("fonts/DejaVuSans.ttf"),game->viewportHeight*0.0225,0 );
 		PROGRESS;
 		game->level.letter = LoadScaledBitmap("levels/letter.png", game->viewportHeight*1.3, game->viewportHeight*1.2);
 		al_set_target_bitmap(game->level.letter);

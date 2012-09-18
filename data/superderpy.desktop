@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Super Derpy: Muffin Attack
+Exec=superderpy
+Comment=Rescue ponies from muffinzombies.
+Icon=superderpy
+Terminal=false
+Categories=Game;ArcadeGame;

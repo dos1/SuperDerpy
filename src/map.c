@@ -25,7 +25,7 @@
 
 void Map_Draw(struct Game *game) {
 	al_draw_bitmap(game->map.map, 0, 0, 0);
-	float x,y;
+	float x=0,y=0;
 	switch (game->map.selected) {
 		case 1:
 			x=0.175;

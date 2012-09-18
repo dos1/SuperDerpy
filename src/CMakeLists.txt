@@ -38,4 +38,4 @@ if(ALLEGRO5_MAIN_FOUND)
   target_link_libraries(superderpy ${ALLEGRO5_MAIN_INCLUDE_DIR})
 endif(ALLEGRO5_MAIN_FOUND)
 
-install(TARGETS superderpy DESTINATION bin)
+install(TARGETS superderpy DESTINATION ${BIN_INSTALL_DIR})

@@ -242,10 +242,10 @@ void Menu_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	al_attach_sample_instance_to_mixer(game->menu.click, game->audio.fx);
 	al_set_sample_instance_playmode(game->menu.click, ALLEGRO_PLAYMODE_ONCE);
 
-	game->menu.font_title = al_load_ttf_font(GetDataFilePath("ShadowsIntoLight.ttf"),game->viewportHeight*0.16,0 );
-	game->menu.font_subtitle = al_load_ttf_font(GetDataFilePath("ShadowsIntoLight.ttf"),game->viewportHeight*0.08,0 );
-	game->menu.font = al_load_ttf_font(GetDataFilePath("ShadowsIntoLight.ttf"),game->viewportHeight*0.05,0 );
-	game->menu.font_selected = al_load_ttf_font(GetDataFilePath("ShadowsIntoLight.ttf"),game->viewportHeight*0.065,0 );
+	game->menu.font_title = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewportHeight*0.16,0 );
+	game->menu.font_subtitle = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewportHeight*0.08,0 );
+	game->menu.font = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewportHeight*0.05,0 );
+	game->menu.font_selected = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewportHeight*0.065,0 );
 	PROGRESS;
 
 	if (!game->menu.sample){

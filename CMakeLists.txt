@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 2.8)
 
 project(SuperDerpy C)
 
+include("cmake/SetPaths.cmake")
+
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -g")
 SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
@@ -20,10 +22,17 @@ if(MINGW)
 
     set(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -mwindows")
 
+		# resource compilation for MinGW
+		add_custom_command( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/icon.o
+				 COMMAND ${CMAKE_WINDRES} -I${CMAKE_SOURCE_DIR} -i${CMAKE_SOURCE_DIR}/data/icons/icon.rc
+				 -o ${CMAKE_CURRENT_BINARY_DIR}/icon.o )
+		set(VLMC_SRCS ${VLMC_SRCS} ${CMAKE_CURRENT_BINARY_DIR}/icon.o)
+		set(LINK_FLAGS -Wl,-subsystem,windows)
+
 endif(MINGW)
 
 add_subdirectory(src)
-install(DIRECTORY data DESTINATION share/superderpy)
+add_subdirectory(data)
 
 # uninstall target
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake" IMMEDIATE @ONLY)

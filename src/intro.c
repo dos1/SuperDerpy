@@ -254,7 +254,7 @@ void Intro_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	}
 	game->intro.table = al_create_bitmap(game->viewportWidth*2, game->viewportHeight);
 
-	game->intro.font = al_load_ttf_font(GetDataFilePath("ShadowsIntoLight.ttf"),game->viewportHeight*0.04,0 );
+	game->intro.font = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewportHeight*0.04,0 );
 
 	FillPage(game, 1);
 	PROGRESS;

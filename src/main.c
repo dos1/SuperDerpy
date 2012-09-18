@@ -18,6 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
+ *
+ * Also, ponies.
  */
 #include <stdio.h>
 #include <math.h>
@@ -327,12 +329,12 @@ void SetupViewport(struct Game *game) {
 }
 
 int Shared_Load(struct Game *game) {
-	game->font = al_load_ttf_font(GetDataFilePath("ShadowsIntoLight.ttf"),game->viewportHeight*0.09,0 );
+	game->font = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewportHeight*0.09,0 );
 	if(!game->font) {
 		fprintf(stderr, "failed to load game font!\n");
 		return -1;
 	}
-	game->font_console = al_load_ttf_font(GetDataFilePath("DejaVuSansMono.ttf"),game->viewportHeight*0.018,0 );
+	game->font_console = al_load_ttf_font(GetDataFilePath("fonts/DejaVuSansMono.ttf"),game->viewportHeight*0.018,0 );
 	if(!game->font_console) {
 		fprintf(stderr, "failed to load console font!\n");
 		return -1;
@@ -437,7 +439,11 @@ int main(int argc, char **argv){
 		fprintf(stderr, "failed to create display!\n");
 		return -1;
 	}
+	ALLEGRO_BITMAP *icon = al_load_bitmap(GetDataFilePath("icons/superderpy.png"));
 	al_set_window_title(game.display, "Super Derpy: Muffin Attack");
+	al_set_display_icon(game.display, icon);
+	al_destroy_bitmap(icon);
+
 	if (game.fullscreen) al_hide_mouse_cursor(game.display);
 	al_inhibit_screensaver(true);
 
