@@ -33,7 +33,41 @@ endif(MINGW)
 
 add_subdirectory(src)
 add_subdirectory(data)
+add_subdirectory(lib)
 
 # uninstall target
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake" IMMEDIATE @ONLY)
 add_custom_target(uninstall COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
+
+INCLUDE(InstallRequiredSystemLibraries)
+
+SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Become Derpy Hooves and fight with muffinzombies in order to rescue Ponyville ponies so they can defeat Discord once again!")
+SET(CPACK_PACKAGE_VENDOR "Sebastian Krzyszkowiak")
+SET(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
+SET(CPACK_PACKAGE_VERSION_MAJOR "0")
+SET(CPACK_PACKAGE_VERSION_MINOR "2")
+SET(CPACK_PACKAGE_VERSION_PATCH "pre")
+SET(CPACK_PACKAGE_INSTALL_DIRECTORY "Super Derpy")
+IF(WIN32 AND NOT UNIX)
+  # There is a bug in NSI that does not handle full unix paths properly. Make
+  # sure there is at least one set of four (4) backlasshes.
+  SET(CPACK_GENERATOR "NSIS")
+  #SET(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/Utilities/Release/InstallIcon.bmp")
+  SET(CPACK_NSIS_INSTALLED_ICON_NAME "bin\\\\superderpy.exe")
+  SET(CPACK_NSIS_DISPLAY_NAME "Super Derpy: Muffin Attack")
+  SET(CPACK_NSIS_HELP_LINK "http:\\\\\\\\www.superderpy.com")
+  SET(CPACK_NSIS_URL_INFO_ABOUT "http:\\\\\\\\dosowisko.net")
+  SET(CPACK_NSIS_CONTACT "dos@dosowisko.net")
+  SET(CPACK_NSIS_CREATE_ICONS "CreateShortCut '\$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\${CPACK_NSIS_DISPLAY_NAME}.lnk' '\$INSTDIR\\\\bin\\\\superderpy.exe'")
+ELSE(WIN32 AND NOT UNIX)
+  SET(CPACK_GENERATOR "DEB" "RPM")
+  SET(CPACK_STRIP_FILES "bin/superderpy")
+  SET(CPACK_SOURCE_STRIP_FILES "")
+  IF(MACOSX)
+      SET(CPACK_GENERATOR "Bundle")
+  ENDIF(MACOSX)
+ENDIF(WIN32 AND NOT UNIX)
+SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "Sebastian Krzyszkowiak <dos@dosowisko.net>")
+#SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6 (>= 2.3.1-6), libgcc1 (>= 1:3.4.2-12)")
+
+include(CPack)
