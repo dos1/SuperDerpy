@@ -1,8 +1,16 @@
-IF(MINGW)
- IF(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/win32" AND IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/win32")
+IF(${PACKAGE_BUILD})
+
+ IF(WIN32)
   FILE(GLOB files "${CMAKE_CURRENT_SOURCE_DIR}/win32/*.dll")
   INSTALL(FILES ${files} DESTINATION ${BIN_INSTALL_DIR})
- ENDIF(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/win32" AND IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/win32")
-ENDIF(MINGW)
+ ENDIF(WIN32)
 
-# TODO: handle libraries in Linux and Mac OS X versions
+ IF(UNIX)
+  FILE(GLOB files "${CMAKE_SOURCE_DIR}/lib/linux-x86/*.so*")
+  INSTALL(FILES ${files} DESTINATION ${LIB_INSTALL_DIR}/superderpy)
+ ENDIF(UNIX)
+
+ENDIF(${BUILD_PACKAGE})
+
+# TODO: handle libraries in Mac OS X version if needed
+# TODO: handle other architectures
