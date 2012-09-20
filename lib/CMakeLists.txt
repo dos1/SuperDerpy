@@ -10,7 +10,7 @@ IF(${PACKAGE_BUILD})
   INSTALL(FILES ${files} DESTINATION ${LIB_INSTALL_DIR}/superderpy)
  ENDIF(UNIX)
 
-ENDIF(${BUILD_PACKAGE})
+ENDIF(${PACKAGE_BUILD})
 
 # TODO: handle libraries in Mac OS X version if needed
 # TODO: handle other architectures
