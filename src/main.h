@@ -52,14 +52,7 @@ enum gamestate_enum {
 	GAMESTATE_DISCLAIMER
 };
 
-/*! \brief Resources used by moonwalk level placeholder. */
-struct Moonwalk {
-		ALLEGRO_BITMAP *fade_bitmap; /*!< Bitmap used on fade-in and fade-out animations. */
-		ALLEGRO_BITMAP *image; /*!< Background texture. */
-		int derpy_frame; /*!< Current frame of Derpy animation. */
-		int derpy_frame_tmp; /*!< Counter used to slow down Derpy animation. */
-		double derpy_pos; /*!< Position of Derpy on screen. */
-};
+/* TODO: move Obstacle and Spritesheet to level.h if possible */
 
 /*! \brief Structure representing obstacles and power-ups flying through the level. */
 struct Obstacle {
@@ -97,8 +90,22 @@ struct Spritesheet {
 		struct Spritesheet* next; /*!< Next spritesheet in the queue. */
 };
 
+/* Gamestate structs */
+
+/*! \brief Resources used by moonwalk level placeholder. */
+struct Moonwalk {
+		ALLEGRO_BITMAP *fade_bitmap; /*!< Bitmap used on fade-in and fade-out animations. */
+		ALLEGRO_BITMAP *image; /*!< Background texture. */
+		int derpy_frame; /*!< Current frame of Derpy animation. */
+		int derpy_frame_tmp; /*!< Counter used to slow down Derpy animation. */
+		double derpy_pos; /*!< Position of Derpy on screen. */
+};
+
 /*! \brief Resources used by Level state. */
 struct Level {
+		struct {
+			int current_level; /*!< Level number. */
+		} input; /*!< Gamestate input data. */
 		int current_level; /*!< Level number. */
 		float speed; /*!< Speed of the player. */
 		float speed_modifier; /*!< Modifier of the speed of the player. */
@@ -260,7 +267,7 @@ struct Intro {
 		ALLEGRO_AUDIO_STREAM *audiostream; /*!< Audiostream used for Celestia voice. */
 };
 
-/*! \brief Resources used by Game state. */
+/*! \brief Main struct of the game. */
 struct Game {
 		ALLEGRO_DISPLAY *display; /*!< Main Allegro display. */
 		ALLEGRO_FONT *font; /*!< Main font used in game. */

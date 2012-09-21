@@ -80,7 +80,7 @@ int Map_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 		al_play_sample_instance(game->map.click);
 	} else if (ev->keyboard.keycode==ALLEGRO_KEY_ENTER) {
 		al_play_sample_instance(game->map.click);
-		game->level.current_level = game->map.selected;
+		game->level.input.current_level = game->map.selected;
 		PrintConsole(game, "Selecting level %d...", game->map.selected);
 		UnloadGameState(game);
 		game->gamestate = GAMESTATE_LOADING;

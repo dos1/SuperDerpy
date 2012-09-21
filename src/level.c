@@ -390,6 +390,7 @@ void Level_ProcessLogic(struct Game *game, ALLEGRO_EVENT *ev) {
 }
 
 void Level_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
+	game->level.current_level = game->level.input.current_level;
 	game->level.derpy_sheets = NULL;
 	game->level.derpy = NULL;
 	Pause_Preload(game);
