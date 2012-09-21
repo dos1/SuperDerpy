@@ -519,7 +519,7 @@ int main(int argc, char **argv){
 	while ((c = getopt (argc, argv, "l:s:")) != -1)
 		switch (c) {
 			case 'l':
-				game.level.current_level = optarg[0]-'0';
+				game.level.input.current_level = optarg[0]-'0';
 				game.loadstate = GAMESTATE_LEVEL;
 				break;
 			case 's':
