@@ -45,6 +45,7 @@ void SelectDerpySpritesheet(struct Game *game, char* name) {
 			game->level.sheet_speed_modifier = tmp->speed;
 			game->level.sheet_pos = 0;
 			game->level.sheet_scale = tmp->scale;
+			game->level.sheet_successor = tmp->successor;
 			if (game->level.derpy) al_destroy_bitmap(game->level.derpy);
 			game->level.derpy = al_create_bitmap((game->viewportHeight*0.25)*tmp->aspect*tmp->scale, (game->viewportHeight*0.25)*tmp->scale);
 			PrintConsole(game, "SUCCESS: Derpy spritesheet activated: %s (%dx%d)", name, al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy));
@@ -70,6 +71,12 @@ void RegisterDerpySpritesheet(struct Game *game, char* name) {
 	s->speed = atof(al_get_config_value(config, "", "speed"));
 	s->aspect = atof(al_get_config_value(config, "", "aspect"));
 	s->scale = atof(al_get_config_value(config, "", "scale"));
+	s->successor=NULL;
+	const char* successor = al_get_config_value(config, "", "successor");
+	if (successor) {
+		s->successor = malloc(255*sizeof(char));
+		strcpy(s->successor, successor);
+	}
 	s->next = game->level.derpy_sheets;
 	game->level.derpy_sheets = s;
 	al_destroy_config(config);
@@ -221,7 +228,12 @@ void Level_Draw(struct Game *game) {
 				game->level.sheet_pos++;
 				game->level.sheet_tmp = 0;
 			}
-			if (game->level.sheet_pos>=game->level.sheet_cols*game->level.sheet_rows-game->level.sheet_blanks) game->level.sheet_pos=0;
+			if (game->level.sheet_pos>=game->level.sheet_cols*game->level.sheet_rows-game->level.sheet_blanks) {
+				game->level.sheet_pos=0;
+				if (game->level.sheet_successor) {
+					SelectDerpySpritesheet(game, game->level.sheet_successor);
+				}
+			}
 		}
 		al_set_target_bitmap(al_get_backbuffer(game->display));
 

@@ -87,6 +87,7 @@ struct Spritesheet {
 		float speed; /*!< Speed modifier of spritesheet animation. */
 		float aspect; /*!< Aspect ratio of the frame. */
 		float scale; /*!< Scale modifier of the frame. */
+		char* successor; /*!< Name of animation successor. If it's not blank, then animation will be played only once. */
 		struct Spritesheet* next; /*!< Next spritesheet in the queue. */
 };
 
@@ -124,6 +125,7 @@ struct Level {
 		int sheet_cols; /*!< Number of cols in current spritesheet. */
 		int sheet_pos; /*!< Frame position in current spritesheet. */
 		int sheet_blanks; /*!< Number of blank frames at the end of current spritesheet. */
+		char* sheet_successor; /*!< Successor of current animation. If blank, then it's looped. */
 		float sheet_tmp; /*!< Temporary counter used to slow down spritesheet animation. */
 		float sheet_speed; /*!< Current speed of Derpy animation. */
 		float sheet_speed_modifier; /*!< Modifier of speed, specified by current spritesheet. */
