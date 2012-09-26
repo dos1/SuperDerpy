@@ -560,64 +560,64 @@ int main(int argc, char **argv){
 
 	while(1) {
 		ALLEGRO_EVENT ev;
-		al_wait_for_event(game.event_queue, &ev);
-		if ((ev.type == ALLEGRO_EVENT_TIMER) && (ev.timer.source == game.timer)) {
-			LogicGameState(&game);
-		}
-		else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
-			break;
-		}
-		else if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
-			/*PrintConsole(&game, "KEYCODE: %s", al_keycode_to_name(ev.keyboard.keycode));*/
-		#ifdef ALLEGRO_MACOSX
-			if ((ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == 104)) {
-		#else
-			if ((ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_TILDE)) {
-		#endif
-				game.showconsole = !game.showconsole;
-			}
-			else if ((game.debug) && (ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_F1)) {
-				int i;
-				for (i=0; i<512; i++) {
-					DrawGameState(&game);
-				}
-				game.showconsole = true;
-				PrintConsole(&game, "DEBUG: 512 frames skipped...");
-			} else if ((game.debug) && (ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_F12)) {
-				ALLEGRO_PATH *path = al_get_standard_path(ALLEGRO_USER_DOCUMENTS_PATH);
-				char filename[255] = { };
-				sprintf(filename, "SuperDerpy_%ld_%ld.png", time(NULL), clock());
-				al_set_path_filename(path, filename);
-				al_save_bitmap(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP), al_get_backbuffer(game.display));
-				PrintConsole(&game, "Screenshot stored in %s", al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
-				al_destroy_path(path);
-			}
-			KEYDOWN_STATE(GAMESTATE_PAUSE, Pause)
-			KEYDOWN_STATE(GAMESTATE_MENU, Menu)
-			KEYDOWN_STATE(GAMESTATE_LOADING, Loading)
-			KEYDOWN_STATE(GAMESTATE_ABOUT, About)
-			KEYDOWN_STATE(GAMESTATE_INTRO, Intro)
-			KEYDOWN_STATE(GAMESTATE_MAP, Map)
-			KEYDOWN_STATE(GAMESTATE_LEVEL, Level)
-			KEYDOWN_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
-			else {
-				game.showconsole = true;
-				PrintConsole(&game, "ERROR: Keystroke in unknown (%d) gamestate! (5 sec sleep)", game.gamestate);
-				DrawConsole(&game);
-				al_flip_display();
-				al_rest(5.0);
-				PrintConsole(&game, "Returning to menu...");
-				game.gamestate = GAMESTATE_LOADING;
-				game.loadstate = GAMESTATE_MENU;
-			}
-		} else if (game.gamestate == GAMESTATE_LEVEL) {
-			Level_ProcessEvent(&game, &ev);
-		}
-
 		if (al_is_event_queue_empty(game.event_queue)) {
 			DrawGameState(&game);
 			DrawConsole(&game);
 			al_flip_display();
+		} else {
+			al_wait_for_event(game.event_queue, &ev);
+			if ((ev.type == ALLEGRO_EVENT_TIMER) && (ev.timer.source == game.timer)) {
+				LogicGameState(&game);
+			}
+			else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
+				break;
+			}
+			else if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
+				/*PrintConsole(&game, "KEYCODE: %s", al_keycode_to_name(ev.keyboard.keycode));*/
+			#ifdef ALLEGRO_MACOSX
+				if ((ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == 104)) {
+			#else
+				if ((ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_TILDE)) {
+			#endif
+					game.showconsole = !game.showconsole;
+				}
+				else if ((game.debug) && (ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_F1)) {
+					int i;
+					for (i=0; i<512; i++) {
+						DrawGameState(&game);
+					}
+					game.showconsole = true;
+					PrintConsole(&game, "DEBUG: 512 frames skipped...");
+				} else if ((game.debug) && (ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_F12)) {
+					ALLEGRO_PATH *path = al_get_standard_path(ALLEGRO_USER_DOCUMENTS_PATH);
+					char filename[255] = { };
+					sprintf(filename, "SuperDerpy_%ld_%ld.png", time(NULL), clock());
+					al_set_path_filename(path, filename);
+					al_save_bitmap(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP), al_get_backbuffer(game.display));
+					PrintConsole(&game, "Screenshot stored in %s", al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
+					al_destroy_path(path);
+				}
+				KEYDOWN_STATE(GAMESTATE_PAUSE, Pause)
+				KEYDOWN_STATE(GAMESTATE_MENU, Menu)
+				KEYDOWN_STATE(GAMESTATE_LOADING, Loading)
+				KEYDOWN_STATE(GAMESTATE_ABOUT, About)
+				KEYDOWN_STATE(GAMESTATE_INTRO, Intro)
+				KEYDOWN_STATE(GAMESTATE_MAP, Map)
+				KEYDOWN_STATE(GAMESTATE_LEVEL, Level)
+				KEYDOWN_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
+				else {
+					game.showconsole = true;
+					PrintConsole(&game, "ERROR: Keystroke in unknown (%d) gamestate! (5 sec sleep)", game.gamestate);
+					DrawConsole(&game);
+					al_flip_display();
+					al_rest(5.0);
+					PrintConsole(&game, "Returning to menu...");
+					game.gamestate = GAMESTATE_LOADING;
+					game.loadstate = GAMESTATE_MENU;
+				}
+			} else if (game.gamestate == GAMESTATE_LEVEL) {
+				Level_ProcessEvent(&game, &ev);
+			}
 		}
 	}
 	game.shuttingdown = true;
