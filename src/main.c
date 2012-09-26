@@ -59,6 +59,9 @@
 /*! \brief Macro for drawing active gamestate. */
 #define DRAW_STATE(state, name) case state:\
 	name ## _Draw(game); break;
+/*! \brief Macro for invocing logic function of active gamestate. */
+#define LOGIC_STATE(state, name) case state:\
+	name ## _Logic(game); break;
 
 double old_time = 0, fps;
 int frames_done = 0;
@@ -149,13 +152,13 @@ void PreloadGameState(struct Game *game, void (*progress)(struct Game*, float)) 
 	}
 	switch (game->loadstate) {
 		PRELOAD_STATE(GAMESTATE_MENU, Menu)
-				PRELOAD_STATE(GAMESTATE_LOADING, Loading)
-				PRELOAD_STATE(GAMESTATE_ABOUT, About)
-				PRELOAD_STATE(GAMESTATE_INTRO, Intro)
-				PRELOAD_STATE(GAMESTATE_MAP, Map)
-				PRELOAD_STATE(GAMESTATE_LEVEL, Level)
-				PRELOAD_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
-				default:
+		PRELOAD_STATE(GAMESTATE_LOADING, Loading)
+		PRELOAD_STATE(GAMESTATE_ABOUT, About)
+		PRELOAD_STATE(GAMESTATE_INTRO, Intro)
+		PRELOAD_STATE(GAMESTATE_MAP, Map)
+		PRELOAD_STATE(GAMESTATE_LEVEL, Level)
+		PRELOAD_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
+		default:
 			PrintConsole(game, "ERROR: Attempted to preload unknown gamestate %d!", game->loadstate);
 		break;
 	}
@@ -171,59 +174,105 @@ void UnloadGameState(struct Game *game) {
 				PrintConsole(game, "Just stopping GAMESTATE_MENU..."); Menu_Stop(game);
 			}
 			break;
-			UNLOAD_STATE(GAMESTATE_PAUSE, Pause)
-					UNLOAD_STATE(GAMESTATE_LOADING, Loading)
-					UNLOAD_STATE(GAMESTATE_ABOUT, About)
-					UNLOAD_STATE(GAMESTATE_INTRO, Intro)
-					UNLOAD_STATE(GAMESTATE_MAP, Map)
-					UNLOAD_STATE(GAMESTATE_LEVEL, Level)
-					UNLOAD_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
-				default:
-				PrintConsole(game, "ERROR: Attempted to unload unknown gamestate %d!", game->gamestate);
+		UNLOAD_STATE(GAMESTATE_PAUSE, Pause)
+		UNLOAD_STATE(GAMESTATE_LOADING, Loading)
+		UNLOAD_STATE(GAMESTATE_ABOUT, About)
+		UNLOAD_STATE(GAMESTATE_INTRO, Intro)
+		UNLOAD_STATE(GAMESTATE_MAP, Map)
+		UNLOAD_STATE(GAMESTATE_LEVEL, Level)
+		UNLOAD_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
+		default:
+			PrintConsole(game, "ERROR: Attempted to unload unknown gamestate %d!", game->gamestate);
 			break;
 	}
 	PrintConsole(game, "finished");
 }
 
 void LoadGameState(struct Game *game) {
-	switch (game->loadstate) {
+	game->gamestate = game->loadstate;
+	game->loadstate = -1;
+	switch (game->gamestate) {
 		LOAD_STATE(GAMESTATE_MENU, Menu)
-				LOAD_STATE(GAMESTATE_LOADING, Loading)
-				LOAD_STATE(GAMESTATE_ABOUT, About)
-				LOAD_STATE(GAMESTATE_INTRO, Intro)
-				LOAD_STATE(GAMESTATE_MAP, Map)
-				LOAD_STATE(GAMESTATE_LEVEL, Level)
-				LOAD_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
-				default:
+		LOAD_STATE(GAMESTATE_LOADING, Loading)
+		LOAD_STATE(GAMESTATE_ABOUT, About)
+		LOAD_STATE(GAMESTATE_INTRO, Intro)
+		LOAD_STATE(GAMESTATE_MAP, Map)
+		LOAD_STATE(GAMESTATE_LEVEL, Level)
+		LOAD_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
+		default:
 			PrintConsole(game, "ERROR: Attempted to load unknown gamestate %d!", game->loadstate);
 	}
 	PrintConsole(game, "finished");
-	game->gamestate = game->loadstate;
-	game->loadstate = -1;
 }
 
 void DrawGameState(struct Game *game) {
 	switch (game->gamestate) {
 		DRAW_STATE(GAMESTATE_MENU, Menu)
-				DRAW_STATE(GAMESTATE_PAUSE, Pause)
-				DRAW_STATE(GAMESTATE_LOADING, Loading)
-				DRAW_STATE(GAMESTATE_ABOUT, About)
-				DRAW_STATE(GAMESTATE_INTRO, Intro)
-				DRAW_STATE(GAMESTATE_MAP, Map)
-				DRAW_STATE(GAMESTATE_LEVEL, Level)
-				DRAW_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
-				default:
+		DRAW_STATE(GAMESTATE_PAUSE, Pause)
+		DRAW_STATE(GAMESTATE_LOADING, Loading)
+		DRAW_STATE(GAMESTATE_ABOUT, About)
+		DRAW_STATE(GAMESTATE_INTRO, Intro)
+		DRAW_STATE(GAMESTATE_MAP, Map)
+		DRAW_STATE(GAMESTATE_LEVEL, Level)
+		DRAW_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
+		default:
 			game->showconsole = true;
-		al_clear_to_color(al_map_rgb(0,0,0));
-		PrintConsole(game, "ERROR: Unknown gamestate %d reached! (5 sec sleep)", game->gamestate);
-		DrawConsole(game);
-		al_flip_display();
-		al_rest(5.0);
-		PrintConsole(game, "Returning to menu...");
-		game->gamestate = GAMESTATE_LOADING;
-		game->loadstate = GAMESTATE_MENU;
-		break;
+			al_clear_to_color(al_map_rgb(0,0,0));
+			PrintConsole(game, "ERROR: Unknown gamestate %d reached! (5 sec sleep)", game->gamestate);
+			DrawConsole(game);
+			al_flip_display();
+			al_rest(5.0);
+			PrintConsole(game, "Returning to menu...");
+			game->gamestate = GAMESTATE_LOADING;
+			game->loadstate = GAMESTATE_MENU;
+			break;
 	}
+}
+
+void LogicGameState(struct Game *game) {
+	switch (game->gamestate) {
+		LOGIC_STATE(GAMESTATE_ABOUT, About)
+		LOGIC_STATE(GAMESTATE_MENU, Menu)
+		LOGIC_STATE(GAMESTATE_MAP, Map)
+		LOGIC_STATE(GAMESTATE_INTRO, Intro)
+		LOGIC_STATE(GAMESTATE_LEVEL, Level)
+		default:
+			// not every gamestate needs to have logic function
+			break;
+	}
+}
+
+void FadeGameState(struct Game *game, bool in) {
+	ALLEGRO_BITMAP* bitmap = al_create_bitmap(game->viewportWidth, game->viewportHeight);
+	al_set_target_bitmap(bitmap);
+	al_clear_to_color(al_map_rgb(0,0,0));
+	al_set_target_bitmap(al_get_backbuffer(game->display));
+	float fadeloop;
+	if (in) {
+		fadeloop = 255;
+	} else {
+		fadeloop = 0;
+	}
+	while ((in && fadeloop>=0) || (!in && fadeloop<255)) {
+		ALLEGRO_EVENT ev;
+		al_wait_for_event(game->event_queue, &ev);
+		if ((ev.type == ALLEGRO_EVENT_TIMER) && (ev.timer.source == game->timer)) {
+			LogicGameState(game);
+			if (in) {
+				fadeloop-=10;
+			} else {
+				fadeloop+=10;
+			}
+		}
+		if (al_is_event_queue_empty(game->event_queue)) {
+			DrawGameState(game);
+			al_draw_tinted_bitmap(bitmap,al_map_rgba_f(1,1,1,fadeloop/255.0),0,0,0);
+			DrawConsole(game);
+			al_flip_display();
+		}
+	}
+	al_destroy_bitmap(bitmap);
+	DrawGameState(game);
 }
 
 /*! \brief Scales bitmap using software linear filtering method to current target. */
@@ -299,8 +348,7 @@ ALLEGRO_BITMAP* LoadScaledBitmap(char* filename, int width, int height) {
 }
 
 float tps(struct Game *game, float t) {
-	if (game->fps>0) return t/game->fps;
-	else return t/fps;
+	return t/60;
 }
 
 void SetupViewport(struct Game *game) {
@@ -373,15 +421,12 @@ int main(int argc, char **argv){
 
 	InitConfig();
 
-	bool redraw = true;
-
 	struct Game game;
 
 	game.fullscreen = atoi(GetConfigOptionDefault("SuperDerpy", "fullscreen", "1"));
 	game.music = atoi(GetConfigOptionDefault("SuperDerpy", "music", "7"));
 	game.voice = atoi(GetConfigOptionDefault("SuperDerpy", "voice", "10"));
 	game.fx = atoi(GetConfigOptionDefault("SuperDerpy", "fx", "10"));
-	game.fps = atoi(GetConfigOptionDefault("SuperDerpy", "fps", "0"));
 	game.debug = atoi(GetConfigOptionDefault("SuperDerpy", "debug", "0"));
 	game.width = atoi(GetConfigOptionDefault("SuperDerpy", "width", "800"));
 	if (game.width<320) game.width=320;
@@ -481,28 +526,14 @@ int main(int argc, char **argv){
 
 	game.showconsole = game.debug;
 
-	ALLEGRO_DISPLAY_MODE mode;
-	al_get_display_mode(0, &mode);
-	if (mode.refresh_rate < game.fps) {
-		if (atoi(GetConfigOptionDefault("SuperDerpy", "lower_fps_to_refresh_rate", "0"))) {
-			PrintConsole(&game, "Refresh rate %d lower than FPS %d, lowering", mode.refresh_rate, game.fps);
-			game.fps = mode.refresh_rate;
-		} else {
-			PrintConsole(&game, "Refresh rate %d lower than FPS %d, NOT lowering due to config", mode.refresh_rate, game.fps);
-		}
-	} else if (game.fps == 0) game.fps = mode.refresh_rate;
-	if (game.fps>600) game.fps = 600;
-
 	al_flip_display();
 	al_clear_to_color(al_map_rgb(0,0,0));
-	if (game.fps>0) game.timer = al_create_timer(ALLEGRO_BPS_TO_SECS(game.fps));
-	else game.timer = al_create_timer(ALLEGRO_BPS_TO_SECS(600));
+	game.timer = al_create_timer(ALLEGRO_BPS_TO_SECS(60)); // logic timer
 	if(!game.timer) {
 		fprintf(stderr, "failed to create timer!\n");
 		return -1;
 	}
 	al_register_event_source(game.event_queue, al_get_timer_event_source(game.timer));
-	al_wait_for_vsync();
 	al_start_timer(game.timer);
 
 	setlocale(LC_NUMERIC, "C"); /* FIXME? */
@@ -529,28 +560,20 @@ int main(int argc, char **argv){
 
 	while(1) {
 		ALLEGRO_EVENT ev;
-		bool event = false;
-		if (game.fps<0) {
-			redraw = true;
-			event=al_get_next_event(game.event_queue, &ev);
-		} else {
-			al_wait_for_event(game.event_queue, &ev);
-			event=true;
-		}
-		if (!event) {}
-		else if ((ev.type == ALLEGRO_EVENT_TIMER) && (ev.timer.source == game.timer)) {
-			redraw = true;
+		al_wait_for_event(game.event_queue, &ev);
+		if ((ev.type == ALLEGRO_EVENT_TIMER) && (ev.timer.source == game.timer)) {
+			LogicGameState(&game);
 		}
 		else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
 			break;
 		}
 		else if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
 			/*PrintConsole(&game, "KEYCODE: %s", al_keycode_to_name(ev.keyboard.keycode));*/
-#ifdef ALLEGRO_MACOSX
+		#ifdef ALLEGRO_MACOSX
 			if ((ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == 104)) {
-#else
+		#else
 			if ((ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_TILDE)) {
-#endif
+		#endif
 				game.showconsole = !game.showconsole;
 			}
 			else if ((game.debug) && (ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_F1)) {
@@ -570,14 +593,14 @@ int main(int argc, char **argv){
 				al_destroy_path(path);
 			}
 			KEYDOWN_STATE(GAMESTATE_PAUSE, Pause)
-					KEYDOWN_STATE(GAMESTATE_MENU, Menu)
-					KEYDOWN_STATE(GAMESTATE_LOADING, Loading)
-					KEYDOWN_STATE(GAMESTATE_ABOUT, About)
-					KEYDOWN_STATE(GAMESTATE_INTRO, Intro)
-					KEYDOWN_STATE(GAMESTATE_MAP, Map)
-					KEYDOWN_STATE(GAMESTATE_LEVEL, Level)
-					KEYDOWN_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
-					else {
+			KEYDOWN_STATE(GAMESTATE_MENU, Menu)
+			KEYDOWN_STATE(GAMESTATE_LOADING, Loading)
+			KEYDOWN_STATE(GAMESTATE_ABOUT, About)
+			KEYDOWN_STATE(GAMESTATE_INTRO, Intro)
+			KEYDOWN_STATE(GAMESTATE_MAP, Map)
+			KEYDOWN_STATE(GAMESTATE_LEVEL, Level)
+			KEYDOWN_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
+			else {
 				game.showconsole = true;
 				PrintConsole(&game, "ERROR: Keystroke in unknown (%d) gamestate! (5 sec sleep)", game.gamestate);
 				DrawConsole(&game);
@@ -587,14 +610,11 @@ int main(int argc, char **argv){
 				game.gamestate = GAMESTATE_LOADING;
 				game.loadstate = GAMESTATE_MENU;
 			}
-		} else {
-			if (game.gamestate == GAMESTATE_LEVEL) {
-				Level_ProcessLogic(&game, &ev);
-			}
+		} else if (game.gamestate == GAMESTATE_LEVEL) {
+			Level_ProcessEvent(&game, &ev);
 		}
 
-		if(redraw && al_is_event_queue_empty(game.event_queue)) {
-			redraw = false;
+		if (al_is_event_queue_empty(game.event_queue)) {
 			DrawGameState(&game);
 			DrawConsole(&game);
 			al_flip_display();

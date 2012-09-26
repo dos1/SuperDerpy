@@ -43,8 +43,6 @@ void AnimPage(struct Game *game, int page, ALLEGRO_COLOR tint) {
 	if (page==4) { amount1=5; amount2=3; anim*=2; }
 
 	if (page<5) al_draw_tinted_bitmap_region(game->intro.animsprites[page],tint,game->viewportWidth*0.3125*(int)fmod(anim,amount1),game->viewportHeight*0.63*(((int)(anim/amount1))%amount2),game->viewportWidth*0.3125, game->viewportHeight*0.63,offset+game->viewportWidth*1.08, game->viewportHeight*0.18,0);
-
-	game->intro.anim += tps(game, 2);
 }
 
 void FillPage(struct Game *game, int page) {
@@ -142,6 +140,20 @@ void FillPage(struct Game *game, int page) {
 	al_destroy_bitmap(second);
 }
 
+void Intro_Logic(struct Game *game) {
+	game->intro.anim += 1.0/20.0;
+	if (game->intro.in_animation) {
+		int old = game->intro.position%game->viewportWidth;
+		game->intro.position -= 10;
+		if (game->intro.position%game->viewportWidth>old) {
+			game->intro.in_animation = false;
+			FillPage(game, game->intro.page+1);
+			PrintConsole(game, "Animation finished.");
+			al_set_audio_stream_playing(game->intro.audiostream, true);
+		}
+	}
+}
+
 void Intro_Draw(struct Game *game) {
 	al_clear_to_color(al_map_rgb(0,0,0));
 	if (game->intro.in_animation) {
@@ -155,44 +167,21 @@ void Intro_Draw(struct Game *game) {
 	al_draw_text_with_shadow(game->intro.font, al_map_rgb(255,255,255), game->viewportWidth/2, game->viewportHeight*0.90, ALLEGRO_ALIGN_CENTRE, "Press any key to continue or escape to skip...");
 	al_draw_bitmap(game->intro.frame, 0, 0, 0);
 	/*PrintConsole(game, "drawing");*/
-	if (game->intro.in_animation) {
-		/*PrintConsole(game, "animating");*/
-		int old = game->intro.position%game->viewportWidth;
-		if (tps(game, 600)) game->intro.position -= tps(game, 600);
-		else game->intro.position -= 1;
-		/*PrintConsole(game, "%d", game->intro.position%game->viewportWidth);*/
-		if (game->intro.position%game->viewportWidth>old) {
-			/*DrawConsole(game);
-			al_flip_display();*/
-			game->intro.in_animation = false;
-			FillPage(game, game->intro.page+1);
-			PrintConsole(game, "Animation finished.");
-			al_set_audio_stream_playing(game->intro.audiostream, true);
-		}
-		else if (game->intro.position<=-4*game->viewportWidth) {
-			PrintConsole(game, "This was the last page.");
-			UnloadGameState(game);
-			game->loadstate = GAMESTATE_MAP;
-			PrintConsole(game, "Chainloading GAMESTATE_MAP...");
-			LoadGameState(game);
-		}
+	if (game->intro.in_animation && game->intro.position<=-4*game->viewportWidth) {
+		PrintConsole(game, "This was the last page.");
+		game->intro.in_animation = false;
+		game->intro.page--;
+		UnloadGameState(game);
+		game->loadstate = GAMESTATE_MAP;
+		PrintConsole(game, "Chainloading GAMESTATE_MAP...");
+		LoadGameState(game);
 	}
 }
 
 void Intro_Load(struct Game *game) {
 	al_play_sample_instance(game->intro.music);
-	ALLEGRO_EVENT ev;
-	float fadeloop;
-	for(fadeloop=0; fadeloop<256; fadeloop+=tps(game, 600)){
-		al_wait_for_event(game->event_queue, &ev);
-		al_draw_tinted_bitmap(game->intro.table,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
-		AnimPage(game, game->intro.page+1, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1));
-		al_draw_tinted_bitmap(game->intro.frame,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), 0, 0, 0);
-		DrawConsole(game);
-		al_flip_display();
-	}
+	FadeGameState(game, true);
 	al_set_audio_stream_playing(game->intro.audiostream, true);
-	Intro_Draw(game);
 }
 
 int Intro_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
@@ -269,25 +258,10 @@ void Intro_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 }
 
 void Intro_Unload(struct Game *game) {
+	FadeGameState(game, false);
 	if (game->intro.audiostream) {
 		al_set_audio_stream_playing(game->intro.audiostream, false);
 		al_destroy_audio_stream(game->intro.audiostream);
-	}
-	ALLEGRO_EVENT ev;
-	float fadeloop;
-	for(fadeloop=255; fadeloop>=0; fadeloop-=tps(game, 600)){
-		al_wait_for_event(game->event_queue, &ev);
-		if (game->intro.in_animation) {
-			al_draw_tinted_bitmap(game->intro.table, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), -1*game->viewportWidth + (cos(((-1*((game->intro.position)%game->viewportWidth))/(float)game->viewportWidth)*(ALLEGRO_PI))/2.0)*game->viewportWidth  + game->viewportWidth/2.0, 0, 0);
-			AnimPage(game, game->intro.page, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1));
-		}
-		else {
-			al_draw_tinted_bitmap(game->intro.table, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), 0, 0, 0);
-			AnimPage(game, game->intro.page+1, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1));
-		}
-		al_draw_tinted_bitmap(game->intro.frame,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), 0, 0, 0);
-		DrawConsole(game);
-		al_flip_display();
 	}
 	al_destroy_bitmap(game->intro.frame);
 	al_destroy_bitmap(game->intro.table);

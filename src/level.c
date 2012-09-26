@@ -99,6 +99,10 @@ void Level_Passed(struct Game *game) {
 	}
 }
 
+void Level_Logic(struct Game *game) {
+	if (game->level.current_level!=1) Moonwalk_Logic(game);
+}
+
 void Level_Draw(struct Game *game) {
 	if (!al_get_sample_instance_playing(game->level.music) && (game->loadstate==GAMESTATE_LEVEL)) {
 		al_set_sample_instance_playing(game->level.music, true);
@@ -380,7 +384,7 @@ int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	return 0;
 }
 
-void Level_ProcessLogic(struct Game *game, ALLEGRO_EVENT *ev) {
+void Level_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev) {
 	if (game->level.handle_input) {
 		if ((ev->type==ALLEGRO_EVENT_KEY_UP) && (ev->keyboard.keycode==ALLEGRO_KEY_LEFT)) {
 			game->level.speed_modifier = 1;
@@ -427,12 +431,12 @@ void Level_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 
 void Level_Unload(struct Game *game) {
 	Pause_Unload_Real(game);
-	al_destroy_sample_instance(game->level.music);
-	al_destroy_sample(game->level.sample);
 	if (game->level.current_level!=1) Moonwalk_Unload(game);
 	else {
 		TM_Destroy();
 	}
+	al_destroy_sample_instance(game->level.music);
+	al_destroy_sample(game->level.sample);
 	struct Obstacle *t = game->level.obstacles;
 	if (t) {
 		while (t->next) {

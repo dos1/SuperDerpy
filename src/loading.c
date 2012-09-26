@@ -31,13 +31,18 @@ void Progress(struct Game *game, float p) {
 }
 
 void Loading_Draw(struct Game *game) {
-	ALLEGRO_EVENT ev;
-	float fadeloop;
-	for(fadeloop=0; fadeloop<256; fadeloop+=tps(game, 600)){
+	float fadeloop=0;
+	while (fadeloop<256) {
+		ALLEGRO_EVENT ev;
 		al_wait_for_event(game->event_queue, &ev);
-		al_draw_tinted_bitmap(game->loading.loading_bitmap,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
-		DrawConsole(game);
-		al_flip_display();
+		if ((ev.type == ALLEGRO_EVENT_TIMER) && (ev.timer.source == game->timer)) {
+			fadeloop+=10;
+		}
+		if (al_is_event_queue_empty(game->event_queue)) {
+			al_draw_tinted_bitmap(game->loading.loading_bitmap,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
+			DrawConsole(game);
+			al_flip_display();
+		}
 	}
 
 	al_draw_bitmap(game->loading.loading_bitmap,0,0,0);
@@ -49,12 +54,21 @@ void Loading_Draw(struct Game *game) {
 	al_wait_for_vsync();
 	al_start_timer(game->timer);
 
-	for(fadeloop=255; fadeloop>0; fadeloop-=tps(game, 600)){
+	fadeloop=0;
+	while (fadeloop<256) {
+		ALLEGRO_EVENT ev;
 		al_wait_for_event(game->event_queue, &ev);
-		al_draw_tinted_bitmap(game->loading.loading_bitmap,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
-		al_draw_filled_rectangle(0, game->viewportHeight*0.985, game->viewportWidth, game->viewportHeight, al_map_rgba(fadeloop,fadeloop,fadeloop,255));
-		DrawConsole(game);
-		al_flip_display();
+		if ((ev.type == ALLEGRO_EVENT_TIMER) && (ev.timer.source == game->timer)) {
+			fadeloop+=10;
+		}
+		if (al_is_event_queue_empty(game->event_queue)) {
+			al_draw_bitmap(game->loading.loading_bitmap,0,0,0);
+			al_draw_filled_rectangle(0, game->viewportHeight*0.985, game->viewportWidth, game->viewportHeight, al_map_rgba(255,255,255,255));
+			al_draw_filled_rectangle(0, 0, game->viewportWidth, game->viewportHeight, al_map_rgba_f(0,0,0,fadeloop/255.0));
+
+			DrawConsole(game);
+			al_flip_display();
+		}
 	}
 	al_clear_to_color(al_map_rgb(0,0,0));
 	DrawConsole(game);

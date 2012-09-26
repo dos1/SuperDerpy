@@ -22,6 +22,7 @@
 
 void DrawMenuState(struct Game *game);
 void Menu_Draw(struct Game *game);
+void Menu_Logic(struct Game *game);
 void Menu_Preload(struct Game *game, void (*progress)(struct Game*, float));
 void Menu_Stop(struct Game *game);
 void Menu_Unload(struct Game *game);

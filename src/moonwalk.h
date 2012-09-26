@@ -21,6 +21,7 @@
 #include "main.h"
 
 void Moonwalk_Draw(struct Game *game);
+void Moonwalk_Logic(struct Game *game);
 void Moonwalk_Preload(struct Game *game);
 void Moonwalk_Unload(struct Game *game);
 void Moonwalk_Load(struct Game *game);

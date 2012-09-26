@@ -170,9 +170,11 @@ void Menu_Draw(struct Game *game) {
 	al_draw_text_with_shadow(game->menu.font_subtitle, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.275, ALLEGRO_ALIGN_CENTRE, "Muffin Attack");
 
 	DrawMenuState(game);
+}
 
-	game->menu.cloud_position-=tps(game, 0.1*60);
-	game->menu.cloud2_position-=tps(game, 0.025*60);
+void Menu_Logic(struct Game *game) {
+	game->menu.cloud_position-=0.1;
+	game->menu.cloud2_position-=0.025;
 	if (game->menu.cloud_position<-80) { game->menu.cloud_position=100; PrintConsole(game, "cloud_position"); }
 	if (game->menu.cloud2_position<0) { game->menu.cloud2_position=100; PrintConsole(game, "cloud2_position"); }
 }
@@ -285,22 +287,9 @@ void Menu_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 }
 
 void Menu_Stop(struct Game* game) {
-	game->menu.menu_fade_bitmap = al_create_bitmap(game->viewportWidth, game->viewportHeight);
-	al_set_target_bitmap(game->menu.menu_fade_bitmap);
-	al_clear_to_color(al_map_rgb(0,0,0));
-	al_set_target_bitmap(al_get_backbuffer(game->display));
-	ALLEGRO_EVENT ev;
-	float fadeloop;
-	for(fadeloop=0; fadeloop<256; fadeloop+=tps(game, 600)){
-		al_wait_for_event(game->event_queue, &ev);
-		Menu_Draw(game);
-		al_draw_tinted_bitmap(game->menu.menu_fade_bitmap,al_map_rgba_f(1,1,1,fadeloop/255.0),0,0,0);
-		DrawConsole(game);
-		al_flip_display();
-	}
+	FadeGameState(game, false);
 	al_stop_sample_instance(game->menu.music);
 	al_stop_sample_instance(game->menu.rain_sound);
-	al_destroy_bitmap(game->menu.menu_fade_bitmap);
 }
 
 void ChangeMenuState(struct Game *game, enum menustate_enum state) {
@@ -347,21 +336,7 @@ void Menu_Load(struct Game *game) {
 
 	al_play_sample_instance(game->menu.music);
 	al_play_sample_instance(game->menu.rain_sound);
-	game->menu.menu_fade_bitmap = al_create_bitmap(game->viewportWidth, game->viewportHeight);
-	al_set_target_bitmap(game->menu.menu_fade_bitmap);
-	al_clear_to_color(al_map_rgb(0,0,0));
-	al_set_target_bitmap(al_get_backbuffer(game->display));
-	ALLEGRO_EVENT ev;
-	float fadeloop;
-	for(fadeloop=255; fadeloop>=0; fadeloop-=tps(game, 600)){
-		al_wait_for_event(game->event_queue, &ev);
-		Menu_Draw(game);
-		al_draw_tinted_bitmap(game->menu.menu_fade_bitmap,al_map_rgba_f(1,1,1,fadeloop/255.0),0,0,0);
-		DrawConsole(game);
-		al_flip_display();
-	}
-	al_destroy_bitmap(game->menu.menu_fade_bitmap);
-	Menu_Draw(game);
+	FadeGameState(game, true);
 }
 
 int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {

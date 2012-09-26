@@ -21,6 +21,7 @@
 #include "main.h"
 
 void About_Draw(struct Game *game);
+void About_Logic(struct Game *game);
 void About_Preload(struct Game *game, void (*progress)(struct Game*, float));
 void About_Unload(struct Game *game);
 void About_Load(struct Game *game);

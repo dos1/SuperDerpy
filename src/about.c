@@ -21,17 +21,26 @@
 #include <stdio.h>
 #include "about.h"
 
+void About_Logic(struct Game *game) {
+	if (al_get_sample_instance_position(game->about.music)<700000) { return; }
+	if (game->about.fadeloop>=0) {
+		if (game->about.fadeloop==0) PrintConsole(game, "Fade in");
+		game->about.fadeloop+=5;
+		if (game->about.fadeloop>=256) {
+			al_destroy_bitmap(game->about.fade_bitmap);
+			game->about.fadeloop=-1;
+		}
+		return;
+	}
+	game->about.x+=0.00025;
+}
+
 void About_Draw(struct Game *game) {
 	/*PrintConsole(game, "%d", al_get_sample_instance_position(game->about.music));*/
 	if (al_get_sample_instance_position(game->about.music)<700000) { al_clear_to_color(al_map_rgba(0,0,0,0)); return; }
 	if (game->about.fadeloop>=0) {
 		if (game->about.fadeloop==0) PrintConsole(game, "Fade in");
 		al_draw_tinted_bitmap(game->about.fade_bitmap,al_map_rgba_f(game->about.fadeloop/255.0,game->about.fadeloop/255.0,game->about.fadeloop/255.0,1),0,0,0);
-		game->about.fadeloop+=tps(game, 300);
-		if (game->about.fadeloop>=256) {
-			al_destroy_bitmap(game->about.fade_bitmap);
-			game->about.fadeloop=-1;
-		}
 		return;
 	}
 
@@ -43,7 +52,6 @@ void About_Draw(struct Game *game) {
 	subbitmap = al_create_sub_bitmap(game->about.text_bitmap, 0, x*al_get_bitmap_height(game->about.text_bitmap), al_get_bitmap_width(game->about.text_bitmap), game->viewportHeight);
 	al_draw_rotated_bitmap(subbitmap, al_get_bitmap_width(subbitmap)/2.0, al_get_bitmap_height(subbitmap)/2.0, game->viewportWidth*0.5+al_get_bitmap_width(subbitmap)/2.0, game->viewportHeight*0.1+al_get_bitmap_height(subbitmap)/2.0, -0.11, 0);
 	al_destroy_bitmap(subbitmap);
-	game->about.x+=tps(game, 60*0.00025);
 	if (game->about.x>1) {
 		UnloadGameState(game);
 		game->loadstate = GAMESTATE_MENU;
@@ -184,7 +192,7 @@ void About_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	PROGRESS;
 
 	game->about.fade_bitmap = al_create_bitmap(game->viewportWidth, game->viewportHeight);
-	
+
 	al_set_target_bitmap(game->about.fade_bitmap);
 	al_draw_bitmap(game->about.image, 0, 0, 0);
 	al_draw_bitmap(game->about.letter, game->viewportWidth*0.3, -game->viewportHeight*0.1, 0);
@@ -198,29 +206,12 @@ void About_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 }
 
 void About_Unload(struct Game *game) {
-	if (game->about.x<0) game->about.x=0;
-	ALLEGRO_EVENT ev;
-	game->about.fade_bitmap = al_create_bitmap(game->viewportWidth, game->viewportHeight);
-	al_set_target_bitmap(game->about.fade_bitmap);
-	al_draw_bitmap(game->about.image,0,0,0);
-	al_draw_bitmap(game->about.letter, game->viewportWidth*0.3, -game->viewportHeight*0.1, 0);
-
-	ALLEGRO_BITMAP* subbitmap;
-	subbitmap = al_create_sub_bitmap(game->about.text_bitmap, 0, game->about.x*al_get_bitmap_height(game->about.text_bitmap), al_get_bitmap_width(game->about.text_bitmap), game->viewportHeight);
-	al_draw_rotated_bitmap(subbitmap, al_get_bitmap_width(subbitmap)/2.0, al_get_bitmap_height(subbitmap)/2.0, game->viewportWidth*0.5+al_get_bitmap_width(subbitmap)/2.0, game->viewportHeight*0.1+al_get_bitmap_height(subbitmap)/2.0, -0.11, 0);
-	al_destroy_bitmap(subbitmap);
-	al_set_target_bitmap(al_get_backbuffer(game->display));
-	float fadeloop;
-	if (game->about.fadeloop!=0)
-		for(fadeloop=255; fadeloop>=0; fadeloop-=tps(game, 600)){
-			al_wait_for_event(game->event_queue, &ev);
-			al_draw_tinted_bitmap(game->about.fade_bitmap, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), 0, 0, 0);
-			DrawConsole(game);
-			al_flip_display();
-		}
+	if (game->about.fadeloop!=0) {
+		FadeGameState(game, false);
+	}
 	al_destroy_bitmap(game->about.image);
 	al_destroy_bitmap(game->about.letter);
-	al_destroy_bitmap(game->about.fade_bitmap);
+	if (game->about.fadeloop>=0) al_destroy_bitmap(game->about.fade_bitmap);
 	al_destroy_bitmap(game->about.text_bitmap);
 	al_destroy_sample_instance(game->about.music);
 	al_destroy_sample(game->about.sample);

@@ -95,7 +95,6 @@ struct Spritesheet {
 
 /*! \brief Resources used by moonwalk level placeholder. */
 struct Moonwalk {
-		ALLEGRO_BITMAP *fade_bitmap; /*!< Bitmap used on fade-in and fade-out animations. */
 		ALLEGRO_BITMAP *image; /*!< Background texture. */
 		int derpy_frame; /*!< Current frame of Derpy animation. */
 		int derpy_frame_tmp; /*!< Counter used to slow down Derpy animation. */
@@ -173,7 +172,6 @@ enum menustate_enum {
 
 /*! \brief Resources used by Menu state. */
 struct Menu {
-		ALLEGRO_BITMAP *menu_fade_bitmap; /*!< Screenshot bitmap used for fades. */
 		ALLEGRO_BITMAP *image; /*!< Bitmap with lower portion of menu landscape. */
 		ALLEGRO_BITMAP *cloud; /*!< Bitmap with bigger cloud. */
 		ALLEGRO_BITMAP *cloud2; /*!< Bitmap with small cloud. */
@@ -339,6 +337,12 @@ float tps(struct Game *game, float t);
 
 /*! \brief Draws frame from current gamestate. */
 void DrawGameState(struct Game *game);
+
+/*! \brief Processes logic of current gamestate. */
+void LogicGameState(struct Game *game);
+
+/*! \brief Displays fade in or fade out animation on current gamestate. */
+void FadeGameState(struct Game *game, bool in);
 
 /*! \brief Load shared resources. */
 int Shared_Load(struct Game *game);

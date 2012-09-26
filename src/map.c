@@ -53,20 +53,15 @@ void Map_Draw(struct Game *game) {
 			break;
 	}
 	al_draw_scaled_bitmap(game->map.arrow, 0, 0, al_get_bitmap_width(game->map.arrow), al_get_bitmap_height(game->map.arrow), game->viewportWidth*x, game->viewportHeight*y + ((sin(game->map.arrowpos)+0.5)/20.0)*game->viewportHeight, game->viewportWidth*0.1, game->viewportHeight*0.16, 0);
-	game->map.arrowpos += tps(game, 0.1*60);
+}
+
+void Map_Logic(struct Game *game) {
+	game->map.arrowpos += 0.1;
 }
 
 void Map_Load(struct Game *game) {
 	al_play_sample_instance(game->map.music);
-	ALLEGRO_EVENT ev;
-	float fadeloop;
-	for(fadeloop=0; fadeloop<256; fadeloop+=tps(game, 600)){
-		al_wait_for_event(game->event_queue, &ev);
-		al_draw_tinted_bitmap(game->map.map,al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1),0,0,0);
-		DrawConsole(game);
-		al_flip_display();
-	}
-	Map_Draw(game);
+	FadeGameState(game, true);
 }
 
 int Map_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
@@ -148,14 +143,7 @@ void Map_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 }
 
 void Map_Unload(struct Game *game) {
-	ALLEGRO_EVENT ev;
-	float fadeloop;
-	for(fadeloop=255; fadeloop>=0; fadeloop-=tps(game, 600)){
-		al_wait_for_event(game->event_queue, &ev);
-		al_draw_tinted_bitmap(game->map.map, al_map_rgba_f(fadeloop/255.0,fadeloop/255.0,fadeloop/255.0,1), 0, 0, 0);
-		DrawConsole(game);
-		al_flip_display();
-	}
+	FadeGameState(game, false);
 	al_destroy_bitmap(game->map.map);
 	al_destroy_bitmap(game->map.map_bg);
 	al_destroy_bitmap(game->map.highlight);

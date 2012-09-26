@@ -33,16 +33,7 @@ void Disclaimer_Draw(struct Game *game) {
 }
 
 void Disclaimer_Load(struct Game *game) {
-	ALLEGRO_EVENT ev;
-	float fadeloop;
-	for (fadeloop=255; fadeloop>0; fadeloop-=tps(game, 600)) {
-		al_wait_for_event(game->event_queue, &ev);
-		Disclaimer_Draw(game);
-		al_draw_filled_rectangle(0,0,game->viewportWidth,game->viewportHeight,al_map_rgba(0,0,0,fadeloop));
-		DrawConsole(game);
-		al_flip_display();
-	}
-	Disclaimer_Draw(game);
+	FadeGameState(game, true);
 }
 
 int Disclaimer_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
@@ -62,18 +53,9 @@ void Disclaimer_Preload(struct Game *game, void (*progress)(struct Game*, float)
 }
 
 void Disclaimer_Unload(struct Game *game) {
-	ALLEGRO_EVENT ev;
-	float fadeloop;
-	for (fadeloop=0; fadeloop<256; fadeloop+=tps(game, 600)) {
-		al_wait_for_event(game->event_queue, &ev);
-		Disclaimer_Draw(game);
-		al_draw_filled_rectangle(0,0,game->viewportWidth,game->viewportHeight,al_map_rgba(0,0,0,fadeloop));
-		DrawConsole(game);
-		al_flip_display();
-	}
+	FadeGameState(game, false);
 	if (!game->menu.loaded) {
 		al_destroy_font(game->menu.font);
 		al_destroy_font(game->menu.font_selected);
 	}
-	al_clear_to_color(al_map_rgb(0,0,0));
 }

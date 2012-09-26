@@ -21,6 +21,7 @@
 #include "main.h"
 
 void Map_Draw(struct Game *game);
+void Map_Logic(struct Game *game);
 void Map_Preload(struct Game *game, void (*progress)(struct Game*, float));
 void Map_Unload(struct Game *game);
 void Map_Load(struct Game *game);
