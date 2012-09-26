@@ -347,7 +347,10 @@ bool Welcome(struct Game *game, struct TM_Action *action, enum TM_ActionState st
 bool PassLevel(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (state == TM_ACTIONSTATE_DESTROY) {
 		Level_Passed(game);
-		TM_AddBackgroundAction(&FadeOut, NULL, 0, "fadeout");
+		Level_Unload(game);
+		game->gamestate = GAMESTATE_LOADING;
+		game->loadstate = GAMESTATE_MAP;
+		//TM_AddBackgroundAction(&FadeOut, NULL, 0, "fadeout");
 	}
 	return true;
 }

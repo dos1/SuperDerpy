@@ -429,6 +429,7 @@ int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 						PrintConsole(game,"Game resumed.");
 						al_destroy_bitmap(game->pause.bitmap);
 						game->pause.bitmap = NULL;
+						ResumeGameState(game);
 						game->gamestate = game->loadstate;
 						break;
 					case 1:
@@ -499,6 +500,7 @@ int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 				PrintConsole(game,"Game resumed.");
 				al_destroy_bitmap(game->pause.bitmap);
 				game->pause.bitmap = NULL;
+				ResumeGameState(game);
 				game->gamestate = game->loadstate;
 				break;
 			default:

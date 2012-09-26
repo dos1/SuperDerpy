@@ -99,5 +99,5 @@ void Moonwalk_UnloadBitmaps(struct Game *game) {
 }
 
 void Moonwalk_Unload(struct Game *game) {
-	FadeGameState(game, false);
+	//FadeGameState(game, false);
 }

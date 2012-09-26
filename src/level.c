@@ -227,11 +227,17 @@ void Level_Logic(struct Game *game) {
 	}
 }
 
+void Level_Resume(struct Game *game) {
+	al_set_sample_instance_position(game->level.music, game->level.music_pos);
+	al_set_sample_instance_playing(game->level.music, true);
+}
+
+void Level_Pause(struct Game *game) {
+	game->level.music_pos = al_get_sample_instance_position(game->level.music);
+	al_set_sample_instance_playing(game->level.music, false);
+}
+
 void Level_Draw(struct Game *game) {
-	if (!al_get_sample_instance_playing(game->level.music) && (game->loadstate==GAMESTATE_LEVEL)) {
-		al_set_sample_instance_playing(game->level.music, true);
-		al_set_sample_instance_position(game->level.music, game->level.music_pos);
-	}
 	if (game->level.current_level!=1) Moonwalk_Draw(game);
 	else {
 
@@ -396,10 +402,7 @@ void Level_Load(struct Game *game) {
 }
 
 int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
-	if (ev->keyboard.keycode==ALLEGRO_KEY_ESCAPE) {
-		game->level.music_pos = al_get_sample_instance_position(game->level.music);
-		al_set_sample_instance_playing(game->level.music, false);
-	} else if ((game->debug) && (ev->keyboard.keycode==ALLEGRO_KEY_F2)) {
+	if ((game->debug) && (ev->keyboard.keycode==ALLEGRO_KEY_F2)) {
 		game->level.hp -= 0.1;
 		if (game->level.hp <= 0) game->level.hp=0.001;
 	} else if ((game->debug) && (ev->keyboard.keycode==ALLEGRO_KEY_F3)) {
@@ -449,6 +452,7 @@ void Level_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	game->level.current_level = game->level.input.current_level;
 	game->level.derpy_sheets = NULL;
 	game->level.derpy = NULL;
+	game->level.unloading = false;
 	Pause_Preload(game);
 	RegisterDerpySpritesheet(game, "walk");
 	RegisterDerpySpritesheet(game, "fly");
@@ -470,7 +474,10 @@ void Level_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 }
 
 void Level_Unload(struct Game *game) {
+	if (game->level.unloading) return;
+	game->level.unloading = true;
 	Pause_Unload_Real(game);
+	FadeGameState(game, false);
 	if (game->level.current_level!=1) Moonwalk_Unload(game);
 	else {
 		TM_Destroy();

@@ -119,6 +119,7 @@ struct Level {
 		float hp; /*!< Player health points (0-1). */
 		bool handle_input; /*!< When false, player looses control over Derpy. */
 		bool failed; /*!< Indicates if player failed level. */
+		bool unloading; /*!< Indicated if level is already being unloaded. */
 		float meter_alpha; /*!< Alpha level of HP meter. */
 		int sheet_rows; /*!< Number of rows in current spritesheet. */
 		int sheet_cols; /*!< Number of cols in current spritesheet. */
@@ -314,6 +315,12 @@ void UnloadGameState(struct Game *game);
 
 /*! \brief Loads gamestate set in game->loadstate. */
 void LoadGameState(struct Game *game);
+
+/*! \brief Pauses gamestate set in game->loadstate. */
+void PauseGameState(struct Game *game);
+
+/*! \brief Resumes gamestate set in game->loadstate. */
+void ResumeGameState(struct Game *game);
 
 /*! \brief Finds path for data file. */
 char* GetDataFilePath(char* filename);

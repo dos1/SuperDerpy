@@ -22,6 +22,8 @@
 
 void SelectDerpySpritesheet(struct Game *game, char* name);
 void Level_Passed(struct Game *game);
+void Level_Pause(struct Game *game);
+void Level_Resume(struct Game *game);
 void Level_Draw(struct Game *game);
 void Level_Logic(struct Game *game);
 void Level_Preload(struct Game *game, void (*progress)(struct Game*, float));

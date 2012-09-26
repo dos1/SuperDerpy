@@ -71,32 +71,27 @@ void Pause_Preload(struct Game* game) {
 }
 
 void Pause_Load(struct Game* game) {
-	game->gamestate=game->loadstate;
-	game->loadstate=GAMESTATE_PAUSE;
-	DrawGameState(game);
-	game->loadstate=game->gamestate;
-	game->gamestate=GAMESTATE_PAUSE;
+	PauseGameState(game);
 	ALLEGRO_BITMAP *fade = al_create_bitmap(game->viewportWidth, game->viewportHeight);
 	al_set_target_bitmap(fade);
 	al_clear_to_color(al_map_rgb(0,0,0));
 	al_set_target_bitmap(al_get_backbuffer(game->display));
-	al_draw_tinted_bitmap(fade,al_map_rgba_f(1,1,1,0.75),0,0,0);
-	game->pause.bitmap = al_create_bitmap(game->viewportWidth, game->viewportHeight);
-	al_set_target_bitmap(game->pause.bitmap);
-	al_draw_bitmap(al_get_backbuffer(game->display), -1*(al_get_display_width(game->display)-game->viewportWidth)/2, -1*(al_get_display_height(game->display)-game->viewportHeight)/2, 0);
-	al_draw_bitmap(game->pause.derpy, 0.47*game->viewportWidth, game->viewportHeight*0.396, 0);
-	al_set_target_bitmap(al_get_backbuffer(game->display));
-	al_destroy_bitmap(fade);
+	game->pause.bitmap = fade;
 	ChangeMenuState(game,MENUSTATE_PAUSE);
 	PrintConsole(game,"Game paused.");
 	al_play_sample_instance(game->menu.click);
 }
 
 void Pause_Draw(struct Game* game) {
-	al_draw_bitmap(game->pause.bitmap, 0, 0, 0);
+	game->gamestate=game->loadstate;
+	game->loadstate=GAMESTATE_PAUSE;
+	DrawGameState(game);
+	game->loadstate=game->gamestate;
+	game->gamestate=GAMESTATE_PAUSE;
+	al_draw_tinted_bitmap(game->pause.bitmap,al_map_rgba_f(1,1,1,0.75),0,0,0);
+	al_draw_bitmap(game->pause.derpy, 0.47*game->viewportWidth, game->viewportHeight*0.396, 0);
 	al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.1, ALLEGRO_ALIGN_CENTRE, "Super Derpy");
 	al_draw_text_with_shadow(game->menu.font_subtitle, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.275, ALLEGRO_ALIGN_CENTRE, "Game paused.");
-
 	DrawMenuState(game);
 }
 

@@ -59,9 +59,15 @@
 /*! \brief Macro for drawing active gamestate. */
 #define DRAW_STATE(state, name) case state:\
 	name ## _Draw(game); break;
-/*! \brief Macro for invocing logic function of active gamestate. */
+/*! \brief Macro for invoking logic function of active gamestate. */
 #define LOGIC_STATE(state, name) case state:\
 	name ## _Logic(game); break;
+/*! \brief Macro for invoking pause function of active gamestate. */
+#define PAUSE_STATE(state, name) case state:\
+	PrintConsole(game, "Pause %s...", #state); name ## _Pause(game); break;
+/*! \brief Macro for invoking resume function of active gamestate. */
+#define RESUME_STATE(state, name) case state:\
+	PrintConsole(game, "Resume %s...", #state); name ## _Resume(game); break;
 
 double old_time = 0, fps;
 int frames_done = 0;
@@ -238,6 +244,24 @@ void LogicGameState(struct Game *game) {
 		LOGIC_STATE(GAMESTATE_LEVEL, Level)
 		default:
 			// not every gamestate needs to have logic function
+			break;
+	}
+}
+
+void PauseGameState(struct Game *game) {
+	switch (game->loadstate) {
+		PAUSE_STATE(GAMESTATE_LEVEL, Level)
+		default:
+			// not every gamestate needs to have pause function
+			break;
+	}
+}
+
+void ResumeGameState(struct Game *game) {
+	switch (game->loadstate) {
+		RESUME_STATE(GAMESTATE_LEVEL, Level)
+		default:
+			// not every gamestate needs to have resume function
 			break;
 	}
 }
