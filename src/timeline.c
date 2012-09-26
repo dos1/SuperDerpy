@@ -131,7 +131,7 @@ void Propagate(enum TM_ActionState action) {
 	if (!game) return;
 	if (queue) {
 		if ((*queue->function) && (queue->active)) {
-			(*queue->function)(game, queue, TM_ACTIONSTATE_DRAW);
+			(*queue->function)(game, queue, action);
 		}
 	}
 	/* process all elements from background marked as active */
@@ -139,7 +139,7 @@ void Propagate(enum TM_ActionState action) {
 	while (pom!=NULL) {
 		if (pom->active) {
 			if (*pom->function) {
-				(*pom->function)(game, pom, TM_ACTIONSTATE_DRAW);
+				(*pom->function)(game, pom, action);
 			}
 		}
 		pom = pom->next;
