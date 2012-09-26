@@ -49,9 +49,9 @@ void TM_Process() {
 			if ((*queue->function)(game, queue, TM_ACTIONSTATE_RUNNING)) {
 				PrintConsole(game, "Timeline Manager: queue: destroy action (%d - %s)", queue->id, queue->name);
 				queue->active=false;
-				(*queue->function)(game, queue, TM_ACTIONSTATE_DESTROY);
 				struct TM_Action *tmp = queue;
 				queue = queue->next;
+				(*tmp->function)(game, tmp, TM_ACTIONSTATE_DESTROY);
 				free(tmp->name);
 				free(tmp);
 				if (queue) PrintConsole(game, "Timeline Manager: queue: run action (%d - %s)", queue->id, queue->name);
