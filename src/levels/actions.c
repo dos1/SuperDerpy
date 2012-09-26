@@ -223,6 +223,13 @@ bool Letter(struct Game *game, struct TM_Action *action, enum TM_ActionState sta
 		al_draw_tinted_bitmap(game->level.letter, al_map_rgba(*f,*f,*f,*f), (game->viewportWidth-al_get_bitmap_width(game->level.letter))/2.0, al_get_bitmap_height(game->level.letter)*-0.05, 0);
 		return false;
 	}
+	else if (state == TM_ACTIONSTATE_PAUSE) {
+		ALLEGRO_AUDIO_STREAM** stream = (ALLEGRO_AUDIO_STREAM**)action->arguments->next->value;
+		al_set_audio_stream_playing(*stream, false);
+	}	else if (state == TM_ACTIONSTATE_RESUME) {
+		ALLEGRO_AUDIO_STREAM** stream = (ALLEGRO_AUDIO_STREAM**)action->arguments->next->value;
+		al_set_audio_stream_playing(*stream, true);
+	}
 	if (state != TM_ACTIONSTATE_RUNNING) return false;
 	if (!action->arguments) {
 		action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(float)));
