@@ -52,7 +52,8 @@ void About_Draw(struct Game *game) {
 	subbitmap = al_create_sub_bitmap(game->about.text_bitmap, 0, x*al_get_bitmap_height(game->about.text_bitmap), al_get_bitmap_width(game->about.text_bitmap), game->viewportHeight);
 	al_draw_rotated_bitmap(subbitmap, al_get_bitmap_width(subbitmap)/2.0, al_get_bitmap_height(subbitmap)/2.0, game->viewportWidth*0.5+al_get_bitmap_width(subbitmap)/2.0, game->viewportHeight*0.1+al_get_bitmap_height(subbitmap)/2.0, -0.11, 0);
 	al_destroy_bitmap(subbitmap);
-	if (game->about.x>1) {
+	if ((game->about.x>1) && (game->about.x<10)) {
+		game->about.x=10;
 		UnloadGameState(game);
 		game->loadstate = GAMESTATE_MENU;
 		LoadGameState(game);
