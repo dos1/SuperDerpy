@@ -89,7 +89,7 @@ void Pause_Draw(struct Game* game) {
 	game->loadstate=game->gamestate;
 	game->gamestate=GAMESTATE_PAUSE;
 	al_draw_tinted_bitmap(game->pause.bitmap,al_map_rgba_f(1,1,1,0.75),0,0,0);
-	al_draw_bitmap(game->pause.derpy, 0.47*game->viewportWidth, game->viewportHeight*0.396, 0);
+	al_draw_bitmap(game->pause.derpy, 0.47*game->viewportWidth, game->viewportHeight*0.4, 0);
 	al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.1, ALLEGRO_ALIGN_CENTRE, "Super Derpy");
 	al_draw_text_with_shadow(game->menu.font_subtitle, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.275, ALLEGRO_ALIGN_CENTRE, "Game paused.");
 	DrawMenuState(game);
