@@ -27,6 +27,7 @@
 enum TM_ActionState {
 	TM_ACTIONSTATE_INIT,
 	TM_ACTIONSTATE_RUNNING,
+	TM_ACTIONSTATE_DRAW,
 	TM_ACTIONSTATE_DESTROY
 };
 
@@ -52,6 +53,8 @@ struct TM_Action {
 void TM_Init(struct Game* game);
 /*! \brief Process current timeline actions. */
 void TM_Process();
+/*! \brief Ask current timeline actions to draw. */
+void TM_Draw();
 /*! \brief Handle timer events. */
 void TM_HandleEvent(ALLEGRO_EVENT *ev);
 /*! \brief Add new action to main queue. */

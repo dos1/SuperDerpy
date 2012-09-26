@@ -100,32 +100,24 @@ void Level_Passed(struct Game *game) {
 }
 
 void Level_Logic(struct Game *game) {
-	if (game->level.current_level!=1) Moonwalk_Logic(game);
-}
-
-void Level_Draw(struct Game *game) {
-	if (!al_get_sample_instance_playing(game->level.music) && (game->loadstate==GAMESTATE_LEVEL)) {
-		al_set_sample_instance_playing(game->level.music, true);
-		al_set_sample_instance_position(game->level.music, game->level.music_pos);
-	}
-	if (game->level.current_level!=1) Moonwalk_Draw(game);
-	else {
-
+	if (game->level.current_level!=1) {
+		Moonwalk_Logic(game);
+	} else {
 		struct ALLEGRO_KEYBOARD_STATE keyboard;
 		al_get_keyboard_state(&keyboard);
 		if (game->level.handle_input) {
-			if (game->level.derpy_angle > 0) { game->level.derpy_angle -= tps(game, 60*0.02); if (game->level.derpy_angle < 0) game->level.derpy_angle = 0; }
-			if (game->level.derpy_angle < 0) { game->level.derpy_angle += tps(game, 60*0.02); if (game->level.derpy_angle > 0) game->level.derpy_angle = 0; }
+			if (game->level.derpy_angle > 0) { game->level.derpy_angle -= 0.02; if (game->level.derpy_angle < 0) game->level.derpy_angle = 0; }
+			if (game->level.derpy_angle < 0) { game->level.derpy_angle += 0.02; if (game->level.derpy_angle > 0) game->level.derpy_angle = 0; }
 			if (al_key_down(&keyboard, ALLEGRO_KEY_UP)) {
-				game->level.derpy_y -= tps(game, 60*0.005);
-				game->level.derpy_angle -= tps(game, 60*0.03);
-				if (game->level.derpy_angle < tps(game, 60*-0.15)) game->level.derpy_angle = tps(game, 60*-0.15);
+				game->level.derpy_y -= 0.005;
+				game->level.derpy_angle -= 0.03;
+				if (game->level.derpy_angle < -0.15) game->level.derpy_angle = -0.15;
 				/*PrintConsole(game, "Derpy Y position: %f", game->level.derpy_y);*/
 			}
 			if (al_key_down(&keyboard, ALLEGRO_KEY_DOWN)) {
-				game->level.derpy_y += tps(game, 60*0.005);
-				game->level.derpy_angle += tps(game, 60*0.03);
-				if (game->level.derpy_angle > tps(game, 60*0.15)) game->level.derpy_angle = tps(game, 60*0.15);
+				game->level.derpy_y += 0.005;
+				game->level.derpy_angle += 0.03;
+				if (game->level.derpy_angle > 0.15) game->level.derpy_angle = 0.15;
 				/*PrintConsole(game, "Derpy Y position: %f", game->level.derpy_y);*/
 			}
 			/*if ((game->level.derpy_y > 0.6) && (game->level.flying)) {
@@ -142,9 +134,107 @@ void Level_Draw(struct Game *game) {
 			if (game->level.derpy_y < 0) game->level.derpy_y=0;
 			else if (game->level.derpy_y > 0.8) game->level.derpy_y=0.8;
 
-			game->level.derpy_y += tps(game, 60*(game->level.derpy_angle / 30));
-
+			game->level.derpy_y += game->level.derpy_angle / 30;
 		}
+
+		int derpyx = game->level.derpy_x*game->viewportWidth;
+		int derpyy = game->level.derpy_y*game->viewportHeight;
+		int derpyw = al_get_bitmap_width(game->level.derpy);
+		int derpyh = al_get_bitmap_height(game->level.derpy);
+		int derpyo = game->viewportWidth*0.1953125-al_get_bitmap_width(game->level.derpy); /* offset */
+		struct Obstacle *tmp = game->level.obstacles;
+		while (tmp) {
+			/*PrintConsole(game, "DRAWING %f %f", tmp->x, tmp->y);*/
+			int x = (tmp->x/100.0)*game->viewportWidth;
+			int y = (tmp->y/100.0)*game->viewportHeight;
+			int w = 0, h = 0;
+			if (tmp->bitmap) {
+				w = al_get_bitmap_width(*(tmp->bitmap))/tmp->cols;
+				h = al_get_bitmap_height(*(tmp->bitmap))/tmp->rows;
+			}
+			if (x > -w) {
+				/*if (!tmp->hit)*/
+				if ((((x>=derpyx+0.38*derpyw+derpyo) && (x<=derpyx+0.94*derpyw+derpyo)) || ((x+w>=derpyx+0.38*derpyw+derpyo) && (x+w<=derpyx+0.94*derpyw+derpyo)) || ((x<=derpyx+0.38*derpyw+derpyo) && (x+w>=derpyx+0.94*derpyw+derpyo))) &&
+						(((y>=derpyy+0.26*derpyh) && (y<=derpyy+0.76*derpyh)) || ((y+h>=derpyy+0.26*derpyh) && (y+h<=derpyy+0.76*derpyh)) || ((y<=derpyy+0.26*derpyh) && (y+h>=derpyy+0.76*derpyh)))) {
+					tmp->hit=true;
+				}
+
+				if (tmp->anim_speed) {
+					tmp->tmp_pos+=1;
+					if (tmp->tmp_pos >= tmp->anim_speed) {
+						tmp->pos++;
+						tmp->tmp_pos = 0;
+					}
+					if (tmp->pos>=tmp->cols*tmp->rows-tmp->blanks) tmp->pos=0;
+				}
+
+				if (tmp->hit) {
+					if (tmp->points>=0) tmp->bitmap = NULL;
+					game->level.hp+=0.0002*tmp->points*(((1-game->level.speed_modifier)/2.0)+1);
+					if (game->level.hp>1) game->level.hp=1;
+					//PrintConsole(game, "POINTS: %d, %f", tmp->points, tps(game, 60*0.0002*tmp->points*game->level.speed_modifier));
+					if ((game->level.hp<=0) && (!game->level.failed)) {
+						game->level.failed = true;
+						game->level.handle_input = false;
+						game->level.speed_modifier = 1;
+						TM_AddBackgroundAction(&LevelFailed, NULL, 0, "levelfailed");
+					}
+				}
+				tmp->x -= game->level.speed*game->level.speed_modifier*tmp->speed*100*al_get_bitmap_width(game->level.stage)/(float)game->viewportWidth;
+				if (tmp->callback) tmp->callback(game, tmp);
+				tmp = tmp->next;
+			} else {
+				if (tmp->next)
+					tmp->next->prev = tmp->prev;
+				if (tmp->prev)
+					tmp->prev->next = tmp->next;
+				else
+					game->level.obstacles = tmp->next;
+				struct Obstacle *t = tmp;
+				tmp = tmp->next;
+				free(t);
+			}
+		}
+		/*if (colision) game->level.hp-=tps(game, 60*0.002);*/
+
+		if ((game->level.sheet_speed) && (game->level.sheet_speed_modifier)) {
+			game->level.sheet_tmp+=1;
+			if (game->level.sheet_tmp >= (game->level.sheet_speed/game->level.speed_modifier)/game->level.sheet_speed_modifier) {
+				game->level.sheet_pos++;
+				game->level.sheet_tmp = 0;
+			}
+			if (game->level.sheet_pos>=game->level.sheet_cols*game->level.sheet_rows-game->level.sheet_blanks) {
+				game->level.sheet_pos=0;
+				if (game->level.sheet_successor) {
+					SelectDerpySpritesheet(game, game->level.sheet_successor);
+				}
+			}
+		}
+
+		if (game->level.speed > 0) {
+			game->level.cl_pos += game->level.speed*game->level.speed_modifier * 0.2;
+			game->level.bg_pos += game->level.speed*game->level.speed_modifier * 0.6;
+			game->level.st_pos += game->level.speed*game->level.speed_modifier * 1;
+			game->level.fg_pos += game->level.speed*game->level.speed_modifier * 1.75;
+			if (game->level.bg_pos >= 1) game->level.bg_pos=game->level.bg_pos-1;
+			if (game->level.st_pos >= 1) game->level.st_pos=game->level.st_pos-1;
+			if (game->level.fg_pos >= 1) game->level.fg_pos=game->level.fg_pos-1;
+		}
+		game->level.cl_pos += 0.00005;
+		if (game->level.cl_pos >= 1) game->level.cl_pos=game->level.cl_pos-1;
+
+		TM_Process();
+	}
+}
+
+void Level_Draw(struct Game *game) {
+	if (!al_get_sample_instance_playing(game->level.music) && (game->loadstate==GAMESTATE_LEVEL)) {
+		al_set_sample_instance_playing(game->level.music, true);
+		al_set_sample_instance_position(game->level.music, game->level.music_pos);
+	}
+	if (game->level.current_level!=1) Moonwalk_Draw(game);
+	else {
+
 		al_draw_bitmap(game->level.clouds, (-game->level.cl_pos)*al_get_bitmap_width(game->level.clouds), 0, 0);
 		al_draw_bitmap(game->level.clouds, (1+(-game->level.cl_pos))*al_get_bitmap_width(game->level.clouds), 0, 0);
 		al_draw_bitmap(game->level.background, (-game->level.bg_pos)*al_get_bitmap_width(game->level.background), 0, 0);
@@ -169,10 +259,8 @@ void Level_Draw(struct Game *game) {
 				h = al_get_bitmap_height(*(tmp->bitmap))/tmp->rows;
 			}
 			if (x > -w) {
-				/*if (!tmp->hit)*/
-				if ((((x>=derpyx+0.38*derpyw+derpyo) && (x<=derpyx+0.94*derpyw+derpyo)) || ((x+w>=derpyx+0.38*derpyw+derpyo) && (x+w<=derpyx+0.94*derpyw+derpyo)) || ((x<=derpyx+0.38*derpyw+derpyo) && (x+w>=derpyx+0.94*derpyw+derpyo))) &&
-						(((y>=derpyy+0.26*derpyh) && (y<=derpyy+0.76*derpyh)) || ((y+h>=derpyy+0.26*derpyh) && (y+h<=derpyy+0.76*derpyh)) || ((y<=derpyy+0.26*derpyh) && (y+h>=derpyy+0.76*derpyh)))) {
-					tmp->hit=true;
+				if ((tmp->hit) && (tmp->points<0)) {
+					colision = true;
 				}
 
 				if (tmp->bitmap) {
@@ -181,33 +269,9 @@ void Level_Draw(struct Game *game) {
 					al_destroy_bitmap(subbitmap);
 				}
 
-				if (tmp->anim_speed) {
-					tmp->tmp_pos+=tps(game, 60);
-					if (tmp->tmp_pos >= tmp->anim_speed) {
-						tmp->pos++;
-						tmp->tmp_pos = 0;
-					}
-					if (tmp->pos>=tmp->cols*tmp->rows-tmp->blanks) tmp->pos=0;
-				}
-
 				/*al_draw_bitmap(*(tmp->bitmap), x, y, 0);*/
 				if (game->level.debug_show_sprite_frames) al_draw_rectangle(x, y, x+w, y+h, al_map_rgba(255,0,0,255), 3);
 
-				if (tmp->hit) {
-					if (tmp->points<0) colision = true;
-					else tmp->bitmap = NULL;
-					game->level.hp+=tps(game, 60*0.0002*tmp->points*(((1-game->level.speed_modifier)/2.0)+1));
-					if (game->level.hp>1) game->level.hp=1;
-					PrintConsole(game, "POINTS: %d, %f", tmp->points, tps(game, 60*0.0002*tmp->points*game->level.speed_modifier));
-					if ((game->level.hp<=0) && (!game->level.failed)) {
-						game->level.failed = true;
-						game->level.handle_input = false;
-						game->level.speed_modifier = 1;
-						TM_AddBackgroundAction(&LevelFailed, NULL, 0, "levelfailed");
-					}
-				}
-				tmp->x -= tps(game, game->level.speed*game->level.speed_modifier*60*tmp->speed)*100*al_get_bitmap_width(game->level.stage)/(float)game->viewportWidth;
-				if (tmp->callback) tmp->callback(game, tmp);
 				tmp = tmp->next;
 			} else {
 				if (tmp->next)
@@ -226,19 +290,6 @@ void Level_Draw(struct Game *game) {
 		al_set_target_bitmap(game->level.derpy);
 		al_clear_to_color(al_map_rgba(0,0,0,0));
 		al_draw_bitmap_region(*(game->level.derpy_sheet),al_get_bitmap_width(game->level.derpy)*(game->level.sheet_pos%game->level.sheet_cols),al_get_bitmap_height(game->level.derpy)*(game->level.sheet_pos/game->level.sheet_cols),al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy),0,0,0);
-		if ((game->level.sheet_speed) && (game->level.sheet_speed_modifier)) {
-			game->level.sheet_tmp+=tps(game, 60);
-			if (game->level.sheet_tmp >= (game->level.sheet_speed/game->level.speed_modifier)/game->level.sheet_speed_modifier) {
-				game->level.sheet_pos++;
-				game->level.sheet_tmp = 0;
-			}
-			if (game->level.sheet_pos>=game->level.sheet_cols*game->level.sheet_rows-game->level.sheet_blanks) {
-				game->level.sheet_pos=0;
-				if (game->level.sheet_successor) {
-					SelectDerpySpritesheet(game, game->level.sheet_successor);
-				}
-			}
-		}
 		al_set_target_bitmap(al_get_backbuffer(game->display));
 
 		al_draw_tinted_rotated_bitmap(game->level.derpy, al_map_rgba(255,255-colision*255,255-colision*255,255), al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy)/2, derpyx+game->viewportWidth*0.1953125, derpyy + al_get_bitmap_height(game->level.derpy)/2, game->level.derpy_angle, 0);
@@ -254,17 +305,6 @@ void Level_Draw(struct Game *game) {
 		al_draw_bitmap(game->level.foreground, (-game->level.fg_pos)*al_get_bitmap_width(game->level.foreground), 0 ,0);
 		al_draw_bitmap(game->level.foreground, (1+(-game->level.fg_pos))*al_get_bitmap_width(game->level.foreground), 0 ,0);
 
-		if (game->level.speed > 0) {
-			game->level.cl_pos += tps(game, 60*game->level.speed*game->level.speed_modifier) * 0.2;
-			game->level.bg_pos += tps(game, 60*game->level.speed*game->level.speed_modifier) * 0.6;
-			game->level.st_pos += tps(game, 60*game->level.speed*game->level.speed_modifier) * 1;
-			game->level.fg_pos += tps(game, 60*game->level.speed*game->level.speed_modifier) * 1.75;
-			if (game->level.bg_pos >= 1) game->level.bg_pos=game->level.bg_pos-1;
-			if (game->level.st_pos >= 1) game->level.st_pos=game->level.st_pos-1;
-			if (game->level.fg_pos >= 1) game->level.fg_pos=game->level.fg_pos-1;
-		}
-		game->level.cl_pos += tps(game, 60*0.00005);
-		if (game->level.cl_pos >= 1) game->level.cl_pos=game->level.cl_pos-1;
 
 		al_set_target_bitmap(game->level.meter_bmp);
 		al_clear_to_color(al_map_rgba(0,0,0,0));
@@ -277,7 +317,7 @@ void Level_Draw(struct Game *game) {
 
 		al_draw_tinted_bitmap(game->level.meter_bmp, al_map_rgba(game->level.meter_alpha,game->level.meter_alpha,game->level.meter_alpha,game->level.meter_alpha), game->viewportWidth*0.95-al_get_bitmap_width(game->level.meter_bmp), game->viewportHeight*0.975-al_get_bitmap_height(game->level.meter_bmp), 0);
 
-		TM_Process();
+		TM_Draw();
 	}
 }
 

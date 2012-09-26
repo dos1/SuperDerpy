@@ -108,6 +108,25 @@ void TM_Process() {
 	}
 }
 
+void TM_Draw() {
+	if (!game) return;
+	if (queue) {
+		if ((*queue->function) && (queue->active)) {
+			(*queue->function)(game, queue, TM_ACTIONSTATE_DRAW);
+		}
+	}
+	/* process all elements from background marked as active */
+	struct TM_Action *pom = background;
+	while (pom!=NULL) {
+		if (pom->active) {
+			if (*pom->function) {
+				(*pom->function)(game, pom, TM_ACTIONSTATE_DRAW);
+			}
+		}
+		pom = pom->next;
+	}
+}
+
 void TM_HandleEvent(ALLEGRO_EVENT *ev) {
 	if (ev->type != ALLEGRO_EVENT_TIMER) return;
 	if (!game) return;

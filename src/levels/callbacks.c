@@ -45,13 +45,13 @@ void Obst_RotateSin(struct Game *game, struct Obstacle *obstacle) {
 	float* a = (float*)obstacle->data;
 	/*PrintConsole(game, "%p - %f", obstacle, obstacle->y);*/
 	obstacle->angle = sin(*a)/2.0;
-	*a+=tps(game, 4.5);
+	*a+=4.5/60.0;
 }
 
 void Obst_MoveSin(struct Game *game, struct Obstacle *obstacle) {
 	float* a = (float*)obstacle->data;
 	/*PrintConsole(game, "%p - %f", obstacle, obstacle->y);*/
 	obstacle->y -= sin(*a)*4;
-	*a+=tps(game, 4.5);
+	*a+=4.5/60.0;
 	obstacle->y += sin(*a)*4;
 }

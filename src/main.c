@@ -534,6 +534,7 @@ int main(int argc, char **argv){
 		return -1;
 	}
 	al_register_event_source(game.event_queue, al_get_timer_event_source(game.timer));
+	al_wait_for_vsync();
 	al_start_timer(game.timer);
 
 	setlocale(LC_NUMERIC, "C"); /* FIXME? */
