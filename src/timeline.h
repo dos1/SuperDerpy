@@ -28,7 +28,9 @@ enum TM_ActionState {
 	TM_ACTIONSTATE_INIT,
 	TM_ACTIONSTATE_RUNNING,
 	TM_ACTIONSTATE_DRAW,
-	TM_ACTIONSTATE_DESTROY
+	TM_ACTIONSTATE_DESTROY,
+	TM_ACTIONSTATE_PAUSE,
+	TM_ACTIONSTATE_RESUME
 };
 
 /*! \brief Arguments for TM_Action. */
@@ -55,6 +57,10 @@ void TM_Init(struct Game* game);
 void TM_Process();
 /*! \brief Ask current timeline actions to draw. */
 void TM_Draw();
+/*! \brief Pauses timeline. */
+void TM_Pause();
+/*! \brief Resumes timeline. */
+void TM_Resume();
 /*! \brief Handle timer events. */
 void TM_HandleEvent(ALLEGRO_EVENT *ev);
 /*! \brief Add new action to main queue. */
@@ -65,8 +71,6 @@ struct TM_Action* TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Ac
 struct TM_Action* TM_AddQueuedBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, float delay, char* name);
 /*! \brief Add delay to main queue. */
 void TM_AddDelay(float delay);
-/*! \brief Pause timers. */
-void TM_Pause(bool pause);
 /*! \brief Destroy timeline. */
 void TM_Destroy();
 /*! \brief Add data to TM_Arguments queue. */

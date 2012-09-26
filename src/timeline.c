@@ -108,7 +108,26 @@ void TM_Process() {
 	}
 }
 
-void TM_Draw() {
+void PauseTimers(bool pause) {
+	if (queue) {
+		if (queue->timer) {
+			if (pause) {
+				al_stop_timer(queue->timer);
+			} else if (!queue->active) al_start_timer(queue->timer);
+		}
+	}
+	struct TM_Action* tmp = background;
+	while (tmp) {
+		if (tmp->timer) {
+			if (pause) {
+				al_stop_timer(tmp->timer);
+			} else if (!tmp->active) al_start_timer(tmp->timer);
+		}
+		tmp = tmp->next;
+	}
+}
+
+void Propagate(enum TM_ActionState action) {
 	if (!game) return;
 	if (queue) {
 		if ((*queue->function) && (queue->active)) {
@@ -125,6 +144,24 @@ void TM_Draw() {
 		}
 		pom = pom->next;
 	}
+}
+
+void TM_Draw() {
+	Propagate(TM_ACTIONSTATE_DRAW);
+}
+
+void TM_Pause() {
+	PrintConsole(game, "Timeline Manager: Pause.");
+	paused = true;
+	PauseTimers(true);
+	Propagate(TM_ACTIONSTATE_PAUSE);
+}
+
+void TM_Resume() {
+	PrintConsole(game, "Timeline Manager: Resume.");
+	paused = false;
+	Propagate(TM_ACTIONSTATE_RESUME);
+	PauseTimers(false);
 }
 
 void TM_HandleEvent(ALLEGRO_EVENT *ev) {
@@ -250,27 +287,6 @@ void TM_AddDelay(float delay) {
 	tmp->delay = delay;
 	tmp->timer = al_create_timer(delay/1000.0);
 	al_register_event_source(game->event_queue, al_get_timer_event_source(tmp->timer));
-}
-
-void TM_Pause(bool pause) {
-	paused = pause;
-	PrintConsole(game, "Timeline Manager: pause %d", pause);
-	if (queue) {
-		if (queue->timer) {
-			if (pause) {
-				al_stop_timer(queue->timer);
-			} else if (!queue->active) al_start_timer(queue->timer);
-		}
-	}
-	struct TM_Action* tmp = background;
-	while (tmp) {
-		if (tmp->timer) {
-			if (pause) {
-				al_stop_timer(tmp->timer);
-			} else if (!tmp->active) al_start_timer(tmp->timer);
-		}
-		tmp = tmp->next;
-	}
 }
 
 void TM_Destroy() {

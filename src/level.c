@@ -230,11 +230,17 @@ void Level_Logic(struct Game *game) {
 void Level_Resume(struct Game *game) {
 	al_set_sample_instance_position(game->level.music, game->level.music_pos);
 	al_set_sample_instance_playing(game->level.music, true);
+	if (game->level.current_level==1) {
+		TM_Resume();
+	}
 }
 
 void Level_Pause(struct Game *game) {
 	game->level.music_pos = al_get_sample_instance_position(game->level.music);
 	al_set_sample_instance_playing(game->level.music, false);
+	if (game->level.current_level==1) {
+		TM_Pause();
+	}
 }
 
 void Level_Draw(struct Game *game) {
