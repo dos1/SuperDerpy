@@ -609,7 +609,7 @@ int main(int argc, char **argv){
 				else if ((game.debug) && (ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_F1)) {
 					int i;
 					for (i=0; i<512; i++) {
-						DrawGameState(&game);
+						LogicGameState(&game);
 					}
 					game.showconsole = true;
 					PrintConsole(&game, "DEBUG: 512 frames skipped...");
