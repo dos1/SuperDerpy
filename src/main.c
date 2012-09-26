@@ -613,6 +613,18 @@ int main(int argc, char **argv){
 					}
 					game.showconsole = true;
 					PrintConsole(&game, "DEBUG: 512 frames skipped...");
+				}	else if ((game.debug) && (ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_F10)) {
+					double speed = ALLEGRO_BPS_TO_SECS(al_get_timer_speed(game.timer)); // inverting
+					speed -= 10;
+					if (speed<10) speed = 10;
+					al_set_timer_speed(game.timer, ALLEGRO_BPS_TO_SECS(speed));
+					PrintConsole(&game, "DEBUG: Gameplay speed: %.2fx", speed/60.0);
+				}	else if ((game.debug) && (ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_F11)) {
+					double speed = ALLEGRO_BPS_TO_SECS(al_get_timer_speed(game.timer)); // inverting
+					speed += 10;
+					if (speed>600) speed = 600;
+					al_set_timer_speed(game.timer, ALLEGRO_BPS_TO_SECS(speed));
+					PrintConsole(&game, "DEBUG: Gameplay speed: %.2fx", speed/60.0);
 				} else if ((game.debug) && (ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_F12)) {
 					ALLEGRO_PATH *path = al_get_standard_path(ALLEGRO_USER_DOCUMENTS_PATH);
 					char filename[255] = { };
