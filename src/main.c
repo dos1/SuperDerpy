@@ -296,7 +296,10 @@ void FadeGameState(struct Game *game, bool in) {
 		}
 	}
 	al_destroy_bitmap(bitmap);
-	DrawGameState(game);
+	al_clear_to_color(al_map_rgb(0,0,0));
+	if (in) {
+		DrawGameState(game);
+	}
 }
 
 /*! \brief Scales bitmap using software linear filtering method to current target. */

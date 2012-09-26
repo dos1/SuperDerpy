@@ -42,8 +42,8 @@ void Moonwalk_Draw(struct Game *game) {
 
 	if (game->level.moonwalk.derpy_pos>1) {
 		game->level.moonwalk.derpy_pos=-1;
-		UnloadGameState(game);
 		Level_Passed(game);
+		UnloadGameState(game);
 		if (game->level.current_level<6) {
 			game->gamestate = GAMESTATE_LOADING;
 			game->loadstate = GAMESTATE_MAP;
