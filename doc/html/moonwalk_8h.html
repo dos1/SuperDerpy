@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Super Derpy: Muffin Attack: src/moonwalk.h File Reference</title>
+<title>Super Derpy: Muffin Attack: src/levels/moonwalk.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -78,7 +78,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_4989de145ff53abce397f1ec189271fe.html">levels</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -89,9 +89,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p><a class="el" href="structMoonwalk.html" title="Resources used by moonwalk level placeholder.">Moonwalk</a> <a class="el" href="structLevel.html" title="Resources used by Level state.">Level</a> placeholder headers.  
+<p><a class="el" href="structMoonwalk.html" title="Resources used by Moonwalk level module.">Moonwalk</a> <a class="el" href="structLevel.html" title="Resources used by Level state and shared between level modules.">Level</a> module headers.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="main_8h_source.html">main.h</a>&quot;</code><br/>
+<div class="textblock"><code>#include &quot;<a class="el" href="main_8h_source.html">../main.h</a>&quot;</code><br/>
 </div>
 <p><a href="moonwalk_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -99,8 +99,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Functions</h2></td></tr>
 <tr class="memitem:ada17027f3e0188624b6647a549af4221"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ada17027f3e0188624b6647a549af4221"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Moonwalk_Draw</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
-<tr class="memitem:a01403a33efe25b9c082880bb3da87aaf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a01403a33efe25b9c082880bb3da87aaf"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Moonwalk_Preload</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
+<tr class="memitem:a27b2e0c12f69cd91db1962751092d305"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a27b2e0c12f69cd91db1962751092d305"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Moonwalk_Logic</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
+<tr class="memitem:ad24d0e1fb215c1529c330edb1d460a92"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad24d0e1fb215c1529c330edb1d460a92"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Moonwalk_Preload</b> (struct <a class="el" href="structGame.html">Game</a> *game, void(*progress)(struct <a class="el" href="structGame.html">Game</a> *, float))</td></tr>
 <tr class="memitem:a3d61dce5bc651db69a02c5c3db19115a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3d61dce5bc651db69a02c5c3db19115a"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Moonwalk_Unload</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
 <tr class="memitem:a26bd64c99845ee6da937dbf813397ac5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a26bd64c99845ee6da937dbf813397ac5"></a>
@@ -109,15 +111,17 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Moonwalk_Load</b> (st
 int&#160;</td><td class="memItemRight" valign="bottom"><b>Moonwalk_Keydown</b> (struct <a class="el" href="structGame.html">Game</a> *game, ALLEGRO_EVENT *ev)</td></tr>
 <tr class="memitem:ac994520f5469717d284e8b236f5d94dc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac994520f5469717d284e8b236f5d94dc"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Moonwalk_UnloadBitmaps</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
-<tr class="memitem:ad708c116a711f02e26bfd075281eaed0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad708c116a711f02e26bfd075281eaed0"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Moonwalk_PreloadBitmaps</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
+<tr class="memitem:ae548904970a119a1290f5e83ffa8bf97"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae548904970a119a1290f5e83ffa8bf97"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Moonwalk_PreloadBitmaps</b> (struct <a class="el" href="structGame.html">Game</a> *game, void(*progress)(struct <a class="el" href="structGame.html">Game</a> *, float))</td></tr>
+<tr class="memitem:ac4022b2d4e904aad2ce8337f65e97e72"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac4022b2d4e904aad2ce8337f65e97e72"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Moonwalk_ProcessEvent</b> (struct <a class="el" href="structGame.html">Game</a> *game, ALLEGRO_EVENT *ev)</td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="structMoonwalk.html" title="Resources used by moonwalk level placeholder.">Moonwalk</a> <a class="el" href="structLevel.html" title="Resources used by Level state.">Level</a> placeholder headers. </p>
+<div class="textblock"><p><a class="el" href="structMoonwalk.html" title="Resources used by Moonwalk level module.">Moonwalk</a> <a class="el" href="structLevel.html" title="Resources used by Level state and shared between level modules.">Level</a> module headers. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Aug 25 2012 01:27:40 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 27 2012 02:59:16 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

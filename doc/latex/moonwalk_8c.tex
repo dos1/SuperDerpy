@@ -1,17 +1,20 @@
-\hypertarget{moonwalk_8c}{\section{src/moonwalk.c File Reference}
-\label{moonwalk_8c}\index{src/moonwalk.\-c@{src/moonwalk.\-c}}
+\hypertarget{moonwalk_8c}{\section{src/levels/moonwalk.c File Reference}
+\label{moonwalk_8c}\index{src/levels/moonwalk.\-c@{src/levels/moonwalk.\-c}}
 }
 
 
-\hyperlink{structMoonwalk}{Moonwalk} \hyperlink{structLevel}{Level} placeholder code.  
+\hyperlink{structMoonwalk}{Moonwalk} \hyperlink{structLevel}{Level} module code.  
 
 
 {\ttfamily \#include $<$stdio.\-h$>$}\\*
 {\ttfamily \#include $<$math.\-h$>$}\\*
-{\ttfamily \#include \char`\"{}level.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../level.\-h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}moonwalk.\-h\char`\"{}}\\*
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
+\item 
+\hypertarget{moonwalk_8c_a27b2e0c12f69cd91db1962751092d305}{void {\bfseries Moonwalk\-\_\-\-Logic} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{moonwalk_8c_a27b2e0c12f69cd91db1962751092d305}
+
 \item 
 \hypertarget{moonwalk_8c_ada17027f3e0188624b6647a549af4221}{void {\bfseries Moonwalk\-\_\-\-Draw} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{moonwalk_8c_ada17027f3e0188624b6647a549af4221}
 
@@ -22,10 +25,10 @@
 \hypertarget{moonwalk_8c_a7135831e82fbff6bfd60f8eb079a1446}{int {\bfseries Moonwalk\-\_\-\-Keydown} (struct \hyperlink{structGame}{Game} $\ast$game, A\-L\-L\-E\-G\-R\-O\-\_\-\-E\-V\-E\-N\-T $\ast$ev)}\label{moonwalk_8c_a7135831e82fbff6bfd60f8eb079a1446}
 
 \item 
-\hypertarget{moonwalk_8c_ad708c116a711f02e26bfd075281eaed0}{void {\bfseries Moonwalk\-\_\-\-Preload\-Bitmaps} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{moonwalk_8c_ad708c116a711f02e26bfd075281eaed0}
+\hypertarget{moonwalk_8c_ae548904970a119a1290f5e83ffa8bf97}{void {\bfseries Moonwalk\-\_\-\-Preload\-Bitmaps} (struct \hyperlink{structGame}{Game} $\ast$game, void($\ast$progress)(struct \hyperlink{structGame}{Game} $\ast$, float))}\label{moonwalk_8c_ae548904970a119a1290f5e83ffa8bf97}
 
 \item 
-\hypertarget{moonwalk_8c_a01403a33efe25b9c082880bb3da87aaf}{void {\bfseries Moonwalk\-\_\-\-Preload} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{moonwalk_8c_a01403a33efe25b9c082880bb3da87aaf}
+\hypertarget{moonwalk_8c_ad24d0e1fb215c1529c330edb1d460a92}{void {\bfseries Moonwalk\-\_\-\-Preload} (struct \hyperlink{structGame}{Game} $\ast$game, void($\ast$progress)(struct \hyperlink{structGame}{Game} $\ast$, float))}\label{moonwalk_8c_ad24d0e1fb215c1529c330edb1d460a92}
 
 \item 
 \hypertarget{moonwalk_8c_ac994520f5469717d284e8b236f5d94dc}{void {\bfseries Moonwalk\-\_\-\-Unload\-Bitmaps} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{moonwalk_8c_ac994520f5469717d284e8b236f5d94dc}
@@ -33,8 +36,11 @@
 \item 
 \hypertarget{moonwalk_8c_a3d61dce5bc651db69a02c5c3db19115a}{void {\bfseries Moonwalk\-\_\-\-Unload} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{moonwalk_8c_a3d61dce5bc651db69a02c5c3db19115a}
 
+\item 
+\hypertarget{moonwalk_8c_ac4022b2d4e904aad2ce8337f65e97e72}{void {\bfseries Moonwalk\-\_\-\-Process\-Event} (struct \hyperlink{structGame}{Game} $\ast$game, A\-L\-L\-E\-G\-R\-O\-\_\-\-E\-V\-E\-N\-T $\ast$ev)}\label{moonwalk_8c_ac4022b2d4e904aad2ce8337f65e97e72}
+
 \end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-\hyperlink{structMoonwalk}{Moonwalk} \hyperlink{structLevel}{Level} placeholder code. 
+\hyperlink{structMoonwalk}{Moonwalk} \hyperlink{structLevel}{Level} module code. 

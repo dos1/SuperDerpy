@@ -220,7 +220,7 @@ void Dodger_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev) {
 }
 
 void Dodger_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float)) {
-	float load_p = 12/19.0, load_a = 19; // TODO: FIXME!
+	float load_p = 12/19.0, load_a = 19; // FIXME: please!
 	game->level.dodger.obst_bmps.pie1 = LoadScaledBitmap("levels/pie1.png", game->viewportWidth*0.1, game->viewportHeight*0.08);
 	PROGRESS;
 	game->level.dodger.obst_bmps.pie2 = LoadScaledBitmap("levels/pie2.png", game->viewportWidth*0.1, game->viewportHeight*0.08);

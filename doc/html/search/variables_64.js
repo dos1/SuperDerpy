@@ -13,5 +13,6 @@ var searchData=
   ['derpy_5fsheets',['derpy_sheets',['../structLevel.html#aad19c0af5ac43ceb72df311d89bd4297',1,'Level']]],
   ['derpy_5fx',['derpy_x',['../structLevel.html#ae5a97d5b61c70c63e93992a9ff3935f9',1,'Level']]],
   ['derpy_5fy',['derpy_y',['../structLevel.html#a7b3c0f5af134797a1ed21ef48da3ab00',1,'Level']]],
-  ['display',['display',['../structGame.html#a2bf8ece79fe05b03c31f2e2ede42e5f5',1,'Game']]]
+  ['display',['display',['../structGame.html#a2bf8ece79fe05b03c31f2e2ede42e5f5',1,'Game']]],
+  ['dodger',['dodger',['../structLevel.html#a2b3fe84587aa6335e2d9c8d961e529cc',1,'Level']]]
 ];

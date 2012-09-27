@@ -136,6 +136,7 @@ void Level_Logic(struct Game *game) {
 }
 
 void Level_Resume(struct Game *game) {
+	// TODO: make it modular
 	al_set_sample_instance_position(game->level.music, game->level.music_pos);
 	al_set_sample_instance_playing(game->level.music, true);
 	if (game->level.current_level==1) {
@@ -144,6 +145,7 @@ void Level_Resume(struct Game *game) {
 }
 
 void Level_Pause(struct Game *game) {
+	// TODO: make it modular
 	game->level.music_pos = al_get_sample_instance_position(game->level.music);
 	al_set_sample_instance_playing(game->level.music, false);
 	if (game->level.current_level==1) {
@@ -169,8 +171,7 @@ void Level_Draw(struct Game *game) {
 
 	al_set_target_bitmap(game->level.meter_bmp);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
-	al_draw_filled_rounded_rectangle(al_get_bitmap_width(game->level.meter_bmp)*0.1, al_get_bitmap_height(game->level.meter_bmp)*0.34, al_get_bitmap_width(game->level.meter_bmp)*0.993, al_get_bitmap_height(game->level.meter_bmp)*0.66,
-																	 6,6, al_map_rgb(232,234,239));
+	al_draw_filled_rounded_rectangle(al_get_bitmap_width(game->level.meter_bmp)*0.1, al_get_bitmap_height(game->level.meter_bmp)*0.34, al_get_bitmap_width(game->level.meter_bmp)*0.993, al_get_bitmap_height(game->level.meter_bmp)*0.66, 6,6, al_map_rgb(232,234,239));
 	al_draw_horizontal_gradient_rect(al_get_bitmap_width(game->level.meter_bmp)-game->viewportWidth*0.215, (al_get_bitmap_height(game->level.meter_bmp)-game->viewportHeight*0.025)/2, game->viewportWidth*0.215*0.975, game->viewportHeight*0.025, al_map_rgb(150,159,182), al_map_rgb(130,139,162));
 	al_draw_filled_rectangle(al_get_bitmap_width(game->level.meter_bmp)-game->viewportWidth*0.215, (al_get_bitmap_height(game->level.meter_bmp)-game->viewportHeight*0.025)/2, al_get_bitmap_width(game->level.meter_bmp)-game->viewportWidth*0.215+(game->viewportWidth*0.215*0.975)*game->level.hp, (al_get_bitmap_height(game->level.meter_bmp)-game->viewportHeight*0.025)/2+game->viewportHeight*0.025, al_map_rgb(214,172,55));
 	al_draw_bitmap(game->level.meter_image, 0, 0, 0);
@@ -203,6 +204,7 @@ void Level_Load(struct Game *game) {
 	if (game->level.current_level!=1) Moonwalk_Load(game);
 	else {
 		Dodger_Load(game);
+		// TODO: move to level 1 specific function
 		TM_AddBackgroundAction(&FadeIn, NULL, 0, "fadein");
 		TM_AddDelay(1000);
 		TM_AddQueuedBackgroundAction(&Welcome, NULL, 0, "welcome");
@@ -304,6 +306,7 @@ void Level_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 		game->level.music = al_create_sample_instance(game->level.sample);
 		al_attach_sample_instance_to_mixer(game->level.music, game->audio.music);
 		al_set_sample_instance_playmode(game->level.music, ALLEGRO_PLAYMODE_LOOP);
+		//TODO: make music handling global
 
 		if (!game->level.sample){
 			fprintf(stderr, "Audio clip sample not loaded!\n" );
@@ -336,6 +339,7 @@ void Level_UnloadBitmaps(struct Game *game) {
 	if (game->level.current_level!=1) Moonwalk_UnloadBitmaps(game);
 	else {
 		Dodger_UnloadBitmaps(game);
+		// TODO: move to level 1 specific function
 		al_destroy_font(game->level.letter_font);
 		al_destroy_bitmap(game->level.letter);
 		al_destroy_bitmap(game->level.owl);
@@ -359,6 +363,7 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 	}
 	if (game->level.current_level==1) load_a+=x;
 	else load_a=9+x;
+	// FIXME: pleaaaaseee
 
 	tmp = game->level.derpy_sheets;
 	while (tmp) {
@@ -397,6 +402,7 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 
 	if (game->level.current_level!=1) Moonwalk_PreloadBitmaps(game, progress);
 	else {
+		// TODO: move to level 1 specific function
 		game->level.owl = LoadScaledBitmap("levels/owl.png", game->viewportWidth*0.08, game->viewportWidth*0.08);
 		PROGRESS;
 		game->level.letter_font = al_load_ttf_font(GetDataFilePath("fonts/DejaVuSans.ttf"),game->viewportHeight*0.0225,0 );

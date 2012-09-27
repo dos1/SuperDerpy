@@ -221,6 +221,7 @@ bool Letter(struct Game *game, struct TM_Action *action, enum TM_ActionState sta
 	al_draw_tinted_bitmap(game->level.letter, al_map_rgba(*f,*f,*f,*f), (game->viewportWidth-al_get_bitmap_width(game->level.letter))/2.0, al_get_bitmap_height(game->level.letter)*-0.05, 0);
 	struct ALLEGRO_KEYBOARD_STATE keyboard;
 	al_get_keyboard_state(&keyboard);
+	// FIXME: do it the proper way
 	if (al_key_down(&keyboard, ALLEGRO_KEY_ENTER)) {
 		return true;
 	}

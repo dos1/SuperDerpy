@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['obst_5fbmps',['obst_bmps',['../structLevel.html#aeb52cb0b931eae0233dd1b50f2c02bf2',1,'Level']]],
-  ['obstacles',['obstacles',['../structLevel.html#a4b4ac826580c681b588dae8ae0dde418',1,'Level']]],
-  ['options',['options',['../structMenu.html#a6ee9749efa96939d50728015a3fd6609',1,'Menu']]],
+  ['obst_5fbmps',['obst_bmps',['../structDodger.html#abbf5585478c85e05e1c60258de290507',1,'Dodger']]],
+  ['obstacles',['obstacles',['../structDodger.html#a114a5a2b5b3640ce2bd7b5a9f7486dfc',1,'Dodger']]],
+  ['options',['options',['../structMenu.html#aaacb604a274394a6000f437a081b13df',1,'Menu']]],
   ['owl',['owl',['../structLevel.html#af504e3f628040bc2a2913a50253e856d',1,'Level']]]
 ];

@@ -3,7 +3,7 @@
 }
 
 
-Resources used by \hyperlink{structLevel}{Level} state.  
+Resources used by \hyperlink{structLevel}{Level} state and shared between level modules.  
 
 
 
@@ -13,8 +13,13 @@ Resources used by \hyperlink{structLevel}{Level} state.
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-int \hyperlink{structLevel_a1ba3ee0104c912dde5d6e70fee889512}{current\-\_\-level}
-\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>int \hyperlink{structLevel_a1ba3ee0104c912dde5d6e70fee889512}{current\_level}\\
+\} \hyperlink{structLevel_a238f3f47a5598d7150c6bba03b4f6dda}{input}\\
+
+\end{tabbing}\item 
 float \hyperlink{structLevel_a936a1d131d1e056878474ca831c5e88f}{speed}
 \item 
 float \hyperlink{structLevel_a0f6fa70a2e0b85437dc1973d1409381f}{speed\-\_\-modifier}
@@ -39,6 +44,8 @@ bool \hyperlink{structLevel_a06cf4f2da517284d2006540051d3e5c0}{handle\-\_\-input
 \item 
 bool \hyperlink{structLevel_a5bea34b31777260f1b23a1d64e6cd865}{failed}
 \item 
+bool \hyperlink{structLevel_a058680deb984491fa71d2f212f8025ae}{unloading}
+\item 
 float \hyperlink{structLevel_a246ce1ecf1523db218cf067df15e511f}{meter\-\_\-alpha}
 \item 
 int \hyperlink{structLevel_a6d608b79c9b4dd8a5efc0c7e5fb482b0}{sheet\-\_\-rows}
@@ -48,6 +55,8 @@ int \hyperlink{structLevel_a8a5c443169a4ff15f330a65473eedb1b}{sheet\-\_\-cols}
 int \hyperlink{structLevel_a21c699af201ffe60ccd1319b3f540947}{sheet\-\_\-pos}
 \item 
 int \hyperlink{structLevel_aebaaba311e5d4842fdbd8c50edd40808}{sheet\-\_\-blanks}
+\item 
+char $\ast$ \hyperlink{structLevel_adfecc93d9f14b4725534aa36f5a79c64}{sheet\-\_\-successor}
 \item 
 float \hyperlink{structLevel_a22e80ea91fd267dae85c0457e581d072}{sheet\-\_\-tmp}
 \item 
@@ -91,44 +100,23 @@ bool \hyperlink{structLevel_a1df786b74cff642434ea6587e6141b4d}{debug\-\_\-show\-
 \item 
 struct \hyperlink{structSpritesheet}{Spritesheet} $\ast$ \hyperlink{structLevel_aad19c0af5ac43ceb72df311d89bd4297}{derpy\-\_\-sheets}
 \item 
-struct \hyperlink{structSpritesheet}{Spritesheet} $\ast$ \hyperlink{structLevel_a591b830752cc796a306e96166f736e3b}{pony\-\_\-sheets}
-\item 
-\begin{tabbing}
-xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
-struct \{\\
-\>ALLEGRO\_BITMAP $\ast$ \hyperlink{structLevel_acf777bae2b7533d8eda0d9766ea402df}{pie1}\\
-\>ALLEGRO\_BITMAP $\ast$ \hyperlink{structLevel_a6b817f8a028cbb01ea9d7e1e6dbcdede}{pie2}\\
-\>ALLEGRO\_BITMAP $\ast$ \hyperlink{structLevel_ad4d4190d232b674d4211f3355a9b7a93}{muffin}\\
-\>ALLEGRO\_BITMAP $\ast$ \hyperlink{structLevel_addc469e6a9843c509fc640a4e625fa50}{badmuffin}\\
-\>ALLEGRO\_BITMAP $\ast$ \hyperlink{structLevel_a6f99b0cb9d6bbba1fd903bc304205270}{cherry}\\
-\>ALLEGRO\_BITMAP $\ast$ \hyperlink{structLevel_aacde4816ff59c4d9ab6f403758630b8f}{pig}\\
-\>ALLEGRO\_BITMAP $\ast$ \hyperlink{structLevel_a40c90c0712efb86cd76d0dcae74f2cbd}{screwball}\\
-\} \hyperlink{structLevel_aeb52cb0b931eae0233dd1b50f2c02bf2}{obst\_bmps}\\
-
-\end{tabbing}\item 
-struct \hyperlink{structObstacle}{Obstacle} $\ast$ \hyperlink{structLevel_a4b4ac826580c681b588dae8ae0dde418}{obstacles}
-\item 
 struct \hyperlink{structMoonwalk}{Moonwalk} \hyperlink{structLevel_ab9e39b9ac0f342332e034c59d55d6a07}{moonwalk}
+\item 
+struct \hyperlink{structDodger}{Dodger} \hyperlink{structLevel_a2b3fe84587aa6335e2d9c8d961e529cc}{dodger}
 \end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-Resources used by \hyperlink{structLevel}{Level} state. 
+Resources used by \hyperlink{structLevel}{Level} state and shared between level modules. 
 
 \subsection{Member Data Documentation}
 \hypertarget{structLevel_a4b4dd31284206502977b3d5b95d52abc}{\index{Level@{Level}!background@{background}}
 \index{background@{background}!Level@{Level}}
 \subsubsection[{background}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ Level\-::background}}\label{structLevel_a4b4dd31284206502977b3d5b95d52abc}
-Bitmap of the background layer of the scene. \hypertarget{structLevel_addc469e6a9843c509fc640a4e625fa50}{\index{Level@{Level}!badmuffin@{badmuffin}}
-\index{badmuffin@{badmuffin}!Level@{Level}}
-\subsubsection[{badmuffin}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ Level\-::badmuffin}}\label{structLevel_addc469e6a9843c509fc640a4e625fa50}
-Bad muffin bitmap. \hypertarget{structLevel_a00321214fdc30f67615053d1ca614948}{\index{Level@{Level}!bg\-\_\-pos@{bg\-\_\-pos}}
+Bitmap of the background layer of the scene. \hypertarget{structLevel_a00321214fdc30f67615053d1ca614948}{\index{Level@{Level}!bg\-\_\-pos@{bg\-\_\-pos}}
 \index{bg\-\_\-pos@{bg\-\_\-pos}!Level@{Level}}
 \subsubsection[{bg\-\_\-pos}]{\setlength{\rightskip}{0pt plus 5cm}float Level\-::bg\-\_\-pos}}\label{structLevel_a00321214fdc30f67615053d1ca614948}
-Position of the background layer of the scene. \hypertarget{structLevel_a6f99b0cb9d6bbba1fd903bc304205270}{\index{Level@{Level}!cherry@{cherry}}
-\index{cherry@{cherry}!Level@{Level}}
-\subsubsection[{cherry}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ Level\-::cherry}}\label{structLevel_a6f99b0cb9d6bbba1fd903bc304205270}
-Cherry bitmap. \hypertarget{structLevel_af466533be369b5ce1f48196a7f3b7b0b}{\index{Level@{Level}!cl\-\_\-pos@{cl\-\_\-pos}}
+Position of the background layer of the scene. \hypertarget{structLevel_af466533be369b5ce1f48196a7f3b7b0b}{\index{Level@{Level}!cl\-\_\-pos@{cl\-\_\-pos}}
 \index{cl\-\_\-pos@{cl\-\_\-pos}!Level@{Level}}
 \subsubsection[{cl\-\_\-pos}]{\setlength{\rightskip}{0pt plus 5cm}float Level\-::cl\-\_\-pos}}\label{structLevel_af466533be369b5ce1f48196a7f3b7b0b}
 Position of the clouds layer of the scene. \hypertarget{structLevel_a27d34b57b66d4e7f733cb6a5cc16ff18}{\index{Level@{Level}!clouds@{clouds}}
@@ -152,13 +140,16 @@ Angle of Derpy sprite on screen (radians). \hypertarget{structLevel_a0e02f3a5674
 Pointer to active Derpy sprite sheet. \hypertarget{structLevel_aad19c0af5ac43ceb72df311d89bd4297}{\index{Level@{Level}!derpy\-\_\-sheets@{derpy\-\_\-sheets}}
 \index{derpy\-\_\-sheets@{derpy\-\_\-sheets}!Level@{Level}}
 \subsubsection[{derpy\-\_\-sheets}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf Spritesheet}$\ast$ Level\-::derpy\-\_\-sheets}}\label{structLevel_aad19c0af5ac43ceb72df311d89bd4297}
-List of sprite sheets of Derpy character. \hypertarget{structLevel_ae5a97d5b61c70c63e93992a9ff3935f9}{\index{Level@{Level}!derpy\-\_\-x@{derpy\-\_\-x}}
+List of spritesheets of Derpy character. \hypertarget{structLevel_ae5a97d5b61c70c63e93992a9ff3935f9}{\index{Level@{Level}!derpy\-\_\-x@{derpy\-\_\-x}}
 \index{derpy\-\_\-x@{derpy\-\_\-x}!Level@{Level}}
 \subsubsection[{derpy\-\_\-x}]{\setlength{\rightskip}{0pt plus 5cm}float Level\-::derpy\-\_\-x}}\label{structLevel_ae5a97d5b61c70c63e93992a9ff3935f9}
 Horizontal position of Derpy (0-\/1). \hypertarget{structLevel_a7b3c0f5af134797a1ed21ef48da3ab00}{\index{Level@{Level}!derpy\-\_\-y@{derpy\-\_\-y}}
 \index{derpy\-\_\-y@{derpy\-\_\-y}!Level@{Level}}
 \subsubsection[{derpy\-\_\-y}]{\setlength{\rightskip}{0pt plus 5cm}float Level\-::derpy\-\_\-y}}\label{structLevel_a7b3c0f5af134797a1ed21ef48da3ab00}
-Vertical position of Derpy (0-\/1). \hypertarget{structLevel_a5bea34b31777260f1b23a1d64e6cd865}{\index{Level@{Level}!failed@{failed}}
+Vertical position of Derpy (0-\/1). \hypertarget{structLevel_a2b3fe84587aa6335e2d9c8d961e529cc}{\index{Level@{Level}!dodger@{dodger}}
+\index{dodger@{dodger}!Level@{Level}}
+\subsubsection[{dodger}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf Dodger} Level\-::dodger}}\label{structLevel_a2b3fe84587aa6335e2d9c8d961e529cc}
+\hyperlink{structDodger}{Dodger} module data. \hypertarget{structLevel_a5bea34b31777260f1b23a1d64e6cd865}{\index{Level@{Level}!failed@{failed}}
 \index{failed@{failed}!Level@{Level}}
 \subsubsection[{failed}]{\setlength{\rightskip}{0pt plus 5cm}bool Level\-::failed}}\label{structLevel_a5bea34b31777260f1b23a1d64e6cd865}
 Indicates if player failed level. \hypertarget{structLevel_a665bb93951ab6b7a91543712152a3acf}{\index{Level@{Level}!fg\-\_\-pos@{fg\-\_\-pos}}
@@ -173,7 +164,10 @@ Bitmap of the foreground layer of the scene. \hypertarget{structLevel_a06cf4f2da
 When false, player looses control over Derpy. \hypertarget{structLevel_a49df009e8113251cfcb48fe17df0b571}{\index{Level@{Level}!hp@{hp}}
 \index{hp@{hp}!Level@{Level}}
 \subsubsection[{hp}]{\setlength{\rightskip}{0pt plus 5cm}float Level\-::hp}}\label{structLevel_a49df009e8113251cfcb48fe17df0b571}
-Player health points (0-\/1). \hypertarget{structLevel_af1b1699478b4633d76c01ea09e666df4}{\index{Level@{Level}!letter@{letter}}
+Player health points (0-\/1). \hypertarget{structLevel_a238f3f47a5598d7150c6bba03b4f6dda}{\index{Level@{Level}!input@{input}}
+\index{input@{input}!Level@{Level}}
+\subsubsection[{input}]{\setlength{\rightskip}{0pt plus 5cm}struct \{ ... \}   Level\-::input}}\label{structLevel_a238f3f47a5598d7150c6bba03b4f6dda}
+Gamestate input data. \hypertarget{structLevel_af1b1699478b4633d76c01ea09e666df4}{\index{Level@{Level}!letter@{letter}}
 \index{letter@{letter}!Level@{Level}}
 \subsubsection[{letter}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ Level\-::letter}}\label{structLevel_af1b1699478b4633d76c01ea09e666df4}
 Bitmap with letter from Twilight. \hypertarget{structLevel_a69e6eae14648fd488a1dec0f55e4d293}{\index{Level@{Level}!letter\-\_\-font@{letter\-\_\-font}}
@@ -191,43 +185,19 @@ Bitmap of the H\-P meter. \hypertarget{structLevel_a371c97dfa3d564a19648cb1b72ed
 Derpy image used in the H\-P meter. \hypertarget{structLevel_ab9e39b9ac0f342332e034c59d55d6a07}{\index{Level@{Level}!moonwalk@{moonwalk}}
 \index{moonwalk@{moonwalk}!Level@{Level}}
 \subsubsection[{moonwalk}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf Moonwalk} Level\-::moonwalk}}\label{structLevel_ab9e39b9ac0f342332e034c59d55d6a07}
-\hyperlink{structMoonwalk}{Moonwalk} placeholder data. \hypertarget{structLevel_ad4d4190d232b674d4211f3355a9b7a93}{\index{Level@{Level}!muffin@{muffin}}
-\index{muffin@{muffin}!Level@{Level}}
-\subsubsection[{muffin}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ Level\-::muffin}}\label{structLevel_ad4d4190d232b674d4211f3355a9b7a93}
-Good muffin bitmap. \hypertarget{structLevel_a41c6aae8f508e078b02c291e1d6f8e67}{\index{Level@{Level}!music@{music}}
+\hyperlink{structMoonwalk}{Moonwalk} module data. \hypertarget{structLevel_a41c6aae8f508e078b02c291e1d6f8e67}{\index{Level@{Level}!music@{music}}
 \index{music@{music}!Level@{Level}}
 \subsubsection[{music}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E\-\_\-\-I\-N\-S\-T\-A\-N\-C\-E$\ast$ Level\-::music}}\label{structLevel_a41c6aae8f508e078b02c291e1d6f8e67}
 Sample instance with background music. \hypertarget{structLevel_a13e322deb3298846260af31324e5b492}{\index{Level@{Level}!music\-\_\-pos@{music\-\_\-pos}}
 \index{music\-\_\-pos@{music\-\_\-pos}!Level@{Level}}
 \subsubsection[{music\-\_\-pos}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int Level\-::music\-\_\-pos}}\label{structLevel_a13e322deb3298846260af31324e5b492}
-Position of sample instance. Used when pausing game. \hypertarget{structLevel_aeb52cb0b931eae0233dd1b50f2c02bf2}{\index{Level@{Level}!obst\-\_\-bmps@{obst\-\_\-bmps}}
-\index{obst\-\_\-bmps@{obst\-\_\-bmps}!Level@{Level}}
-\subsubsection[{obst\-\_\-bmps}]{\setlength{\rightskip}{0pt plus 5cm}struct \{ ... \}   Level\-::obst\-\_\-bmps}}\label{structLevel_aeb52cb0b931eae0233dd1b50f2c02bf2}
-\hyperlink{structObstacle}{Obstacle} bitmaps. \hypertarget{structLevel_a4b4ac826580c681b588dae8ae0dde418}{\index{Level@{Level}!obstacles@{obstacles}}
-\index{obstacles@{obstacles}!Level@{Level}}
-\subsubsection[{obstacles}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf Obstacle}$\ast$ Level\-::obstacles}}\label{structLevel_a4b4ac826580c681b588dae8ae0dde418}
-List of obstacles being currently rendered. \hypertarget{structLevel_af504e3f628040bc2a2913a50253e856d}{\index{Level@{Level}!owl@{owl}}
+Position of sample instance. Used when pausing game. \hypertarget{structLevel_af504e3f628040bc2a2913a50253e856d}{\index{Level@{Level}!owl@{owl}}
 \index{owl@{owl}!Level@{Level}}
 \subsubsection[{owl}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ Level\-::owl}}\label{structLevel_af504e3f628040bc2a2913a50253e856d}
-Owlicious bitmap. \hypertarget{structLevel_acf777bae2b7533d8eda0d9766ea402df}{\index{Level@{Level}!pie1@{pie1}}
-\index{pie1@{pie1}!Level@{Level}}
-\subsubsection[{pie1}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ Level\-::pie1}}\label{structLevel_acf777bae2b7533d8eda0d9766ea402df}
-Pie bitmap. \hypertarget{structLevel_a6b817f8a028cbb01ea9d7e1e6dbcdede}{\index{Level@{Level}!pie2@{pie2}}
-\index{pie2@{pie2}!Level@{Level}}
-\subsubsection[{pie2}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ Level\-::pie2}}\label{structLevel_a6b817f8a028cbb01ea9d7e1e6dbcdede}
-Pie bitmap (crossed). \hypertarget{structLevel_aacde4816ff59c4d9ab6f403758630b8f}{\index{Level@{Level}!pig@{pig}}
-\index{pig@{pig}!Level@{Level}}
-\subsubsection[{pig}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ Level\-::pig}}\label{structLevel_aacde4816ff59c4d9ab6f403758630b8f}
-Pig spritesheet bitmap. \hypertarget{structLevel_a591b830752cc796a306e96166f736e3b}{\index{Level@{Level}!pony\-\_\-sheets@{pony\-\_\-sheets}}
-\index{pony\-\_\-sheets@{pony\-\_\-sheets}!Level@{Level}}
-\subsubsection[{pony\-\_\-sheets}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf Spritesheet}$\ast$ Level\-::pony\-\_\-sheets}}\label{structLevel_a591b830752cc796a306e96166f736e3b}
-List of sprite sheets of character rescued by Derpy. \hypertarget{structLevel_a234fa7b9ec35dd360e4e3c48a944fc7d}{\index{Level@{Level}!sample@{sample}}
+Owlicious bitmap. \hypertarget{structLevel_a234fa7b9ec35dd360e4e3c48a944fc7d}{\index{Level@{Level}!sample@{sample}}
 \index{sample@{sample}!Level@{Level}}
 \subsubsection[{sample}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E$\ast$ Level\-::sample}}\label{structLevel_a234fa7b9ec35dd360e4e3c48a944fc7d}
-Sample with background music. \hypertarget{structLevel_a40c90c0712efb86cd76d0dcae74f2cbd}{\index{Level@{Level}!screwball@{screwball}}
-\index{screwball@{screwball}!Level@{Level}}
-\subsubsection[{screwball}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ Level\-::screwball}}\label{structLevel_a40c90c0712efb86cd76d0dcae74f2cbd}
-Screwball spritesheet bitmap. \hypertarget{structLevel_aebaaba311e5d4842fdbd8c50edd40808}{\index{Level@{Level}!sheet\-\_\-blanks@{sheet\-\_\-blanks}}
+Sample with background music. \hypertarget{structLevel_aebaaba311e5d4842fdbd8c50edd40808}{\index{Level@{Level}!sheet\-\_\-blanks@{sheet\-\_\-blanks}}
 \index{sheet\-\_\-blanks@{sheet\-\_\-blanks}!Level@{Level}}
 \subsubsection[{sheet\-\_\-blanks}]{\setlength{\rightskip}{0pt plus 5cm}int Level\-::sheet\-\_\-blanks}}\label{structLevel_aebaaba311e5d4842fdbd8c50edd40808}
 Number of blank frames at the end of current spritesheet. \hypertarget{structLevel_a8a5c443169a4ff15f330a65473eedb1b}{\index{Level@{Level}!sheet\-\_\-cols@{sheet\-\_\-cols}}
@@ -248,7 +218,10 @@ Scale modifier of current spritesheet. \hypertarget{structLevel_a41db1345ac15889
 Current speed of Derpy animation. \hypertarget{structLevel_a3cae10fd441bcc14b6a47dd5fedafa59}{\index{Level@{Level}!sheet\-\_\-speed\-\_\-modifier@{sheet\-\_\-speed\-\_\-modifier}}
 \index{sheet\-\_\-speed\-\_\-modifier@{sheet\-\_\-speed\-\_\-modifier}!Level@{Level}}
 \subsubsection[{sheet\-\_\-speed\-\_\-modifier}]{\setlength{\rightskip}{0pt plus 5cm}float Level\-::sheet\-\_\-speed\-\_\-modifier}}\label{structLevel_a3cae10fd441bcc14b6a47dd5fedafa59}
-Modifier of speed, specified by current spritesheet. \hypertarget{structLevel_a22e80ea91fd267dae85c0457e581d072}{\index{Level@{Level}!sheet\-\_\-tmp@{sheet\-\_\-tmp}}
+Modifier of speed, specified by current spritesheet. \hypertarget{structLevel_adfecc93d9f14b4725534aa36f5a79c64}{\index{Level@{Level}!sheet\-\_\-successor@{sheet\-\_\-successor}}
+\index{sheet\-\_\-successor@{sheet\-\_\-successor}!Level@{Level}}
+\subsubsection[{sheet\-\_\-successor}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ Level\-::sheet\-\_\-successor}}\label{structLevel_adfecc93d9f14b4725534aa36f5a79c64}
+Successor of current animation. If blank, then it's looped. \hypertarget{structLevel_a22e80ea91fd267dae85c0457e581d072}{\index{Level@{Level}!sheet\-\_\-tmp@{sheet\-\_\-tmp}}
 \index{sheet\-\_\-tmp@{sheet\-\_\-tmp}!Level@{Level}}
 \subsubsection[{sheet\-\_\-tmp}]{\setlength{\rightskip}{0pt plus 5cm}float Level\-::sheet\-\_\-tmp}}\label{structLevel_a22e80ea91fd267dae85c0457e581d072}
 Temporary counter used to slow down spritesheet animation. \hypertarget{structLevel_a936a1d131d1e056878474ca831c5e88f}{\index{Level@{Level}!speed@{speed}}
@@ -263,7 +236,10 @@ Modifier of the speed of the player. \hypertarget{structLevel_ab13f799d9e2e06a04
 Position of the stage layer of the scene. \hypertarget{structLevel_ad412b858a4e688114dd89a44ecb005bb}{\index{Level@{Level}!stage@{stage}}
 \index{stage@{stage}!Level@{Level}}
 \subsubsection[{stage}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ Level\-::stage}}\label{structLevel_ad412b858a4e688114dd89a44ecb005bb}
-Bitmap of the stage layer of the scene. \hypertarget{structLevel_a575fec7686bd94b5c35b15d73296c977}{\index{Level@{Level}!welcome@{welcome}}
+Bitmap of the stage layer of the scene. \hypertarget{structLevel_a058680deb984491fa71d2f212f8025ae}{\index{Level@{Level}!unloading@{unloading}}
+\index{unloading@{unloading}!Level@{Level}}
+\subsubsection[{unloading}]{\setlength{\rightskip}{0pt plus 5cm}bool Level\-::unloading}}\label{structLevel_a058680deb984491fa71d2f212f8025ae}
+Indicated if level is already being unloaded. \hypertarget{structLevel_a575fec7686bd94b5c35b15d73296c977}{\index{Level@{Level}!welcome@{welcome}}
 \index{welcome@{welcome}!Level@{Level}}
 \subsubsection[{welcome}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ Level\-::welcome}}\label{structLevel_a575fec7686bd94b5c35b15d73296c977}
 Bitmap of the welcome text (for instance \char`\"{}\-Level 1\-: Fluttershy\char`\"{}). 

@@ -104,6 +104,19 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="time
 <tr class="memitem:a75451d54b61c3ec12815790c2e33a31e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a75451d54b61c3ec12815790c2e33a31e"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeline_8c.html#a75451d54b61c3ec12815790c2e33a31e">TM_Process</a> ()</td></tr>
 <tr class="memdesc:a75451d54b61c3ec12815790c2e33a31e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process current timeline actions. <br/></td></tr>
+<tr class="memitem:aff8881d3b71ebd12dc8bbb68b59f2742"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aff8881d3b71ebd12dc8bbb68b59f2742"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PauseTimers</b> (bool pause)</td></tr>
+<tr class="memitem:a6d870efa3e843a8a5a5449d3447e65d2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6d870efa3e843a8a5a5449d3447e65d2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Propagate</b> (enum <a class="el" href="timeline_8h.html#a76cf4bbb9006628ae8bcd1a4f3afdf87">TM_ActionState</a> action)</td></tr>
+<tr class="memitem:ac34e045ccf87d833a4371a9d8e1f6725"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac34e045ccf87d833a4371a9d8e1f6725"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeline_8c.html#ac34e045ccf87d833a4371a9d8e1f6725">TM_Draw</a> ()</td></tr>
+<tr class="memdesc:ac34e045ccf87d833a4371a9d8e1f6725"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ask current timeline actions to draw. <br/></td></tr>
+<tr class="memitem:a8fa40b4c90831b2fec1d878743aac09d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8fa40b4c90831b2fec1d878743aac09d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeline_8c.html#a8fa40b4c90831b2fec1d878743aac09d">TM_Pause</a> ()</td></tr>
+<tr class="memdesc:a8fa40b4c90831b2fec1d878743aac09d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pauses timeline. <br/></td></tr>
+<tr class="memitem:a35f0ba74edb8501a1f8fc89e19153cbd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a35f0ba74edb8501a1f8fc89e19153cbd"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeline_8c.html#a35f0ba74edb8501a1f8fc89e19153cbd">TM_Resume</a> ()</td></tr>
+<tr class="memdesc:a35f0ba74edb8501a1f8fc89e19153cbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resumes timeline. <br/></td></tr>
 <tr class="memitem:a2e38ca3352eaa0cccb741f7d6c6f9bb9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2e38ca3352eaa0cccb741f7d6c6f9bb9"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeline_8c.html#a2e38ca3352eaa0cccb741f7d6c6f9bb9">TM_HandleEvent</a> (ALLEGRO_EVENT *ev)</td></tr>
 <tr class="memdesc:a2e38ca3352eaa0cccb741f7d6c6f9bb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle timer events. <br/></td></tr>
@@ -122,9 +135,6 @@ struct <a class="el" href="structTM__Action.html">TM_Action</a> *&#160;</td><td 
 <tr class="memitem:a96012953eefd9118c10f0b888b001e41"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a96012953eefd9118c10f0b888b001e41"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeline_8c.html#a96012953eefd9118c10f0b888b001e41">TM_AddDelay</a> (float delay)</td></tr>
 <tr class="memdesc:a96012953eefd9118c10f0b888b001e41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add delay to main queue. <br/></td></tr>
-<tr class="memitem:acbfe5777a0ca67e36ba31b6e4ce55696"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acbfe5777a0ca67e36ba31b6e4ce55696"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeline_8c.html#acbfe5777a0ca67e36ba31b6e4ce55696">TM_Pause</a> (bool pause)</td></tr>
-<tr class="memdesc:acbfe5777a0ca67e36ba31b6e4ce55696"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structPause.html" title="Resources used by Pause state.">Pause</a> timers. <br/></td></tr>
 <tr class="memitem:a950cb13ffd2bf9dc9954ad6cc462075f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a950cb13ffd2bf9dc9954ad6cc462075f"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timeline_8c.html#a950cb13ffd2bf9dc9954ad6cc462075f">TM_Destroy</a> ()</td></tr>
 <tr class="memdesc:a950cb13ffd2bf9dc9954ad6cc462075f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy timeline. <br/></td></tr>
@@ -148,15 +158,13 @@ struct <a class="el" href="structGame.html">Game</a> *&#160;</td><td class="memI
 struct <a class="el" href="structTM__Action.html">TM_Action</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>queue</b></td></tr>
 <tr class="memitem:aafe2721a3300a2464e673bb405a513da"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aafe2721a3300a2464e673bb405a513da"></a>
 struct <a class="el" href="structTM__Action.html">TM_Action</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>background</b></td></tr>
-<tr class="memitem:a1656129c4a4fd8809254194f08f0ac70"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1656129c4a4fd8809254194f08f0ac70"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>paused</b></td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Timeline Manager framework code. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Aug 25 2012 01:27:40 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 27 2012 02:59:16 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

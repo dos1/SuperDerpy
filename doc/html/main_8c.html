@@ -121,9 +121,18 @@ Macros</h2></td></tr>
 <tr class="memdesc:ad177e8b9a44bacebfe10168f6b6fb983"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for sending keydown events to gamestate. <br/></td></tr>
 <tr class="memitem:a2073d7fa9facf2f65d7198e159714d28"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a2073d7fa9facf2f65d7198e159714d28">DRAW_STATE</a>(state, name)</td></tr>
 <tr class="memdesc:a2073d7fa9facf2f65d7198e159714d28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for drawing active gamestate.  <a href="#a2073d7fa9facf2f65d7198e159714d28"></a><br/></td></tr>
+<tr class="memitem:a377e5ef6571dce5dc2ddbff14df69932"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a377e5ef6571dce5dc2ddbff14df69932">LOGIC_STATE</a>(state, name)</td></tr>
+<tr class="memdesc:a377e5ef6571dce5dc2ddbff14df69932"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for invoking logic function of active gamestate.  <a href="#a377e5ef6571dce5dc2ddbff14df69932"></a><br/></td></tr>
+<tr class="memitem:a84252a86aaf291a45b6318fe80a767fa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a84252a86aaf291a45b6318fe80a767fa">PAUSE_STATE</a>(state, name)</td></tr>
+<tr class="memdesc:a84252a86aaf291a45b6318fe80a767fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for invoking pause function of active gamestate.  <a href="#a84252a86aaf291a45b6318fe80a767fa"></a><br/></td></tr>
+<tr class="memitem:af38a995c235fecc1427c040f3bffda7e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#af38a995c235fecc1427c040f3bffda7e">RESUME_STATE</a>(state, name)</td></tr>
+<tr class="memdesc:af38a995c235fecc1427c040f3bffda7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for invoking resume function of active gamestate.  <a href="#af38a995c235fecc1427c040f3bffda7e"></a><br/></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a3c3512cfd72e3078ed970085f31a7b40"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c3512cfd72e3078ed970085f31a7b40"></a>
+char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a3c3512cfd72e3078ed970085f31a7b40">GetDataFilePath</a> (char *filename)</td></tr>
+<tr class="memdesc:a3c3512cfd72e3078ed970085f31a7b40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds path for data file. <br/></td></tr>
 <tr class="memitem:a83e9560a39a8b6beea953f69553dd28b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a83e9560a39a8b6beea953f69553dd28b">PrintConsole</a> (struct <a class="el" href="structGame.html">Game</a> *game, char *format,...)</td></tr>
 <tr class="memdesc:a83e9560a39a8b6beea953f69553dd28b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print some message on game console.  <a href="#a83e9560a39a8b6beea953f69553dd28b"></a><br/></td></tr>
 <tr class="memitem:a3a03870a3158c22e10b22d60822c190a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a03870a3158c22e10b22d60822c190a"></a>
@@ -141,15 +150,24 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main
 <tr class="memitem:aba8768911068b399b4118452eb3959ec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aba8768911068b399b4118452eb3959ec"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#aba8768911068b399b4118452eb3959ec">DrawGameState</a> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
 <tr class="memdesc:aba8768911068b399b4118452eb3959ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws frame from current gamestate. <br/></td></tr>
+<tr class="memitem:ad0546784746e89712b06e405ad907bb9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad0546784746e89712b06e405ad907bb9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#ad0546784746e89712b06e405ad907bb9">LogicGameState</a> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
+<tr class="memdesc:ad0546784746e89712b06e405ad907bb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes logic of current gamestate. <br/></td></tr>
+<tr class="memitem:acec4517002cf3ba62b607d3f4ebe20e8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acec4517002cf3ba62b607d3f4ebe20e8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#acec4517002cf3ba62b607d3f4ebe20e8">PauseGameState</a> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
+<tr class="memdesc:acec4517002cf3ba62b607d3f4ebe20e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pauses gamestate set in game-&gt;loadstate. <br/></td></tr>
+<tr class="memitem:a132daa46a6e55c1508badea4d38b6fc6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a132daa46a6e55c1508badea4d38b6fc6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a132daa46a6e55c1508badea4d38b6fc6">ResumeGameState</a> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
+<tr class="memdesc:a132daa46a6e55c1508badea4d38b6fc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resumes gamestate set in game-&gt;loadstate. <br/></td></tr>
+<tr class="memitem:a9b39a4855e329ac4613b2ff881c86e9b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9b39a4855e329ac4613b2ff881c86e9b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a9b39a4855e329ac4613b2ff881c86e9b">FadeGameState</a> (struct <a class="el" href="structGame.html">Game</a> *game, bool in)</td></tr>
+<tr class="memdesc:a9b39a4855e329ac4613b2ff881c86e9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays fade in or fade out animation on current gamestate. <br/></td></tr>
 <tr class="memitem:a95f035fc3dfd7397ae24243d156c8195"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a95f035fc3dfd7397ae24243d156c8195"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a95f035fc3dfd7397ae24243d156c8195">ScaleBitmap</a> (ALLEGRO_BITMAP *source, int width, int height)</td></tr>
 <tr class="memdesc:a95f035fc3dfd7397ae24243d156c8195"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scales bitmap using software linear filtering method to current target. <br/></td></tr>
 <tr class="memitem:a83bf17fca7535cabf55e8fcffbf80c7c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a83bf17fca7535cabf55e8fcffbf80c7c"></a>
 ALLEGRO_BITMAP *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a83bf17fca7535cabf55e8fcffbf80c7c">LoadScaledBitmap</a> (char *filename, int width, int height)</td></tr>
 <tr class="memdesc:a83bf17fca7535cabf55e8fcffbf80c7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads bitmap into memory and scales it with software linear filtering. <br/></td></tr>
-<tr class="memitem:a1f39d133bfa874d55703118487a186e6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1f39d133bfa874d55703118487a186e6"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a1f39d133bfa874d55703118487a186e6">tps</a> (struct <a class="el" href="structGame.html">Game</a> *game, float t)</td></tr>
-<tr class="memdesc:a1f39d133bfa874d55703118487a186e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws console bitmap on screen. <br/></td></tr>
 <tr class="memitem:a7026a8094d3ddca6f7a69b8b489515e7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7026a8094d3ddca6f7a69b8b489515e7"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a7026a8094d3ddca6f7a69b8b489515e7">SetupViewport</a> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
 <tr class="memdesc:a7026a8094d3ddca6f7a69b8b489515e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setups letterbox viewport if necessary. <br/></td></tr>
@@ -240,6 +258,66 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>frames_done</b> = 0</t
 
 </div>
 </div>
+<a class="anchor" id="a377e5ef6571dce5dc2ddbff14df69932"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LOGIC_STATE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">state, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">case</span> state:\</div>
+<div class="line">        name ## _Logic(game); <span class="keywordflow">break</span>;</div>
+</div><!-- fragment -->
+<p>Macro for invoking logic function of active gamestate. </p>
+
+</div>
+</div>
+<a class="anchor" id="a84252a86aaf291a45b6318fe80a767fa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PAUSE_STATE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">state, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">case</span> state:\</div>
+<div class="line">        PrintConsole(game, <span class="stringliteral">&quot;Pause %s...&quot;</span>, #state); name ## _Pause(game); <span class="keywordflow">break</span>;</div>
+</div><!-- fragment -->
+<p>Macro for invoking pause function of active gamestate. </p>
+
+</div>
+</div>
 <a class="anchor" id="a6f4cfa63173a94a303439c98b0529180"></a>
 <div class="memitem">
 <div class="memproto">
@@ -268,6 +346,36 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>frames_done</b> = 0</t
 </div><!-- fragment -->
 <p>Macro for preloading gamestate. </p>
 <p>Preloading of state happens when loading screen is displayed. </p>
+
+</div>
+</div>
+<a class="anchor" id="af38a995c235fecc1427c040f3bffda7e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RESUME_STATE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">state, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">case</span> state:\</div>
+<div class="line">        PrintConsole(game, <span class="stringliteral">&quot;Resume %s...&quot;</span>, #state); name ## _Resume(game); <span class="keywordflow">break</span>;</div>
+</div><!-- fragment -->
+<p>Macro for invoking resume function of active gamestate. </p>
 
 </div>
 </div>
@@ -341,7 +449,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>frames_done</b> = 0</t
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Aug 25 2012 01:27:40 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 27 2012 02:59:16 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

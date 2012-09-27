@@ -106,14 +106,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMoonwalk.html">Moonwalk</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resources used by moonwalk level placeholder.  <a href="structMoonwalk.html#details">More...</a><br/></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structObstacle.html">Obstacle</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure representing obstacles and power-ups flying through the level.  <a href="structObstacle.html#details">More...</a><br/></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSpritesheet.html">Spritesheet</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure representing one spritesheet animation of Derpy.  <a href="structSpritesheet.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMoonwalk.html">Moonwalk</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resources used by <a class="el" href="structMoonwalk.html" title="Resources used by Moonwalk level module.">Moonwalk</a> level module.  <a href="structMoonwalk.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structDodger.html">Dodger</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resources used by <a class="el" href="structDodger.html" title="Resources used by Dodger level module.">Dodger</a> level module.  <a href="structDodger.html#details">More...</a><br/></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLevel.html">Level</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resources used by <a class="el" href="structLevel.html" title="Resources used by Level state.">Level</a> state.  <a href="structLevel.html#details">More...</a><br/></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resources used by <a class="el" href="structLevel.html" title="Resources used by Level state and shared between level modules.">Level</a> state and shared between level modules.  <a href="structLevel.html#details">More...</a><br/></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMenu.html">Menu</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resources used by <a class="el" href="structMenu.html" title="Resources used by Menu state.">Menu</a> state.  <a href="structMenu.html#details">More...</a><br/></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLoading.html">Loading</a></td></tr>
@@ -127,7 +129,7 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIntro.html">Intro</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resources used by <a class="el" href="structIntro.html" title="Resources used by Intro state.">Intro</a> state.  <a href="structIntro.html#details">More...</a><br/></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGame.html">Game</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resources used by <a class="el" href="structGame.html" title="Resources used by Game state.">Game</a> state.  <a href="structGame.html#details">More...</a><br/></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main struct of the game.  <a href="structGame.html#details">More...</a><br/></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -176,6 +178,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main
 <tr class="memitem:afe84ca1b0107fe689f9d2987d83caea0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afe84ca1b0107fe689f9d2987d83caea0"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#afe84ca1b0107fe689f9d2987d83caea0">LoadGameState</a> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
 <tr class="memdesc:afe84ca1b0107fe689f9d2987d83caea0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads gamestate set in game-&gt;loadstate. <br/></td></tr>
+<tr class="memitem:acec4517002cf3ba62b607d3f4ebe20e8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acec4517002cf3ba62b607d3f4ebe20e8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#acec4517002cf3ba62b607d3f4ebe20e8">PauseGameState</a> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
+<tr class="memdesc:acec4517002cf3ba62b607d3f4ebe20e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pauses gamestate set in game-&gt;loadstate. <br/></td></tr>
+<tr class="memitem:a132daa46a6e55c1508badea4d38b6fc6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a132daa46a6e55c1508badea4d38b6fc6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a132daa46a6e55c1508badea4d38b6fc6">ResumeGameState</a> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
+<tr class="memdesc:a132daa46a6e55c1508badea4d38b6fc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resumes gamestate set in game-&gt;loadstate. <br/></td></tr>
+<tr class="memitem:a3c3512cfd72e3078ed970085f31a7b40"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c3512cfd72e3078ed970085f31a7b40"></a>
+char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a3c3512cfd72e3078ed970085f31a7b40">GetDataFilePath</a> (char *filename)</td></tr>
+<tr class="memdesc:a3c3512cfd72e3078ed970085f31a7b40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds path for data file. <br/></td></tr>
 <tr class="memitem:a83e9560a39a8b6beea953f69553dd28b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a83e9560a39a8b6beea953f69553dd28b">PrintConsole</a> (struct <a class="el" href="structGame.html">Game</a> *game, char *format,...)</td></tr>
 <tr class="memdesc:a83e9560a39a8b6beea953f69553dd28b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print some message on game console.  <a href="#a83e9560a39a8b6beea953f69553dd28b"></a><br/></td></tr>
 <tr class="memitem:a3a03870a3158c22e10b22d60822c190a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a03870a3158c22e10b22d60822c190a"></a>
@@ -184,12 +195,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main
 <tr class="memitem:a83bf17fca7535cabf55e8fcffbf80c7c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a83bf17fca7535cabf55e8fcffbf80c7c"></a>
 ALLEGRO_BITMAP *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a83bf17fca7535cabf55e8fcffbf80c7c">LoadScaledBitmap</a> (char *filename, int width, int height)</td></tr>
 <tr class="memdesc:a83bf17fca7535cabf55e8fcffbf80c7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads bitmap into memory and scales it with software linear filtering. <br/></td></tr>
-<tr class="memitem:a1f39d133bfa874d55703118487a186e6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1f39d133bfa874d55703118487a186e6"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a1f39d133bfa874d55703118487a186e6">tps</a> (struct <a class="el" href="structGame.html">Game</a> *game, float t)</td></tr>
-<tr class="memdesc:a1f39d133bfa874d55703118487a186e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws console bitmap on screen. <br/></td></tr>
 <tr class="memitem:aba8768911068b399b4118452eb3959ec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aba8768911068b399b4118452eb3959ec"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#aba8768911068b399b4118452eb3959ec">DrawGameState</a> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
 <tr class="memdesc:aba8768911068b399b4118452eb3959ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws frame from current gamestate. <br/></td></tr>
+<tr class="memitem:ad0546784746e89712b06e405ad907bb9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad0546784746e89712b06e405ad907bb9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#ad0546784746e89712b06e405ad907bb9">LogicGameState</a> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
+<tr class="memdesc:ad0546784746e89712b06e405ad907bb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes logic of current gamestate. <br/></td></tr>
+<tr class="memitem:a9b39a4855e329ac4613b2ff881c86e9b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9b39a4855e329ac4613b2ff881c86e9b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#a9b39a4855e329ac4613b2ff881c86e9b">FadeGameState</a> (struct <a class="el" href="structGame.html">Game</a> *game, bool in)</td></tr>
+<tr class="memdesc:a9b39a4855e329ac4613b2ff881c86e9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays fade in or fade out animation on current gamestate. <br/></td></tr>
 <tr class="memitem:ab0af27461c4e23c088670da5e6a971ef"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab0af27461c4e23c088670da5e6a971ef"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8h.html#ab0af27461c4e23c088670da5e6a971ef">Shared_Load</a> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
 <tr class="memdesc:ab0af27461c4e23c088670da5e6a971ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load shared resources. <br/></td></tr>
@@ -242,7 +256,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Aug 25 2012 01:27:40 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 27 2012 02:59:16 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

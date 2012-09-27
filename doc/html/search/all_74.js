@@ -16,11 +16,12 @@ var searchData=
   ['tm_5farguments',['TM_Arguments',['../structTM__Arguments.html',1,'']]],
   ['tm_5fdestroy',['TM_Destroy',['../timeline_8c.html#a950cb13ffd2bf9dc9954ad6cc462075f',1,'TM_Destroy():&#160;timeline.c'],['../timeline_8h.html#a950cb13ffd2bf9dc9954ad6cc462075f',1,'TM_Destroy():&#160;timeline.c']]],
   ['tm_5fdestroyargs',['TM_DestroyArgs',['../timeline_8c.html#ae4fa0908342990aa1d3cf0654bae6808',1,'TM_DestroyArgs(struct TM_Arguments *args):&#160;timeline.c'],['../timeline_8h.html#ae4fa0908342990aa1d3cf0654bae6808',1,'TM_DestroyArgs(struct TM_Arguments *args):&#160;timeline.c']]],
+  ['tm_5fdraw',['TM_Draw',['../timeline_8c.html#ac34e045ccf87d833a4371a9d8e1f6725',1,'TM_Draw():&#160;timeline.c'],['../timeline_8h.html#ac34e045ccf87d833a4371a9d8e1f6725',1,'TM_Draw():&#160;timeline.c']]],
   ['tm_5fhandleevent',['TM_HandleEvent',['../timeline_8c.html#a2e38ca3352eaa0cccb741f7d6c6f9bb9',1,'TM_HandleEvent(ALLEGRO_EVENT *ev):&#160;timeline.c'],['../timeline_8h.html#a2e38ca3352eaa0cccb741f7d6c6f9bb9',1,'TM_HandleEvent(ALLEGRO_EVENT *ev):&#160;timeline.c']]],
   ['tm_5finit',['TM_Init',['../timeline_8c.html#a2a11da6477ec30ef12dc20b530bc0946',1,'TM_Init(struct Game *g):&#160;timeline.c'],['../timeline_8h.html#a6f31f95cc5e5c9167c63d6091a9726b3',1,'TM_Init(struct Game *game):&#160;timeline.c']]],
   ['tm_5finitialized',['TM_Initialized',['../timeline_8c.html#a39af041908160eed75defd882e718765',1,'TM_Initialized():&#160;timeline.c'],['../timeline_8h.html#a39af041908160eed75defd882e718765',1,'TM_Initialized():&#160;timeline.c']]],
-  ['tm_5fpause',['TM_Pause',['../timeline_8c.html#acbfe5777a0ca67e36ba31b6e4ce55696',1,'TM_Pause(bool pause):&#160;timeline.c'],['../timeline_8h.html#acbfe5777a0ca67e36ba31b6e4ce55696',1,'TM_Pause(bool pause):&#160;timeline.c']]],
+  ['tm_5fpause',['TM_Pause',['../timeline_8c.html#a8fa40b4c90831b2fec1d878743aac09d',1,'TM_Pause():&#160;timeline.c'],['../timeline_8h.html#a8fa40b4c90831b2fec1d878743aac09d',1,'TM_Pause():&#160;timeline.c']]],
   ['tm_5fprocess',['TM_Process',['../timeline_8c.html#a75451d54b61c3ec12815790c2e33a31e',1,'TM_Process():&#160;timeline.c'],['../timeline_8h.html#a75451d54b61c3ec12815790c2e33a31e',1,'TM_Process():&#160;timeline.c']]],
-  ['tmp_5fpos',['tmp_pos',['../structObstacle.html#afd620c4c3496cd6f84184dcda4ca7611',1,'Obstacle']]],
-  ['tps',['tps',['../main_8c.html#a1f39d133bfa874d55703118487a186e6',1,'tps(struct Game *game, float t):&#160;main.c'],['../main_8h.html#a1f39d133bfa874d55703118487a186e6',1,'tps(struct Game *game, float t):&#160;main.c']]]
+  ['tm_5fresume',['TM_Resume',['../timeline_8c.html#a35f0ba74edb8501a1f8fc89e19153cbd',1,'TM_Resume():&#160;timeline.c'],['../timeline_8h.html#a35f0ba74edb8501a1f8fc89e19153cbd',1,'TM_Resume():&#160;timeline.c']]],
+  ['tmp_5fpos',['tmp_pos',['../structObstacle.html#afd620c4c3496cd6f84184dcda4ca7611',1,'Obstacle']]]
 ];

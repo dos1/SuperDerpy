@@ -17,9 +17,14 @@ struct \hyperlink{structTM__Action}{T\-M\-\_\-\-Action}
 \subsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
-enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{T\-M\-\_\-\-Action\-State} \{ {\bfseries T\-M\-\_\-\-A\-C\-T\-I\-O\-N\-S\-T\-A\-T\-E\-\_\-\-I\-N\-I\-T}, 
+enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{T\-M\-\_\-\-Action\-State} \{ \\*
+{\bfseries T\-M\-\_\-\-A\-C\-T\-I\-O\-N\-S\-T\-A\-T\-E\-\_\-\-I\-N\-I\-T}, 
 {\bfseries T\-M\-\_\-\-A\-C\-T\-I\-O\-N\-S\-T\-A\-T\-E\-\_\-\-R\-U\-N\-N\-I\-N\-G}, 
-{\bfseries T\-M\-\_\-\-A\-C\-T\-I\-O\-N\-S\-T\-A\-T\-E\-\_\-\-D\-E\-S\-T\-R\-O\-Y}
+{\bfseries T\-M\-\_\-\-A\-C\-T\-I\-O\-N\-S\-T\-A\-T\-E\-\_\-\-D\-R\-A\-W}, 
+{\bfseries T\-M\-\_\-\-A\-C\-T\-I\-O\-N\-S\-T\-A\-T\-E\-\_\-\-D\-E\-S\-T\-R\-O\-Y}, 
+\\*
+{\bfseries T\-M\-\_\-\-A\-C\-T\-I\-O\-N\-S\-T\-A\-T\-E\-\_\-\-P\-A\-U\-S\-E}, 
+{\bfseries T\-M\-\_\-\-A\-C\-T\-I\-O\-N\-S\-T\-A\-T\-E\-\_\-\-R\-E\-S\-U\-M\-E}
  \}
 \begin{DoxyCompactList}\small\item\em State of the \hyperlink{structTM__Action}{T\-M\-\_\-\-Action}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Functions}
@@ -31,6 +36,15 @@ enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{T\-M\-\_\-\-Actio
 \hypertarget{timeline_8h_a75451d54b61c3ec12815790c2e33a31e}{void \hyperlink{timeline_8h_a75451d54b61c3ec12815790c2e33a31e}{T\-M\-\_\-\-Process} ()}\label{timeline_8h_a75451d54b61c3ec12815790c2e33a31e}
 
 \begin{DoxyCompactList}\small\item\em Process current timeline actions. \end{DoxyCompactList}\item 
+\hypertarget{timeline_8h_ac34e045ccf87d833a4371a9d8e1f6725}{void \hyperlink{timeline_8h_ac34e045ccf87d833a4371a9d8e1f6725}{T\-M\-\_\-\-Draw} ()}\label{timeline_8h_ac34e045ccf87d833a4371a9d8e1f6725}
+
+\begin{DoxyCompactList}\small\item\em Ask current timeline actions to draw. \end{DoxyCompactList}\item 
+\hypertarget{timeline_8h_a8fa40b4c90831b2fec1d878743aac09d}{void \hyperlink{timeline_8h_a8fa40b4c90831b2fec1d878743aac09d}{T\-M\-\_\-\-Pause} ()}\label{timeline_8h_a8fa40b4c90831b2fec1d878743aac09d}
+
+\begin{DoxyCompactList}\small\item\em Pauses timeline. \end{DoxyCompactList}\item 
+\hypertarget{timeline_8h_a35f0ba74edb8501a1f8fc89e19153cbd}{void \hyperlink{timeline_8h_a35f0ba74edb8501a1f8fc89e19153cbd}{T\-M\-\_\-\-Resume} ()}\label{timeline_8h_a35f0ba74edb8501a1f8fc89e19153cbd}
+
+\begin{DoxyCompactList}\small\item\em Resumes timeline. \end{DoxyCompactList}\item 
 \hypertarget{timeline_8h_a2e38ca3352eaa0cccb741f7d6c6f9bb9}{void \hyperlink{timeline_8h_a2e38ca3352eaa0cccb741f7d6c6f9bb9}{T\-M\-\_\-\-Handle\-Event} (A\-L\-L\-E\-G\-R\-O\-\_\-\-E\-V\-E\-N\-T $\ast$ev)}\label{timeline_8h_a2e38ca3352eaa0cccb741f7d6c6f9bb9}
 
 \begin{DoxyCompactList}\small\item\em Handle timer events. \end{DoxyCompactList}\item 
@@ -46,9 +60,6 @@ enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{T\-M\-\_\-\-Actio
 \hypertarget{timeline_8h_a96012953eefd9118c10f0b888b001e41}{void \hyperlink{timeline_8h_a96012953eefd9118c10f0b888b001e41}{T\-M\-\_\-\-Add\-Delay} (float delay)}\label{timeline_8h_a96012953eefd9118c10f0b888b001e41}
 
 \begin{DoxyCompactList}\small\item\em Add delay to main queue. \end{DoxyCompactList}\item 
-\hypertarget{timeline_8h_acbfe5777a0ca67e36ba31b6e4ce55696}{void \hyperlink{timeline_8h_acbfe5777a0ca67e36ba31b6e4ce55696}{T\-M\-\_\-\-Pause} (bool pause)}\label{timeline_8h_acbfe5777a0ca67e36ba31b6e4ce55696}
-
-\begin{DoxyCompactList}\small\item\em \hyperlink{structPause}{Pause} timers. \end{DoxyCompactList}\item 
 \hypertarget{timeline_8h_a950cb13ffd2bf9dc9954ad6cc462075f}{void \hyperlink{timeline_8h_a950cb13ffd2bf9dc9954ad6cc462075f}{T\-M\-\_\-\-Destroy} ()}\label{timeline_8h_a950cb13ffd2bf9dc9954ad6cc462075f}
 
 \begin{DoxyCompactList}\small\item\em Destroy timeline. \end{DoxyCompactList}\item 

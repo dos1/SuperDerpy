@@ -17,6 +17,9 @@ var searchData=
   ['disclaimer_2ec',['disclaimer.c',['../disclaimer_8c.html',1,'']]],
   ['disclaimer_2eh',['disclaimer.h',['../disclaimer_8h.html',1,'']]],
   ['display',['display',['../structGame.html#a2bf8ece79fe05b03c31f2e2ede42e5f5',1,'Game']]],
+  ['dodger',['Dodger',['../structDodger.html',1,'Dodger'],['../structLevel.html#a2b3fe84587aa6335e2d9c8d961e529cc',1,'Level::dodger()']]],
+  ['dodger_2ec',['dodger.c',['../dodger_8c.html',1,'']]],
+  ['dodger_2eh',['dodger.h',['../dodger_8h.html',1,'']]],
   ['draw_5fstate',['DRAW_STATE',['../main_8c.html#a2073d7fa9facf2f65d7198e159714d28',1,'main.c']]],
   ['drawconsole',['DrawConsole',['../main_8c.html#a3a03870a3158c22e10b22d60822c190a',1,'DrawConsole(struct Game *game):&#160;main.c'],['../main_8h.html#a3a03870a3158c22e10b22d60822c190a',1,'DrawConsole(struct Game *game):&#160;main.c']]],
   ['drawgamestate',['DrawGameState',['../main_8c.html#aba8768911068b399b4118452eb3959ec',1,'DrawGameState(struct Game *game):&#160;main.c'],['../main_8h.html#aba8768911068b399b4118452eb3959ec',1,'DrawGameState(struct Game *game):&#160;main.c']]]

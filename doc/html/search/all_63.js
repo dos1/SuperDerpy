@@ -3,7 +3,7 @@ var searchData=
   ['callback',['callback',['../structObstacle.html#a21b4ff0edaa2dc5394ff7a6328e48358',1,'Obstacle']]],
   ['callbacks_2ec',['callbacks.c',['../callbacks_8c.html',1,'']]],
   ['callbacks_2eh',['callbacks.h',['../callbacks_8h.html',1,'']]],
-  ['cherry',['cherry',['../structLevel.html#a6f99b0cb9d6bbba1fd903bc304205270',1,'Level']]],
+  ['cherry',['cherry',['../structDodger.html#a374d77e3c665e735db2c92f457d80273',1,'Dodger']]],
   ['cl_5fpos',['cl_pos',['../structLevel.html#af466533be369b5ce1f48196a7f3b7b0b',1,'Level']]],
   ['click',['click',['../structMenu.html#a8f8e8b511a64f03e71259dde1a7bf6f2',1,'Menu::click()'],['../structMap.html#a32370a5fb75fcf7d0bebd210cb2a0985',1,'Map::click()']]],
   ['click_5fsample',['click_sample',['../structMenu.html#a012f284df5f9d8e39785a264c736c506',1,'Menu::click_sample()'],['../structMap.html#abcd15a027ece6075efe4baaf99c7595d',1,'Map::click_sample()']]],
