@@ -188,7 +188,7 @@ void Dodger_Load(struct Game *game) {
 	game->level.dodger.obstacles = NULL;
 }
 
-int Dodger_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
+void Dodger_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	if (game->level.handle_input) {
 		if (ev->keyboard.keycode==ALLEGRO_KEY_LEFT) {
 			game->level.speed_modifier = 0.75;
@@ -196,7 +196,6 @@ int Dodger_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 			game->level.speed_modifier = 1.3;
 		}
 	}
-	return 0;
 }
 
 void Dodger_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev) {
@@ -238,6 +237,10 @@ void Dodger_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, flo
 }
 
 void Dodger_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
+	RegisterDerpySpritesheet(game, "walk");
+	RegisterDerpySpritesheet(game, "stand");
+	RegisterDerpySpritesheet(game, "fly");
+	RegisterDerpySpritesheet(game, "run");
 }
 
 void Dodger_UnloadBitmaps(struct Game *game) {
@@ -267,3 +270,6 @@ void Dodger_Unload(struct Game *game) {
 		free(tmp);
 	}
 }
+
+void Dodger_Resume(struct Game *game) {}
+void Dodger_Pause(struct Game *game) {}

@@ -21,6 +21,7 @@
 #include "main.h"
 
 void SelectDerpySpritesheet(struct Game *game, char* name);
+void RegisterDerpySpritesheet(struct Game *game, char* name);
 void Level_Passed(struct Game *game);
 void Level_Pause(struct Game *game);
 void Level_Resume(struct Game *game);

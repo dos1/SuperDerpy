@@ -68,13 +68,9 @@ void Moonwalk_Load(struct Game *game) {
 	FadeGameState(game, true);
 }
 
-int Moonwalk_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
-	return 0;
-}
+void Moonwalk_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {}
 
 void Moonwalk_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float)) {
-	/*game->level.derpy_sheet = LoadScaledBitmap("levels/derpcycle.png", game->viewportWidth*0.1953125*6, game->viewportHeight*0.25*4);*/
-
 	// nasty hack: overwrite level backgrounds
 	al_destroy_bitmap(game->level.background);
 	al_destroy_bitmap(game->level.foreground);
@@ -89,25 +85,14 @@ void Moonwalk_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, f
 }
 
 void Moonwalk_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
-	PrintConsole(game, "Initializing level %d...", game->level.current_level);
+	RegisterDerpySpritesheet(game, "walk");
+	// nasty hack: overwrite level music
+	al_destroy_sample(game->level.sample);
 	game->level.sample = al_load_sample( GetDataFilePath("levels/moonwalk.flac") );
-	//TODO: make music handling global
-	game->level.music = al_create_sample_instance(game->level.sample);
-	al_attach_sample_instance_to_mixer(game->level.music, game->audio.music);
-	al_set_sample_instance_playmode(game->level.music, ALLEGRO_PLAYMODE_LOOP);
-
-	if (!game->level.sample){
-		fprintf(stderr, "Audio clip sample not loaded!\n" );
-		exit(-1);
-	}
 }
 
-void Moonwalk_UnloadBitmaps(struct Game *game) {
-}
-
-void Moonwalk_Unload(struct Game *game) {
-	//FadeGameState(game, false);
-}
-
-void Moonwalk_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev) {
-}
+void Moonwalk_UnloadBitmaps(struct Game *game) {}
+void Moonwalk_Unload(struct Game *game) {}
+void Moonwalk_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev) {}
+void Moonwalk_Resume(struct Game *game) {}
+void Moonwalk_Pause(struct Game *game) {}

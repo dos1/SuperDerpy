@@ -58,10 +58,18 @@ void SelectDerpySpritesheet(struct Game *game, char* name) {
 }
 
 void RegisterDerpySpritesheet(struct Game *game, char* name) {
+	struct Spritesheet *s = game->level.derpy_sheets;
+	while (s) {
+		if (!strcmp(s->name, name)) {
+			//PrintConsole(game, "Derpy spritesheet %s already registered!", name);
+			return;
+		}
+		s = s->next;
+	}
 	char filename[255] = { };
 	sprintf(filename, "levels/derpy/%s.ini", name);
 	ALLEGRO_CONFIG *config = al_load_config_file(GetDataFilePath(filename));
-	struct Spritesheet *s = malloc(sizeof(struct Spritesheet));
+	s = malloc(sizeof(struct Spritesheet));
 	s->name = malloc((strlen(name)+1)*sizeof(char));
 	strcpy(s->name, name);
 	s->bitmap = NULL;
@@ -136,21 +144,19 @@ void Level_Logic(struct Game *game) {
 }
 
 void Level_Resume(struct Game *game) {
-	// TODO: make it modular
 	al_set_sample_instance_position(game->level.music, game->level.music_pos);
 	al_set_sample_instance_playing(game->level.music, true);
-	if (game->level.current_level==1) {
-		TM_Resume();
-	}
+	if (game->level.current_level==1)	Dodger_Resume(game);
+	else Moonwalk_Resume(game);
+	TM_Resume();
 }
 
 void Level_Pause(struct Game *game) {
-	// TODO: make it modular
 	game->level.music_pos = al_get_sample_instance_position(game->level.music);
 	al_set_sample_instance_playing(game->level.music, false);
-	if (game->level.current_level==1) {
-		TM_Pause();
-	}
+	if (game->level.current_level==1)	Dodger_Pause(game);
+	else Moonwalk_Pause(game);
+	TM_Pause();
 }
 
 void Level_Draw(struct Game *game) {
@@ -164,7 +170,7 @@ void Level_Draw(struct Game *game) {
 	if (game->level.current_level==1) Dodger_Draw(game);
 	else Moonwalk_Draw(game);
 
-	if (game->level.unloading) return;
+	if (!game->level.foreground) return;
 
 	al_draw_bitmap(game->level.foreground, (-game->level.fg_pos)*al_get_bitmap_width(game->level.foreground), 0 ,0);
 	al_draw_bitmap(game->level.foreground, (1+(-game->level.fg_pos))*al_get_bitmap_width(game->level.foreground), 0 ,0);
@@ -285,35 +291,32 @@ void Level_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev) {
 }
 
 void Level_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
+	PrintConsole(game, "Initializing level %d...", game->level.input.current_level);
+
 	game->level.current_level = game->level.input.current_level;
 	game->level.derpy_sheets = NULL;
 	game->level.derpy = NULL;
 	game->level.unloading = false;
 	Pause_Preload(game);
-	RegisterDerpySpritesheet(game, "stand");
-	if (game->level.current_level!=1) {
-		RegisterDerpySpritesheet(game, "walk");
-		Moonwalk_Preload(game, progress);
-	}
-	else {
-		RegisterDerpySpritesheet(game, "walk");
-		RegisterDerpySpritesheet(game, "fly");
-		RegisterDerpySpritesheet(game, "run");
+	RegisterDerpySpritesheet(game, "stand"); // default
 
-		Dodger_Preload(game, progress);
+	//TODO: load proper music file for each level
+	game->level.sample = al_load_sample( GetDataFilePath("levels/1/music.flac") );
 
-		game->level.sample = al_load_sample( GetDataFilePath("levels/1/music.flac") );
-		game->level.music = al_create_sample_instance(game->level.sample);
-		al_attach_sample_instance_to_mixer(game->level.music, game->audio.music);
-		al_set_sample_instance_playmode(game->level.music, ALLEGRO_PLAYMODE_LOOP);
-		//TODO: make music handling global
+	if (game->level.current_level==1) Dodger_Preload(game, progress);
+	else Moonwalk_Preload(game, progress);
 
-		if (!game->level.sample){
-			fprintf(stderr, "Audio clip sample not loaded!\n" );
-			exit(-1);
-		}
-	}
 	Level_PreloadBitmaps(game, progress);
+
+	game->level.music = al_create_sample_instance(game->level.sample);
+	al_attach_sample_instance_to_mixer(game->level.music, game->audio.music);
+	al_set_sample_instance_playmode(game->level.music, ALLEGRO_PLAYMODE_LOOP);
+
+	if (!game->level.sample){
+		fprintf(stderr, "Audio clip sample not loaded!\n" );
+		exit(-1);
+	}
+
 }
 
 void Level_Unload(struct Game *game) {
@@ -351,6 +354,7 @@ void Level_UnloadBitmaps(struct Game *game) {
 	al_destroy_bitmap(game->level.meter_bmp);
 	al_destroy_bitmap(game->level.meter_image);
 	al_destroy_bitmap(game->level.welcome);
+	game->level.foreground = NULL;
 }
 
 void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float)) {
@@ -378,7 +382,8 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 
 	game->level.derpy = al_create_bitmap(al_get_bitmap_width(*(game->level.derpy_sheet))/game->level.sheet_cols, al_get_bitmap_height(*(game->level.derpy_sheet))/game->level.sheet_rows);
 	
-	/* TODO: maybe handle strange display aspects */
+	//TODO: load proper bitmap files for each level
+	//TODO: maybe handle strange display aspects
 	game->level.clouds = LoadScaledBitmap("levels/1/clouds.png", game->viewportHeight*4.73307291666666666667, game->viewportHeight);
 	PROGRESS;
 	game->level.foreground = LoadScaledBitmap("levels/1/foreground.png", game->viewportHeight*4.73307291666666666667, game->viewportHeight);
