@@ -25,32 +25,11 @@
 /*! \brief Display level failed screen and set fade-out to be run after few seconds.  */
 bool LevelFailed(struct Game *game, struct TM_Action *action, enum TM_ActionState state);
 
-/*! \brief Accelerate current speed game until threshold is reached  */
-bool Accelerate(struct Game *game, struct TM_Action *action, enum TM_ActionState state);
-
-/*! \brief Set Derpy to walk and move her position on screen. */
-bool Walk(struct Game *game, struct TM_Action *action, enum TM_ActionState state);
-
-/*! \brief Move screen until some position is reached. */
-bool Move(struct Game *game, struct TM_Action *action, enum TM_ActionState state);
-
 /*! \brief Fade-in HP meter. */
 bool ShowMeter(struct Game *game, struct TM_Action *action, enum TM_ActionState state);
 
-/*! \brief Fly Derpy, fly! */
-bool Fly(struct Game *game, struct TM_Action *action, enum TM_ActionState state);
-
-/*! \brief Run Derpy, run! */
-bool Run(struct Game *game, struct TM_Action *action, enum TM_ActionState state);
-
-/*! \brief Generates obstacles. */
-bool GenerateObstacles(struct Game *game, struct TM_Action *action, enum TM_ActionState state);
-
 /*! \brief Stops Derpy. */
 bool Stop(struct Game *game, struct TM_Action *action, enum TM_ActionState state);
-
-/*! \brief Shows letter from Twilight on screen. */
-bool Letter(struct Game *game, struct TM_Action *action, enum TM_ActionState state);
 
 /*! \brief Fade-in screen. */
 bool FadeIn(struct Game *game, struct TM_Action *action, enum TM_ActionState state);

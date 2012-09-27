@@ -25,7 +25,7 @@
 unsigned int lastid;
 struct Game* game = NULL;
 struct TM_Action *queue, *background;
-bool paused;
+// TODO: consider moving globals to structure
 
 void TM_Init(struct Game* g) {
 	PrintConsole(g, "Timeline Manager: init");
@@ -33,16 +33,12 @@ void TM_Init(struct Game* g) {
 	lastid = 0;
 	queue = NULL;
 	background = NULL;
-	paused = false;
 }
 
 void TM_Process() {
 	if (!game) return;
-	if (paused) return;
-	/*
-			 process first element from queue
-		 if returns true, then delete it
-		*/
+	/* process first element from queue
+		 if returns true, delete it */
 	if (queue) {
 		if (*queue->function) {
 			queue->active = true;
@@ -152,14 +148,12 @@ void TM_Draw() {
 
 void TM_Pause() {
 	PrintConsole(game, "Timeline Manager: Pause.");
-	paused = true;
 	PauseTimers(true);
 	Propagate(TM_ACTIONSTATE_PAUSE);
 }
 
 void TM_Resume() {
 	PrintConsole(game, "Timeline Manager: Resume.");
-	paused = false;
 	Propagate(TM_ACTIONSTATE_RESUME);
 	PauseTimers(false);
 }
@@ -167,7 +161,6 @@ void TM_Resume() {
 void TM_HandleEvent(ALLEGRO_EVENT *ev) {
 	if (ev->type != ALLEGRO_EVENT_TIMER) return;
 	if (!game) return;
-	if (paused) return;
 	if (queue) {
 		if (ev->timer.source == queue->timer) {
 			queue->active=true;

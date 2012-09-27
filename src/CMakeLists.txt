@@ -9,11 +9,13 @@ SET(SRC_LIST
   main.c
   map.c
   menu.c
-  moonwalk.c
   pause.c
   timeline.c
+  levels/moonwalk.c
+  levels/dodger.c
   levels/actions.c
-  levels/callbacks.c
+  levels/dodger/actions.c
+  levels/dodger/callbacks.c
 )
 
 find_package(Allegro5 REQUIRED)

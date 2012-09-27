@@ -21,13 +21,13 @@
 #include <stdio.h>
 #include <math.h>
 #include "levels/actions.h"
-#include "moonwalk.h"
+#include "levels/dodger/actions.h"
+#include "levels/moonwalk.h"
+#include "levels/dodger.h"
 #include "config.h"
 #include "pause.h"
 #include "level.h"
 #include "timeline.h"
-
-/* TODO: check if spritesheet speed still depends on FPS */
 
 void SelectDerpySpritesheet(struct Game *game, char* name) {
 	struct Spritesheet *tmp = game->level.derpy_sheets;
@@ -100,131 +100,39 @@ void Level_Passed(struct Game *game) {
 }
 
 void Level_Logic(struct Game *game) {
-	if (game->level.current_level!=1) {
-		Moonwalk_Logic(game);
+	if (game->level.current_level==1) {
+		Dodger_Logic(game);
 	} else {
-		struct ALLEGRO_KEYBOARD_STATE keyboard;
-		al_get_keyboard_state(&keyboard);
-		if (game->level.handle_input) {
-			if (game->level.derpy_angle > 0) { game->level.derpy_angle -= 0.02; if (game->level.derpy_angle < 0) game->level.derpy_angle = 0; }
-			if (game->level.derpy_angle < 0) { game->level.derpy_angle += 0.02; if (game->level.derpy_angle > 0) game->level.derpy_angle = 0; }
-			if (al_key_down(&keyboard, ALLEGRO_KEY_UP)) {
-				game->level.derpy_y -= 0.005;
-				game->level.derpy_angle -= 0.03;
-				if (game->level.derpy_angle < -0.15) game->level.derpy_angle = -0.15;
-				/*PrintConsole(game, "Derpy Y position: %f", game->level.derpy_y);*/
-			}
-			if (al_key_down(&keyboard, ALLEGRO_KEY_DOWN)) {
-				game->level.derpy_y += 0.005;
-				game->level.derpy_angle += 0.03;
-				if (game->level.derpy_angle > 0.15) game->level.derpy_angle = 0.15;
-				/*PrintConsole(game, "Derpy Y position: %f", game->level.derpy_y);*/
-			}
-			/*if ((game->level.derpy_y > 0.6) && (game->level.flying)) {
-				SelectDerpySpritesheet(game, "run");
-				game->level.flying = false;
-				game->level.sheet_speed = tps(game, 60*0.0020/game->level.speed);
-			}
-			else if ((game->level.derpy_y <= 0.6) && (!game->level.flying)) {
-				SelectDerpySpritesheet(game, "fly");
-				game->level.flying = true;
-				game->level.sheet_speed = tps(game, 60*2.4);
-			}
-			if (!game->level.flying) game->level.sheet_speed = tps(game, 60*0.0020/game->level.speed); */
-			if (game->level.derpy_y < 0) game->level.derpy_y=0;
-			else if (game->level.derpy_y > 0.8) game->level.derpy_y=0.8;
-
-			game->level.derpy_y += game->level.derpy_angle / 30;
-		}
-
-		int derpyx = game->level.derpy_x*game->viewportWidth;
-		int derpyy = game->level.derpy_y*game->viewportHeight;
-		int derpyw = al_get_bitmap_width(game->level.derpy);
-		int derpyh = al_get_bitmap_height(game->level.derpy);
-		int derpyo = game->viewportWidth*0.1953125-al_get_bitmap_width(game->level.derpy); /* offset */
-		struct Obstacle *tmp = game->level.obstacles;
-		while (tmp) {
-			/*PrintConsole(game, "DRAWING %f %f", tmp->x, tmp->y);*/
-			int x = (tmp->x/100.0)*game->viewportWidth;
-			int y = (tmp->y/100.0)*game->viewportHeight;
-			int w = 0, h = 0;
-			if (tmp->bitmap) {
-				w = al_get_bitmap_width(*(tmp->bitmap))/tmp->cols;
-				h = al_get_bitmap_height(*(tmp->bitmap))/tmp->rows;
-			}
-			if (x > -w) {
-				/*if (!tmp->hit)*/
-				if ((((x>=derpyx+0.38*derpyw+derpyo) && (x<=derpyx+0.94*derpyw+derpyo)) || ((x+w>=derpyx+0.38*derpyw+derpyo) && (x+w<=derpyx+0.94*derpyw+derpyo)) || ((x<=derpyx+0.38*derpyw+derpyo) && (x+w>=derpyx+0.94*derpyw+derpyo))) &&
-						(((y>=derpyy+0.26*derpyh) && (y<=derpyy+0.76*derpyh)) || ((y+h>=derpyy+0.26*derpyh) && (y+h<=derpyy+0.76*derpyh)) || ((y<=derpyy+0.26*derpyh) && (y+h>=derpyy+0.76*derpyh)))) {
-					tmp->hit=true;
-				}
-
-				if (tmp->anim_speed) {
-					tmp->tmp_pos+=1;
-					if (tmp->tmp_pos >= tmp->anim_speed) {
-						tmp->pos++;
-						tmp->tmp_pos = 0;
-					}
-					if (tmp->pos>=tmp->cols*tmp->rows-tmp->blanks) tmp->pos=0;
-				}
-
-				if (tmp->hit) {
-					if (tmp->points>=0) tmp->bitmap = NULL;
-					game->level.hp+=0.0002*tmp->points*(((1-game->level.speed_modifier)/2.0)+1);
-					if (game->level.hp>1) game->level.hp=1;
-					//PrintConsole(game, "POINTS: %d, %f", tmp->points, tps(game, 60*0.0002*tmp->points*game->level.speed_modifier));
-					if ((game->level.hp<=0) && (!game->level.failed)) {
-						game->level.failed = true;
-						game->level.handle_input = false;
-						game->level.speed_modifier = 1;
-						TM_AddBackgroundAction(&LevelFailed, NULL, 0, "levelfailed");
-					}
-				}
-				tmp->x -= game->level.speed*game->level.speed_modifier*tmp->speed*100*al_get_bitmap_width(game->level.stage)/(float)game->viewportWidth;
-				if (tmp->callback) tmp->callback(game, tmp);
-				tmp = tmp->next;
-			} else {
-				if (tmp->next)
-					tmp->next->prev = tmp->prev;
-				if (tmp->prev)
-					tmp->prev->next = tmp->next;
-				else
-					game->level.obstacles = tmp->next;
-				struct Obstacle *t = tmp;
-				tmp = tmp->next;
-				free(t);
-			}
-		}
-		/*if (colision) game->level.hp-=tps(game, 60*0.002);*/
-
-		if ((game->level.sheet_speed) && (game->level.sheet_speed_modifier)) {
-			game->level.sheet_tmp+=1;
-			if (game->level.sheet_tmp >= (game->level.sheet_speed/game->level.speed_modifier)/game->level.sheet_speed_modifier) {
-				game->level.sheet_pos++;
-				game->level.sheet_tmp = 0;
-			}
-			if (game->level.sheet_pos>=game->level.sheet_cols*game->level.sheet_rows-game->level.sheet_blanks) {
-				game->level.sheet_pos=0;
-				if (game->level.sheet_successor) {
-					SelectDerpySpritesheet(game, game->level.sheet_successor);
-				}
-			}
-		}
-
-		if (game->level.speed > 0) {
-			game->level.cl_pos += game->level.speed*game->level.speed_modifier * 0.2;
-			game->level.bg_pos += game->level.speed*game->level.speed_modifier * 0.6;
-			game->level.st_pos += game->level.speed*game->level.speed_modifier * 1;
-			game->level.fg_pos += game->level.speed*game->level.speed_modifier * 1.75;
-			if (game->level.bg_pos >= 1) game->level.bg_pos=game->level.bg_pos-1;
-			if (game->level.st_pos >= 1) game->level.st_pos=game->level.st_pos-1;
-			if (game->level.fg_pos >= 1) game->level.fg_pos=game->level.fg_pos-1;
-		}
-		game->level.cl_pos += 0.00005;
-		if (game->level.cl_pos >= 1) game->level.cl_pos=game->level.cl_pos-1;
-
-		TM_Process();
+		Moonwalk_Logic(game);
 	}
+
+	if ((game->level.sheet_speed) && (game->level.sheet_speed_modifier)) {
+		game->level.sheet_tmp+=1;
+		if (game->level.sheet_tmp >= (game->level.sheet_speed/game->level.speed_modifier)/game->level.sheet_speed_modifier) {
+			game->level.sheet_pos++;
+			game->level.sheet_tmp = 0;
+		}
+		if (game->level.sheet_pos>=game->level.sheet_cols*game->level.sheet_rows-game->level.sheet_blanks) {
+			game->level.sheet_pos=0;
+			if (game->level.sheet_successor) {
+				SelectDerpySpritesheet(game, game->level.sheet_successor);
+			}
+		}
+	}
+
+	if (game->level.speed > 0) {
+		game->level.cl_pos += game->level.speed*game->level.speed_modifier * 0.2;
+		game->level.bg_pos += game->level.speed*game->level.speed_modifier * 0.6;
+		game->level.st_pos += game->level.speed*game->level.speed_modifier * 1;
+		game->level.fg_pos += game->level.speed*game->level.speed_modifier * 1.75;
+		if (game->level.bg_pos >= 1) game->level.bg_pos=game->level.bg_pos-1;
+		if (game->level.st_pos >= 1) game->level.st_pos=game->level.st_pos-1;
+		if (game->level.fg_pos >= 1) game->level.fg_pos=game->level.fg_pos-1;
+	}
+	game->level.cl_pos += 0.00005;
+	if (game->level.cl_pos >= 1) game->level.cl_pos=game->level.cl_pos-1;
+
+	TM_Process();
 }
 
 void Level_Resume(struct Game *game) {
@@ -244,93 +152,33 @@ void Level_Pause(struct Game *game) {
 }
 
 void Level_Draw(struct Game *game) {
-	if (game->level.current_level!=1) Moonwalk_Draw(game);
-	else {
+	al_draw_bitmap(game->level.clouds, (-game->level.cl_pos)*al_get_bitmap_width(game->level.clouds), 0, 0);
+	al_draw_bitmap(game->level.clouds, (1+(-game->level.cl_pos))*al_get_bitmap_width(game->level.clouds), 0, 0);
+	al_draw_bitmap(game->level.background, (-game->level.bg_pos)*al_get_bitmap_width(game->level.background), 0, 0);
+	al_draw_bitmap(game->level.background, (1+(-game->level.bg_pos))*al_get_bitmap_width(game->level.background), 0, 0);
+	al_draw_bitmap(game->level.stage, (-game->level.st_pos)*al_get_bitmap_width(game->level.stage), 0 ,0);
+	al_draw_bitmap(game->level.stage, (1+(-game->level.st_pos))*al_get_bitmap_width(game->level.stage), 0 ,0);
 
-		al_draw_bitmap(game->level.clouds, (-game->level.cl_pos)*al_get_bitmap_width(game->level.clouds), 0, 0);
-		al_draw_bitmap(game->level.clouds, (1+(-game->level.cl_pos))*al_get_bitmap_width(game->level.clouds), 0, 0);
-		al_draw_bitmap(game->level.background, (-game->level.bg_pos)*al_get_bitmap_width(game->level.background), 0, 0);
-		al_draw_bitmap(game->level.background, (1+(-game->level.bg_pos))*al_get_bitmap_width(game->level.background), 0, 0);
-		al_draw_bitmap(game->level.stage, (-game->level.st_pos)*al_get_bitmap_width(game->level.stage), 0 ,0);
-		al_draw_bitmap(game->level.stage, (1+(-game->level.st_pos))*al_get_bitmap_width(game->level.stage), 0 ,0);
+	if (game->level.current_level==1) Dodger_Draw(game);
+	else Moonwalk_Draw(game);
 
-		int derpyx = game->level.derpy_x*game->viewportWidth;
-		int derpyy = game->level.derpy_y*game->viewportHeight;
-		int derpyw = al_get_bitmap_width(game->level.derpy);
-		int derpyh = al_get_bitmap_height(game->level.derpy);
-		int derpyo = game->viewportWidth*0.1953125-al_get_bitmap_width(game->level.derpy); /* offset */
-		bool colision = false;
-		struct Obstacle *tmp = game->level.obstacles;
-		while (tmp) {
-			/*PrintConsole(game, "DRAWING %f %f", tmp->x, tmp->y);*/
-			int x = (tmp->x/100.0)*game->viewportWidth;
-			int y = (tmp->y/100.0)*game->viewportHeight;
-			int w = 0, h = 0;
-			if (tmp->bitmap) {
-				w = al_get_bitmap_width(*(tmp->bitmap))/tmp->cols;
-				h = al_get_bitmap_height(*(tmp->bitmap))/tmp->rows;
-			}
-			if (x > -w) {
-				if ((tmp->hit) && (tmp->points<0)) {
-					colision = true;
-				}
+	if (game->level.unloading) return;
 
-				if (tmp->bitmap) {
-					ALLEGRO_BITMAP* subbitmap = al_create_sub_bitmap(*(tmp->bitmap),w*(tmp->pos%tmp->cols), h*(tmp->pos/tmp->cols),w,h);
-					al_draw_rotated_bitmap(subbitmap,w/2.0, h/2.0, x+w/2.0,y+h/2.0, tmp->angle, 0);
-					al_destroy_bitmap(subbitmap);
-				}
+	al_draw_bitmap(game->level.foreground, (-game->level.fg_pos)*al_get_bitmap_width(game->level.foreground), 0 ,0);
+	al_draw_bitmap(game->level.foreground, (1+(-game->level.fg_pos))*al_get_bitmap_width(game->level.foreground), 0 ,0);
 
-				/*al_draw_bitmap(*(tmp->bitmap), x, y, 0);*/
-				if (game->level.debug_show_sprite_frames) al_draw_rectangle(x, y, x+w, y+h, al_map_rgba(255,0,0,255), 3);
+	al_set_target_bitmap(game->level.meter_bmp);
+	al_clear_to_color(al_map_rgba(0,0,0,0));
+	al_draw_filled_rounded_rectangle(al_get_bitmap_width(game->level.meter_bmp)*0.1, al_get_bitmap_height(game->level.meter_bmp)*0.34, al_get_bitmap_width(game->level.meter_bmp)*0.993, al_get_bitmap_height(game->level.meter_bmp)*0.66,
+																	 6,6, al_map_rgb(232,234,239));
+	al_draw_horizontal_gradient_rect(al_get_bitmap_width(game->level.meter_bmp)-game->viewportWidth*0.215, (al_get_bitmap_height(game->level.meter_bmp)-game->viewportHeight*0.025)/2, game->viewportWidth*0.215*0.975, game->viewportHeight*0.025, al_map_rgb(150,159,182), al_map_rgb(130,139,162));
+	al_draw_filled_rectangle(al_get_bitmap_width(game->level.meter_bmp)-game->viewportWidth*0.215, (al_get_bitmap_height(game->level.meter_bmp)-game->viewportHeight*0.025)/2, al_get_bitmap_width(game->level.meter_bmp)-game->viewportWidth*0.215+(game->viewportWidth*0.215*0.975)*game->level.hp, (al_get_bitmap_height(game->level.meter_bmp)-game->viewportHeight*0.025)/2+game->viewportHeight*0.025, al_map_rgb(214,172,55));
+	al_draw_bitmap(game->level.meter_image, 0, 0, 0);
+	al_set_target_bitmap(al_get_backbuffer(game->display));
 
-				tmp = tmp->next;
-			} else {
-				if (tmp->next)
-					tmp->next->prev = tmp->prev;
-				if (tmp->prev)
-					tmp->prev->next = tmp->next;
-				else
-					game->level.obstacles = tmp->next;
-				struct Obstacle *t = tmp;
-				tmp = tmp->next;
-				free(t);
-			}
-		}
-		/*if (colision) game->level.hp-=tps(game, 60*0.002);*/
+	al_draw_tinted_bitmap(game->level.meter_bmp, al_map_rgba(game->level.meter_alpha,game->level.meter_alpha,game->level.meter_alpha,game->level.meter_alpha), game->viewportWidth*0.95-al_get_bitmap_width(game->level.meter_bmp), game->viewportHeight*0.975-al_get_bitmap_height(game->level.meter_bmp), 0);
 
-		al_set_target_bitmap(game->level.derpy);
-		al_clear_to_color(al_map_rgba(0,0,0,0));
-		al_draw_bitmap_region(*(game->level.derpy_sheet),al_get_bitmap_width(game->level.derpy)*(game->level.sheet_pos%game->level.sheet_cols),al_get_bitmap_height(game->level.derpy)*(game->level.sheet_pos/game->level.sheet_cols),al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy),0,0,0);
-		al_set_target_bitmap(al_get_backbuffer(game->display));
-
-		al_draw_tinted_rotated_bitmap(game->level.derpy, al_map_rgba(255,255-colision*255,255-colision*255,255), al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy)/2, derpyx+game->viewportWidth*0.1953125, derpyy + al_get_bitmap_height(game->level.derpy)/2, game->level.derpy_angle, 0);
-
-		/*		if ((((x>=derpyx+0.36*derpyw) && (x<=derpyx+0.94*derpyw)) || ((x+w>=derpyx+0.36*derpyw) && (x+w<=derpyx+0.94*derpyw))) &&
-			(((y>=derpyy+0.26*derpyh) && (y<=derpyy+0.76*derpyh)) || ((y+h>=derpyy+0.26*derpyh) && (y+h<=derpyy+0.76*derpyh)))) {
-	*/
-		if (game->level.debug_show_sprite_frames) {
-			al_draw_rectangle(derpyx+derpyo, derpyy, derpyx+derpyw+derpyo, derpyy+derpyh, al_map_rgba(0,255,0,255), 3);
-			al_draw_rectangle(derpyx+0.38*derpyw+derpyo, derpyy+0.26*derpyh, derpyx+0.94*derpyw+derpyo, derpyy+0.76*derpyh, al_map_rgba(0,0,255,255), 3);
-		}
-
-		al_draw_bitmap(game->level.foreground, (-game->level.fg_pos)*al_get_bitmap_width(game->level.foreground), 0 ,0);
-		al_draw_bitmap(game->level.foreground, (1+(-game->level.fg_pos))*al_get_bitmap_width(game->level.foreground), 0 ,0);
-
-
-		al_set_target_bitmap(game->level.meter_bmp);
-		al_clear_to_color(al_map_rgba(0,0,0,0));
-		al_draw_filled_rounded_rectangle(al_get_bitmap_width(game->level.meter_bmp)*0.1, al_get_bitmap_height(game->level.meter_bmp)*0.34, al_get_bitmap_width(game->level.meter_bmp)*0.993, al_get_bitmap_height(game->level.meter_bmp)*0.66,
-																		 6,6, al_map_rgb(232,234,239));
-		al_draw_horizontal_gradient_rect(al_get_bitmap_width(game->level.meter_bmp)-game->viewportWidth*0.215, (al_get_bitmap_height(game->level.meter_bmp)-game->viewportHeight*0.025)/2, game->viewportWidth*0.215*0.975, game->viewportHeight*0.025, al_map_rgb(150,159,182), al_map_rgb(130,139,162));
-		al_draw_filled_rectangle(al_get_bitmap_width(game->level.meter_bmp)-game->viewportWidth*0.215, (al_get_bitmap_height(game->level.meter_bmp)-game->viewportHeight*0.025)/2, al_get_bitmap_width(game->level.meter_bmp)-game->viewportWidth*0.215+(game->viewportWidth*0.215*0.975)*game->level.hp, (al_get_bitmap_height(game->level.meter_bmp)-game->viewportHeight*0.025)/2+game->viewportHeight*0.025, al_map_rgb(214,172,55));
-		al_draw_bitmap(game->level.meter_image, 0, 0, 0);
-		al_set_target_bitmap(al_get_backbuffer(game->display));
-
-		al_draw_tinted_bitmap(game->level.meter_bmp, al_map_rgba(game->level.meter_alpha,game->level.meter_alpha,game->level.meter_alpha,game->level.meter_alpha), game->viewportWidth*0.95-al_get_bitmap_width(game->level.meter_bmp), game->viewportHeight*0.975-al_get_bitmap_height(game->level.meter_bmp), 0);
-
-		TM_Draw();
-	}
+	TM_Draw();
 }
 
 void Level_Load(struct Game *game) {
@@ -345,16 +193,16 @@ void Level_Load(struct Game *game) {
 	game->level.derpy_x = -0.2;
 	game->level.derpy_y = 0.6;
 	game->level.derpy_angle = 0;
-	game->level.sheet_speed = tps(game, 60*2.4);
+	game->level.sheet_speed = 2.4;
 	game->level.sheet_tmp = 0;
 	game->level.handle_input = false;
-	game->level.obstacles = NULL;
 	game->level.meter_alpha=0;
 	game->level.debug_show_sprite_frames=false;
 	al_clear_to_color(al_map_rgb(0,0,0));
+	TM_Init(game);
 	if (game->level.current_level!=1) Moonwalk_Load(game);
 	else {
-		TM_Init(game);
+		Dodger_Load(game);
 		TM_AddBackgroundAction(&FadeIn, NULL, 0, "fadein");
 		TM_AddDelay(1000);
 		TM_AddQueuedBackgroundAction(&Welcome, NULL, 0, "welcome");
@@ -385,6 +233,7 @@ void Level_Load(struct Game *game) {
 		// cutscene goes here */
 		TM_AddAction(&PassLevel, NULL, "passlevel");
 
+		// init level specific obstacle for Dodger module
 		struct Obstacle *obst = malloc(sizeof(struct Obstacle));
 		obst->prev = NULL;
 		obst->next = NULL;
@@ -403,7 +252,7 @@ void Level_Load(struct Game *game) {
 		obst->callback = NULL;
 		obst->data = NULL;
 		obst->bitmap = &(game->level.owl);
-		game->level.obstacles = obst;
+		game->level.dodger.obstacles = obst;
 	}
 }
 
@@ -417,14 +266,8 @@ int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	} else if ((game->debug) && (ev->keyboard.keycode==ALLEGRO_KEY_F4)) {
 		game->level.debug_show_sprite_frames = !game->level.debug_show_sprite_frames;
 	}
-	if (game->level.current_level!=1) Moonwalk_Keydown(game, ev);
-	else if (game->level.handle_input) {
-		if (ev->keyboard.keycode==ALLEGRO_KEY_LEFT) {
-			game->level.speed_modifier = 0.75;
-		} else if (ev->keyboard.keycode==ALLEGRO_KEY_RIGHT) {
-			game->level.speed_modifier = 1.3;
-		}
-	}
+	if (game->level.current_level==1) Dodger_Keydown(game, ev);
+	else Moonwalk_Keydown(game, ev);
 	if (ev->keyboard.keycode==ALLEGRO_KEY_ESCAPE) {
 		game->gamestate = GAMESTATE_PAUSE;
 		game->loadstate = GAMESTATE_LEVEL;
@@ -434,24 +277,9 @@ int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 }
 
 void Level_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev) {
-	if (game->level.handle_input) {
-		if ((ev->type==ALLEGRO_EVENT_KEY_UP) && (ev->keyboard.keycode==ALLEGRO_KEY_LEFT)) {
-			game->level.speed_modifier = 1;
-			struct ALLEGRO_KEYBOARD_STATE keyboard;
-			al_get_keyboard_state(&keyboard);
-			if (al_key_down(&keyboard, ALLEGRO_KEY_RIGHT)) {
-				game->level.speed_modifier = 1.3;
-			}
-		} else if ((ev->type==ALLEGRO_EVENT_KEY_UP) && (ev->keyboard.keycode==ALLEGRO_KEY_RIGHT)) {
-			game->level.speed_modifier = 1;
-			struct ALLEGRO_KEYBOARD_STATE keyboard;
-			al_get_keyboard_state(&keyboard);
-			if (al_key_down(&keyboard, ALLEGRO_KEY_LEFT)) {
-				game->level.speed_modifier = 0.75;
-			}
-		}
-	}
-	if (game->level.current_level==1) TM_HandleEvent(ev);
+	if (game->level.current_level==1)	Dodger_ProcessEvent(game, ev);
+	else Moonwalk_ProcessEvent(game, ev);
+	TM_HandleEvent(ev);
 }
 
 void Level_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
@@ -460,12 +288,18 @@ void Level_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	game->level.derpy = NULL;
 	game->level.unloading = false;
 	Pause_Preload(game);
-	RegisterDerpySpritesheet(game, "walk");
-	RegisterDerpySpritesheet(game, "fly");
-	RegisterDerpySpritesheet(game, "run");
 	RegisterDerpySpritesheet(game, "stand");
-	if (game->level.current_level!=1) Moonwalk_Preload(game);
+	if (game->level.current_level!=1) {
+		RegisterDerpySpritesheet(game, "walk");
+		Moonwalk_Preload(game, progress);
+	}
 	else {
+		RegisterDerpySpritesheet(game, "walk");
+		RegisterDerpySpritesheet(game, "fly");
+		RegisterDerpySpritesheet(game, "run");
+
+		Dodger_Preload(game, progress);
+
 		game->level.sample = al_load_sample( GetDataFilePath("levels/1/music.flac") );
 		game->level.music = al_create_sample_instance(game->level.sample);
 		al_attach_sample_instance_to_mixer(game->level.music, game->audio.music);
@@ -484,28 +318,12 @@ void Level_Unload(struct Game *game) {
 	game->level.unloading = true;
 	Pause_Unload_Real(game);
 	FadeGameState(game, false);
-	if (game->level.current_level!=1) Moonwalk_Unload(game);
-	else {
-		TM_Destroy();
-	}
 	al_destroy_sample_instance(game->level.music);
 	al_destroy_sample(game->level.sample);
-	struct Obstacle *t = game->level.obstacles;
-	if (t) {
-		while (t->next) {
-			if (t->prev) free(t->prev);
-			t = t->next;
-		}
-		free(t);
-	}
 	Level_UnloadBitmaps(game);
-	struct Spritesheet *tmp, *s = game->level.derpy_sheets;
-	tmp = s;
-	while (s) {
-		tmp = s;
-		s = s->next;
-		free(tmp);
-	}
+	if (game->level.current_level!=1) Moonwalk_Unload(game);
+	else Dodger_Unload(game);
+	TM_Destroy();
 }
 
 void Level_UnloadBitmaps(struct Game *game) {
@@ -517,24 +335,18 @@ void Level_UnloadBitmaps(struct Game *game) {
 	}
 	if (game->level.current_level!=1) Moonwalk_UnloadBitmaps(game);
 	else {
+		Dodger_UnloadBitmaps(game);
 		al_destroy_font(game->level.letter_font);
-		al_destroy_bitmap(game->level.foreground);
-		al_destroy_bitmap(game->level.background);
-		al_destroy_bitmap(game->level.stage);
-		al_destroy_bitmap(game->level.clouds);
-		al_destroy_bitmap(game->level.welcome);
 		al_destroy_bitmap(game->level.letter);
 		al_destroy_bitmap(game->level.owl);
-		al_destroy_bitmap(game->level.obst_bmps.pie1);
-		al_destroy_bitmap(game->level.obst_bmps.pie2);
-		al_destroy_bitmap(game->level.obst_bmps.pig);
-		al_destroy_bitmap(game->level.obst_bmps.cherry);
-		al_destroy_bitmap(game->level.obst_bmps.muffin);
-		al_destroy_bitmap(game->level.obst_bmps.badmuffin);
-		al_destroy_bitmap(game->level.obst_bmps.screwball);
-		al_destroy_bitmap(game->level.meter_bmp);
-		al_destroy_bitmap(game->level.meter_image);
 	}
+	al_destroy_bitmap(game->level.foreground);
+	al_destroy_bitmap(game->level.background);
+	al_destroy_bitmap(game->level.clouds);
+	al_destroy_bitmap(game->level.stage);
+	al_destroy_bitmap(game->level.meter_bmp);
+	al_destroy_bitmap(game->level.meter_image);
+	al_destroy_bitmap(game->level.welcome);
 }
 
 void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float)) {
@@ -546,7 +358,7 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 		tmp = tmp->next;
 	}
 	if (game->level.current_level==1) load_a+=x;
-	else load_a=2+x;
+	else load_a=9+x;
 
 	tmp = game->level.derpy_sheets;
 	while (tmp) {
@@ -561,31 +373,30 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 
 	game->level.derpy = al_create_bitmap(al_get_bitmap_width(*(game->level.derpy_sheet))/game->level.sheet_cols, al_get_bitmap_height(*(game->level.derpy_sheet))/game->level.sheet_rows);
 	
-	if (game->level.current_level!=1) Moonwalk_PreloadBitmaps(game);
+	/* TODO: maybe handle strange display aspects */
+	game->level.clouds = LoadScaledBitmap("levels/1/clouds.png", game->viewportHeight*4.73307291666666666667, game->viewportHeight);
+	PROGRESS;
+	game->level.foreground = LoadScaledBitmap("levels/1/foreground.png", game->viewportHeight*4.73307291666666666667, game->viewportHeight);
+	PROGRESS;
+	game->level.background = LoadScaledBitmap("levels/1/background.png", game->viewportHeight*4.73307291666666666667, game->viewportHeight);
+	PROGRESS;
+	game->level.stage = LoadScaledBitmap("levels/1/stage.png", game->viewportHeight*4.73307291666666666667, game->viewportHeight);
+	PROGRESS;
+	game->level.meter_image = LoadScaledBitmap("levels/meter.png", game->viewportWidth*0.075, game->viewportWidth*0.075*0.96470588235294117647);
+	PROGRESS;
+	game->level.meter_bmp = al_create_bitmap(game->viewportWidth*0.2+al_get_bitmap_width(game->level.meter_image), al_get_bitmap_height(game->level.meter_image));
+	PROGRESS;
+	game->level.welcome = al_create_bitmap(game->viewportWidth, game->viewportHeight/2);
+	PROGRESS;
+	al_set_target_bitmap(game->level.welcome);
+	al_clear_to_color(al_map_rgba(0,0,0,0));
+	al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.1, ALLEGRO_ALIGN_CENTRE, "Level 1");
+	al_draw_text_with_shadow(game->menu.font_subtitle, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.275, ALLEGRO_ALIGN_CENTRE, "Fluttershy");
+	PROGRESS;
+
+
+	if (game->level.current_level!=1) Moonwalk_PreloadBitmaps(game, progress);
 	else {
-		/* TODO: handle strange display aspects */
-		game->level.clouds = LoadScaledBitmap("levels/1/clouds.png", game->viewportHeight*4.73307291666666666667, game->viewportHeight);
-		PROGRESS;
-		game->level.foreground = LoadScaledBitmap("levels/1/foreground.png", game->viewportHeight*4.73307291666666666667, game->viewportHeight);
-		PROGRESS;
-		game->level.background = LoadScaledBitmap("levels/1/background.png", game->viewportHeight*4.73307291666666666667, game->viewportHeight);
-		PROGRESS;
-		game->level.stage = LoadScaledBitmap("levels/1/stage.png", game->viewportHeight*4.73307291666666666667, game->viewportHeight);
-		PROGRESS;
-		game->level.obst_bmps.pie1 = LoadScaledBitmap("levels/pie1.png", game->viewportWidth*0.1, game->viewportHeight*0.08);
-		PROGRESS;
-		game->level.obst_bmps.pie2 = LoadScaledBitmap("levels/pie2.png", game->viewportWidth*0.1, game->viewportHeight*0.08);
-		PROGRESS;
-		game->level.obst_bmps.pig = LoadScaledBitmap("levels/pig.png", (int)(game->viewportWidth*0.15)*3, (int)(game->viewportHeight*0.2)*3);
-		PROGRESS;
-		game->level.obst_bmps.screwball = LoadScaledBitmap("levels/screwball.png", (int)(game->viewportHeight*0.2)*4*1.4, (int)(game->viewportHeight*0.2)*4);
-		PROGRESS;
-		game->level.obst_bmps.muffin = LoadScaledBitmap("levels/muffin.png", game->viewportWidth*0.07, game->viewportHeight*0.1);
-		PROGRESS;
-		game->level.obst_bmps.cherry = LoadScaledBitmap("levels/cherry.png", game->viewportWidth*0.03, game->viewportHeight*0.08);
-		PROGRESS;
-		game->level.obst_bmps.badmuffin = LoadScaledBitmap("levels/badmuffin.png", game->viewportWidth*0.07, game->viewportHeight*0.1);
-		PROGRESS;
 		game->level.owl = LoadScaledBitmap("levels/owl.png", game->viewportWidth*0.08, game->viewportWidth*0.08);
 		PROGRESS;
 		game->level.letter_font = al_load_ttf_font(GetDataFilePath("fonts/DejaVuSans.ttf"),game->viewportHeight*0.0225,0 );
@@ -632,19 +443,8 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 		al_draw_text_with_shadow(game->menu.font, al_map_rgb(255,255,255), al_get_bitmap_width(game->level.letter)*0.5, al_get_bitmap_height(game->level.letter)*0.8, ALLEGRO_ALIGN_CENTRE, "Press enter to continue...");
 		al_set_target_bitmap(al_get_backbuffer(game->display));
 		PROGRESS;
-		game->level.welcome = al_create_bitmap(game->viewportWidth, game->viewportHeight/2);
-		PROGRESS;
-		al_set_target_bitmap(game->level.welcome);
-		al_clear_to_color(al_map_rgba(0,0,0,0));
-		al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.1, ALLEGRO_ALIGN_CENTRE, "Level 1");
-		al_draw_text_with_shadow(game->menu.font_subtitle, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.275, ALLEGRO_ALIGN_CENTRE, "Fluttershy");
-		PROGRESS;
 
-		game->level.meter_image = LoadScaledBitmap("levels/meter.png", game->viewportWidth*0.075, game->viewportWidth*0.075*0.96470588235294117647);
-		PROGRESS;
-		game->level.meter_bmp = al_create_bitmap(game->viewportWidth*0.2+al_get_bitmap_width(game->level.meter_image), al_get_bitmap_height(game->level.meter_image));
-
+		Dodger_PreloadBitmaps(game, progress);
 		al_set_target_bitmap(al_get_backbuffer(game->display));
 	}
-	PROGRESS;
 }

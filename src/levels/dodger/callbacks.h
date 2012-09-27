@@ -1,5 +1,5 @@
 /*! \file callbacks.h
- *  \brief Headers with Obstacle callbacks for Level.
+ *  \brief Headers with Obstacle callbacks for Dodger Level module.
  */
 /*
  * Copyright (c) Sebastian Krzyszkowiak <dos@dosowisko.net>
@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include "../main.h"
+#include "../../main.h"
 
 /*! \brief Move up or down until reaching the edge of the screen. After that - change direction. */
 void Obst_MoveUpDown(struct Game *game, struct Obstacle *obstacle);

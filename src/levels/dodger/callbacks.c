@@ -1,5 +1,5 @@
 /*! \file callbacks.c
- *  \brief Obstacle callbacks for Level.
+ *  \brief Obstacle callbacks for Dodger Level module.
  */
 /*
  * Copyright (c) Sebastian Krzyszkowiak <dos@dosowisko.net>

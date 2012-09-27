@@ -374,10 +374,6 @@ ALLEGRO_BITMAP* LoadScaledBitmap(char* filename, int width, int height) {
 	return target;*/
 }
 
-float tps(struct Game *game, float t) {
-	return t/60;
-}
-
 void SetupViewport(struct Game *game) {
 	game->viewportWidth = al_get_display_width(game->display);
 	game->viewportHeight = al_get_display_height(game->display);

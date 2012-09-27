@@ -1,5 +1,5 @@
 /*! \file moonwalk.c
- *  \brief Moonwalk Level placeholder code.
+ *  \brief Moonwalk Level module code.
  */
 /*
  * Copyright (c) Sebastian Krzyszkowiak <dos@dosowisko.net>
@@ -20,7 +20,7 @@
  */
 #include <stdio.h>
 #include <math.h>
-#include "level.h"
+#include "../level.h"
 #include "moonwalk.h"
 
 void Moonwalk_Logic(struct Game *game) {
@@ -53,7 +53,7 @@ void Moonwalk_Draw(struct Game *game) {
 		}
 		return;
 	}
-	al_draw_scaled_bitmap(game->level.moonwalk.image,0,0,al_get_bitmap_width(game->level.moonwalk.image),al_get_bitmap_height(game->level.moonwalk.image),0,0,game->viewportWidth, game->viewportHeight,0);
+	al_draw_scaled_bitmap(game->level.stage,0,0,al_get_bitmap_width(game->level.stage),al_get_bitmap_height(game->level.stage),0,0,game->viewportWidth, game->viewportHeight,0);
 	al_draw_bitmap(game->level.derpy, game->level.moonwalk.derpy_pos*game->viewportWidth, game->viewportHeight*0.95-al_get_bitmap_height(game->level.derpy), ALLEGRO_FLIP_HORIZONTAL);
 	al_draw_textf(game->font, al_map_rgb(255,255,255), game->viewportWidth/2, game->viewportHeight/2.2, ALLEGRO_ALIGN_CENTRE, "Level %d: Not implemented yet!", game->level.current_level);
 	al_draw_text(game->font, al_map_rgb(255,255,255), game->viewportWidth/2, game->viewportHeight/1.8, ALLEGRO_ALIGN_CENTRE, "Have some moonwalk instead.");
@@ -72,16 +72,23 @@ int Moonwalk_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	return 0;
 }
 
-void Moonwalk_PreloadBitmaps(struct Game *game) {
-	game->level.moonwalk.image =LoadScaledBitmap("levels/disco.jpg", game->viewportWidth, game->viewportHeight);
+void Moonwalk_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float)) {
 	/*game->level.derpy_sheet = LoadScaledBitmap("levels/derpcycle.png", game->viewportWidth*0.1953125*6, game->viewportHeight*0.25*4);*/
 
-	game->level.derpy = al_create_bitmap(game->viewportWidth*0.1953125, game->viewportHeight*0.25);
+	// nasty hack: overwrite level backgrounds
+	al_destroy_bitmap(game->level.background);
+	al_destroy_bitmap(game->level.foreground);
+	al_destroy_bitmap(game->level.stage);
+	al_destroy_bitmap(game->level.clouds);
+	game->level.background=al_create_bitmap(0,0);
+	game->level.foreground=al_create_bitmap(0,0);
+	game->level.clouds=al_create_bitmap(0,0);
+	game->level.stage = LoadScaledBitmap("levels/disco.jpg", game->viewportWidth, game->viewportHeight);
 
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 }
 
-void Moonwalk_Preload(struct Game *game) {
+void Moonwalk_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	PrintConsole(game, "Initializing level %d...", game->level.current_level);
 	game->level.sample = al_load_sample( GetDataFilePath("levels/moonwalk.flac") );
 	game->level.music = al_create_sample_instance(game->level.sample);
@@ -95,9 +102,11 @@ void Moonwalk_Preload(struct Game *game) {
 }
 
 void Moonwalk_UnloadBitmaps(struct Game *game) {
-	al_destroy_bitmap(game->level.moonwalk.image);
 }
 
 void Moonwalk_Unload(struct Game *game) {
 	//FadeGameState(game, false);
+}
+
+void Moonwalk_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev) {
 }

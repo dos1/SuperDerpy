@@ -52,8 +52,6 @@ enum gamestate_enum {
 	GAMESTATE_DISCLAIMER
 };
 
-/* TODO: move Obstacle and Spritesheet to level.h if possible */
-
 /*! \brief Structure representing obstacles and power-ups flying through the level. */
 struct Obstacle {
 		ALLEGRO_BITMAP **bitmap; /*!< Pointer to bitmap used by obstacle. */
@@ -93,15 +91,28 @@ struct Spritesheet {
 
 /* Gamestate structs */
 
-/*! \brief Resources used by moonwalk level placeholder. */
+/*! \brief Resources used by Moonwalk level module. */
 struct Moonwalk {
-		ALLEGRO_BITMAP *image; /*!< Background texture. */
 		int derpy_frame; /*!< Current frame of Derpy animation. */
 		int derpy_frame_tmp; /*!< Counter used to slow down Derpy animation. */
 		double derpy_pos; /*!< Position of Derpy on screen. */
 };
 
-/*! \brief Resources used by Level state. */
+/*! \brief Resources used by Dodger level module. */
+struct Dodger {
+		struct {
+				ALLEGRO_BITMAP *pie1; /*!< Pie bitmap. */
+				ALLEGRO_BITMAP *pie2; /*!< Pie bitmap (crossed). */
+				ALLEGRO_BITMAP *muffin; /*!< Good muffin bitmap. */
+				ALLEGRO_BITMAP *badmuffin; /*!< Bad muffin bitmap. */
+				ALLEGRO_BITMAP *cherry; /*!< Cherry bitmap. */
+				ALLEGRO_BITMAP *pig; /*!< Pig spritesheet bitmap. */
+				ALLEGRO_BITMAP *screwball; /*!< Screwball spritesheet bitmap. */
+		} obst_bmps; /*!< Obstacle bitmaps. */
+		struct Obstacle *obstacles; /*!< List of obstacles being currently rendered. */
+};
+
+/*! \brief Resources used by Level state and shared between level modules. */
 struct Level {
 		struct {
 			int current_level; /*!< Level number. */
@@ -146,19 +157,10 @@ struct Level {
 		ALLEGRO_BITMAP *meter_image; /*!< Derpy image used in the HP meter. */
 		ALLEGRO_BITMAP *letter; /*!< Bitmap with letter from Twilight. */
 		bool debug_show_sprite_frames; /*!< When true, displays colorful borders around spritesheets and their active areas. */
-		struct Spritesheet* derpy_sheets; /*!< List of sprite sheets of Derpy character. */
-		struct Spritesheet* pony_sheets; /*!< List of sprite sheets of character rescued by Derpy. */
-		struct {
-				ALLEGRO_BITMAP *pie1; /*!< Pie bitmap. */
-				ALLEGRO_BITMAP *pie2; /*!< Pie bitmap (crossed). */
-				ALLEGRO_BITMAP *muffin; /*!< Good muffin bitmap. */
-				ALLEGRO_BITMAP *badmuffin; /*!< Bad muffin bitmap. */
-				ALLEGRO_BITMAP *cherry; /*!< Cherry bitmap. */
-				ALLEGRO_BITMAP *pig; /*!< Pig spritesheet bitmap. */
-				ALLEGRO_BITMAP *screwball; /*!< Screwball spritesheet bitmap. */
-		} obst_bmps; /*!< Obstacle bitmaps. */
-		struct Obstacle *obstacles; /*!< List of obstacles being currently rendered. */
-		struct Moonwalk moonwalk; /*!< Moonwalk placeholder data. */
+		struct Spritesheet* derpy_sheets; /*!< List of spritesheets of Derpy character. */
+		//struct Spritesheet* pony_sheets; /*!< List of spritesheets of character rescued by Derpy. */
+		struct Moonwalk moonwalk; /*!< Moonwalk module data. */
+		struct Dodger dodger; /*!< Dodger module data. */
 };
 
 /*! \brief Enum of menu states in Menu and Pause game states. */
@@ -338,9 +340,6 @@ void DrawConsole(struct Game *game);
 
 /*! \brief Loads bitmap into memory and scales it with software linear filtering. */
 ALLEGRO_BITMAP* LoadScaledBitmap(char* filename, int width, int height);
-
-/*! \brief Draws console bitmap on screen. */
-float tps(struct Game *game, float t);
 
 /*! \brief Draws frame from current gamestate. */
 void DrawGameState(struct Game *game);
