@@ -23,16 +23,20 @@
 #include "../gamestates/level.h"
 
 bool LevelFailed(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
-	if (state == TM_ACTIONSTATE_INIT) {
-		TM_AddBackgroundAction(&FadeOut, NULL, 3000, "fadeout");
-	} else if (state == TM_ACTIONSTATE_DRAW) {
+	if (state == TM_ACTIONSTATE_DRAW) {
 		al_draw_filled_rectangle(0, 0, game->viewportWidth, game->viewportHeight, al_map_rgba(0,0,0,100));
 		al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.4, ALLEGRO_ALIGN_CENTRE, "Failed!");
 	} else if (state == TM_ACTIONSTATE_RUNNING) {
 		game->level.speed-=0.00001;
-		return false;
+		if (game->level.speed<=0) {
+			return true;
+		}
+	} else if (state == TM_ACTIONSTATE_DESTROY) {
+		Level_Unload(game);
+		game->gamestate = GAMESTATE_LOADING;
+		game->loadstate = GAMESTATE_MAP;
 	}
-	return true;
+	return false;
 }
 
 bool ShowMeter(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
