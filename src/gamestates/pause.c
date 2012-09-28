@@ -71,7 +71,6 @@ void Pause_Preload(struct Game* game) {
 }
 
 void Pause_Load(struct Game* game) {
-	PauseGameState(game);
 	ALLEGRO_BITMAP *fade = al_create_bitmap(game->viewportWidth, game->viewportHeight);
 	al_set_target_bitmap(fade);
 	al_clear_to_color(al_map_rgb(0,0,0));

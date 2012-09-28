@@ -227,6 +227,7 @@ int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	if (ev->keyboard.keycode==ALLEGRO_KEY_ESCAPE) {
 		game->gamestate = GAMESTATE_PAUSE;
 		game->loadstate = GAMESTATE_LEVEL;
+		PauseGameState(game);
 		Pause_Load(game);
 	}
 	return 0;
