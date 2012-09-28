@@ -17,11 +17,11 @@ SET(SRC_LIST
   levels/level4.c
   levels/level5.c
   levels/level6.c
-  levels/moonwalk.c
-  levels/dodger.c
-  levels/actions.c
-  levels/dodger/actions.c
-  levels/dodger/callbacks.c
+	levels/actions.c
+	levels/modules/moonwalk.c
+	levels/modules/dodger.c
+	levels/modules/dodger/actions.c
+	levels/modules/dodger/callbacks.c
 )
 
 find_package(Allegro5 REQUIRED)

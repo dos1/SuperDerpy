@@ -21,8 +21,8 @@
 
 #include "actions.h"
 #include "callbacks.h"
-#include "../actions.h"
-#include "../../gamestates/level.h"
+#include "../../actions.h"
+#include "../../../gamestates/level.h"
 
 
 bool Accelerate(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {

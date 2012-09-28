@@ -20,7 +20,7 @@
  */
 #include <stdio.h>
 #include "../gamestates/level.h"
-#include "moonwalk.h"
+#include "modules/moonwalk.h"
 
 void Level3_Load(struct Game *game) {
 	Moonwalk_Load(game);

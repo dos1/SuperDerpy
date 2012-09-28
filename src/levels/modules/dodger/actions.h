@@ -19,8 +19,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include "../../main.h"
-#include "../../timeline.h"
+#include "../../../main.h"
+#include "../../../timeline.h"
 
 /*! \brief Accelerate current speed game until threshold is reached  */
 bool Accelerate(struct Game *game, struct TM_Action *action, enum TM_ActionState state);

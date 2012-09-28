@@ -1,5 +1,5 @@
-/*! \file moonwalk.h
- *  \brief Moonwalk Level module headers.
+/*! \file callbacks.h
+ *  \brief Headers with Obstacle callbacks for Dodger Level module.
  */
 /*
  * Copyright (c) Sebastian Krzyszkowiak <dos@dosowisko.net>
@@ -18,17 +18,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-#include "../main.h"
 
-void Moonwalk_Draw(struct Game *game);
-void Moonwalk_Logic(struct Game *game);
-void Moonwalk_Preload(struct Game *game);
-void Moonwalk_Unload(struct Game *game);
-void Moonwalk_Load(struct Game *game);
-void Moonwalk_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
-void Moonwalk_UnloadBitmaps(struct Game *game);
-void Moonwalk_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float));
-void Moonwalk_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev);
-void Moonwalk_Resume(struct Game *game);
-void Moonwalk_Pause(struct Game *game);
-inline int Moonwalk_PreloadSteps();
+#include "../../../main.h"
+
+/*! \brief Move up or down until reaching the edge of the screen. After that - change direction. */
+void Obst_MoveUpDown(struct Game *game, struct Obstacle *obstacle);
+
+/*! \brief Move up at constant speed. */
+void Obst_MoveUp(struct Game *game, struct Obstacle *obstacle);
+
+/*! \brief Move in sinusoidal way in Y-axis relative to position at beginning. */
+void Obst_MoveSin(struct Game *game, struct Obstacle *obstacle);
+
+/*! \brief Rotate in sinusoidal way. */
+void Obst_RotateSin(struct Game *game, struct Obstacle *obstacle);

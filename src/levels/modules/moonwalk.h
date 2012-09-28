@@ -1,5 +1,5 @@
-/*! \file dodger.h
- *  \brief Dodger Level module headers.
+/*! \file moonwalk.h
+ *  \brief Moonwalk Level module headers.
  */
 /*
  * Copyright (c) Sebastian Krzyszkowiak <dos@dosowisko.net>
@@ -18,17 +18,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-#include "../main.h"
+#include "../../main.h"
 
-void Dodger_Draw(struct Game *game);
-void Dodger_Logic(struct Game *game);
-void Dodger_Preload(struct Game *game);
-void Dodger_Unload(struct Game *game);
-void Dodger_Load(struct Game *game);
-void Dodger_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
-void Dodger_UnloadBitmaps(struct Game *game);
-void Dodger_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float));
-void Dodger_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev);
-void Dodger_Resume(struct Game *game);
-void Dodger_Pause(struct Game *game);
-inline int Dodger_PreloadSteps();
+void Moonwalk_Draw(struct Game *game);
+void Moonwalk_Logic(struct Game *game);
+void Moonwalk_Preload(struct Game *game);
+void Moonwalk_Unload(struct Game *game);
+void Moonwalk_Load(struct Game *game);
+void Moonwalk_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
+void Moonwalk_UnloadBitmaps(struct Game *game);
+void Moonwalk_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float));
+void Moonwalk_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev);
+void Moonwalk_Resume(struct Game *game);
+void Moonwalk_Pause(struct Game *game);
+inline int Moonwalk_PreloadSteps();

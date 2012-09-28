@@ -20,9 +20,9 @@
  */
 #include <stdio.h>
 #include "../gamestates/level.h"
-#include "dodger.h"
 #include "actions.h"
-#include "dodger/actions.h"
+#include "modules/dodger.h"
+#include "modules/dodger/actions.h"
 
 void Level1_Load(struct Game *game) {
 	Dodger_Load(game);
