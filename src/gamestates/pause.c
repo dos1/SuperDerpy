@@ -44,14 +44,23 @@ int Pause_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 			al_flip_display();
 			SetupViewport(game);
 			Shared_Load(game);
-			al_draw_text_with_shadow(game->font, al_map_rgb(255,255,255), game->viewportWidth*0.0234, game->viewportHeight*0.85, ALLEGRO_ALIGN_LEFT, "Loading...");
-			al_flip_display();
+
+			void Progress(struct Game *game, float p) {
+				al_set_target_bitmap(al_get_backbuffer(game->display));
+				al_clear_to_color(al_map_rgb(0,0,0));
+				al_draw_text_with_shadow(game->font, al_map_rgb(255,255,255), game->viewportWidth*0.0234, game->viewportHeight*0.84, ALLEGRO_ALIGN_LEFT, "Loading...");
+				al_draw_filled_rectangle(0, game->viewportHeight*0.985, game->viewportWidth, game->viewportHeight, al_map_rgba(128,128,128,128));
+				al_draw_filled_rectangle(0, game->viewportHeight*0.985, p*game->viewportWidth, game->viewportHeight, al_map_rgba(255,255,255,255));
+				al_flip_display();
+			}
+			Progress(game, 0);
+
 			Loading_Unload(game);
 			Loading_Load(game);
 			Menu_Unload(game);
 			Menu_Preload(game, NULL);
 			Level_UnloadBitmaps(game);
-			Level_PreloadBitmaps(game, NULL);
+			Level_PreloadBitmaps(game, &Progress);
 			Pause_Unload_Real(game);
 			Pause_Preload(game);
 			Pause_Load(game);

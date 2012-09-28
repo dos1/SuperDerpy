@@ -331,7 +331,6 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 	game->level.derpy = al_create_bitmap(al_get_bitmap_width(*(game->level.derpy_sheet))/game->level.sheet_cols, al_get_bitmap_height(*(game->level.derpy_sheet))/game->level.sheet_rows);
 	
 	//TODO: load proper bitmap files for each level
-	//TODO: maybe handle strange display aspects
 	game->level.clouds = LoadScaledBitmap("levels/1/clouds.png", game->viewportHeight*4.73307291666666666667, game->viewportHeight);
 	PROGRESS;
 	game->level.foreground = LoadScaledBitmap("levels/1/foreground.png", game->viewportHeight*4.73307291666666666667, game->viewportHeight);
