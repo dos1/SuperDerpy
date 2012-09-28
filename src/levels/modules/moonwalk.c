@@ -76,15 +76,9 @@ inline int Moonwalk_PreloadSteps() {
 
 void Moonwalk_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float)) {
 	PROGRESS_INIT(Moonwalk_PreloadSteps());
-	// nasty hack: overwrite level backgrounds
-	al_destroy_bitmap(game->level.background);
-	al_destroy_bitmap(game->level.foreground);
+	// nasty hack: overwrite level background
 	al_destroy_bitmap(game->level.stage);
-	al_destroy_bitmap(game->level.clouds);
-	game->level.background=al_create_bitmap(0,0);
-	game->level.foreground=al_create_bitmap(0,0);
-	game->level.clouds=al_create_bitmap(0,0);
-	game->level.stage = LoadScaledBitmap("levels/disco.jpg", game->viewportWidth, game->viewportHeight);
+	game->level.stage = LoadScaledBitmap("levels/moonwalk/disco.jpg", game->viewportWidth, game->viewportHeight);
 	PROGRESS;
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 }
@@ -93,7 +87,7 @@ void Moonwalk_Preload(struct Game *game) {
 	RegisterDerpySpritesheet(game, "walk");
 	// nasty hack: overwrite level music
 	al_destroy_sample(game->level.sample);
-	game->level.sample = al_load_sample( GetDataFilePath("levels/moonwalk.flac") );
+	game->level.sample = al_load_sample( GetDataFilePath("levels/moonwalk/moonwalk.flac") );
 }
 
 void Moonwalk_UnloadBitmaps(struct Game *game) {}

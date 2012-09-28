@@ -246,6 +246,13 @@ void Level_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev) {
 	TM_HandleEvent(ev);
 }
 
+char* GetLevelFilename(struct Game *game, char* filename) {
+	char* name = strdup(filename);
+	char* ch = strchr(name, '?');
+	ch[0] = '0' + game->level.current_level;
+	return name;
+}
+
 void Level_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	PrintConsole(game, "Initializing level %d...", game->level.input.current_level);
 
@@ -256,8 +263,7 @@ void Level_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	Pause_Preload(game);
 	RegisterDerpySpritesheet(game, "stand"); // default
 
-	//TODO: load proper music file for each level
-	game->level.sample = al_load_sample( GetDataFilePath("levels/1/music.flac") );
+	game->level.sample = al_load_sample( GetDataFilePath(GetLevelFilename(game, "levels/?/music.flac")) );
 
 	LEVELS(Preload, game);
 
@@ -347,14 +353,13 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 
 	game->level.derpy = al_create_bitmap(al_get_bitmap_width(*(game->level.derpy_sheet))/game->level.sheet_cols, al_get_bitmap_height(*(game->level.derpy_sheet))/game->level.sheet_rows);
 	
-	//TODO: load proper bitmap files for each level
-	game->level.clouds = LoadScaledBitmap("levels/1/clouds.png", game->viewportHeight*4.73307291666666666667, game->viewportHeight);
+	game->level.clouds = LoadScaledBitmap(GetLevelFilename(game, "levels/?/clouds.png"), game->viewportHeight*4.73307291666666666667, game->viewportHeight);
 	PROGRESS;
-	game->level.foreground = LoadScaledBitmap("levels/1/foreground.png", game->viewportHeight*4.73307291666666666667, game->viewportHeight);
+	game->level.foreground = LoadScaledBitmap(GetLevelFilename(game, "levels/?/foreground.png"), game->viewportHeight*4.73307291666666666667, game->viewportHeight);
 	PROGRESS;
-	game->level.background = LoadScaledBitmap("levels/1/background.png", game->viewportHeight*4.73307291666666666667, game->viewportHeight);
+	game->level.background = LoadScaledBitmap(GetLevelFilename(game, "levels/?/background.png"), game->viewportHeight*4.73307291666666666667, game->viewportHeight);
 	PROGRESS;
-	game->level.stage = LoadScaledBitmap("levels/1/stage.png", game->viewportHeight*4.73307291666666666667, game->viewportHeight);
+	game->level.stage = LoadScaledBitmap(GetLevelFilename(game, "levels/?/stage.png"), game->viewportHeight*4.73307291666666666667, game->viewportHeight);
 	PROGRESS;
 	game->level.meter_image = LoadScaledBitmap("levels/meter.png", game->viewportWidth*0.075, game->viewportWidth*0.075*0.96470588235294117647);
 	PROGRESS;

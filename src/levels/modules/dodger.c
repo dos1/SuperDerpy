@@ -224,19 +224,19 @@ inline int Dodger_PreloadSteps() {
 
 void Dodger_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float)) {
 	PROGRESS_INIT(Dodger_PreloadSteps());
-	game->level.dodger.obst_bmps.pie1 = LoadScaledBitmap("levels/pie1.png", game->viewportWidth*0.1, game->viewportHeight*0.08);
+	game->level.dodger.obst_bmps.pie1 = LoadScaledBitmap("levels/dodger/pie1.png", game->viewportWidth*0.1, game->viewportHeight*0.08);
 	PROGRESS;
-	game->level.dodger.obst_bmps.pie2 = LoadScaledBitmap("levels/pie2.png", game->viewportWidth*0.1, game->viewportHeight*0.08);
+	game->level.dodger.obst_bmps.pie2 = LoadScaledBitmap("levels/dodger/pie2.png", game->viewportWidth*0.1, game->viewportHeight*0.08);
 	PROGRESS;
-	game->level.dodger.obst_bmps.pig = LoadScaledBitmap("levels/pig.png", (int)(game->viewportWidth*0.15)*3, (int)(game->viewportHeight*0.2)*3);
+	game->level.dodger.obst_bmps.pig = LoadScaledBitmap("levels/dodger/pig.png", (int)(game->viewportWidth*0.15)*3, (int)(game->viewportHeight*0.2)*3);
 	PROGRESS;
-	game->level.dodger.obst_bmps.screwball = LoadScaledBitmap("levels/screwball.png", (int)(game->viewportHeight*0.2)*4*1.4, (int)(game->viewportHeight*0.2)*4);
+	game->level.dodger.obst_bmps.screwball = LoadScaledBitmap("levels/dodger/screwball.png", (int)(game->viewportHeight*0.2)*4*1.4, (int)(game->viewportHeight*0.2)*4);
 	PROGRESS;
-	game->level.dodger.obst_bmps.muffin = LoadScaledBitmap("levels/muffin.png", game->viewportWidth*0.07, game->viewportHeight*0.1);
+	game->level.dodger.obst_bmps.muffin = LoadScaledBitmap("levels/dodger/muffin.png", game->viewportWidth*0.07, game->viewportHeight*0.1);
 	PROGRESS;
-	game->level.dodger.obst_bmps.cherry = LoadScaledBitmap("levels/cherry.png", game->viewportWidth*0.03, game->viewportHeight*0.08);
+	game->level.dodger.obst_bmps.cherry = LoadScaledBitmap("levels/dodger/cherry.png", game->viewportWidth*0.03, game->viewportHeight*0.08);
 	PROGRESS;
-	game->level.dodger.obst_bmps.badmuffin = LoadScaledBitmap("levels/badmuffin.png", game->viewportWidth*0.07, game->viewportHeight*0.1);
+	game->level.dodger.obst_bmps.badmuffin = LoadScaledBitmap("levels/dodger/badmuffin.png", game->viewportWidth*0.07, game->viewportHeight*0.1);
 	PROGRESS;
 }
 

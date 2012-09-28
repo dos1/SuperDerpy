@@ -42,3 +42,6 @@ bool Welcome(struct Game *game, struct TM_Action *action, enum TM_ActionState st
 
 /*! \brief Pass level and fade-out after few seconds. */
 bool PassLevel(struct Game *game, struct TM_Action *action, enum TM_ActionState state);
+
+/*! \brief Shows letter from Twilight on screen. */
+bool Letter(struct Game *game, struct TM_Action *action, enum TM_ActionState state);

@@ -34,3 +34,4 @@ void Level_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev);
 int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
 void Level_UnloadBitmaps(struct Game *game);
 void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float));
+char* GetLevelFilename(struct Game *game, char* filename);

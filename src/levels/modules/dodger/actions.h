@@ -39,6 +39,3 @@ bool Run(struct Game *game, struct TM_Action *action, enum TM_ActionState state)
 
 /*! \brief Generates obstacles. */
 bool GenerateObstacles(struct Game *game, struct TM_Action *action, enum TM_ActionState state);
-
-/*! \brief Shows letter from Twilight on screen. */
-bool Letter(struct Game *game, struct TM_Action *action, enum TM_ActionState state);

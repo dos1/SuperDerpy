@@ -99,11 +99,11 @@ inline int Level1_PreloadSteps() {
 
 void Level1_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float)) {
 	PROGRESS_INIT(Level1_PreloadSteps());
-	game->level.owl = LoadScaledBitmap("levels/owl.png", game->viewportWidth*0.08, game->viewportWidth*0.08);
+	game->level.owl = LoadScaledBitmap("levels/1/owl.png", game->viewportWidth*0.08, game->viewportWidth*0.08);
 	PROGRESS;
 	game->level.letter_font = al_load_ttf_font(GetDataFilePath("fonts/DejaVuSans.ttf"),game->viewportHeight*0.0225,0 );
 	PROGRESS;
-	game->level.letter = LoadScaledBitmap("levels/letter.png", game->viewportHeight*1.3, game->viewportHeight*1.2);
+	game->level.letter = LoadScaledBitmap("levels/1/letter.png", game->viewportHeight*1.3, game->viewportHeight*1.2);
 	al_set_target_bitmap(game->level.letter);
 	float y = 0.20;
 	float x = 0.19;

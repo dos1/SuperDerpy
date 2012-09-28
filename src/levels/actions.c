@@ -162,3 +162,51 @@ bool PassLevel(struct Game *game, struct TM_Action *action, enum TM_ActionState 
 	}
 	return true;
 }
+
+bool Letter(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
+	if (state == TM_ACTIONSTATE_INIT) action->arguments = NULL;
+	if (state == TM_ACTIONSTATE_DESTROY) {
+		ALLEGRO_AUDIO_STREAM** stream = (ALLEGRO_AUDIO_STREAM**)action->arguments->next->value;
+		al_set_audio_stream_playing(*stream, false);
+		al_destroy_audio_stream(*stream);
+		free(action->arguments->next->value);
+		free(action->arguments->value);
+		TM_DestroyArgs(action->arguments);
+	}
+	if (state == TM_ACTIONSTATE_DRAW) {
+		float* f = (float*)action->arguments->value;
+		al_draw_tinted_bitmap(game->level.letter, al_map_rgba(*f,*f,*f,*f), (game->viewportWidth-al_get_bitmap_width(game->level.letter))/2.0, al_get_bitmap_height(game->level.letter)*-0.05, 0);
+		return false;
+	}
+	else if (state == TM_ACTIONSTATE_PAUSE) {
+		ALLEGRO_AUDIO_STREAM** stream = (ALLEGRO_AUDIO_STREAM**)action->arguments->next->value;
+		al_set_audio_stream_playing(*stream, false);
+	}	else if (state == TM_ACTIONSTATE_RESUME) {
+		ALLEGRO_AUDIO_STREAM** stream = (ALLEGRO_AUDIO_STREAM**)action->arguments->next->value;
+		al_set_audio_stream_playing(*stream, true);
+	}
+	if (state != TM_ACTIONSTATE_RUNNING) return false;
+	if (!action->arguments) {
+		action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(float)));
+		float* f = (float*)action->arguments->value;
+		*f = 0;
+		action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(ALLEGRO_AUDIO_STREAM*)));
+		ALLEGRO_AUDIO_STREAM** stream = (ALLEGRO_AUDIO_STREAM**)action->arguments->next->value;
+		*stream = al_load_audio_stream(GetDataFilePath("levels/1/letter.flac"), 4, 1024);
+		al_attach_audio_stream_to_mixer(*stream, game->audio.voice);
+		al_set_audio_stream_playing(*stream, true);
+		al_set_audio_stream_gain(*stream, 2.00);
+		action->arguments->next->next = NULL;
+	}
+	float* f = (float*)action->arguments->value;
+	*f+=5;
+	if (*f>255) *f=255;
+	al_draw_tinted_bitmap(game->level.letter, al_map_rgba(*f,*f,*f,*f), (game->viewportWidth-al_get_bitmap_width(game->level.letter))/2.0, al_get_bitmap_height(game->level.letter)*-0.05, 0);
+	struct ALLEGRO_KEYBOARD_STATE keyboard;
+	al_get_keyboard_state(&keyboard);
+	// FIXME: do it the proper way
+	if (al_key_down(&keyboard, ALLEGRO_KEY_ENTER)) {
+		return true;
+	}
+	return false;
+}
