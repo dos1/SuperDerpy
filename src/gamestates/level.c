@@ -20,12 +20,31 @@
  */
 #include <stdio.h>
 #include <math.h>
-#include "../levels/moonwalk.h"
 #include "../levels/level1.h"
+#include "../levels/level2.h"
+#include "../levels/level3.h"
+#include "../levels/level4.h"
+#include "../levels/level5.h"
+#include "../levels/level6.h"
 #include "../config.h"
 #include "pause.h"
 #include "level.h"
 #include "../timeline.h"
+
+#define LEVELS(name, ...) switch (game->level.current_level) { \
+	case 1: \
+	Level1_ ## name (__VA_ARGS__); break;\
+	case 2: \
+	Level2_ ## name (__VA_ARGS__); break;\
+	case 3: \
+	Level3_ ## name (__VA_ARGS__); break;\
+	case 4: \
+	Level4_ ## name (__VA_ARGS__); break;\
+	case 5: \
+	Level5_ ## name (__VA_ARGS__); break;\
+	case 6: \
+	Level6_ ## name (__VA_ARGS__); break;\
+}
 
 void SelectDerpySpritesheet(struct Game *game, char* name) {
 	struct Spritesheet *tmp = game->level.derpy_sheets;
@@ -106,11 +125,7 @@ void Level_Passed(struct Game *game) {
 }
 
 void Level_Logic(struct Game *game) {
-	if (game->level.current_level==1) {
-		Level1_Logic(game);
-	} else {
-		Moonwalk_Logic(game);
-	}
+	LEVELS(Logic, game);
 
 	if ((game->level.sheet_speed) && (game->level.sheet_speed_modifier)) {
 		game->level.sheet_tmp+=1;
@@ -144,16 +159,14 @@ void Level_Logic(struct Game *game) {
 void Level_Resume(struct Game *game) {
 	al_set_sample_instance_position(game->level.music, game->level.music_pos);
 	al_set_sample_instance_playing(game->level.music, true);
-	if (game->level.current_level==1)	Level1_Resume(game);
-	else Moonwalk_Resume(game);
+	LEVELS(Resume, game);
 	TM_Resume();
 }
 
 void Level_Pause(struct Game *game) {
 	game->level.music_pos = al_get_sample_instance_position(game->level.music);
 	al_set_sample_instance_playing(game->level.music, false);
-	if (game->level.current_level==1)	Level1_Pause(game);
-	else Moonwalk_Pause(game);
+	LEVELS(Pause, game);
 	TM_Pause();
 }
 
@@ -165,8 +178,7 @@ void Level_Draw(struct Game *game) {
 	al_draw_bitmap(game->level.stage, (-game->level.st_pos)*al_get_bitmap_width(game->level.stage), 0 ,0);
 	al_draw_bitmap(game->level.stage, (1+(-game->level.st_pos))*al_get_bitmap_width(game->level.stage), 0 ,0);
 
-	if (game->level.current_level==1) Level1_Draw(game);
-	else Moonwalk_Draw(game);
+	LEVELS(Draw, game);
 
 	if (!game->level.foreground) return;
 
@@ -206,10 +218,7 @@ void Level_Load(struct Game *game) {
 	game->level.debug_show_sprite_frames=false;
 	al_clear_to_color(al_map_rgb(0,0,0));
 	TM_Init(game);
-	if (game->level.current_level!=1) Moonwalk_Load(game);
-	else {
-		Level1_Load(game);
-	}
+	LEVELS(Load, game);
 }
 
 int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
@@ -222,8 +231,7 @@ int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	} else if ((game->debug) && (ev->keyboard.keycode==ALLEGRO_KEY_F4)) {
 		game->level.debug_show_sprite_frames = !game->level.debug_show_sprite_frames;
 	}
-	if (game->level.current_level==1) Level1_Keydown(game, ev);
-	else Moonwalk_Keydown(game, ev);
+	LEVELS(Keydown, game, ev);
 	if (ev->keyboard.keycode==ALLEGRO_KEY_ESCAPE) {
 		game->gamestate = GAMESTATE_PAUSE;
 		game->loadstate = GAMESTATE_LEVEL;
@@ -234,8 +242,7 @@ int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 }
 
 void Level_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev) {
-	if (game->level.current_level==1)	Level1_ProcessEvent(game, ev);
-	else Moonwalk_ProcessEvent(game, ev);
+	LEVELS(ProcessEvent, game, ev);
 	TM_HandleEvent(ev);
 }
 
@@ -252,8 +259,7 @@ void Level_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	//TODO: load proper music file for each level
 	game->level.sample = al_load_sample( GetDataFilePath("levels/1/music.flac") );
 
-	if (game->level.current_level==1) Level1_Preload(game);
-	else Moonwalk_Preload(game);
+	LEVELS(Preload, game);
 
 	Level_PreloadBitmaps(game, progress);
 
@@ -276,8 +282,7 @@ void Level_Unload(struct Game *game) {
 	al_destroy_sample_instance(game->level.music);
 	al_destroy_sample(game->level.sample);
 	Level_UnloadBitmaps(game);
-	if (game->level.current_level!=1) Moonwalk_Unload(game);
-	else Level1_Unload(game);
+	LEVELS(Unload, game);
 	TM_Destroy();
 }
 
@@ -289,8 +294,7 @@ void Level_UnloadBitmaps(struct Game *game) {
 		al_destroy_bitmap(tmp->bitmap);
 		tmp = tmp->next;
 	}
-	if (game->level.current_level!=1) Moonwalk_UnloadBitmaps(game);
-	else Level1_UnloadBitmaps(game);
+	LEVELS(UnloadBitmaps, game);
 	al_destroy_bitmap(game->level.foreground);
 	al_destroy_bitmap(game->level.background);
 	al_destroy_bitmap(game->level.clouds);
@@ -302,8 +306,21 @@ void Level_UnloadBitmaps(struct Game *game) {
 }
 
 int Level_PreloadSteps(struct Game *game) {
-	if (game->level.current_level==1) return Level1_PreloadSteps();
-	else return Moonwalk_PreloadSteps();
+	switch (game->level.current_level) {
+		case 1:
+			return Level1_PreloadSteps(); break;
+		case 2:
+			return Level2_PreloadSteps(); break;
+		case 3:
+			return Level3_PreloadSteps(); break;
+		case 4:
+			return Level4_PreloadSteps(); break;
+		case 5:
+			return Level5_PreloadSteps(); break;
+		case 6:
+			return Level6_PreloadSteps(); break;
+	}
+	return 0;
 }
 
 void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float)) {
@@ -349,6 +366,5 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 	void ChildProgress(struct Game* game, float p) {
 		if (progress) (*progress)(game, load_p+=1/load_a);
 	}
-	if (game->level.current_level!=1) Moonwalk_PreloadBitmaps(game, &ChildProgress);
-	else Level1_PreloadBitmaps(game, &ChildProgress);
+	LEVELS(PreloadBitmaps, game, &ChildProgress);
 }

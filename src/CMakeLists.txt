@@ -1,17 +1,22 @@
 SET(SRC_LIST
-	main.c
-	allegro_utils.c
+  main.c
+  allegro_utils.c
   config.c
-	timeline.c
-	gamestates/about.c
-	gamestates/disclaimer.c
-	gamestates/intro.c
-	gamestates/level.c
-	gamestates/loading.c
-	gamestates/map.c
-	gamestates/menu.c
-	gamestates/pause.c
-	levels/level1.c
+  timeline.c
+  gamestates/about.c
+  gamestates/disclaimer.c
+  gamestates/intro.c
+  gamestates/level.c
+  gamestates/loading.c
+  gamestates/map.c
+  gamestates/menu.c
+  gamestates/pause.c
+  levels/level1.c
+  levels/level2.c
+  levels/level3.c
+  levels/level4.c
+  levels/level5.c
+  levels/level6.c
   levels/moonwalk.c
   levels/dodger.c
   levels/actions.c
