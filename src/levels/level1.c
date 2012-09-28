@@ -74,7 +74,7 @@ void Level1_Load(struct Game *game) {
 	obst->angle = 0;
 	obst->callback = NULL;
 	obst->data = NULL;
-	obst->bitmap = &(game->level.owl);
+	obst->bitmap = &(game->level.level1.owl);
 	game->level.dodger.obstacles = obst;
 }
 
@@ -86,7 +86,7 @@ void Level1_UnloadBitmaps(struct Game *game) {
 	Dodger_UnloadBitmaps(game);
 	al_destroy_font(game->level.letter_font);
 	al_destroy_bitmap(game->level.letter);
-	al_destroy_bitmap(game->level.owl);
+	al_destroy_bitmap(game->level.level1.owl);
 }
 
 void Level1_Preload(struct Game *game) {
@@ -99,7 +99,7 @@ inline int Level1_PreloadSteps() {
 
 void Level1_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float)) {
 	PROGRESS_INIT(Level1_PreloadSteps());
-	game->level.owl = LoadScaledBitmap("levels/1/owl.png", game->viewportWidth*0.08, game->viewportWidth*0.08);
+	game->level.level1.owl = LoadScaledBitmap("levels/1/owl.png", game->viewportWidth*0.08, game->viewportWidth*0.08);
 	PROGRESS;
 	game->level.letter_font = al_load_ttf_font(GetDataFilePath("fonts/DejaVuSans.ttf"),game->viewportHeight*0.0225,0 );
 	PROGRESS;

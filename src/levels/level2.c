@@ -21,9 +21,15 @@
 #include <stdio.h>
 #include "../gamestates/level.h"
 #include "modules/moonwalk.h"
+#include "../timeline.h"
+#include "actions.h"
+#include "level2.h"
 
 void Level2_Load(struct Game *game) {
 	Moonwalk_Load(game);
+	TM_AddAction(&DoMoonwalk, NULL, "moonwalk");
+	TM_AddAction(&PassLevel, NULL, "passlevel");
+	FadeGameState(game, true);
 }
 
 void Level2_Unload(struct Game *game) {

@@ -1,4 +1,4 @@
-/*! \file Level6.c
+/*! \file level6.c
  *  \brief Level 6 code.
  */
 /*
@@ -21,9 +21,14 @@
 #include <stdio.h>
 #include "../gamestates/level.h"
 #include "modules/moonwalk.h"
+#include "../timeline.h"
+#include "actions.h"
+#include "level6.h"
 
 void Level6_Load(struct Game *game) {
 	Moonwalk_Load(game);
+	TM_AddBackgroundAction(&PassLevel, NULL, 5000, "passlevel");
+	FadeGameState(game, true);
 }
 
 void Level6_Unload(struct Game *game) {

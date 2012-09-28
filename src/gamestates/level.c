@@ -131,7 +131,7 @@ void Level_Logic(struct Game *game) {
 		game->level.sheet_tmp+=1;
 		if (game->level.sheet_tmp >= (game->level.sheet_speed/game->level.speed_modifier)/game->level.sheet_speed_modifier) {
 			game->level.sheet_pos++;
-			game->level.sheet_tmp = 0;
+			game->level.sheet_tmp -= (game->level.sheet_speed/game->level.speed_modifier)/game->level.sheet_speed_modifier;
 		}
 		if (game->level.sheet_pos>=game->level.sheet_cols*game->level.sheet_rows-game->level.sheet_blanks) {
 			game->level.sheet_pos=0;

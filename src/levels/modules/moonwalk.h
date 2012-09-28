@@ -19,7 +19,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 #include "../../main.h"
+#include "../../timeline.h"
 
+bool DoMoonwalk(struct Game *game, struct TM_Action *action, enum TM_ActionState state);
 void Moonwalk_Draw(struct Game *game);
 void Moonwalk_Logic(struct Game *game);
 void Moonwalk_Preload(struct Game *game);

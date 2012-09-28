@@ -93,8 +93,6 @@ struct Spritesheet {
 
 /*! \brief Resources used by Moonwalk level module. */
 struct Moonwalk {
-		int derpy_frame; /*!< Current frame of Derpy animation. */
-		int derpy_frame_tmp; /*!< Counter used to slow down Derpy animation. */
 		double derpy_pos; /*!< Position of Derpy on screen. */
 };
 
@@ -145,7 +143,6 @@ struct Level {
 		ALLEGRO_SAMPLE *sample; /*!< Sample with background music. */
 		ALLEGRO_SAMPLE_INSTANCE *music; /*!< Sample instance with background music. */
 		unsigned int music_pos; /*!< Position of sample instance. Used when pausing game. */
-		ALLEGRO_BITMAP *owl; /*!< Owlicious bitmap. */
 		ALLEGRO_BITMAP *background; /*!< Bitmap of the background layer of the scene. */
 		ALLEGRO_BITMAP *stage; /*!< Bitmap of the stage layer of the scene. */
 		ALLEGRO_BITMAP *foreground; /*!< Bitmap of the foreground layer of the scene. */
@@ -159,6 +156,9 @@ struct Level {
 		bool debug_show_sprite_frames; /*!< When true, displays colorful borders around spritesheets and their active areas. */
 		struct Spritesheet* derpy_sheets; /*!< List of spritesheets of Derpy character. */
 		//struct Spritesheet* pony_sheets; /*!< List of spritesheets of character rescued by Derpy. */
+		struct {
+				ALLEGRO_BITMAP *owl; /*!< Owlicious bitmap. */
+		} level1; /*!< Resources used by level 1. */
 		struct Moonwalk moonwalk; /*!< Moonwalk module data. */
 		struct Dodger dodger; /*!< Dodger module data. */
 };

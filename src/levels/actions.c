@@ -27,6 +27,7 @@ bool LevelFailed(struct Game *game, struct TM_Action *action, enum TM_ActionStat
 		al_draw_filled_rectangle(0, 0, game->viewportWidth, game->viewportHeight, al_map_rgba(0,0,0,100));
 		al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.4, ALLEGRO_ALIGN_CENTRE, "Failed!");
 	} else if (state == TM_ACTIONSTATE_RUNNING) {
+		// FIXME: this should be more generic. Some callback function?
 		game->level.speed-=0.00001;
 		if (game->level.speed<=0) {
 			return true;
@@ -156,9 +157,13 @@ bool PassLevel(struct Game *game, struct TM_Action *action, enum TM_ActionState 
 	if (state == TM_ACTIONSTATE_DESTROY) {
 		Level_Passed(game);
 		Level_Unload(game);
-		game->gamestate = GAMESTATE_LOADING;
-		game->loadstate = GAMESTATE_MAP;
-		//TM_AddBackgroundAction(&FadeOut, NULL, 0, "fadeout");
+		if (game->level.current_level<6) {
+			game->gamestate = GAMESTATE_LOADING;
+			game->loadstate = GAMESTATE_MAP;
+		} else {
+			game->gamestate = GAMESTATE_LOADING;
+			game->loadstate = GAMESTATE_ABOUT;
+		}
 	}
 	return true;
 }
@@ -192,7 +197,7 @@ bool Letter(struct Game *game, struct TM_Action *action, enum TM_ActionState sta
 		*f = 0;
 		action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(ALLEGRO_AUDIO_STREAM*)));
 		ALLEGRO_AUDIO_STREAM** stream = (ALLEGRO_AUDIO_STREAM**)action->arguments->next->value;
-		*stream = al_load_audio_stream(GetDataFilePath("levels/1/letter.flac"), 4, 1024);
+		*stream = al_load_audio_stream(GetDataFilePath(GetLevelFilename(game, "levels/?/letter.flac")), 4, 1024);
 		al_attach_audio_stream_to_mixer(*stream, game->audio.voice);
 		al_set_audio_stream_playing(*stream, true);
 		al_set_audio_stream_gain(*stream, 2.00);

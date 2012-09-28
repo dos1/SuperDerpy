@@ -24,7 +24,7 @@
 #include "../../actions.h"
 #include "../../../gamestates/level.h"
 
-
+// TODO: make it configurable and move to generic actions
 bool Accelerate(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (state != TM_ACTIONSTATE_RUNNING) return false;
 	game->level.speed+=0.000015;
@@ -32,6 +32,7 @@ bool Accelerate(struct Game *game, struct TM_Action *action, enum TM_ActionState
 	return true;
 }
 
+// TODO: make it configurable and move to generic actions
 bool Walk(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (state == TM_ACTIONSTATE_INIT) action->arguments = NULL;
 	if (state != TM_ACTIONSTATE_RUNNING) return false;
@@ -42,9 +43,10 @@ bool Walk(struct Game *game, struct TM_Action *action, enum TM_ActionState state
 	return true;
 }
 
+// TODO: make it configurable and move to generic actions
 bool Move(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (state != TM_ACTIONSTATE_RUNNING) return false;
-	game->level.speed=0.00035;
+	game->level.speed=0.000345;
 	if (game->level.st_pos<0.275) return false;
 	return true;
 }
