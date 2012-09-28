@@ -20,7 +20,7 @@
  */
 
 #include "actions.h"
-#include "../level.h"
+#include "../gamestates/level.h"
 
 bool LevelFailed(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (state == TM_ACTIONSTATE_INIT) {

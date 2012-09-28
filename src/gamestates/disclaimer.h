@@ -1,5 +1,5 @@
-/*! \file level.h
- *  \brief Playable Level headers.
+/*! \file disclaimer.h
+ *  \brief Disclaimer about early release preview - headers.
  */
 /*
  * Copyright (c) Sebastian Krzyszkowiak <dos@dosowisko.net>
@@ -18,19 +18,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-#include "main.h"
+#include "../main.h"
 
-void SelectDerpySpritesheet(struct Game *game, char* name);
-void RegisterDerpySpritesheet(struct Game *game, char* name);
-void Level_Passed(struct Game *game);
-void Level_Pause(struct Game *game);
-void Level_Resume(struct Game *game);
-void Level_Draw(struct Game *game);
-void Level_Logic(struct Game *game);
-void Level_Preload(struct Game *game, void (*progress)(struct Game*, float));
-void Level_Unload(struct Game *game);
-void Level_Load(struct Game *game);
-void Level_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev);
-int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
-void Level_UnloadBitmaps(struct Game *game);
-void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float));
+void Disclaimer_Draw(struct Game *game);
+void Disclaimer_Preload(struct Game *game, void (*progress)(struct Game*, float));
+void Disclaimer_Unload(struct Game *game);
+void Disclaimer_Load(struct Game *game);
+int Disclaimer_Keydown(struct Game *game, ALLEGRO_EVENT *ev);

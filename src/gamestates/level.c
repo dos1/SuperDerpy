@@ -20,14 +20,12 @@
  */
 #include <stdio.h>
 #include <math.h>
-#include "levels/actions.h"
-#include "levels/dodger/actions.h"
-#include "levels/moonwalk.h"
-#include "levels/dodger.h"
-#include "config.h"
+#include "../levels/moonwalk.h"
+#include "../levels/level1.h"
+#include "../config.h"
 #include "pause.h"
 #include "level.h"
-#include "timeline.h"
+#include "../timeline.h"
 
 void SelectDerpySpritesheet(struct Game *game, char* name) {
 	struct Spritesheet *tmp = game->level.derpy_sheets;
@@ -109,7 +107,7 @@ void Level_Passed(struct Game *game) {
 
 void Level_Logic(struct Game *game) {
 	if (game->level.current_level==1) {
-		Dodger_Logic(game);
+		Level1_Logic(game);
 	} else {
 		Moonwalk_Logic(game);
 	}
@@ -146,7 +144,7 @@ void Level_Logic(struct Game *game) {
 void Level_Resume(struct Game *game) {
 	al_set_sample_instance_position(game->level.music, game->level.music_pos);
 	al_set_sample_instance_playing(game->level.music, true);
-	if (game->level.current_level==1)	Dodger_Resume(game);
+	if (game->level.current_level==1)	Level1_Resume(game);
 	else Moonwalk_Resume(game);
 	TM_Resume();
 }
@@ -154,7 +152,7 @@ void Level_Resume(struct Game *game) {
 void Level_Pause(struct Game *game) {
 	game->level.music_pos = al_get_sample_instance_position(game->level.music);
 	al_set_sample_instance_playing(game->level.music, false);
-	if (game->level.current_level==1)	Dodger_Pause(game);
+	if (game->level.current_level==1)	Level1_Pause(game);
 	else Moonwalk_Pause(game);
 	TM_Pause();
 }
@@ -167,7 +165,7 @@ void Level_Draw(struct Game *game) {
 	al_draw_bitmap(game->level.stage, (-game->level.st_pos)*al_get_bitmap_width(game->level.stage), 0 ,0);
 	al_draw_bitmap(game->level.stage, (1+(-game->level.st_pos))*al_get_bitmap_width(game->level.stage), 0 ,0);
 
-	if (game->level.current_level==1) Dodger_Draw(game);
+	if (game->level.current_level==1) Level1_Draw(game);
 	else Moonwalk_Draw(game);
 
 	if (!game->level.foreground) return;
@@ -187,6 +185,7 @@ void Level_Draw(struct Game *game) {
 
 	TM_Draw();
 }
+
 
 void Level_Load(struct Game *game) {
 	game->level.failed=false;
@@ -209,58 +208,7 @@ void Level_Load(struct Game *game) {
 	TM_Init(game);
 	if (game->level.current_level!=1) Moonwalk_Load(game);
 	else {
-		Dodger_Load(game);
-		// TODO: move to level 1 specific function
-		TM_AddBackgroundAction(&FadeIn, NULL, 0, "fadein");
-		TM_AddDelay(1000);
-		TM_AddQueuedBackgroundAction(&Welcome, NULL, 0, "welcome");
-		TM_AddDelay(1000);
-		TM_AddAction(&Walk, NULL, "walk");
-		TM_AddAction(&Move, NULL, "move");
-		TM_AddAction(&Stop, NULL, "stop");
-		TM_AddDelay(1000);
-		TM_AddAction(&Letter, NULL, "letter");
-		TM_AddDelay(200);
-		TM_AddQueuedBackgroundAction(&Accelerate, NULL, 0, "accelerate");
-		TM_AddAction(&Fly, NULL, "fly");
-		TM_AddDelay(500);
-		/* first part gameplay goes here */
-
-		/* actions for generating obstacles should go here
-		* probably as regular actions. When one ends, harder one
-		* begins. After last one part with muffins starts. */
-		TM_AddAction(&GenerateObstacles, NULL, "obstacles");
-		TM_AddDelay(3*1000);
-		/* wings disappear, deccelerate */
-		TM_AddAction(&Run, NULL, "run");
-		TM_AddDelay(3*1000);
-		/* show Fluttershy's house
-
-		// second part gameplay goes here
-
-		// cutscene goes here */
-		TM_AddAction(&PassLevel, NULL, "passlevel");
-
-		// init level specific obstacle for Dodger module
-		struct Obstacle *obst = malloc(sizeof(struct Obstacle));
-		obst->prev = NULL;
-		obst->next = NULL;
-		obst->x = 83.5;
-		obst->y = 55;
-		obst->speed = 1;
-		obst->points = 0;
-		obst->hit = false;
-		obst->rows = 1;
-		obst->cols = 1;
-		obst->pos = 0;
-		obst->blanks = 0;
-		obst->anim_speed = 0;
-		obst->tmp_pos = 0;
-		obst->angle = 0;
-		obst->callback = NULL;
-		obst->data = NULL;
-		obst->bitmap = &(game->level.owl);
-		game->level.dodger.obstacles = obst;
+		Level1_Load(game);
 	}
 }
 
@@ -274,7 +222,7 @@ int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	} else if ((game->debug) && (ev->keyboard.keycode==ALLEGRO_KEY_F4)) {
 		game->level.debug_show_sprite_frames = !game->level.debug_show_sprite_frames;
 	}
-	if (game->level.current_level==1) Dodger_Keydown(game, ev);
+	if (game->level.current_level==1) Level1_Keydown(game, ev);
 	else Moonwalk_Keydown(game, ev);
 	if (ev->keyboard.keycode==ALLEGRO_KEY_ESCAPE) {
 		game->gamestate = GAMESTATE_PAUSE;
@@ -285,7 +233,7 @@ int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 }
 
 void Level_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev) {
-	if (game->level.current_level==1)	Dodger_ProcessEvent(game, ev);
+	if (game->level.current_level==1)	Level1_ProcessEvent(game, ev);
 	else Moonwalk_ProcessEvent(game, ev);
 	TM_HandleEvent(ev);
 }
@@ -303,8 +251,8 @@ void Level_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	//TODO: load proper music file for each level
 	game->level.sample = al_load_sample( GetDataFilePath("levels/1/music.flac") );
 
-	if (game->level.current_level==1) Dodger_Preload(game, progress);
-	else Moonwalk_Preload(game, progress);
+	if (game->level.current_level==1) Level1_Preload(game);
+	else Moonwalk_Preload(game);
 
 	Level_PreloadBitmaps(game, progress);
 
@@ -328,9 +276,10 @@ void Level_Unload(struct Game *game) {
 	al_destroy_sample(game->level.sample);
 	Level_UnloadBitmaps(game);
 	if (game->level.current_level!=1) Moonwalk_Unload(game);
-	else Dodger_Unload(game);
+	else Level1_Unload(game);
 	TM_Destroy();
 }
+
 
 void Level_UnloadBitmaps(struct Game *game) {
 	al_destroy_bitmap(game->level.derpy);
@@ -340,13 +289,7 @@ void Level_UnloadBitmaps(struct Game *game) {
 		tmp = tmp->next;
 	}
 	if (game->level.current_level!=1) Moonwalk_UnloadBitmaps(game);
-	else {
-		Dodger_UnloadBitmaps(game);
-		// TODO: move to level 1 specific function
-		al_destroy_font(game->level.letter_font);
-		al_destroy_bitmap(game->level.letter);
-		al_destroy_bitmap(game->level.owl);
-	}
+	else Level1_UnloadBitmaps(game);
 	al_destroy_bitmap(game->level.foreground);
 	al_destroy_bitmap(game->level.background);
 	al_destroy_bitmap(game->level.clouds);
@@ -357,17 +300,21 @@ void Level_UnloadBitmaps(struct Game *game) {
 	game->level.foreground = NULL;
 }
 
+int Level_PreloadSteps(struct Game *game) {
+	if (game->level.current_level==1) return Level1_PreloadSteps();
+	else return Moonwalk_PreloadSteps();
+}
+
 void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float)) {
-	PROGRESS_INIT(19);
 	int x = 0;
+
 	struct Spritesheet *tmp = game->level.derpy_sheets;
 	while (tmp) {
 		x++;
 		tmp = tmp->next;
 	}
-	if (game->level.current_level==1) load_a+=x;
-	else load_a=9+x;
-	// FIXME: pleaaaaseee
+
+	PROGRESS_INIT(8+x+Level_PreloadSteps(game));
 
 	tmp = game->level.derpy_sheets;
 	while (tmp) {
@@ -398,64 +345,10 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 	PROGRESS;
 	game->level.welcome = al_create_bitmap(game->viewportWidth, game->viewportHeight/2);
 	PROGRESS;
-	al_set_target_bitmap(game->level.welcome);
-	al_clear_to_color(al_map_rgba(0,0,0,0));
-	al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.1, ALLEGRO_ALIGN_CENTRE, "Level 1");
-	al_draw_text_with_shadow(game->menu.font_subtitle, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.275, ALLEGRO_ALIGN_CENTRE, "Fluttershy");
-	PROGRESS;
 
-
-	if (game->level.current_level!=1) Moonwalk_PreloadBitmaps(game, progress);
-	else {
-		// TODO: move to level 1 specific function
-		game->level.owl = LoadScaledBitmap("levels/owl.png", game->viewportWidth*0.08, game->viewportWidth*0.08);
-		PROGRESS;
-		game->level.letter_font = al_load_ttf_font(GetDataFilePath("fonts/DejaVuSans.ttf"),game->viewportHeight*0.0225,0 );
-		PROGRESS;
-		game->level.letter = LoadScaledBitmap("levels/letter.png", game->viewportHeight*1.3, game->viewportHeight*1.2);
-		al_set_target_bitmap(game->level.letter);
-		float y = 0.20;
-		float x = 0.19;
-		void draw_text(char* text) {
-			al_draw_text(game->level.letter_font, al_map_rgb(0,0,0), al_get_bitmap_width(game->level.letter)*x, game->viewportHeight*y, ALLEGRO_ALIGN_LEFT, text);
-			y+=0.028;
-		}
-		draw_text("Dear Derpy,");
-		draw_text("");
-		x = 0.20;
-		draw_text("I'm glad you decided to help us! I found a few tips");
-		draw_text("in my library that might be useful on your mission.");
-		draw_text("I would like to share them with you.");
-		draw_text("");
-		x = 0.21;
-		draw_text("Muffins regenerate your energy, so collect as many");
-		draw_text("as you can. Cherries can help you as well. But be");
-		draw_text("careful and avoid the muffinzombies - they can");
-		draw_text("harm you!");
-		draw_text("");
-		x = 0.22;
-		draw_text("Discord is not fully awake yet, but he's already");
-		draw_text("causing chaos all over Equestria and his strange");
-		draw_text("creatures may try to stop you. Don't let them!");
-		draw_text("");
-		x = 0.23;
-		draw_text("Last but not least - You should be able to see the");
-		draw_text("constellation Orion in the sky tonight. Be sure to");
-		draw_text("take a moment to look for it if you have one to");
-		draw_text("spare. It's beautiful!");
-		draw_text("");
-		x = 0.25;
-		draw_text("The fate of Equestria rests in your hooves.");
-		draw_text("Be safe and good luck!");
-		draw_text("");
-		x = 0.26;
-		draw_text("Yours,");
-		draw_text("Twilight Sparkle");
-		al_draw_text_with_shadow(game->menu.font, al_map_rgb(255,255,255), al_get_bitmap_width(game->level.letter)*0.5, al_get_bitmap_height(game->level.letter)*0.8, ALLEGRO_ALIGN_CENTRE, "Press enter to continue...");
-		al_set_target_bitmap(al_get_backbuffer(game->display));
-		PROGRESS;
-
-		Dodger_PreloadBitmaps(game, progress);
-		al_set_target_bitmap(al_get_backbuffer(game->display));
+	void ChildProgress(struct Game* game, float p) {
+		if (progress) (*progress)(game, load_p+=1/load_a);
 	}
+	if (game->level.current_level!=1) Moonwalk_PreloadBitmaps(game, &ChildProgress);
+	else Level1_PreloadBitmaps(game, &ChildProgress);
 }

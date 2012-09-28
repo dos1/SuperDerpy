@@ -1,5 +1,5 @@
-/*! \file moonwalk.h
- *  \brief Moonwalk Level module headers.
+/*! \file loading.h
+ *  \brief Loading screen headers.
  */
 /*
  * Copyright (c) Sebastian Krzyszkowiak <dos@dosowisko.net>
@@ -20,15 +20,8 @@
  */
 #include "../main.h"
 
-void Moonwalk_Draw(struct Game *game);
-void Moonwalk_Logic(struct Game *game);
-void Moonwalk_Preload(struct Game *game);
-void Moonwalk_Unload(struct Game *game);
-void Moonwalk_Load(struct Game *game);
-void Moonwalk_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
-void Moonwalk_UnloadBitmaps(struct Game *game);
-void Moonwalk_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float));
-void Moonwalk_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev);
-void Moonwalk_Resume(struct Game *game);
-void Moonwalk_Pause(struct Game *game);
-inline int Moonwalk_PreloadSteps();
+void Loading_Draw(struct Game *game);
+void Loading_Preload(struct Game *game, void (*progress)(struct Game*, float));
+void Loading_Unload(struct Game *game);
+void Loading_Load(struct Game *game);
+int Loading_Keydown(struct Game *game, ALLEGRO_EVENT *ev);

@@ -25,7 +25,7 @@
 unsigned int lastid;
 struct Game* game = NULL;
 struct TM_Action *queue, *background;
-// TODO: consider moving globals to structure
+// TODO: consider moving globals to some structure
 
 void TM_Init(struct Game* g) {
 	PrintConsole(g, "Timeline Manager: init");

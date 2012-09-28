@@ -20,7 +20,7 @@
  */
 #include <stdio.h>
 #include <math.h>
-#include "../level.h"
+#include "../gamestates/level.h"
 #include "dodger.h"
 #include "actions.h"
 #include "dodger/actions.h"
@@ -218,8 +218,12 @@ void Dodger_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev) {
 	}
 }
 
+inline int Dodger_PreloadSteps() {
+	return 7;
+}
+
 void Dodger_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float)) {
-	float load_p = 12/19.0, load_a = 19; // FIXME: please!
+	PROGRESS_INIT(Dodger_PreloadSteps());
 	game->level.dodger.obst_bmps.pie1 = LoadScaledBitmap("levels/pie1.png", game->viewportWidth*0.1, game->viewportHeight*0.08);
 	PROGRESS;
 	game->level.dodger.obst_bmps.pie2 = LoadScaledBitmap("levels/pie2.png", game->viewportWidth*0.1, game->viewportHeight*0.08);
@@ -236,7 +240,7 @@ void Dodger_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, flo
 	PROGRESS;
 }
 
-void Dodger_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
+void Dodger_Preload(struct Game *game) {
 	RegisterDerpySpritesheet(game, "walk");
 	RegisterDerpySpritesheet(game, "stand");
 	RegisterDerpySpritesheet(game, "fly");

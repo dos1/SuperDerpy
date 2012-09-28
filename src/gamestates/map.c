@@ -20,7 +20,7 @@
  */
 #include <stdio.h>
 #include <math.h>
-#include "config.h"
+#include "../config.h"
 #include "map.h"
 
 void Map_Draw(struct Game *game) {

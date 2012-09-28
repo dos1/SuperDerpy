@@ -1,5 +1,5 @@
-/*! \file loading.h
- *  \brief Loading screen headers.
+/*! \file level1.h
+ *  \brief Level 1 headers.
  */
 /*
  * Copyright (c) Sebastian Krzyszkowiak <dos@dosowisko.net>
@@ -18,10 +18,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-#include "main.h"
+#include "../main.h"
 
-void Loading_Draw(struct Game *game);
-void Loading_Preload(struct Game *game, void (*progress)(struct Game*, float));
-void Loading_Unload(struct Game *game);
-void Loading_Load(struct Game *game);
-int Loading_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
+void Level1_Load(struct Game *game);
+void Level1_Unload(struct Game *game);
+void Level1_UnloadBitmaps(struct Game *game);
+void Level1_Preload(struct Game *game);
+void Level1_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float));
+inline int Level1_PreloadSteps();
+void Level1_Draw(struct Game *game);
+void Level1_Logic(struct Game *game);
+void Level1_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
+void Level1_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev);
+void Level1_Resume(struct Game *game);
+void Level1_Pause(struct Game *game);

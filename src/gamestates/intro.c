@@ -251,8 +251,7 @@ void Intro_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	PrintConsole(game, "Chainpreloading GAMESTATE_MAP...");
 	PROGRESS;
 	void MapProgress(struct Game* game, float p) {
-		/* if (progress) (*progress)(game, load_p+=1/load_a); */
-		if (progress) (*progress)(game, 0.625+0.375*p);
+		if (progress) (*progress)(game, load_p+=1/load_a);
 	}
 	Map_Preload(game, &MapProgress);
 }

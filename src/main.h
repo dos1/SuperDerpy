@@ -110,7 +110,7 @@ struct Dodger {
 				ALLEGRO_BITMAP *screwball; /*!< Screwball spritesheet bitmap. */
 		} obst_bmps; /*!< Obstacle bitmaps. */
 		struct Obstacle *obstacles; /*!< List of obstacles being currently rendered. */
-};
+} dodger;
 
 /*! \brief Resources used by Level state and shared between level modules. */
 struct Level {

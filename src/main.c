@@ -26,14 +26,14 @@
 #include <getopt.h>
 #include <locale.h>
 #include <signal.h>
-#include "menu.h"
-#include "loading.h"
-#include "about.h"
-#include "intro.h"
-#include "map.h"
-#include "level.h"
-#include "pause.h"
-#include "disclaimer.h"
+#include "gamestates/menu.h"
+#include "gamestates/loading.h"
+#include "gamestates/about.h"
+#include "gamestates/intro.h"
+#include "gamestates/map.h"
+#include "gamestates/level.h"
+#include "gamestates/pause.h"
+#include "gamestates/disclaimer.h"
 #include "config.h"
 
 /*! \brief Macro for preloading gamestate.

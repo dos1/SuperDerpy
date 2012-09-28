@@ -22,7 +22,7 @@
 
 void Dodger_Draw(struct Game *game);
 void Dodger_Logic(struct Game *game);
-void Dodger_Preload(struct Game *game, void (*progress)(struct Game*, float));
+void Dodger_Preload(struct Game *game);
 void Dodger_Unload(struct Game *game);
 void Dodger_Load(struct Game *game);
 void Dodger_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
@@ -31,3 +31,4 @@ void Dodger_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, flo
 void Dodger_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev);
 void Dodger_Resume(struct Game *game);
 void Dodger_Pause(struct Game *game);
+inline int Dodger_PreloadSteps();

@@ -1,5 +1,5 @@
-/*! \file disclaimer.h
- *  \brief Disclaimer about early release preview - headers.
+/*! \file map.h
+ *  \brief Map view headers.
  */
 /*
  * Copyright (c) Sebastian Krzyszkowiak <dos@dosowisko.net>
@@ -18,10 +18,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-#include "main.h"
+#include "../main.h"
 
-void Disclaimer_Draw(struct Game *game);
-void Disclaimer_Preload(struct Game *game, void (*progress)(struct Game*, float));
-void Disclaimer_Unload(struct Game *game);
-void Disclaimer_Load(struct Game *game);
-int Disclaimer_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
+void Map_Draw(struct Game *game);
+void Map_Logic(struct Game *game);
+void Map_Preload(struct Game *game, void (*progress)(struct Game*, float));
+void Map_Unload(struct Game *game);
+void Map_Load(struct Game *game);
+int Map_Keydown(struct Game *game, ALLEGRO_EVENT *ev);

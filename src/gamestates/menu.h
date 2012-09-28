@@ -1,5 +1,5 @@
-/*! \file pause.h
- *  \brief Pause state headers.
+/*! \file menu.h
+ *  \brief Main Menu view headers.
  */
 /*
  * Copyright (c) Sebastian Krzyszkowiak <dos@dosowisko.net>
@@ -18,11 +18,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-#include "main.h"
+#include "../main.h"
 
-void Pause_Draw(struct Game *game);
-void Pause_Preload(struct Game *game);
-void Pause_Unload_Real(struct Game* game);
-void Pause_Unload(struct Game *game);
-void Pause_Load(struct Game *game);
-int Pause_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
+void DrawMenuState(struct Game *game);
+void Menu_Draw(struct Game *game);
+void Menu_Logic(struct Game *game);
+void Menu_Preload(struct Game *game, void (*progress)(struct Game*, float));
+void Menu_Stop(struct Game *game);
+void Menu_Unload(struct Game *game);
+void Menu_Load(struct Game *game);
+int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
+void ChangeMenuState(struct Game *game, enum menustate_enum state);

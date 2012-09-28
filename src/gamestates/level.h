@@ -1,5 +1,5 @@
-/*! \file menu.h
- *  \brief Main Menu view headers.
+/*! \file level.h
+ *  \brief Playable Level headers.
  */
 /*
  * Copyright (c) Sebastian Krzyszkowiak <dos@dosowisko.net>
@@ -18,14 +18,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-#include "main.h"
+#include "../main.h"
 
-void DrawMenuState(struct Game *game);
-void Menu_Draw(struct Game *game);
-void Menu_Logic(struct Game *game);
-void Menu_Preload(struct Game *game, void (*progress)(struct Game*, float));
-void Menu_Stop(struct Game *game);
-void Menu_Unload(struct Game *game);
-void Menu_Load(struct Game *game);
-int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
-void ChangeMenuState(struct Game *game, enum menustate_enum state);
+void SelectDerpySpritesheet(struct Game *game, char* name);
+void RegisterDerpySpritesheet(struct Game *game, char* name);
+void Level_Passed(struct Game *game);
+void Level_Pause(struct Game *game);
+void Level_Resume(struct Game *game);
+void Level_Draw(struct Game *game);
+void Level_Logic(struct Game *game);
+void Level_Preload(struct Game *game, void (*progress)(struct Game*, float));
+void Level_Unload(struct Game *game);
+void Level_Load(struct Game *game);
+void Level_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev);
+int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
+void Level_UnloadBitmaps(struct Game *game);
+void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float));
