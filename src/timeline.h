@@ -26,6 +26,7 @@
 /*! \brief State of the TM_Action. */
 enum TM_ActionState {
 	TM_ACTIONSTATE_INIT,
+	TM_ACTIONSTATE_START,
 	TM_ACTIONSTATE_RUNNING,
 	TM_ACTIONSTATE_DRAW,
 	TM_ACTIONSTATE_DESTROY,
@@ -66,11 +67,11 @@ void TM_HandleEvent(ALLEGRO_EVENT *ev);
 /*! \brief Add new action to main queue. */
 struct TM_Action* TM_AddAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, char* name);
 /*! \brief Add new action to background queue. */
-struct TM_Action* TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, float delay, char* name);
+struct TM_Action* TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, int delay, char* name);
 /*! \brief Add new action to main queue, which adds specified action into background queue. */
-struct TM_Action* TM_AddQueuedBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, float delay, char* name);
+struct TM_Action* TM_AddQueuedBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, int delay, char* name);
 /*! \brief Add delay to main queue. */
-void TM_AddDelay(float delay);
+void TM_AddDelay(int delay);
 /*! \brief Destroy timeline. */
 void TM_Destroy();
 /*! \brief Add data to TM_Arguments queue. */

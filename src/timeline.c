@@ -41,6 +41,10 @@ void TM_Process() {
 		 if returns true, delete it */
 	if (queue) {
 		if (*queue->function) {
+			if (!queue->active) {
+				PrintConsole(game, "Timeline Manager: queue: run action (%d - %s)", queue->id, queue->name);
+				(*queue->function)(game, queue, TM_ACTIONSTATE_START);
+			}
 			queue->active = true;
 			if ((*queue->function)(game, queue, TM_ACTIONSTATE_RUNNING)) {
 				PrintConsole(game, "Timeline Manager: queue: destroy action (%d - %s)", queue->id, queue->name);
@@ -50,7 +54,6 @@ void TM_Process() {
 				(*tmp->function)(game, tmp, TM_ACTIONSTATE_DESTROY);
 				free(tmp->name);
 				free(tmp);
-				if (queue) PrintConsole(game, "Timeline Manager: queue: run action (%d - %s)", queue->id, queue->name);
 			}
 		} else {
 			/* delay handling */
@@ -59,9 +62,11 @@ void TM_Process() {
 				queue = queue->next;
 				free(tmp->name);
 				free(tmp);
-				if (queue) PrintConsole(game, "Timeline Manager: queue: run action (%d - %s)", queue->id, queue->name);
 			} else {
-				al_start_timer(queue->timer);
+				if (!al_get_timer_started(queue->timer)) {
+					PrintConsole(game, "Timeline Manager: queue: delay started %d ms (%d - %s)", queue->delay, queue->id, queue->name);
+					al_start_timer(queue->timer);
+				}
 			}
 		}
 	}
@@ -167,8 +172,8 @@ void TM_HandleEvent(ALLEGRO_EVENT *ev) {
 			al_destroy_timer(queue->timer);
 			queue->timer = NULL;
 			if (queue->function) {
-				PrintConsole(game, "Timeline Manager: queue: init action (%d - %s)", queue->id, queue->name);
-				(*queue->function)(game, queue, TM_ACTIONSTATE_INIT);
+				PrintConsole(game, "Timeline Manager: queue: run action (%d - %s)", queue->id, queue->name);
+				(*queue->function)(game, queue, TM_ACTIONSTATE_START);
 			} else {
 				PrintConsole(game, "Timeline Manager: queue: delay reached (%d - %s)", queue->id, queue->name);
 			}
@@ -178,11 +183,11 @@ void TM_HandleEvent(ALLEGRO_EVENT *ev) {
 	struct TM_Action *pom = background;
 	while (pom) {
 		if (ev->timer.source == pom->timer) {
-			PrintConsole(game, "Timeline Manager: background: delay reached, init and run action (%d - %s)", pom->id, pom->name);
+			PrintConsole(game, "Timeline Manager: background: delay reached, run action (%d - %s)", pom->id, pom->name);
 			pom->active=true;
 			al_destroy_timer(pom->timer);
 			pom->timer = NULL;
-			(*pom->function)(game, pom, TM_ACTIONSTATE_INIT);
+			(*pom->function)(game, pom, TM_ACTIONSTATE_START);
 			return;
 		}
 		pom=pom->next;
@@ -216,7 +221,7 @@ struct TM_Action* TM_AddAction(bool (*func)(struct Game*, struct TM_Action*, enu
 	return action;
 }
 
-struct TM_Action* TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, float delay, char* name) {
+struct TM_Action* TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, int delay, char* name) {
 	struct TM_Action *action = malloc(sizeof(struct TM_Action));
 	if (background) {
 		struct TM_Action *pom = background;
@@ -235,15 +240,19 @@ struct TM_Action* TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Ac
 	action->delay = delay;
 	action->id = ++lastid;
 	if (delay) {
+		PrintConsole(game, "Timeline Manager: background: init action with delay %d ms (%d - %s)", delay, action->id, action->name);
+		(*action->function)(game, action, TM_ACTIONSTATE_INIT);
 		action->active = false;
 		action->timer = al_create_timer(delay/1000.0);
 		al_register_event_source(game->event_queue, al_get_timer_event_source(action->timer));
 		al_start_timer(action->timer);
 	} else {
+		PrintConsole(game, "Timeline Manager: background: init action (%d - %s)", action->id, action->name);
+		(*action->function)(game, action, TM_ACTIONSTATE_INIT);
 		action->timer = NULL;
 		action->active = true;
-		PrintConsole(game, "Timeline Manager: background: init and run action (%d - %s)", action->id, action->name);
-		(*action->function)(game, action, TM_ACTIONSTATE_INIT);
+		PrintConsole(game, "Timeline Manager: background: run action (%d - %s)", action->id, action->name);
+		(*action->function)(game, action, TM_ACTIONSTATE_START);
 	}
 	return action;
 }
@@ -251,18 +260,18 @@ struct TM_Action* TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Ac
 /*! \brief Predefined action used by TM_AddQueuedBackgroundAction */
 bool runinbackground(struct Game* game, struct TM_Action* action, enum TM_ActionState state) {
 	if (state != TM_ACTIONSTATE_RUNNING) return false;
-	float* delay = (float*) action->arguments->next->value;
+	int* delay = (int*) action->arguments->next->value;
 	char* name = (char*) action->arguments->next->next->value;
 	TM_AddBackgroundAction(action->arguments->value, action->arguments->next->next->next, *delay, name);
 	free(name);
 	return true;
 }
 
-struct TM_Action* TM_AddQueuedBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, float delay, char* name) {
+struct TM_Action* TM_AddQueuedBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, int delay, char* name) {
 	struct TM_Arguments* arguments = TM_AddToArgs(NULL, (void*) func);
-	arguments = TM_AddToArgs(arguments, malloc(sizeof(float)));
+	arguments = TM_AddToArgs(arguments, malloc(sizeof(int)));
 	arguments = TM_AddToArgs(arguments, NULL);
-	*(float*)(arguments->next->value) = delay;
+	*(int*)(arguments->next->value) = delay;
 	arguments->next->next->value = malloc((strlen(name)+1)*sizeof(char));
 	strcpy(arguments->next->next->value, name);
 
@@ -270,13 +279,13 @@ struct TM_Action* TM_AddQueuedBackgroundAction(bool (*func)(struct Game*, struct
 	return TM_AddAction(*runinbackground, arguments, "TM_BackgroundAction");
 }
 
-void TM_AddDelay(float delay) {
+void TM_AddDelay(int delay) {
 	/*int *tmp;
 	tmp = malloc(sizeof(int));
 	*tmp = delay;
 	TM_AddAction(NULL, TM_AddToArgs(NULL, tmp));*/
 	struct TM_Action* tmp = TM_AddAction(NULL, NULL, "TM_Delay");
-	PrintConsole(game, "Timeline Manager: queue: adding delay %f ms (%d)", delay, tmp->id);
+	PrintConsole(game, "Timeline Manager: queue: adding delay %d ms (%d)", delay, tmp->id);
 	tmp->delay = delay;
 	tmp->timer = al_create_timer(delay/1000.0);
 	al_register_event_source(game->event_queue, al_get_timer_event_source(tmp->timer));

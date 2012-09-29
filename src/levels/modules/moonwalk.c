@@ -25,7 +25,7 @@
 
 // TODO: use Walk action instead
 bool DoMoonwalk(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
-	if (state == TM_ACTIONSTATE_INIT) {
+	if (state == TM_ACTIONSTATE_START) {
 		SelectDerpySpritesheet(game, "walk");
 		game->level.sheet_speed_modifier = 0.94;
 		game->level.moonwalk.derpy_pos = -0.2;

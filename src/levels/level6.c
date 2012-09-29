@@ -27,7 +27,9 @@
 
 void Level6_Load(struct Game *game) {
 	Moonwalk_Load(game);
-	TM_AddBackgroundAction(&PassLevel, NULL, 5000, "passlevel");
+	TM_AddAction(&DoMoonwalk, NULL, "moonwalk");
+	TM_AddBackgroundAction(&DoMoonwalk, NULL, 5000, "moonwalkDerp");
+	TM_AddBackgroundAction(&PassLevel, NULL, 10000, "passlevel");
 	FadeGameState(game, true);
 }
 
