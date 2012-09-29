@@ -124,7 +124,6 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a234fa7b9ec35dd360e4e3c48a944fc7d"><td class="memItemLeft" align="right" valign="top">ALLEGRO_SAMPLE *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLevel.html#a234fa7b9ec35dd360e4e3c48a944fc7d">sample</a></td></tr>
 <tr class="memitem:a41c6aae8f508e078b02c291e1d6f8e67"><td class="memItemLeft" align="right" valign="top">ALLEGRO_SAMPLE_INSTANCE *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLevel.html#a41c6aae8f508e078b02c291e1d6f8e67">music</a></td></tr>
 <tr class="memitem:a13e322deb3298846260af31324e5b492"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLevel.html#a13e322deb3298846260af31324e5b492">music_pos</a></td></tr>
-<tr class="memitem:af504e3f628040bc2a2913a50253e856d"><td class="memItemLeft" align="right" valign="top">ALLEGRO_BITMAP *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLevel.html#af504e3f628040bc2a2913a50253e856d">owl</a></td></tr>
 <tr class="memitem:a4b4dd31284206502977b3d5b95d52abc"><td class="memItemLeft" align="right" valign="top">ALLEGRO_BITMAP *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLevel.html#a4b4dd31284206502977b3d5b95d52abc">background</a></td></tr>
 <tr class="memitem:ad412b858a4e688114dd89a44ecb005bb"><td class="memItemLeft" align="right" valign="top">ALLEGRO_BITMAP *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLevel.html#ad412b858a4e688114dd89a44ecb005bb">stage</a></td></tr>
 <tr class="memitem:a26c758ccdc7404a3ee0e766d1cbbf0be"><td class="memItemLeft" align="right" valign="top">ALLEGRO_BITMAP *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLevel.html#a26c758ccdc7404a3ee0e766d1cbbf0be">foreground</a></td></tr>
@@ -137,6 +136,9 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:af1b1699478b4633d76c01ea09e666df4"><td class="memItemLeft" align="right" valign="top">ALLEGRO_BITMAP *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLevel.html#af1b1699478b4633d76c01ea09e666df4">letter</a></td></tr>
 <tr class="memitem:a1df786b74cff642434ea6587e6141b4d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLevel.html#a1df786b74cff642434ea6587e6141b4d">debug_show_sprite_frames</a></td></tr>
 <tr class="memitem:aad19c0af5ac43ceb72df311d89bd4297"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structSpritesheet.html">Spritesheet</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLevel.html#aad19c0af5ac43ceb72df311d89bd4297">derpy_sheets</a></td></tr>
+<tr class="memitem:af1fca124d2e1de4cca501af83c1fce87"><td class="memItemLeft" >struct {</td></tr>
+<tr class="memitem:a75b6b2d22e48b73555e63582b7cead08"><td class="memItemLeft" >&#160;&#160;&#160;ALLEGRO_BITMAP *&#160;&#160;&#160;<a class="el" href="structLevel.html#af504e3f628040bc2a2913a50253e856d">owl</a></td></tr>
+<tr class="memitem:af1fca124d2e1de4cca501af83c1fce87"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLevel.html#af1fca124d2e1de4cca501af83c1fce87">level1</a></td></tr>
 <tr class="memitem:ab9e39b9ac0f342332e034c59d55d6a07"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structMoonwalk.html">Moonwalk</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLevel.html#ab9e39b9ac0f342332e034c59d55d6a07">moonwalk</a></td></tr>
 <tr class="memitem:a2b3fe84587aa6335e2d9c8d961e529cc"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structDodger.html">Dodger</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLevel.html#a2b3fe84587aa6335e2d9c8d961e529cc">dodger</a></td></tr>
 </table>
@@ -413,6 +415,19 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Font used in letter from Twilight on first level. </p>
+
+</div>
+</div>
+<a class="anchor" id="af1fca124d2e1de4cca501af83c1fce87"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct { ... }   Level::level1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Resources used by level 1. </p>
 
 </div>
 </div>
@@ -721,7 +736,7 @@ Public Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 27 2012 02:59:16 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Sep 29 2012 03:44:21 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

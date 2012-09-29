@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Super Derpy: Muffin Attack: src/levels/dodger/actions.h Source File</title>
+<title>Super Derpy: Muffin Attack: src/levels/level5.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -78,12 +78,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_4989de145ff53abce397f1ec189271fe.html">levels</a></li><li class="navelem"><a class="el" href="dir_ef2042f323ed03e66fd65ec968fc03ac.html">dodger</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_e78f8101111290c0a975c91bad01fb6f.html">src</a></li><li class="navelem"><a class="el" href="dir_4ff4f6bebc32dbfd42a94291be3d242d.html">levels</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">actions.h</div>  </div>
+<div class="title">level5.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
@@ -104,27 +104,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment"> * along with this program; if not, write to the Free Software</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment"> * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;../../main.h&quot;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;../../timeline.h&quot;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keywordtype">bool</span> Accelerate(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Main struct of the game.">Game</a> *game, <span class="keyword">struct</span> <a class="code" href="structTM__Action.html" title="Timeline action.">TM_Action</a> *action, <span class="keyword">enum</span> <a class="code" href="timeline_8h.html#a76cf4bbb9006628ae8bcd1a4f3afdf87" title="State of the TM_Action.">TM_ActionState</a> state);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keywordtype">bool</span> Walk(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Main struct of the game.">Game</a> *game, <span class="keyword">struct</span> <a class="code" href="structTM__Action.html" title="Timeline action.">TM_Action</a> *action, <span class="keyword">enum</span> <a class="code" href="timeline_8h.html#a76cf4bbb9006628ae8bcd1a4f3afdf87" title="State of the TM_Action.">TM_ActionState</a> state);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keywordtype">bool</span> Move(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Main struct of the game.">Game</a> *game, <span class="keyword">struct</span> <a class="code" href="structTM__Action.html" title="Timeline action.">TM_Action</a> *action, <span class="keyword">enum</span> <a class="code" href="timeline_8h.html#a76cf4bbb9006628ae8bcd1a4f3afdf87" title="State of the TM_Action.">TM_ActionState</a> state);</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keywordtype">bool</span> Fly(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Main struct of the game.">Game</a> *game, <span class="keyword">struct</span> <a class="code" href="structTM__Action.html" title="Timeline action.">TM_Action</a> *action, <span class="keyword">enum</span> <a class="code" href="timeline_8h.html#a76cf4bbb9006628ae8bcd1a4f3afdf87" title="State of the TM_Action.">TM_ActionState</a> state);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keywordtype">bool</span> Run(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Main struct of the game.">Game</a> *game, <span class="keyword">struct</span> <a class="code" href="structTM__Action.html" title="Timeline action.">TM_Action</a> *action, <span class="keyword">enum</span> <a class="code" href="timeline_8h.html#a76cf4bbb9006628ae8bcd1a4f3afdf87" title="State of the TM_Action.">TM_ActionState</a> state);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keywordtype">bool</span> GenerateObstacles(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Main struct of the game.">Game</a> *game, <span class="keyword">struct</span> <a class="code" href="structTM__Action.html" title="Timeline action.">TM_Action</a> *action, <span class="keyword">enum</span> <a class="code" href="timeline_8h.html#a76cf4bbb9006628ae8bcd1a4f3afdf87" title="State of the TM_Action.">TM_ActionState</a> state);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keywordtype">bool</span> Letter(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Main struct of the game.">Game</a> *game, <span class="keyword">struct</span> <a class="code" href="structTM__Action.html" title="Timeline action.">TM_Action</a> *action, <span class="keyword">enum</span> <a class="code" href="timeline_8h.html#a76cf4bbb9006628ae8bcd1a4f3afdf87" title="State of the TM_Action.">TM_ActionState</a> state);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;../main.h&quot;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keywordtype">void</span> Level5_Load(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Main struct of the game.">Game</a> *game);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keywordtype">void</span> Level5_Unload(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Main struct of the game.">Game</a> *game);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keywordtype">void</span> Level5_UnloadBitmaps(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Main struct of the game.">Game</a> *game);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keywordtype">void</span> Level5_Preload(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Main struct of the game.">Game</a> *game);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keywordtype">void</span> Level5_PreloadBitmaps(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Main struct of the game.">Game</a> *game, <span class="keywordtype">void</span> (*progress)(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Main struct of the game.">Game</a>*, <span class="keywordtype">float</span>));</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">int</span> Level5_PreloadSteps();</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keywordtype">void</span> Level5_Draw(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Main struct of the game.">Game</a> *game);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keywordtype">void</span> Level5_Logic(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Main struct of the game.">Game</a> *game);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keywordtype">void</span> Level5_Keydown(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Main struct of the game.">Game</a> *game, ALLEGRO_EVENT *ev);</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keywordtype">void</span> Level5_ProcessEvent(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Main struct of the game.">Game</a> *game, ALLEGRO_EVENT *ev);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keywordtype">void</span> Level5_Resume(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Main struct of the game.">Game</a> *game);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keywordtype">void</span> Level5_Pause(<span class="keyword">struct</span> <a class="code" href="structGame.html" title="Main struct of the game.">Game</a> *game);</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 27 2012 02:59:16 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Sep 29 2012 03:44:21 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

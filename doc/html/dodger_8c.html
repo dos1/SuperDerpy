@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Super Derpy: Muffin Attack: src/levels/dodger.c File Reference</title>
+<title>Super Derpy: Muffin Attack: src/levels/modules/dodger.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -78,7 +78,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_4989de145ff53abce397f1ec189271fe.html">levels</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_e78f8101111290c0a975c91bad01fb6f.html">src</a></li><li class="navelem"><a class="el" href="dir_4ff4f6bebc32dbfd42a94291be3d242d.html">levels</a></li><li class="navelem"><a class="el" href="dir_8a932d837bc095e8ae16508a04c7ef42.html">modules</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -93,9 +93,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdio.h&gt;</code><br/>
 <code>#include &lt;math.h&gt;</code><br/>
-<code>#include &quot;<a class="el" href="level_8h_source.html">../level.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="level_8h_source.html">../../gamestates/level.h</a>&quot;</code><br/>
+<code>#include &quot;../actions.h&quot;</code><br/>
 <code>#include &quot;<a class="el" href="dodger_8h_source.html">dodger.h</a>&quot;</code><br/>
-<code>#include &quot;actions.h&quot;</code><br/>
 <code>#include &quot;dodger/actions.h&quot;</code><br/>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="func-members"></a>
@@ -106,25 +106,31 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Dodger_Logic</b> (str
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Dodger_Draw</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
 <tr class="memitem:a620daf3fab76e61c7b9de82a75eb4612"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a620daf3fab76e61c7b9de82a75eb4612"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Dodger_Load</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
-<tr class="memitem:a8e8610c9df9a1bb98cbf2dac581b69b8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8e8610c9df9a1bb98cbf2dac581b69b8"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>Dodger_Keydown</b> (struct <a class="el" href="structGame.html">Game</a> *game, ALLEGRO_EVENT *ev)</td></tr>
+<tr class="memitem:a8e49d2c349ec65655957a72d1ce9143e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8e49d2c349ec65655957a72d1ce9143e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Dodger_Keydown</b> (struct <a class="el" href="structGame.html">Game</a> *game, ALLEGRO_EVENT *ev)</td></tr>
 <tr class="memitem:aa7cc0bbf416ae2254f42ce2b1e656015"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa7cc0bbf416ae2254f42ce2b1e656015"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Dodger_ProcessEvent</b> (struct <a class="el" href="structGame.html">Game</a> *game, ALLEGRO_EVENT *ev)</td></tr>
+<tr class="memitem:a76c65a6c6a8fb9d2f0b9a6998f412216"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a76c65a6c6a8fb9d2f0b9a6998f412216"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>Dodger_PreloadSteps</b> ()</td></tr>
 <tr class="memitem:a8c0b6503bc1fae773bbfb7b4116c8c8c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8c0b6503bc1fae773bbfb7b4116c8c8c"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Dodger_PreloadBitmaps</b> (struct <a class="el" href="structGame.html">Game</a> *game, void(*progress)(struct <a class="el" href="structGame.html">Game</a> *, float))</td></tr>
-<tr class="memitem:a7b5cbca80c76d95ca0024bcd5f8408be"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b5cbca80c76d95ca0024bcd5f8408be"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Dodger_Preload</b> (struct <a class="el" href="structGame.html">Game</a> *game, void(*progress)(struct <a class="el" href="structGame.html">Game</a> *, float))</td></tr>
+<tr class="memitem:a2410b3fd5c782d04bff0e61673c69dd4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2410b3fd5c782d04bff0e61673c69dd4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Dodger_Preload</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
 <tr class="memitem:a0f7188cc1ccd3158b39c7e6d1b9affeb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0f7188cc1ccd3158b39c7e6d1b9affeb"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Dodger_UnloadBitmaps</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
 <tr class="memitem:a6eb766eaa9229fd5453229208659ef95"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6eb766eaa9229fd5453229208659ef95"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Dodger_Unload</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
+<tr class="memitem:a17a09414ab657ce2ebbc4c60a7c88683"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a17a09414ab657ce2ebbc4c60a7c88683"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Dodger_Resume</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
+<tr class="memitem:a31782264f846d78a8211eefb92880d8f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a31782264f846d78a8211eefb92880d8f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Dodger_Pause</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="structDodger.html" title="Resources used by Dodger level module.">Dodger</a> <a class="el" href="structLevel.html" title="Resources used by Level state and shared between level modules.">Level</a> module code. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 27 2012 02:59:16 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Sep 29 2012 03:44:21 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

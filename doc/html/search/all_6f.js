@@ -7,6 +7,6 @@ var searchData=
   ['obst_5frotatesin',['Obst_RotateSin',['../callbacks_8c.html#a6b792c47aaf0919506b2869d2ad50f13',1,'Obst_RotateSin(struct Game *game, struct Obstacle *obstacle):&#160;callbacks.c'],['../callbacks_8h.html#a6b792c47aaf0919506b2869d2ad50f13',1,'Obst_RotateSin(struct Game *game, struct Obstacle *obstacle):&#160;callbacks.c']]],
   ['obstacle',['Obstacle',['../structObstacle.html',1,'']]],
   ['obstacles',['obstacles',['../structDodger.html#a114a5a2b5b3640ce2bd7b5a9f7486dfc',1,'Dodger']]],
-  ['options',['options',['../structMenu.html#aaacb604a274394a6000f437a081b13df',1,'Menu']]],
+  ['options',['options',['../structMenu.html#a126bbd1f3999e0e0f9f568282a1ca00b',1,'Menu']]],
   ['owl',['owl',['../structLevel.html#af504e3f628040bc2a2913a50253e856d',1,'Level']]]
 ];

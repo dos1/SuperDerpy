@@ -1,5 +1,5 @@
-\hypertarget{level_8c}{\section{src/level.c File Reference}
-\label{level_8c}\index{src/level.\-c@{src/level.\-c}}
+\hypertarget{level_8c}{\section{src/gamestates/level.c File Reference}
+\label{level_8c}\index{src/gamestates/level.\-c@{src/gamestates/level.\-c}}
 }
 
 
@@ -8,14 +8,21 @@ Playable \hyperlink{structLevel}{Level} code.
 
 {\ttfamily \#include $<$stdio.\-h$>$}\\*
 {\ttfamily \#include $<$math.\-h$>$}\\*
-{\ttfamily \#include \char`\"{}levels/actions.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}levels/dodger/actions.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}levels/moonwalk.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}levels/dodger.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}config.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../levels/level1.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../levels/level2.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../levels/level3.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../levels/level4.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../levels/level5.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../levels/level6.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../config.\-h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}pause.\-h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}level.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}timeline.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../timeline.\-h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bfseries L\-E\-V\-E\-L\-S}(name,...)
+\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -49,6 +56,9 @@ Playable \hyperlink{structLevel}{Level} code.
 \hypertarget{level_8c_adf91794c134d0263b0285f7302a84924}{void {\bfseries Level\-\_\-\-Process\-Event} (struct \hyperlink{structGame}{Game} $\ast$game, A\-L\-L\-E\-G\-R\-O\-\_\-\-E\-V\-E\-N\-T $\ast$ev)}\label{level_8c_adf91794c134d0263b0285f7302a84924}
 
 \item 
+\hypertarget{level_8c_a317f5b03d46e3c4e961c09369e6f566c}{char $\ast$ {\bfseries Get\-Level\-Filename} (struct \hyperlink{structGame}{Game} $\ast$game, char $\ast$filename)}\label{level_8c_a317f5b03d46e3c4e961c09369e6f566c}
+
+\item 
 \hypertarget{level_8c_a983de798a9590bd5f177e0465b77b70e}{void {\bfseries Level\-\_\-\-Preload} (struct \hyperlink{structGame}{Game} $\ast$game, void($\ast$progress)(struct \hyperlink{structGame}{Game} $\ast$, float))}\label{level_8c_a983de798a9590bd5f177e0465b77b70e}
 
 \item 
@@ -58,6 +68,9 @@ Playable \hyperlink{structLevel}{Level} code.
 \hypertarget{level_8c_a9a3a3059a7c3e0858df40898a3b3a533}{void {\bfseries Level\-\_\-\-Unload\-Bitmaps} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{level_8c_a9a3a3059a7c3e0858df40898a3b3a533}
 
 \item 
+\hypertarget{level_8c_a50a6c10fce5dd4e2d02e50a1b7d5f8e3}{int {\bfseries Level\-\_\-\-Preload\-Steps} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{level_8c_a50a6c10fce5dd4e2d02e50a1b7d5f8e3}
+
+\item 
 \hypertarget{level_8c_a65dd2a494c2e9e1f5e963f0e6cb546b5}{void {\bfseries Level\-\_\-\-Preload\-Bitmaps} (struct \hyperlink{structGame}{Game} $\ast$game, void($\ast$progress)(struct \hyperlink{structGame}{Game} $\ast$, float))}\label{level_8c_a65dd2a494c2e9e1f5e963f0e6cb546b5}
 
 \end{DoxyCompactItemize}
@@ -65,3 +78,30 @@ Playable \hyperlink{structLevel}{Level} code.
 
 \subsection{Detailed Description}
 Playable \hyperlink{structLevel}{Level} code. 
+
+\subsection{Macro Definition Documentation}
+\hypertarget{level_8c_a4eb6d2494fffd9511545f37d5aa27e63}{\index{level.\-c@{level.\-c}!L\-E\-V\-E\-L\-S@{L\-E\-V\-E\-L\-S}}
+\index{L\-E\-V\-E\-L\-S@{L\-E\-V\-E\-L\-S}!level.c@{level.\-c}}
+\subsubsection[{L\-E\-V\-E\-L\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\-E\-V\-E\-L\-S(
+\begin{DoxyParamCaption}
+\item[{}]{name, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}}\label{level_8c_a4eb6d2494fffd9511545f37d5aa27e63}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+\textcolor{keywordflow}{switch} (game->\hyperlink{structGame_aa258068886c6db9c88d73e07c7e114f2}{level}.\hyperlink{structLevel_a1ba3ee0104c912dde5d6e70fee889512}{current\_level}) \{ \(\backslash\)
+        case 1: \(\backslash\)
+        Level1\_ ## name (\_\_VA\_ARGS\_\_); \textcolor{keywordflow}{break};\(\backslash\)
+        case 2: \(\backslash\)
+        Level2\_ ## name (\_\_VA\_ARGS\_\_); \textcolor{keywordflow}{break};\(\backslash\)
+        case 3: \(\backslash\)
+        Level3\_ ## name (\_\_VA\_ARGS\_\_); \textcolor{keywordflow}{break};\(\backslash\)
+        case 4: \(\backslash\)
+        Level4\_ ## name (\_\_VA\_ARGS\_\_); \textcolor{keywordflow}{break};\(\backslash\)
+        case 5: \(\backslash\)
+        Level5\_ ## name (\_\_VA\_ARGS\_\_); \textcolor{keywordflow}{break};\(\backslash\)
+        case 6: \(\backslash\)
+        Level6\_ ## name (\_\_VA\_ARGS\_\_); \textcolor{keywordflow}{break};\(\backslash\)
+\}
+\end{DoxyCode}

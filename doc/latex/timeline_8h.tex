@@ -19,10 +19,11 @@ struct \hyperlink{structTM__Action}{T\-M\-\_\-\-Action}
 \item 
 enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{T\-M\-\_\-\-Action\-State} \{ \\*
 {\bfseries T\-M\-\_\-\-A\-C\-T\-I\-O\-N\-S\-T\-A\-T\-E\-\_\-\-I\-N\-I\-T}, 
+{\bfseries T\-M\-\_\-\-A\-C\-T\-I\-O\-N\-S\-T\-A\-T\-E\-\_\-\-S\-T\-A\-R\-T}, 
 {\bfseries T\-M\-\_\-\-A\-C\-T\-I\-O\-N\-S\-T\-A\-T\-E\-\_\-\-R\-U\-N\-N\-I\-N\-G}, 
 {\bfseries T\-M\-\_\-\-A\-C\-T\-I\-O\-N\-S\-T\-A\-T\-E\-\_\-\-D\-R\-A\-W}, 
-{\bfseries T\-M\-\_\-\-A\-C\-T\-I\-O\-N\-S\-T\-A\-T\-E\-\_\-\-D\-E\-S\-T\-R\-O\-Y}, 
 \\*
+{\bfseries T\-M\-\_\-\-A\-C\-T\-I\-O\-N\-S\-T\-A\-T\-E\-\_\-\-D\-E\-S\-T\-R\-O\-Y}, 
 {\bfseries T\-M\-\_\-\-A\-C\-T\-I\-O\-N\-S\-T\-A\-T\-E\-\_\-\-P\-A\-U\-S\-E}, 
 {\bfseries T\-M\-\_\-\-A\-C\-T\-I\-O\-N\-S\-T\-A\-T\-E\-\_\-\-R\-E\-S\-U\-M\-E}
  \}
@@ -51,13 +52,13 @@ enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{T\-M\-\_\-\-Actio
 \hypertarget{timeline_8h_a6f909356f7c1e9bdade01c6bc46aa078}{struct \hyperlink{structTM__Action}{T\-M\-\_\-\-Action} $\ast$ \hyperlink{timeline_8h_a6f909356f7c1e9bdade01c6bc46aa078}{T\-M\-\_\-\-Add\-Action} (bool($\ast$func)(struct \hyperlink{structGame}{Game} $\ast$, struct \hyperlink{structTM__Action}{T\-M\-\_\-\-Action} $\ast$, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{T\-M\-\_\-\-Action\-State}), struct \hyperlink{structTM__Arguments}{T\-M\-\_\-\-Arguments} $\ast$args, char $\ast$name)}\label{timeline_8h_a6f909356f7c1e9bdade01c6bc46aa078}
 
 \begin{DoxyCompactList}\small\item\em Add new action to main queue. \end{DoxyCompactList}\item 
-\hypertarget{timeline_8h_a2506eb9068da955dfbe606837d57344f}{struct \hyperlink{structTM__Action}{T\-M\-\_\-\-Action} $\ast$ \hyperlink{timeline_8h_a2506eb9068da955dfbe606837d57344f}{T\-M\-\_\-\-Add\-Background\-Action} (bool($\ast$func)(struct \hyperlink{structGame}{Game} $\ast$, struct \hyperlink{structTM__Action}{T\-M\-\_\-\-Action} $\ast$, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{T\-M\-\_\-\-Action\-State}), struct \hyperlink{structTM__Arguments}{T\-M\-\_\-\-Arguments} $\ast$args, float delay, char $\ast$name)}\label{timeline_8h_a2506eb9068da955dfbe606837d57344f}
+\hypertarget{timeline_8h_af2169d07602124c0548cf0867b06ab74}{struct \hyperlink{structTM__Action}{T\-M\-\_\-\-Action} $\ast$ \hyperlink{timeline_8h_af2169d07602124c0548cf0867b06ab74}{T\-M\-\_\-\-Add\-Background\-Action} (bool($\ast$func)(struct \hyperlink{structGame}{Game} $\ast$, struct \hyperlink{structTM__Action}{T\-M\-\_\-\-Action} $\ast$, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{T\-M\-\_\-\-Action\-State}), struct \hyperlink{structTM__Arguments}{T\-M\-\_\-\-Arguments} $\ast$args, int delay, char $\ast$name)}\label{timeline_8h_af2169d07602124c0548cf0867b06ab74}
 
 \begin{DoxyCompactList}\small\item\em Add new action to background queue. \end{DoxyCompactList}\item 
-\hypertarget{timeline_8h_a4e5673d8b4ef973830395af22dd0bd25}{struct \hyperlink{structTM__Action}{T\-M\-\_\-\-Action} $\ast$ \hyperlink{timeline_8h_a4e5673d8b4ef973830395af22dd0bd25}{T\-M\-\_\-\-Add\-Queued\-Background\-Action} (bool($\ast$func)(struct \hyperlink{structGame}{Game} $\ast$, struct \hyperlink{structTM__Action}{T\-M\-\_\-\-Action} $\ast$, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{T\-M\-\_\-\-Action\-State}), struct \hyperlink{structTM__Arguments}{T\-M\-\_\-\-Arguments} $\ast$args, float delay, char $\ast$name)}\label{timeline_8h_a4e5673d8b4ef973830395af22dd0bd25}
+\hypertarget{timeline_8h_a84f421e1504575fb91d0ddd399aca4f7}{struct \hyperlink{structTM__Action}{T\-M\-\_\-\-Action} $\ast$ \hyperlink{timeline_8h_a84f421e1504575fb91d0ddd399aca4f7}{T\-M\-\_\-\-Add\-Queued\-Background\-Action} (bool($\ast$func)(struct \hyperlink{structGame}{Game} $\ast$, struct \hyperlink{structTM__Action}{T\-M\-\_\-\-Action} $\ast$, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{T\-M\-\_\-\-Action\-State}), struct \hyperlink{structTM__Arguments}{T\-M\-\_\-\-Arguments} $\ast$args, int delay, char $\ast$name)}\label{timeline_8h_a84f421e1504575fb91d0ddd399aca4f7}
 
 \begin{DoxyCompactList}\small\item\em Add new action to main queue, which adds specified action into background queue. \end{DoxyCompactList}\item 
-\hypertarget{timeline_8h_a96012953eefd9118c10f0b888b001e41}{void \hyperlink{timeline_8h_a96012953eefd9118c10f0b888b001e41}{T\-M\-\_\-\-Add\-Delay} (float delay)}\label{timeline_8h_a96012953eefd9118c10f0b888b001e41}
+\hypertarget{timeline_8h_a34a63d3895e41b74c3ac30015278be8f}{void \hyperlink{timeline_8h_a34a63d3895e41b74c3ac30015278be8f}{T\-M\-\_\-\-Add\-Delay} (int delay)}\label{timeline_8h_a34a63d3895e41b74c3ac30015278be8f}
 
 \begin{DoxyCompactList}\small\item\em Add delay to main queue. \end{DoxyCompactList}\item 
 \hypertarget{timeline_8h_a950cb13ffd2bf9dc9954ad6cc462075f}{void \hyperlink{timeline_8h_a950cb13ffd2bf9dc9954ad6cc462075f}{T\-M\-\_\-\-Destroy} ()}\label{timeline_8h_a950cb13ffd2bf9dc9954ad6cc462075f}

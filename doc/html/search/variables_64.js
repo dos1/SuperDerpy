@@ -6,8 +6,6 @@ var searchData=
   ['delay',['delay',['../structTM__Action.html#a73181b4f19f197b992ed98d11d3964a8',1,'TM_Action']]],
   ['derpy',['derpy',['../structLevel.html#ae33832497116b7a0c184959bbde21ee5',1,'Level::derpy()'],['../structPause.html#aa2a1cde9971149a5c48f10899ca97079',1,'Pause::derpy()']]],
   ['derpy_5fangle',['derpy_angle',['../structLevel.html#a364d35d138549a87532d959288283956',1,'Level']]],
-  ['derpy_5fframe',['derpy_frame',['../structMoonwalk.html#a4a3874c58e11745d4896b004861e1555',1,'Moonwalk']]],
-  ['derpy_5fframe_5ftmp',['derpy_frame_tmp',['../structMoonwalk.html#ab087ba01cd2a107286ec8f75f58c676c',1,'Moonwalk']]],
   ['derpy_5fpos',['derpy_pos',['../structMoonwalk.html#a69689c77a64928bfb52c1dc1e1f7b33f',1,'Moonwalk']]],
   ['derpy_5fsheet',['derpy_sheet',['../structLevel.html#a0e02f3a5674a2ad3c23de22b6a4ed044',1,'Level']]],
   ['derpy_5fsheets',['derpy_sheets',['../structLevel.html#aad19c0af5ac43ceb72df311d89bd4297',1,'Level']]],

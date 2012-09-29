@@ -180,32 +180,25 @@ bool Letter(struct Game *game, struct TM_Action *action, enum TM_ActionState sta
 		al_set_audio_stream_playing(*stream, false);
 		al_set_audio_stream_gain(*stream, 2.00);
 		action->arguments->next->next = NULL;
-	}
-	else if (state == TM_ACTIONSTATE_DESTROY) {
+	} else if (state == TM_ACTIONSTATE_DESTROY) {
 		ALLEGRO_AUDIO_STREAM** stream = (ALLEGRO_AUDIO_STREAM**)action->arguments->next->value;
 		al_set_audio_stream_playing(*stream, false);
 		al_destroy_audio_stream(*stream);
 		free(action->arguments->next->value);
 		free(action->arguments->value);
 		TM_DestroyArgs(action->arguments);
-	}
-	else if (state == TM_ACTIONSTATE_DRAW) {
+	} else if (state == TM_ACTIONSTATE_DRAW) {
 		float* f = (float*)action->arguments->value;
 		al_draw_tinted_bitmap(game->level.letter, al_map_rgba(*f,*f,*f,*f), (game->viewportWidth-al_get_bitmap_width(game->level.letter))/2.0, al_get_bitmap_height(game->level.letter)*-0.05, 0);
 		return false;
-	}
-	else if (state == TM_ACTIONSTATE_PAUSE) {
+	} else if (state == TM_ACTIONSTATE_PAUSE) {
 		ALLEGRO_AUDIO_STREAM** stream = (ALLEGRO_AUDIO_STREAM**)action->arguments->next->value;
 		al_set_audio_stream_playing(*stream, false);
-	}	else if (state == TM_ACTIONSTATE_RESUME) {
+	}	else if ((state == TM_ACTIONSTATE_RESUME) || (state == TM_ACTIONSTATE_START)) {
 		ALLEGRO_AUDIO_STREAM** stream = (ALLEGRO_AUDIO_STREAM**)action->arguments->next->value;
 		al_set_audio_stream_playing(*stream, true);
-	}
-	else if (state == TM_ACTIONSTATE_START) {
-		ALLEGRO_AUDIO_STREAM** stream = (ALLEGRO_AUDIO_STREAM**)action->arguments->next->value;
-		al_set_audio_stream_playing(*stream, true);
-	}
-	else if (state != TM_ACTIONSTATE_RUNNING) return false;
+	} else if (state != TM_ACTIONSTATE_RUNNING) return false;
+
 	float* f = (float*)action->arguments->value;
 	*f+=5;
 	if (*f>255) *f=255;

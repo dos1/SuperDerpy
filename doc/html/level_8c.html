@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Super Derpy: Muffin Attack: src/level.c File Reference</title>
+<title>Super Derpy: Muffin Attack: src/gamestates/level.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -78,11 +78,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_e78f8101111290c0a975c91bad01fb6f.html">src</a></li><li class="navelem"><a class="el" href="dir_410b3d52a56c168286da461d27d88774.html">gamestates</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">level.c File Reference</div>  </div>
@@ -93,15 +94,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdio.h&gt;</code><br/>
 <code>#include &lt;math.h&gt;</code><br/>
-<code>#include &quot;levels/actions.h&quot;</code><br/>
-<code>#include &quot;levels/dodger/actions.h&quot;</code><br/>
-<code>#include &quot;<a class="el" href="moonwalk_8h_source.html">levels/moonwalk.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="dodger_8h_source.html">levels/dodger.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="config_8h_source.html">config.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="level1_8h_source.html">../levels/level1.h</a>&quot;</code><br/>
+<code>#include &quot;../levels/level2.h&quot;</code><br/>
+<code>#include &quot;../levels/level3.h&quot;</code><br/>
+<code>#include &quot;../levels/level4.h&quot;</code><br/>
+<code>#include &quot;../levels/level5.h&quot;</code><br/>
+<code>#include &quot;../levels/level6.h&quot;</code><br/>
+<code>#include &quot;<a class="el" href="config_8h_source.html">../config.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="pause_8h_source.html">pause.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="level_8h_source.html">level.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="timeline_8h_source.html">timeline.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="timeline_8h_source.html">../timeline.h</a>&quot;</code><br/>
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a4eb6d2494fffd9511545f37d5aa27e63"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>LEVELS</b>(name,...)</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ad1a855f6e064bce29cb2d291511243eb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad1a855f6e064bce29cb2d291511243eb"></a>
@@ -124,21 +131,66 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Level_Load</b> (struc
 int&#160;</td><td class="memItemRight" valign="bottom"><b>Level_Keydown</b> (struct <a class="el" href="structGame.html">Game</a> *game, ALLEGRO_EVENT *ev)</td></tr>
 <tr class="memitem:adf91794c134d0263b0285f7302a84924"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adf91794c134d0263b0285f7302a84924"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Level_ProcessEvent</b> (struct <a class="el" href="structGame.html">Game</a> *game, ALLEGRO_EVENT *ev)</td></tr>
+<tr class="memitem:a317f5b03d46e3c4e961c09369e6f566c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a317f5b03d46e3c4e961c09369e6f566c"></a>
+char *&#160;</td><td class="memItemRight" valign="bottom"><b>GetLevelFilename</b> (struct <a class="el" href="structGame.html">Game</a> *game, char *filename)</td></tr>
 <tr class="memitem:a983de798a9590bd5f177e0465b77b70e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a983de798a9590bd5f177e0465b77b70e"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Level_Preload</b> (struct <a class="el" href="structGame.html">Game</a> *game, void(*progress)(struct <a class="el" href="structGame.html">Game</a> *, float))</td></tr>
 <tr class="memitem:a90e915acd1cecf93fac834c2928f9f57"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a90e915acd1cecf93fac834c2928f9f57"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Level_Unload</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
 <tr class="memitem:a9a3a3059a7c3e0858df40898a3b3a533"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9a3a3059a7c3e0858df40898a3b3a533"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Level_UnloadBitmaps</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
+<tr class="memitem:a50a6c10fce5dd4e2d02e50a1b7d5f8e3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a50a6c10fce5dd4e2d02e50a1b7d5f8e3"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>Level_PreloadSteps</b> (struct <a class="el" href="structGame.html">Game</a> *game)</td></tr>
 <tr class="memitem:a65dd2a494c2e9e1f5e963f0e6cb546b5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a65dd2a494c2e9e1f5e963f0e6cb546b5"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Level_PreloadBitmaps</b> (struct <a class="el" href="structGame.html">Game</a> *game, void(*progress)(struct <a class="el" href="structGame.html">Game</a> *, float))</td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Playable <a class="el" href="structLevel.html" title="Resources used by Level state and shared between level modules.">Level</a> code. </p>
-</div></div><!-- contents -->
+</div><h2>Macro Definition Documentation</h2>
+<a class="anchor" id="a4eb6d2494fffd9511545f37d5aa27e63"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LEVELS</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">switch</span> (game-&gt;<a class="code" href="structGame.html#aa258068886c6db9c88d73e07c7e114f2">level</a>.<a class="code" href="structLevel.html#a1ba3ee0104c912dde5d6e70fee889512">current_level</a>) { \</div>
+<div class="line">        case 1: \</div>
+<div class="line">        Level1_ ## name (__VA_ARGS__); <span class="keywordflow">break</span>;\</div>
+<div class="line">        case 2: \</div>
+<div class="line">        Level2_ ## name (__VA_ARGS__); <span class="keywordflow">break</span>;\</div>
+<div class="line">        case 3: \</div>
+<div class="line">        Level3_ ## name (__VA_ARGS__); <span class="keywordflow">break</span>;\</div>
+<div class="line">        case 4: \</div>
+<div class="line">        Level4_ ## name (__VA_ARGS__); <span class="keywordflow">break</span>;\</div>
+<div class="line">        case 5: \</div>
+<div class="line">        Level5_ ## name (__VA_ARGS__); <span class="keywordflow">break</span>;\</div>
+<div class="line">        case 6: \</div>
+<div class="line">        Level6_ ## name (__VA_ARGS__); <span class="keywordflow">break</span>;\</div>
+<div class="line">}</div>
+</div><!-- fragment -->
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 27 2012 02:59:16 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Sep 29 2012 03:44:21 for Super Derpy: Muffin Attack by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>
