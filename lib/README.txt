@@ -50,6 +50,7 @@ common distributions.
 If you're on GNU/Linux, and you're not packaging but only building for
 yourself, there's no need to place any files here.
 
+Remember to adjust install prefix when packaging.
 -------------------------------------------------------------------------------
 TODO: Support Mac OS X (if it's needed at all) and other architectures
 than x86.
