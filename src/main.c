@@ -103,6 +103,7 @@ char* GetDataFilePath(char* filename) {
 	}
 	TestPath("../share/superderpy/data/");
 	TestPath("../data/");
+	TestPath("../Resources/data/");
 	TestPath("data/");
 
 	if (!result) {

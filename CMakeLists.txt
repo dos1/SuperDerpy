@@ -2,10 +2,17 @@ cmake_minimum_required(VERSION 2.8)
 
 project(SuperDerpy C)
 
-include("cmake/SetPaths.cmake")
-
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -g")
+if(APPLE)
+  SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fnested-functions")
+  if(CMAKE_INSTALL_PREFIX MATCHES "/usr/local")
+    set(CMAKE_INSTALL_PREFIX "/Applications")
+    set(BIN_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}")
+  endif(CMAKE_INSTALL_PREFIX MATCHES "/usr/local")
+endif(APPLE)
 SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+
+include("cmake/SetPaths.cmake")
 
 if(MINGW)
     # Guess MINGDIR from the value of CMAKE_C_COMPILER if it's not set.
@@ -27,7 +34,7 @@ if(MINGW)
 				 COMMAND ${CMAKE_WINDRES} -I${CMAKE_SOURCE_DIR} -i${CMAKE_SOURCE_DIR}/data/icons/icon.rc
 				 -o ${CMAKE_CURRENT_BINARY_DIR}/icon.o )
 		set(VLMC_SRCS ${VLMC_SRCS} ${CMAKE_CURRENT_BINARY_DIR}/icon.o)
-		set(LINK_FLAGS -Wl,-subsystem,windows)
+		#set(LINK_FLAGS -Wl,-subsystem,windows)
 
 endif(MINGW)
 
@@ -63,11 +70,12 @@ ELSE(WIN32 AND NOT UNIX)
   SET(CPACK_GENERATOR "DEB" "RPM")
   SET(CPACK_STRIP_FILES "bin/superderpy")
   SET(CPACK_SOURCE_STRIP_FILES "")
-  IF(MACOSX)
-      SET(CPACK_GENERATOR "Bundle")
-  ENDIF(MACOSX)
+  IF(APPLE)
+      SET(CPACK_GENERATOR "DragNDrop")
+  ENDIF(APPLE)
 ENDIF(WIN32 AND NOT UNIX)
 SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "Sebastian Krzyszkowiak <dos@dosowisko.net>")
 #SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6 (>= 2.3.1-6), libgcc1 (>= 1:3.4.2-12)")
+SET(CPACK_SET_DESTDIR "ON")
 
 include(CPack)
