@@ -23,15 +23,15 @@
 #include "callbacks.h"
 
 void Obst_MoveUpDown(struct Game *game, struct Obstacle *obstacle) {
-	if (obstacle->data) {
+	if (*((bool*)obstacle->data)) {
 		obstacle->y -= 0.5;
 		if (obstacle->y<=0) {
-			obstacle->data=NULL;
+			*((bool*)obstacle->data)=false;
 		}
 	} else {
 		obstacle->y += 0.5;
 		if (obstacle->y>=((game->viewportHeight-al_get_bitmap_height(*(obstacle->bitmap))/obstacle->rows)/(float)game->viewportHeight)*100) {
-			obstacle->data++;
+			*((bool*)obstacle->data)=true;
 		}
 	}
 }

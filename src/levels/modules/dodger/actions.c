@@ -149,7 +149,8 @@ bool GenerateObstacles(struct Game *game, struct TM_Action *action, enum TM_Acti
 			} else {
 				obst->callback = &Obst_MoveUpDown;
 				obst->bitmap = &(game->level.dodger.obst_bmps.screwball);
-				obst->data = (void*)(rand()%2); // FIXME: not portable!
+				obst->data = malloc(sizeof(bool));
+				*((bool*)obst->data) = rand()%2;
 				obst->rows = 4;
 				obst->cols = 4;
 				obst->speed = 1.1;
