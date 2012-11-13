@@ -34,7 +34,7 @@ void TM_Init(struct Game* g) {
 	background = NULL;
 }
 
-void TM_Process() {
+void TM_Process(void) {
 	if (!game) return;
 	/* process first element from queue
 		 if returns true, delete it */
@@ -146,17 +146,17 @@ void Propagate(enum TM_ActionState action) {
 	}
 }
 
-void TM_Draw() {
+void TM_Draw(void) {
 	Propagate(TM_ACTIONSTATE_DRAW);
 }
 
-void TM_Pause() {
+void TM_Pause(void) {
 	PrintConsole(game, "Timeline Manager: Pause.");
 	PauseTimers(true);
 	Propagate(TM_ACTIONSTATE_PAUSE);
 }
 
-void TM_Resume() {
+void TM_Resume(void) {
 	PrintConsole(game, "Timeline Manager: Resume.");
 	Propagate(TM_ACTIONSTATE_RESUME);
 	PauseTimers(false);
@@ -290,7 +290,7 @@ void TM_AddDelay(int delay) {
 	al_register_event_source(game->event_queue, al_get_timer_event_source(tmp->timer));
 }
 
-void TM_Destroy() {
+void TM_Destroy(void) {
 	if (!game) return;
 	PrintConsole(game, "Timeline Manager: destroy");
 	struct TM_Action *tmp, *tmp2, *pom = queue;
@@ -371,7 +371,7 @@ void TM_DestroyArgs(struct TM_Arguments* args) {
 	}
 }
 
-bool TM_Initialized() {
+bool TM_Initialized(void) {
 	if (game) return true;
 	return false;
 }

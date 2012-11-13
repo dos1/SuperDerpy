@@ -60,7 +60,7 @@ void Moonwalk_Load(struct Game *game) {
 
 void Moonwalk_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {}
 
-inline int Moonwalk_PreloadSteps() {
+inline int Moonwalk_PreloadSteps(void) {
 	return 1;
 }
 

@@ -55,13 +55,13 @@ struct TM_Action {
 /*! \brief Init timeline. */
 void TM_Init(struct Game* game);
 /*! \brief Process current timeline actions. */
-void TM_Process();
+void TM_Process(void);
 /*! \brief Ask current timeline actions to draw. */
-void TM_Draw();
+void TM_Draw(void);
 /*! \brief Pauses timeline. */
-void TM_Pause();
+void TM_Pause(void);
 /*! \brief Resumes timeline. */
-void TM_Resume();
+void TM_Resume(void);
 /*! \brief Handle timer events. */
 void TM_HandleEvent(ALLEGRO_EVENT *ev);
 /*! \brief Add new action to main queue. */
@@ -73,12 +73,12 @@ struct TM_Action* TM_AddQueuedBackgroundAction(bool (*func)(struct Game*, struct
 /*! \brief Add delay to main queue. */
 void TM_AddDelay(int delay);
 /*! \brief Destroy timeline. */
-void TM_Destroy();
+void TM_Destroy(void);
 /*! \brief Add data to TM_Arguments queue. */
 struct TM_Arguments* TM_AddToArgs(struct TM_Arguments* args, void* arg);
 /*! \brief Destroy TM_Arguments queue. */
 void TM_DestroyArgs(struct TM_Arguments* args);
 /*! \brief Check if timeline is initialised. */
-bool TM_Initialized();
+bool TM_Initialized(void);
 
 #endif

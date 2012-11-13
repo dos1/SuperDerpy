@@ -218,7 +218,7 @@ void Dodger_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev) {
 	}
 }
 
-inline int Dodger_PreloadSteps() {
+inline int Dodger_PreloadSteps(void) {
 	return 7;
 }
 

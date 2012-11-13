@@ -25,7 +25,7 @@ void Level3_Unload(struct Game *game);
 void Level3_UnloadBitmaps(struct Game *game);
 void Level3_Preload(struct Game *game);
 void Level3_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float));
-inline int Level3_PreloadSteps();
+inline int Level3_PreloadSteps(void);
 void Level3_Draw(struct Game *game);
 void Level3_Logic(struct Game *game);
 void Level3_Keydown(struct Game *game, ALLEGRO_EVENT *ev);

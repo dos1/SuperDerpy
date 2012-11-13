@@ -93,7 +93,7 @@ void Level1_Preload(struct Game *game) {
 	Dodger_Preload(game);
 }
 
-inline int Level1_PreloadSteps() {
+inline int Level1_PreloadSteps(void) {
 	return 4+Dodger_PreloadSteps();
 }
 

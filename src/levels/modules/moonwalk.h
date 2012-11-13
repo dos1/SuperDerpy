@@ -33,4 +33,4 @@ void Moonwalk_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, f
 void Moonwalk_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev);
 void Moonwalk_Resume(struct Game *game);
 void Moonwalk_Pause(struct Game *game);
-inline int Moonwalk_PreloadSteps();
+inline int Moonwalk_PreloadSteps(void);

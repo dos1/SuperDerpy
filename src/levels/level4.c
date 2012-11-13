@@ -45,7 +45,7 @@ void Level4_Preload(struct Game *game) {
 	Moonwalk_Preload(game);
 }
 
-inline int Level4_PreloadSteps() {
+inline int Level4_PreloadSteps(void) {
 	return 0+Moonwalk_PreloadSteps();
 }
 

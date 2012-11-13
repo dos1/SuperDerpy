@@ -23,7 +23,7 @@
 
 ALLEGRO_CONFIG *config;
 
-void InitConfig() {
+void InitConfig(void) {
 	ALLEGRO_PATH *path = al_get_standard_path(ALLEGRO_USER_SETTINGS_PATH);
 	ALLEGRO_PATH *data = al_create_path("SuperDerpy.ini");
 	al_join_paths(path, data);
@@ -46,7 +46,7 @@ const char* GetConfigOptionDefault(char* section, char* name, const char* def) {
 	if (!ret) return def; else return ret;
 }
 
-void DeinitConfig() {
+void DeinitConfig(void) {
 	ALLEGRO_PATH *path = al_get_standard_path(ALLEGRO_USER_SETTINGS_PATH);
 	ALLEGRO_PATH *data = al_create_path("SuperDerpy.ini");
 	al_make_directory(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
