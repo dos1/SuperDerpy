@@ -461,7 +461,7 @@ int main(int argc, char **argv){
 		fprintf(stderr, "failed to initialize image addon!\n");
 		/*al_show_native_message_box(display, "Error", "Error", "Failed to initialize al_init_image_addon!",
 															 NULL, ALLEGRO_MESSAGEBOX_ERROR);*/
-		return 0;
+		return -1;
 	}
 
 	if(!al_init_acodec_addon()){
