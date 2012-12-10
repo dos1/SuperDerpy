@@ -71,6 +71,7 @@
 
 double old_time = 0, fps;
 int frames_done = 0;
+bool memoryscale;
 
 char* GetDataFilePath(char* filename) {
 
@@ -351,12 +352,16 @@ ALLEGRO_BITMAP* LoadScaledBitmap(char* filename, int width, int height) {
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 	char* origfn = GetDataFilePath(filename);
 	void GenerateBitmap() {
-		al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
+		if (memoryscale) al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
 
 		source = al_load_bitmap( origfn );
-		al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR | ALLEGRO_MAG_LINEAR);
-
-		ScaleBitmap(source, width, height);
+		if (memoryscale) {
+			al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR | ALLEGRO_MAG_LINEAR);
+			ScaleBitmap(source, width, height);
+		}
+		else {
+			al_draw_scaled_bitmap(source, 0, 0, al_get_bitmap_width(source), al_get_bitmap_height(source), 0, 0, width, height, 0);
+		}
 		/*al_save_bitmap(cachefn, target);
 		PrintConsole(game, "Cache bitmap %s generated.", filename);*/
 		al_destroy_bitmap(source);
@@ -375,11 +380,12 @@ ALLEGRO_BITMAP* LoadScaledBitmap(char* filename, int width, int height) {
 	return target;*/
 }
 
+
 void SetupViewport(struct Game *game) {
 	game->viewportWidth = al_get_display_width(game->display);
 	game->viewportHeight = al_get_display_height(game->display);
 	if (atoi(GetConfigOptionDefault("SuperDerpy", "letterbox", "1"))) {
-		float const aspectRatio = (float)800 / (float)500;
+		float const aspectRatio = (float)1920 / (float)1080; // full HD
 		int clipWidth = game->viewportWidth, clipHeight = game->viewportWidth / aspectRatio;
 		int clipX = 0, clipY = (game->viewportHeight - clipHeight) / 2;
 		if (clipY <= 0) {
@@ -391,7 +397,7 @@ void SetupViewport(struct Game *game) {
 		al_set_clipping_rectangle(clipX, clipY, clipWidth, clipHeight);
 
 		/*float scaleX = (float)clipWidth  / (float)800,
-					scaleY = (float)clipHeight / (float)500;*/
+					scaleY = (float)clipHeight / (float)450;*/
 		ALLEGRO_TRANSFORM projection;
 		al_build_transform(&projection, clipX, clipY, 1, 1, 0.0f);
 		al_use_transform(&projection);
@@ -454,8 +460,9 @@ int main(int argc, char **argv){
 	game.debug = atoi(GetConfigOptionDefault("SuperDerpy", "debug", "0"));
 	game.width = atoi(GetConfigOptionDefault("SuperDerpy", "width", "800"));
 	if (game.width<320) game.width=320;
-	game.height = atoi(GetConfigOptionDefault("SuperDerpy", "height", "500"));
-	if (game.height<200) game.height=200;
+	game.height = atoi(GetConfigOptionDefault("SuperDerpy", "height", "450"));
+	if (game.height<200) game.height=180;
+	memoryscale = !atoi(GetConfigOptionDefault("SuperDerpy", "GPU_scaling", "1"));
 
 	if(!al_init_image_addon()) {
 		fprintf(stderr, "failed to initialize image addon!\n");
