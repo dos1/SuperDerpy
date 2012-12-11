@@ -81,10 +81,11 @@ void Loading_Load(struct Game *game) {
 
 	game->loading.loading_bitmap = al_create_bitmap(game->viewportWidth, game->viewportHeight);
 
-	game->loading.image = LoadScaledBitmap("loading.png", game->viewportWidth, game->viewportHeight);
+	game->loading.image = LoadScaledBitmap("loading.png", game->viewportHeight*2, game->viewportHeight);
 
 	al_set_target_bitmap(game->loading.loading_bitmap);
-	al_draw_bitmap(game->loading.image, 0, 0, 0);
+	al_clear_to_color(al_map_rgb(193,225,218));
+	al_draw_bitmap(game->loading.image, game->viewportWidth-al_get_bitmap_width(game->loading.image), 0, 0);
 	al_draw_text_with_shadow(game->font, al_map_rgb(255,255,255), game->viewportWidth*0.0234, game->viewportHeight*0.84, ALLEGRO_ALIGN_LEFT, "Loading...");
 	al_draw_filled_rectangle(0, game->viewportHeight*0.985, game->viewportWidth, game->viewportHeight, al_map_rgba(128,128,128,128));
 	al_set_target_bitmap(al_get_backbuffer(game->display));

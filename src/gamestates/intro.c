@@ -34,7 +34,7 @@ void AnimPage(struct Game *game, int page, ALLEGRO_COLOR tint) {
 	if (page==3) { amount1=3; amount2=3; }
 	if (page==5) { amount1=5; amount2=3; anim*=2; }
 
-	if (page<6) al_draw_tinted_bitmap_region(game->intro.animsprites[page-1],tint,game->viewportWidth*0.3125*(int)fmod(anim,amount1),game->viewportHeight*0.63*(((int)(anim/amount1))%amount2),game->viewportWidth*0.3125, game->viewportHeight*0.63,offset+game->viewportWidth*0.08, game->viewportHeight*0.18,0);
+	if (page<6) al_draw_tinted_bitmap_region(game->intro.animsprites[page-1],tint,game->viewportHeight*1.6*0.3125*(int)fmod(anim,amount1),game->viewportHeight*0.63*(((int)(anim/amount1))%amount2),game->viewportHeight*1.6*0.3125, game->viewportHeight*0.63,offset+game->viewportWidth*0.08, game->viewportHeight*0.18,0);
 
 	amount1 = 2;
 	amount2 = 2;
@@ -42,7 +42,7 @@ void AnimPage(struct Game *game, int page, ALLEGRO_COLOR tint) {
 	if (page==2) { amount1=3; amount2=3; }
 	if (page==4) { amount1=5; amount2=3; anim*=2; }
 
-	if (page<5) al_draw_tinted_bitmap_region(game->intro.animsprites[page],tint,game->viewportWidth*0.3125*(int)fmod(anim,amount1),game->viewportHeight*0.63*(((int)(anim/amount1))%amount2),game->viewportWidth*0.3125, game->viewportHeight*0.63,offset+game->viewportWidth*1.08, game->viewportHeight*0.18,0);
+	if (page<5) al_draw_tinted_bitmap_region(game->intro.animsprites[page],tint,game->viewportHeight*1.6*0.3125*(int)fmod(anim,amount1),game->viewportHeight*0.63*(((int)(anim/amount1))%amount2),game->viewportHeight*1.6*0.3125, game->viewportHeight*0.63,offset+game->viewportWidth*1.08, game->viewportHeight*0.18,0);
 }
 
 void FillPage(struct Game *game, int page) {
@@ -109,9 +109,9 @@ void FillPage(struct Game *game, int page) {
 				draw_text(4, "turned his muffinzombies against Twilight");
 				draw_text(4, "and her friends, trapping them in their");
 				draw_text(4, "own homes. With the bearers of the");
-				draw_text(4, "Elements out of the way, he now waits until");
-				draw_text(4, "chaos takes hold of the world, so he can");
-				draw_text(4, "rule Equestria once again.");
+				draw_text(4, "Elements out of the way, he now waits");
+				draw_text(4, "until chaos takes hold of the world,");
+				draw_text(4, "so he can rule Equestria once again.");
 				al_hold_bitmap_drawing(false);
 				break;
 			case 5:
@@ -213,15 +213,15 @@ void Intro_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	game->intro.in_animation = false;
 	game->intro.anim = 0;
 
-	game->intro.animsprites[0] = LoadScaledBitmap("intro/1.png", (int)(game->viewportWidth*0.3125)*2, game->viewportHeight*0.63*2);
+	game->intro.animsprites[0] = LoadScaledBitmap("intro/1.png", (int)(game->viewportHeight*1.6*0.3125)*2, game->viewportHeight*0.63*2);
 	PROGRESS;
-	game->intro.animsprites[1] = LoadScaledBitmap("intro/2.png", (int)(game->viewportWidth*0.3125)*4, game->viewportHeight*0.63*3);
+	game->intro.animsprites[1] = LoadScaledBitmap("intro/2.png", (int)(game->viewportHeight*1.6*0.3125)*4, game->viewportHeight*0.63*3);
 	PROGRESS;
-	game->intro.animsprites[2] = LoadScaledBitmap("intro/3.png", (int)(game->viewportWidth*0.3125)*3, game->viewportHeight*0.63*3);
+	game->intro.animsprites[2] = LoadScaledBitmap("intro/3.png", (int)(game->viewportHeight*1.6*0.3125)*3, game->viewportHeight*0.63*3);
 	PROGRESS;
-	game->intro.animsprites[3] = LoadScaledBitmap("intro/4.png", (int)(game->viewportWidth*0.3125)*2, game->viewportHeight*0.63*2);
+	game->intro.animsprites[3] = LoadScaledBitmap("intro/4.png", (int)(game->viewportHeight*1.6*0.3125)*2, game->viewportHeight*0.63*2);
 	PROGRESS;
-	game->intro.animsprites[4] = LoadScaledBitmap("intro/5.png", (int)(game->viewportWidth*0.3125)*5, game->viewportHeight*0.63*3);
+	game->intro.animsprites[4] = LoadScaledBitmap("intro/5.png", (int)(game->viewportHeight*1.6*0.3125)*5, game->viewportHeight*0.63*3);
 	PROGRESS;
 
 	game->intro.table_bitmap =LoadScaledBitmap("intro/paper.png", game->viewportWidth, game->viewportHeight);

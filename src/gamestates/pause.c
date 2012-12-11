@@ -71,7 +71,7 @@ int Pause_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 
 void Pause_Preload(struct Game* game) {
 	game->pause.bitmap = NULL;
-	game->pause.derpy = LoadScaledBitmap("levels/derpy_pause.png", game->viewportWidth*0.53, game->viewportHeight*0.604);
+	game->pause.derpy = LoadScaledBitmap("levels/derpy_pause.png", game->viewportHeight*1.6*0.53, game->viewportHeight*0.604);
 	PrintConsole(game,"Pause preloaded.");
 	if (!game->menu.loaded) {
 		PrintConsole(game,"Pause: Preloading GAMESTATE_MENU...");
@@ -97,7 +97,7 @@ void Pause_Draw(struct Game* game) {
 	game->loadstate=game->gamestate;
 	game->gamestate=GAMESTATE_PAUSE;
 	al_draw_tinted_bitmap(game->pause.bitmap,al_map_rgba_f(1,1,1,0.75),0,0,0);
-	al_draw_bitmap(game->pause.derpy, 0.47*game->viewportWidth, game->viewportHeight*0.4, 0);
+	al_draw_bitmap(game->pause.derpy, game->viewportWidth-al_get_bitmap_width(game->pause.derpy), game->viewportHeight*0.4, 0);
 	al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.1, ALLEGRO_ALIGN_CENTRE, "Super Derpy");
 	al_draw_text_with_shadow(game->menu.font_subtitle, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.275, ALLEGRO_ALIGN_CENTRE, "Game paused.");
 	DrawMenuState(game);

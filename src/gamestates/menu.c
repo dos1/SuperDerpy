@@ -124,8 +124,8 @@ void Menu_Draw(struct Game *game) {
 	if (tint < 0.000004) { PrintConsole(game, "random tint %f", tint); game->menu.mountain_position = (game->viewportWidth*(rand()/(float)RAND_MAX)/2)+game->viewportWidth/2; }
 	al_draw_tinted_bitmap(game->menu.mountain,al_map_rgba_f(tint,tint,tint,tint),game->menu.mountain_position, 0,0);
 	al_draw_scaled_bitmap(game->menu.cloud,0,0,al_get_bitmap_width(game->menu.cloud), al_get_bitmap_height(game->menu.cloud), game->viewportWidth*(sin((game->menu.cloud_position/40)-4.5)-0.3), game->viewportHeight*0.35, al_get_bitmap_width(game->menu.cloud)/2, al_get_bitmap_height(game->menu.cloud)/2,0);
-	al_draw_bitmap(game->menu.cloud2,game->viewportWidth*(game->menu.cloud2_position/100.0), game->viewportHeight/1.5,0);
-	al_draw_bitmap(game->menu.image,0, game->viewportHeight*0.55,0);
+	al_draw_bitmap(game->menu.cloud2,game->viewportWidth*(game->menu.cloud2_position/100.0), game->viewportHeight-(game->viewportWidth*(1240.0/3910.0))*0.7,0);
+	al_draw_bitmap(game->menu.image,0, game->viewportHeight-(game->viewportWidth*(1240.0/3910.0)),0);
 
 	al_draw_bitmap(game->menu.pinkcloud_bitmap,(game->viewportWidth*0.12) + (cos((game->menu.cloud_position/25+80)*1.74444))*40, 0,0);
 	al_draw_bitmap(game->menu.cloud,game->viewportWidth*game->menu.cloud_position/100, game->viewportHeight*0.1,0);
@@ -187,19 +187,19 @@ void Menu_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	game->menu.options.width = game->width;
 	game->menu.options.height = game->height;
 	game->menu.loaded = true;
-	game->menu.image = LoadScaledBitmap( "menu/menu.png", game->viewportWidth, game->viewportHeight*0.45);
+	game->menu.image = LoadScaledBitmap( "menu/menu.png", game->viewportWidth, game->viewportWidth*(1240.0/3910.0));
 	PROGRESS;
-	game->menu.mountain = LoadScaledBitmap( "menu/mountain.png", game->viewportWidth*0.055, game->viewportHeight/9 );
+	game->menu.mountain = LoadScaledBitmap( "menu/mountain.png", game->viewportHeight*1.6*0.055, game->viewportHeight/9 );
 	PROGRESS;
-	game->menu.cloud = LoadScaledBitmap( "menu/cloud.png", game->viewportWidth*0.5, game->viewportHeight*0.25 );
+	game->menu.cloud = LoadScaledBitmap( "menu/cloud.png", game->viewportHeight*1.6*0.5, game->viewportHeight*0.25 );
 	PROGRESS;
-	game->menu.cloud2 = LoadScaledBitmap( "menu/cloud2.png", game->viewportWidth*0.2, game->viewportHeight*0.1 );
+	game->menu.cloud2 = LoadScaledBitmap( "menu/cloud2.png", game->viewportHeight*1.6*0.2, game->viewportHeight*0.1 );
 	PROGRESS;
-	game->menu.logo = LoadScaledBitmap( "menu/logo.png", game->viewportWidth*0.3, game->viewportHeight*0.35 );
-	game->menu.blurbg = al_create_bitmap(game->viewportWidth*0.3, game->viewportHeight*0.35);
-	game->menu.blurbg2 = al_create_bitmap(game->viewportWidth*0.3, game->viewportHeight*0.35);
+	game->menu.logo = LoadScaledBitmap( "menu/logo.png", game->viewportHeight*1.6*0.3, game->viewportHeight*0.35 );
+	game->menu.blurbg = al_create_bitmap(game->viewportHeight*1.6*0.3, game->viewportHeight*0.35);
+	game->menu.blurbg2 = al_create_bitmap(game->viewportHeight*1.6*0.3, game->viewportHeight*0.35);
 	PROGRESS;
-	game->menu.logoblur = al_create_bitmap(game->viewportWidth*0.3+4, game->viewportHeight*0.35+4);
+	game->menu.logoblur = al_create_bitmap(game->viewportHeight*1.6*0.3+4, game->viewportHeight*0.35+4);
 	al_set_target_bitmap(game->menu.logoblur);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 	float alpha = (1.0/40.0);
@@ -213,9 +213,10 @@ void Menu_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	}
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 	PROGRESS;
-	game->menu.glass = LoadScaledBitmap( "menu/glass.png", game->viewportWidth*0.3, game->viewportHeight*0.35 );
+	game->menu.glass = LoadScaledBitmap( "menu/glass.png", game->viewportHeight*1.6*0.3, game->viewportHeight*0.35 );
 	PROGRESS;
-	game->menu.pinkcloud = LoadScaledBitmap( "menu/pinkcloud.png", game->viewportWidth*0.33125, game->viewportHeight*0.8122);
+	//game->menu.pinkcloud = LoadScaledBitmap( "menu/pinkcloud.png", game->viewportWidth*0.33125, game->viewportHeight*0.8122);
+	game->menu.pinkcloud = LoadScaledBitmap( "menu/pinkcloud.png", game->viewportHeight*0.8122*(1171.0/2218.0), game->viewportHeight*0.8122);
 	PROGRESS;
 	al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
 	game->menu.rain = al_load_bitmap( GetDataFilePath("menu/rain.png") );
@@ -265,14 +266,14 @@ void Menu_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 		exit(-1);
 	}
 
-	game->menu.pinkcloud_bitmap = al_create_bitmap(game->viewportWidth*0.33125, game->viewportHeight);
+	game->menu.pinkcloud_bitmap = al_create_bitmap(game->viewportHeight*0.8122*(1171.0/2218.0), game->viewportHeight);
 
-	game->menu.pie_bitmap = al_create_bitmap(game->viewportWidth/2, game->viewportHeight);
+	game->menu.pie_bitmap = al_create_bitmap(game->viewportHeight*0.8, game->viewportHeight);
 	al_set_target_bitmap(game->menu.pie_bitmap);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
-	al_draw_scaled_bitmap(game->menu.pie, 0, 0, al_get_bitmap_width(game->menu.pie), al_get_bitmap_height(game->menu.pie), al_get_bitmap_width(game->menu.pie_bitmap)*0.5, 0, game->viewportWidth*0.11875, game->viewportHeight*0.0825, 0);
-	al_draw_scaled_bitmap(game->menu.pie, 0, 0, al_get_bitmap_width(game->menu.pie), al_get_bitmap_height(game->menu.pie), al_get_bitmap_width(game->menu.pie_bitmap)*0.1, al_get_bitmap_height(game->menu.pie_bitmap)*0.3, game->viewportWidth*0.09, game->viewportHeight*0.06, ALLEGRO_FLIP_HORIZONTAL);
-	al_draw_scaled_bitmap(game->menu.pie, 0, 0, al_get_bitmap_width(game->menu.pie), al_get_bitmap_height(game->menu.pie), al_get_bitmap_width(game->menu.pie_bitmap)*0.3, al_get_bitmap_height(game->menu.pie_bitmap)*0.6, game->viewportWidth*0.13, game->viewportHeight*0.1, 0);
+	al_draw_scaled_bitmap(game->menu.pie, 0, 0, al_get_bitmap_width(game->menu.pie), al_get_bitmap_height(game->menu.pie), al_get_bitmap_width(game->menu.pie_bitmap)*0.5, 0, game->viewportHeight*1.6*0.11875, game->viewportHeight*0.0825, 0);
+	al_draw_scaled_bitmap(game->menu.pie, 0, 0, al_get_bitmap_width(game->menu.pie), al_get_bitmap_height(game->menu.pie), al_get_bitmap_width(game->menu.pie_bitmap)*0.1, al_get_bitmap_height(game->menu.pie_bitmap)*0.3, game->viewportHeight*1.6*0.09, game->viewportHeight*0.06, ALLEGRO_FLIP_HORIZONTAL);
+	al_draw_scaled_bitmap(game->menu.pie, 0, 0, al_get_bitmap_width(game->menu.pie), al_get_bitmap_height(game->menu.pie), al_get_bitmap_width(game->menu.pie_bitmap)*0.3, al_get_bitmap_height(game->menu.pie_bitmap)*0.6, game->viewportHeight*1.6*0.13, game->viewportHeight*0.1, 0);
 	al_destroy_bitmap(game->menu.pie);
 	PROGRESS;
 
