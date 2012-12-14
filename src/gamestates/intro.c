@@ -34,7 +34,7 @@ void AnimPage(struct Game *game, int page, ALLEGRO_COLOR tint) {
 	if (page==3) { amount1=3; amount2=3; }
 	if (page==5) { amount1=5; amount2=3; anim*=2; }
 
-	if (page<6) al_draw_tinted_bitmap_region(game->intro.animsprites[page-1],tint,game->viewportHeight*1.6*0.3125*(int)fmod(anim,amount1),game->viewportHeight*0.63*(((int)(anim/amount1))%amount2),game->viewportHeight*1.6*0.3125, game->viewportHeight*0.63,offset+game->viewportWidth*0.08, game->viewportHeight*0.18,0);
+	if (page<6) al_draw_tinted_bitmap_region(game->intro.animsprites[page-1],tint,game->viewportHeight*1.6*0.3125*(int)fmod(anim,amount1),game->viewportHeight*0.63*(((int)(anim/amount1))%amount2),game->viewportHeight*1.6*0.3125, game->viewportHeight*0.63,offset+game->viewportWidth*0.09, game->viewportHeight*0.18,0);
 
 	amount1 = 2;
 	amount2 = 2;
@@ -42,7 +42,7 @@ void AnimPage(struct Game *game, int page, ALLEGRO_COLOR tint) {
 	if (page==2) { amount1=3; amount2=3; }
 	if (page==4) { amount1=5; amount2=3; anim*=2; }
 
-	if (page<5) al_draw_tinted_bitmap_region(game->intro.animsprites[page],tint,game->viewportHeight*1.6*0.3125*(int)fmod(anim,amount1),game->viewportHeight*0.63*(((int)(anim/amount1))%amount2),game->viewportHeight*1.6*0.3125, game->viewportHeight*0.63,offset+game->viewportWidth*1.08, game->viewportHeight*0.18,0);
+	if (page<5) al_draw_tinted_bitmap_region(game->intro.animsprites[page],tint,game->viewportHeight*1.6*0.3125*(int)fmod(anim,amount1),game->viewportHeight*0.63*(((int)(anim/amount1))%amount2),game->viewportHeight*1.6*0.3125, game->viewportHeight*0.63,offset+game->viewportWidth*1.09, game->viewportHeight*0.18,0);
 }
 
 void FillPage(struct Game *game, int page) {
@@ -164,7 +164,7 @@ void Intro_Draw(struct Game *game) {
 		al_draw_bitmap(game->intro.table, 0, 0, 0);
 		AnimPage(game, game->intro.page+1, al_map_rgba_f(1,1,1,1));
 	}
-	al_draw_text_with_shadow(game->intro.font, al_map_rgb(255,255,255), game->viewportWidth/2, game->viewportHeight*0.90, ALLEGRO_ALIGN_CENTRE, "Press any key to continue or escape to skip...");
+	al_draw_text_with_shadow(game->intro.font, al_map_rgb(255,255,255), game->viewportWidth/2, game->viewportHeight*0.88, ALLEGRO_ALIGN_CENTRE, "Press any key to continue or escape to skip...");
 	al_draw_bitmap(game->intro.frame, 0, 0, 0);
 	/*PrintConsole(game, "drawing");*/
 	if (game->intro.in_animation && game->intro.position<=-4*game->viewportWidth) {
