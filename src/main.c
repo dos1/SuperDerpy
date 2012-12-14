@@ -384,7 +384,7 @@ ALLEGRO_BITMAP* LoadScaledBitmap(char* filename, int width, int height) {
 void SetupViewport(struct Game *game) {
 	game->viewportWidth = al_get_display_width(game->display);
 	game->viewportHeight = al_get_display_height(game->display);
-	if (atoi(GetConfigOptionDefault("SuperDerpy", "letterbox", "1"))) {
+	if (atoi(GetConfigOptionDefault("SuperDerpy", "letterbox", "0"))) {
 		float const aspectRatio = (float)1920 / (float)1080; // full HD
 		int clipWidth = game->viewportWidth, clipHeight = game->viewportWidth / aspectRatio;
 		int clipX = 0, clipY = (game->viewportHeight - clipHeight) / 2;
@@ -403,6 +403,15 @@ void SetupViewport(struct Game *game) {
 		al_use_transform(&projection);
 		game->viewportWidth = clipWidth;
 		game->viewportHeight = clipHeight;
+	} else if ((atoi(GetConfigOptionDefault("SuperDerpy", "rotate", "1"))) && (game->viewportHeight > game->viewportWidth)) {
+		ALLEGRO_TRANSFORM projection;
+		al_identity_transform(&projection);
+		al_rotate_transform(&projection, 0.5*ALLEGRO_PI);
+		al_translate_transform(&projection, game->viewportWidth, 0);
+		al_use_transform(&projection);
+		int temp = game->viewportHeight;
+		game->viewportHeight = game->viewportWidth;
+		game->viewportWidth = temp;
 	}
 }
 
