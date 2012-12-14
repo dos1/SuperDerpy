@@ -52,7 +52,7 @@ void Map_Draw(struct Game *game) {
 			y=0.675;
 			break;
 	}
-	al_draw_scaled_bitmap(game->map.arrow, 0, 0, al_get_bitmap_width(game->map.arrow), al_get_bitmap_height(game->map.arrow), game->viewportWidth*x, game->viewportHeight*y + ((sin(game->map.arrowpos)+0.5)/20.0)*game->viewportHeight, game->viewportWidth*0.1, game->viewportHeight*0.16, 0);
+	al_draw_scaled_bitmap(game->map.arrow, 0, 0, al_get_bitmap_width(game->map.arrow), al_get_bitmap_height(game->map.arrow), (game->viewportWidth-game->viewportHeight*1.6)/2+game->viewportHeight*1.6*x, game->viewportHeight*y + ((sin(game->map.arrowpos)+0.5)/20.0)*game->viewportHeight, game->viewportHeight*1.6*0.1, game->viewportHeight*0.16, 0);
 }
 
 void Map_Logic(struct Game *game) {
@@ -101,11 +101,11 @@ void Map_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	PrintConsole(game, "Last level available: %d", game->map.selected);
 	game->map.arrowpos = 0;
 
-	game->map.map_bg = LoadScaledBitmap("map/background.png", game->viewportWidth, game->viewportHeight);
+	game->map.map_bg = LoadScaledBitmap("map/background.png", game->viewportHeight*1.6, game->viewportHeight);
 	PROGRESS;
 	char filename[30] = { };
 	sprintf(filename, "map/highlight%d.png", game->map.available);
-	game->map.highlight = LoadScaledBitmap(filename, game->viewportWidth, game->viewportHeight);
+	game->map.highlight = LoadScaledBitmap(filename, game->viewportHeight*1.6, game->viewportHeight);
 	PROGRESS;
 
 	game->map.arrow = al_load_bitmap( GetDataFilePath("map/arrow.png") );
@@ -136,8 +136,8 @@ void Map_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	game->map.map = LoadScaledBitmap("table.png", game->viewportWidth, game->viewportHeight);
 	PROGRESS;
 	al_set_target_bitmap(game->map.map);
-	al_draw_bitmap(game->map.map_bg, 0, 0 ,0);
-	al_draw_bitmap(game->map.highlight, 0, 0 ,0);
+	al_draw_bitmap(game->map.map_bg, (game->viewportWidth-game->viewportHeight*1.6)/2, 0 ,0);
+	al_draw_bitmap(game->map.highlight, (game->viewportWidth-game->viewportHeight*1.6)/2, 0 ,0);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 	PROGRESS;
 }
