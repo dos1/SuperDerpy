@@ -92,7 +92,7 @@ void Dodger_Logic(struct Game *game) {
 			}
 
 			if (tmp->hit) {
-				if (tmp->points>=0) tmp->bitmap = NULL;
+				if (tmp->points>0) tmp->bitmap = NULL;
 				game->level.hp+=0.0002*tmp->points*(((1-game->level.speed_modifier)/2.0)+1);
 				if (game->level.hp>1) game->level.hp=1;
 				//PrintConsole(game, "POINTS: %d, %f", tmp->points, tps(game, 60*0.0002*tmp->points*game->level.speed_modifier));

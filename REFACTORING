@@ -1,4 +1,5 @@
 - sidescroll interpolation
-- tint Derpy at the current end of level 1
+- tilt Derpy at the current end of level 1
+- fix obstacles being moved on fullscreen toggling
 
 - modular structure of the engine
