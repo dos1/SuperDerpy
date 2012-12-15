@@ -188,12 +188,12 @@ void Level_Draw(struct Game *game) {
 	al_set_target_bitmap(game->level.meter_bmp);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 	al_draw_filled_rounded_rectangle(al_get_bitmap_width(game->level.meter_bmp)*0.1, al_get_bitmap_height(game->level.meter_bmp)*0.34, al_get_bitmap_width(game->level.meter_bmp)*0.993, al_get_bitmap_height(game->level.meter_bmp)*0.66, 6,6, al_map_rgb(232,234,239));
-	al_draw_horizontal_gradient_rect(al_get_bitmap_width(game->level.meter_bmp)-game->viewportWidth*0.215, (al_get_bitmap_height(game->level.meter_bmp)-game->viewportHeight*0.025)/2, game->viewportWidth*0.215*0.975, game->viewportHeight*0.025, al_map_rgb(150,159,182), al_map_rgb(130,139,162));
-	al_draw_filled_rectangle(al_get_bitmap_width(game->level.meter_bmp)-game->viewportWidth*0.215, (al_get_bitmap_height(game->level.meter_bmp)-game->viewportHeight*0.025)/2, al_get_bitmap_width(game->level.meter_bmp)-game->viewportWidth*0.215+(game->viewportWidth*0.215*0.975)*game->level.hp, (al_get_bitmap_height(game->level.meter_bmp)-game->viewportHeight*0.025)/2+game->viewportHeight*0.025, al_map_rgb(214,172,55));
+	al_draw_horizontal_gradient_rect(al_get_bitmap_width(game->level.meter_bmp)-game->viewportHeight*1.6*0.215, (al_get_bitmap_height(game->level.meter_bmp)-game->viewportHeight*0.025)/2, game->viewportHeight*1.6*0.215*0.975, game->viewportHeight*0.025, al_map_rgb(150,159,182), al_map_rgb(130,139,162));
+	al_draw_filled_rectangle(al_get_bitmap_width(game->level.meter_bmp)-game->viewportHeight*1.6*0.215, (al_get_bitmap_height(game->level.meter_bmp)-game->viewportHeight*0.025)/2, al_get_bitmap_width(game->level.meter_bmp)-game->viewportHeight*1.6*0.215+(game->viewportHeight*1.6*0.215*0.975)*game->level.hp, (al_get_bitmap_height(game->level.meter_bmp)-game->viewportHeight*0.025)/2+game->viewportHeight*0.025, al_map_rgb(214,172,55));
 	al_draw_bitmap(game->level.meter_image, 0, 0, 0);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 
-	al_draw_tinted_bitmap(game->level.meter_bmp, al_map_rgba(game->level.meter_alpha,game->level.meter_alpha,game->level.meter_alpha,game->level.meter_alpha), game->viewportWidth*0.95-al_get_bitmap_width(game->level.meter_bmp), game->viewportHeight*0.975-al_get_bitmap_height(game->level.meter_bmp), 0);
+	al_draw_tinted_bitmap(game->level.meter_bmp, al_map_rgba(game->level.meter_alpha,game->level.meter_alpha,game->level.meter_alpha,game->level.meter_alpha), game->viewportWidth-al_get_bitmap_width(game->level.meter_bmp)*1.1, game->viewportHeight*0.975-al_get_bitmap_height(game->level.meter_bmp), 0);
 
 	TM_Draw();
 }
@@ -361,9 +361,9 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 	PROGRESS;
 	game->level.stage = LoadScaledBitmap(GetLevelFilename(game, "levels/?/stage.png"), game->viewportHeight*4.73307291666666666667, game->viewportHeight);
 	PROGRESS;
-	game->level.meter_image = LoadScaledBitmap("levels/meter.png", game->viewportWidth*0.075, game->viewportWidth*0.075*0.96470588235294117647);
+	game->level.meter_image = LoadScaledBitmap("levels/meter.png", game->viewportHeight*1.6*0.075, game->viewportHeight*1.6*0.075*0.96470588235294117647);
 	PROGRESS;
-	game->level.meter_bmp = al_create_bitmap(game->viewportWidth*0.2+al_get_bitmap_width(game->level.meter_image), al_get_bitmap_height(game->level.meter_image));
+	game->level.meter_bmp = al_create_bitmap(game->viewportHeight*1.6*0.2+al_get_bitmap_width(game->level.meter_image), al_get_bitmap_height(game->level.meter_image));
 	PROGRESS;
 	game->level.welcome = al_create_bitmap(game->viewportWidth, game->viewportHeight/2);
 	PROGRESS;

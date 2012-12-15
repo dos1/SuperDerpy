@@ -60,7 +60,7 @@ void Level1_Load(struct Game *game) {
 	struct Obstacle *obst = malloc(sizeof(struct Obstacle));
 	obst->prev = NULL;
 	obst->next = NULL;
-	obst->x = 83.5;
+	obst->x = (game->viewportHeight*1.33625)/game->viewportWidth*100;
 	obst->y = 55;
 	obst->speed = 1;
 	obst->points = 0;
@@ -99,7 +99,7 @@ inline int Level1_PreloadSteps(void) {
 
 void Level1_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float)) {
 	PROGRESS_INIT(Level1_PreloadSteps());
-	game->level.level1.owl = LoadScaledBitmap("levels/1/owl.png", game->viewportWidth*0.08, game->viewportWidth*0.08);
+	game->level.level1.owl = LoadScaledBitmap("levels/1/owl.png", game->viewportHeight*0.1275, game->viewportHeight*0.1275);
 	PROGRESS;
 	game->level.letter_font = al_load_ttf_font(GetDataFilePath("fonts/DejaVuSans.ttf"),game->viewportHeight*0.0225,0 );
 	PROGRESS;

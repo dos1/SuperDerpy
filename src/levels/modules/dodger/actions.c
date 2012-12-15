@@ -36,8 +36,8 @@ bool Accelerate(struct Game *game, struct TM_Action *action, enum TM_ActionState
 bool Walk(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (state == TM_ACTIONSTATE_START) SelectDerpySpritesheet(game, "walk");
 	else if (state != TM_ACTIONSTATE_RUNNING) return false;
-	game->level.derpy_x+=0.001;
-	if (game->level.derpy_x>=0.05) return true;
+	game->level.derpy_x+=(0.00125*1280)/(float)game->viewportWidth;
+	if (game->level.derpy_x>=(0.05*1280)/(float)game->viewportWidth) return true;
 	return false;
 }
 

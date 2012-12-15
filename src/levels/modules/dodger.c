@@ -60,11 +60,11 @@ void Dodger_Logic(struct Game *game) {
 		game->level.derpy_y += game->level.derpy_angle / 30;
 	}
 
-	int derpyx = game->level.derpy_x*game->viewportWidth;
+	int derpyx = game->level.derpy_x*game->viewportHeight*1.6;
 	int derpyy = game->level.derpy_y*game->viewportHeight;
 	int derpyw = al_get_bitmap_width(game->level.derpy);
 	int derpyh = al_get_bitmap_height(game->level.derpy);
-	int derpyo = game->viewportWidth*0.1953125-al_get_bitmap_width(game->level.derpy); /* offset */
+	int derpyo = game->viewportHeight*1.6*0.1953125-al_get_bitmap_width(game->level.derpy); /* offset */
 	struct Obstacle *tmp = game->level.dodger.obstacles;
 	while (tmp) {
 		/*PrintConsole(game, "DRAWING %f %f", tmp->x, tmp->y);*/
@@ -123,11 +123,11 @@ void Dodger_Logic(struct Game *game) {
 }
 
 void Dodger_Draw(struct Game *game) {
-	int derpyx = game->level.derpy_x*game->viewportWidth;
+	int derpyx = game->level.derpy_x*game->viewportHeight*1.6;
 	int derpyy = game->level.derpy_y*game->viewportHeight;
 	int derpyw = al_get_bitmap_width(game->level.derpy);
 	int derpyh = al_get_bitmap_height(game->level.derpy);
-	int derpyo = game->viewportWidth*0.1953125-al_get_bitmap_width(game->level.derpy); /* offset */
+	int derpyo = game->viewportHeight*1.6*0.1953125-al_get_bitmap_width(game->level.derpy); /* offset */
 	bool colision = false;
 	struct Obstacle *tmp = game->level.dodger.obstacles;
 	while (tmp) {
@@ -173,7 +173,7 @@ void Dodger_Draw(struct Game *game) {
 	al_draw_bitmap_region(*(game->level.derpy_sheet),al_get_bitmap_width(game->level.derpy)*(game->level.sheet_pos%game->level.sheet_cols),al_get_bitmap_height(game->level.derpy)*(game->level.sheet_pos/game->level.sheet_cols),al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy),0,0,0);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 
-	al_draw_tinted_rotated_bitmap(game->level.derpy, al_map_rgba(255,255-colision*255,255-colision*255,255), al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy)/2, derpyx+game->viewportWidth*0.1953125, derpyy + al_get_bitmap_height(game->level.derpy)/2, game->level.derpy_angle, 0);
+	al_draw_tinted_rotated_bitmap(game->level.derpy, al_map_rgba(255,255-colision*255,255-colision*255,255), al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy)/2, derpyx+game->viewportHeight*1.6*0.1953125, derpyy + al_get_bitmap_height(game->level.derpy)/2, game->level.derpy_angle, 0);
 
 	/*		if ((((x>=derpyx+0.36*derpyw) && (x<=derpyx+0.94*derpyw)) || ((x+w>=derpyx+0.36*derpyw) && (x+w<=derpyx+0.94*derpyw))) &&
 		(((y>=derpyy+0.26*derpyh) && (y<=derpyy+0.76*derpyh)) || ((y+h>=derpyy+0.26*derpyh) && (y+h<=derpyy+0.76*derpyh)))) {
@@ -224,19 +224,19 @@ inline int Dodger_PreloadSteps(void) {
 
 void Dodger_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float)) {
 	PROGRESS_INIT(Dodger_PreloadSteps());
-	game->level.dodger.obst_bmps.pie1 = LoadScaledBitmap("levels/dodger/pie1.png", game->viewportWidth*0.1, game->viewportHeight*0.08);
+	game->level.dodger.obst_bmps.pie1 = LoadScaledBitmap("levels/dodger/pie1.png", game->viewportHeight*1.6*0.1, game->viewportHeight*0.08);
 	PROGRESS;
-	game->level.dodger.obst_bmps.pie2 = LoadScaledBitmap("levels/dodger/pie2.png", game->viewportWidth*0.1, game->viewportHeight*0.08);
+	game->level.dodger.obst_bmps.pie2 = LoadScaledBitmap("levels/dodger/pie2.png", game->viewportHeight*1.6*0.1, game->viewportHeight*0.08);
 	PROGRESS;
-	game->level.dodger.obst_bmps.pig = LoadScaledBitmap("levels/dodger/pig.png", (int)(game->viewportWidth*0.15)*3, (int)(game->viewportHeight*0.2)*3);
+	game->level.dodger.obst_bmps.pig = LoadScaledBitmap("levels/dodger/pig.png", (int)(game->viewportHeight*1.6*0.15)*3, (int)(game->viewportHeight*0.2)*3);
 	PROGRESS;
 	game->level.dodger.obst_bmps.screwball = LoadScaledBitmap("levels/dodger/screwball.png", (int)(game->viewportHeight*0.2)*4*1.4, (int)(game->viewportHeight*0.2)*4);
 	PROGRESS;
-	game->level.dodger.obst_bmps.muffin = LoadScaledBitmap("levels/dodger/muffin.png", game->viewportWidth*0.07, game->viewportHeight*0.1);
+	game->level.dodger.obst_bmps.muffin = LoadScaledBitmap("levels/dodger/muffin.png", game->viewportHeight*1.6*0.07, game->viewportHeight*0.1);
 	PROGRESS;
-	game->level.dodger.obst_bmps.cherry = LoadScaledBitmap("levels/dodger/cherry.png", game->viewportWidth*0.03, game->viewportHeight*0.08);
+	game->level.dodger.obst_bmps.cherry = LoadScaledBitmap("levels/dodger/cherry.png", game->viewportHeight*1.6*0.03, game->viewportHeight*0.08);
 	PROGRESS;
-	game->level.dodger.obst_bmps.badmuffin = LoadScaledBitmap("levels/dodger/badmuffin.png", game->viewportWidth*0.07, game->viewportHeight*0.1);
+	game->level.dodger.obst_bmps.badmuffin = LoadScaledBitmap("levels/dodger/badmuffin.png", game->viewportHeight*1.6*0.07, game->viewportHeight*0.1);
 	PROGRESS;
 }
 
