@@ -228,7 +228,6 @@ struct Pause {
 
 /*! \brief Resources used by About state. */
 struct About {
-		ALLEGRO_BITMAP *fade_bitmap; /*!< Bitmap with screenshot, used in fades. */
 		ALLEGRO_BITMAP *image; /*!< Background bitmap. */
 		ALLEGRO_BITMAP *text_bitmap; /*!< Bitmap with scrolled text. */
 		ALLEGRO_BITMAP *letter; /*!< Paper bitmap. */

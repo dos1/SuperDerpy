@@ -1,11 +1,4 @@
-[X] Loading
-[X] Menu
-[X] Intro
-[X] Moonwalk
-[X] Pauza
-[X] Mapa
-[X] Level 1
-[ ] About
+- sidescroll interpolation
+- tint Derpy at the current end of level 1
 
-- pomyśleć nad vsyncem
-- pochylenie Derpy na końcu
+- modular structure of the engine

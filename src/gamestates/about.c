@@ -23,34 +23,28 @@
 
 void About_Logic(struct Game *game) {
 	if (al_get_sample_instance_position(game->about.music)<700000) { return; }
-	if (game->about.fadeloop>=0) {
-		if (game->about.fadeloop==0) PrintConsole(game, "Fade in");
-		game->about.fadeloop+=5;
-		if (game->about.fadeloop>=256) {
-			al_destroy_bitmap(game->about.fade_bitmap);
-			game->about.fadeloop=-1;
-		}
-		return;
+	if (game->about.fadeloop==0) {
+		PrintConsole(game, "Fade in");
+		game->about.fadeloop=1;
+		FadeGameState(game, true);
 	}
 	game->about.x+=0.00025;
 }
 
 void About_Draw(struct Game *game) {
 	/*PrintConsole(game, "%d", al_get_sample_instance_position(game->about.music));*/
-	if (al_get_sample_instance_position(game->about.music)<700000) { al_clear_to_color(al_map_rgba(0,0,0,0)); return; }
-	if (game->about.fadeloop>=0) {
-		if (game->about.fadeloop==0) PrintConsole(game, "Fade in");
-		al_draw_tinted_bitmap(game->about.fade_bitmap,al_map_rgba_f(game->about.fadeloop/255.0,game->about.fadeloop/255.0,game->about.fadeloop/255.0,1),0,0,0);
+	if ((al_get_sample_instance_position(game->about.music)<700000) || (game->about.fadeloop==0)) {
+		al_clear_to_color(al_map_rgba(0,0,0,0));
 		return;
 	}
 
 	al_draw_scaled_bitmap(game->about.image,0,0,al_get_bitmap_width(game->about.image),al_get_bitmap_height(game->about.image),0,0,game->viewportWidth, game->viewportHeight,0);
-	al_draw_bitmap(game->about.letter, game->viewportWidth*0.3, -game->viewportHeight*0.1, 0);
+	al_draw_bitmap(game->about.letter, game->viewportWidth-al_get_bitmap_width(game->about.letter), -game->viewportHeight*0.1, 0);
 	float x = game->about.x;
 	if (x<0) x=0;
 	ALLEGRO_BITMAP* subbitmap;
 	subbitmap = al_create_sub_bitmap(game->about.text_bitmap, 0, x*al_get_bitmap_height(game->about.text_bitmap), al_get_bitmap_width(game->about.text_bitmap), game->viewportHeight);
-	al_draw_rotated_bitmap(subbitmap, al_get_bitmap_width(subbitmap)/2.0, al_get_bitmap_height(subbitmap)/2.0, game->viewportWidth*0.5+al_get_bitmap_width(subbitmap)/2.0, game->viewportHeight*0.1+al_get_bitmap_height(subbitmap)/2.0, -0.11, 0);
+	al_draw_rotated_bitmap(subbitmap, al_get_bitmap_width(subbitmap)/2.0, al_get_bitmap_height(subbitmap)/2.0, game->viewportWidth-al_get_bitmap_width(game->about.letter)+al_get_bitmap_width(subbitmap), game->viewportHeight*0.1+al_get_bitmap_height(subbitmap)/2.0, -0.11, 0);
 	al_destroy_bitmap(subbitmap);
 	if ((game->about.x>1) && (game->about.x<10)) {
 		game->about.x=10;
@@ -76,7 +70,7 @@ int About_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 }
 
 void About_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
-	PROGRESS_INIT(6);
+	PROGRESS_INIT(5);
 
 	game->about.image =LoadScaledBitmap("table.png", game->viewportWidth, game->viewportHeight);
 	PROGRESS;
@@ -98,7 +92,7 @@ void About_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 		fprintf(stderr, "Audio clip sample not loaded!\n" );
 		exit(-1);
 	}
-	game->about.text_bitmap = al_create_bitmap(game->viewportWidth*0.4, game->viewportHeight*3.225);
+	game->about.text_bitmap = al_create_bitmap(game->viewportHeight*1.6*0.4, game->viewportHeight*3.225);
 	al_set_target_bitmap(game->about.text_bitmap);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 	al_draw_text(game->about.font, al_map_rgb(0,0,0), 0.5*al_get_bitmap_width(game->about.text_bitmap), 0.015*al_get_bitmap_height(game->about.text_bitmap), ALLEGRO_ALIGN_CENTRE, "Super Derpy: Muffin Attack");
@@ -191,19 +185,6 @@ void About_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	draw_text("");
 	draw_text("http://www.superderpy.com/");
 	PROGRESS;
-
-	game->about.fade_bitmap = al_create_bitmap(game->viewportWidth, game->viewportHeight);
-
-	al_set_target_bitmap(game->about.fade_bitmap);
-	al_draw_bitmap(game->about.image, 0, 0, 0);
-	al_draw_bitmap(game->about.letter, game->viewportWidth*0.3, -game->viewportHeight*0.1, 0);
-	ALLEGRO_BITMAP* subbitmap;
-	subbitmap = al_create_sub_bitmap(game->about.text_bitmap, 0, 0, al_get_bitmap_width(game->about.text_bitmap), game->viewportHeight);
-	al_draw_rotated_bitmap(subbitmap, al_get_bitmap_width(subbitmap)/2.0, al_get_bitmap_height(subbitmap)/2.0, game->viewportWidth*0.5+al_get_bitmap_width(subbitmap)/2.0, game->viewportHeight*0.1+al_get_bitmap_height(subbitmap)/2.0, -0.11, 0);
-	al_destroy_bitmap(subbitmap);
-
-	al_set_target_bitmap(al_get_backbuffer(game->display));
-	PROGRESS;
 }
 
 void About_Unload(struct Game *game) {
@@ -212,7 +193,6 @@ void About_Unload(struct Game *game) {
 	}
 	al_destroy_bitmap(game->about.image);
 	al_destroy_bitmap(game->about.letter);
-	if (game->about.fadeloop>=0) al_destroy_bitmap(game->about.fade_bitmap);
 	al_destroy_bitmap(game->about.text_bitmap);
 	al_destroy_sample_instance(game->about.music);
 	al_destroy_sample(game->about.sample);
