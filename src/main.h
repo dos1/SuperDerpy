@@ -306,6 +306,10 @@ struct Game {
 				ALLEGRO_MIXER *voice; /*!< Voice mixer. */
 				ALLEGRO_MIXER *fx; /*!< Effects mixer. */
 		} audio; /*!< Audio resources. */
+		struct {
+				double old_time, fps;
+				int frames_done;
+		} fps_count;
 };
 
 /*! \brief Preloads gamestate set in game->loadstate. */

@@ -1,6 +1,7 @@
-/*! \file main.c * \brief Main file of SuperDerpy engine.
+/*! \file main.c
+ *  \brief Main file of SuperDerpy engine.
  *
- *   Contains basic functions shared by all views.
+ *  Contains basic functions shared by all views.
  */
 /*
  * Copyright (c) Sebastian Krzyszkowiak <dos@dosowisko.net>
@@ -69,10 +70,6 @@
 #define RESUME_STATE(state, name) case state:\
 	PrintConsole(game, "Resume %s...", #state); name ## _Resume(game); break;
 
-double old_time = 0, fps;
-int frames_done = 0;
-bool memoryscale;
-
 char* GetDataFilePath(char* filename) {
 
 	char *result = 0;
@@ -137,16 +134,16 @@ void DrawConsole(struct Game *game) {
 	if (game->showconsole) {
 		al_draw_bitmap(game->console, 0, 0, 0);
 		double game_time = al_get_time();
-		if(game_time - old_time >= 1.0) {
-			fps = frames_done / (game_time - old_time);
-			frames_done = 0;
-			old_time = game_time;
+		if(game_time - game->fps_count.old_time >= 1.0) {
+			game->fps_count.fps = game->fps_count.frames_done / (game_time - game->fps_count.old_time);
+			game->fps_count.frames_done = 0;
+			game->fps_count.old_time = game_time;
 		}
 		char sfps[6] = { };
-		sprintf(sfps, "%.0f", fps);
+		sprintf(sfps, "%.0f", game->fps_count.fps);
 		al_draw_text_with_shadow(game->font, al_map_rgb(255,255,255), game->viewportWidth*0.99, 0, ALLEGRO_ALIGN_RIGHT, sfps);
 	}
-	frames_done++;
+	game->fps_count.frames_done++;
 }
 
 void PreloadGameState(struct Game *game, void (*progress)(struct Game*, float)) {
@@ -347,6 +344,7 @@ void ScaleBitmap(ALLEGRO_BITMAP* source, int width, int height) {
 }
 
 ALLEGRO_BITMAP* LoadScaledBitmap(char* filename, int width, int height) {
+	bool memoryscale = !atoi(GetConfigOptionDefault("SuperDerpy", "GPU_scaling", "1"));
 	ALLEGRO_BITMAP *source, *target = al_create_bitmap(width, height);
 	al_set_target_bitmap(target);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
@@ -462,6 +460,10 @@ int main(int argc, char **argv){
 
 	struct Game game;
 
+	game.fps_count.frames_done = 0;
+	game.fps_count.fps = 0;
+	game.fps_count.old_time = 0;
+
 	game.fullscreen = atoi(GetConfigOptionDefault("SuperDerpy", "fullscreen", "1"));
 	game.music = atoi(GetConfigOptionDefault("SuperDerpy", "music", "7"));
 	game.voice = atoi(GetConfigOptionDefault("SuperDerpy", "voice", "10"));
@@ -471,7 +473,6 @@ int main(int argc, char **argv){
 	if (game.width<320) game.width=320;
 	game.height = atoi(GetConfigOptionDefault("SuperDerpy", "height", "450"));
 	if (game.height<200) game.height=180;
-	memoryscale = !atoi(GetConfigOptionDefault("SuperDerpy", "GPU_scaling", "1"));
 
 	if(!al_init_image_addon()) {
 		fprintf(stderr, "failed to initialize image addon!\n");
