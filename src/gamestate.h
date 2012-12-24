@@ -18,6 +18,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
+#ifndef GAMESTATE_H
+#define GAMESTATE_H
 
 struct Game;
 
@@ -40,3 +42,5 @@ void StopGamestate(struct Game *game, const char* name);
 void PauseGamestate(struct Game *game, const char* name);
 void ResumeGamestate(struct Game *game, const char* name);
 void SwitchGamestate(struct Game *game, const char* current, const char* n);
+
+#endif

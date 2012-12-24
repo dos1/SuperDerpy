@@ -25,18 +25,18 @@ void InitConfig(struct Game *game) {
 	ALLEGRO_PATH *path = al_get_standard_path(ALLEGRO_USER_SETTINGS_PATH);
 	ALLEGRO_PATH *data = al_create_path("SuperDerpy.ini");
 	al_join_paths(path, data);
-	game->config.config = al_load_config_file(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
-	if (!game->config.config) game->config.config=al_create_config();
+	game->_priv.config = al_load_config_file(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
+	if (!game->_priv.config) game->_priv.config=al_create_config();
 	al_destroy_path(path);
 	al_destroy_path(data);
 }
 
 void SetConfigOption(struct Game *game, char* section, char* name, char* value) {
-	al_set_config_value(game->config.config, section, name, value);
+	al_set_config_value(game->_priv.config, section, name, value);
 }
 
 const char* GetConfigOption(struct Game *game, char* section, char* name) {
-	return al_get_config_value(game->config.config, section, name);
+	return al_get_config_value(game->_priv.config, section, name);
 }
 
 const char* GetConfigOptionDefault(struct Game *game, char* section, char* name, const char* def) {
@@ -49,8 +49,8 @@ void DeinitConfig(struct Game *game) {
 	ALLEGRO_PATH *data = al_create_path("SuperDerpy.ini");
 	al_make_directory(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
 	al_join_paths(path, data);
-	al_save_config_file(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP), game->config.config);
+	al_save_config_file(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP), game->_priv.config);
 	al_destroy_path(path);
 	al_destroy_path(data);
-	al_destroy_config(game->config.config);
+	al_destroy_config(game->_priv.config);
 }

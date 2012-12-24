@@ -51,7 +51,6 @@ struct Game {
 			int fps; /*!< FPS limit */
 			int width; /*!< Width of window as being set in configuration. */
 			int height; /*!< Height of window as being set in configuration. */
-			ALLEGRO_CONFIG *config;
 		} config;
 
 		struct {
@@ -76,6 +75,8 @@ struct Game {
 						double old_time, fps;
 						int frames_done;
 				} fps_count;
+
+				ALLEGRO_CONFIG *config;
 
 		} _priv; /*!< Private resources. Do not use in gamestates! */
 

@@ -48,12 +48,37 @@ void DrawConsole(struct Game *game) {
 	game->_priv.fps_count.frames_done++;
 }
 
+int counter=0;
+
 void DrawGamestates(struct Game *game) {
+	if (counter<0) {
+		PrintConsole(game, "logiced %d", abs(counter));
+		counter=0;
+	}
+	counter++;
 	al_clear_to_color(al_map_rgb(0,0,0));
+	struct Gamestate *tmp = game->_priv.gamestate_list;
+	while (tmp) {
+		if ((tmp->loaded) && (tmp->started)) {
+			//PrintConsole(game, "drawing %s", tmp->name);
+		}
+		tmp = tmp->next;
+	}
 }
 
 void LogicGamestates(struct Game *game) {
-	return;
+	if (counter>0) {
+		PrintConsole(game, "drawed %d", abs(counter));
+		counter=0;
+	}
+	counter--;
+	struct Gamestate *tmp = game->_priv.gamestate_list;
+	while (tmp) {
+		if ((tmp->loaded) && (tmp->started) && (!tmp->paused)) {
+			//PrintConsole(game, "logic %s", tmp->name);
+		}
+		tmp = tmp->next;
+	}
 }
 
 void SetupViewport(struct Game *game) {
@@ -213,6 +238,9 @@ int main(int argc, char **argv){
 
 	PrintConsole(&game, "Viewport %dx%d", game.viewport.width, game.viewport.height);
 
+	game._priv.gamestate = NULL;
+	game._priv.gamestate_list = NULL;
+
 	game._priv.event_queue = al_create_event_queue();
 	if(!game._priv.event_queue) {
 		fprintf(stderr, "failed to create event_queue!\n");
@@ -240,13 +268,13 @@ int main(int argc, char **argv){
 
 	al_flip_display();
 	al_clear_to_color(al_map_rgb(0,0,0));
+	al_wait_for_vsync();
 	game._priv.timer = al_create_timer(ALLEGRO_BPS_TO_SECS(60)); // logic timer
 	if(!game._priv.timer) {
 		fprintf(stderr, "failed to create timer!\n");
 		return -1;
 	}
 	al_register_event_source(game._priv.event_queue, al_get_timer_event_source(game._priv.timer));
-	al_wait_for_vsync();
 	al_start_timer(game._priv.timer);
 
 	setlocale(LC_NUMERIC, "C");
@@ -274,14 +302,39 @@ int main(int argc, char **argv){
 	StartGamestate(&game, gamestate);
 	//free(gamestate);
 
+	bool redraw = false;
+
 	while(1) {
 		ALLEGRO_EVENT ev;
-		if (al_is_event_queue_empty(game._priv.event_queue)) {
+		if (redraw && al_is_event_queue_empty(game._priv.event_queue)) {
 
-			// TODO: process gamestates
+			struct Gamestate *tmp = game._priv.gamestate_list;
+			while (tmp) {
+				if ((tmp->pending_load) && (!tmp->loaded)) {
+					PrintConsole(&game, "Loading gamestate %s...", tmp->name);
+					tmp->loaded = true;
+					tmp->pending_load = false;
+				} else if ((tmp->pending_load) && (tmp->loaded)) {
+					PrintConsole(&game, "Unloading gamestate %s...", tmp->name);
+					tmp->loaded = false;
+					tmp->pending_load = false;
+					tmp->handle = NULL;
+				} else if ((tmp->pending_start) && (!tmp->started)) {
+					PrintConsole(&game, "Starting gamestate %s...", tmp->name);
+					tmp->started = true;
+					tmp->pending_start = false;
+				} else if ((tmp->pending_start) && (tmp->started)) {
+					PrintConsole(&game, "Stopping gamestate %s...", tmp->name);
+					tmp->started = false;
+					tmp->pending_start = false;
+				}
+				tmp=tmp->next;
+			}
+
 			DrawGamestates(&game);
 			DrawConsole(&game);
 			al_flip_display();
+			redraw = false;
 
 		} else {
 
@@ -289,6 +342,7 @@ int main(int argc, char **argv){
 
 			if ((ev.type == ALLEGRO_EVENT_TIMER) && (ev.timer.source == game._priv.timer)) {
 				LogicGamestates(&game);
+				redraw = true;
 			}
 			else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
 				break;

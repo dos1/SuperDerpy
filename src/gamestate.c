@@ -20,29 +20,139 @@
  */
 
 #include "utils.h"
+#include "gamestate.h"
+
+struct Gamestate* AddNewGamestate(struct Game *game) {
+	struct Gamestate *tmp = game->_priv.gamestate_list;
+	if (!tmp) {
+		game->_priv.gamestate_list = malloc(sizeof(struct Gamestate));
+		tmp = game->_priv.gamestate_list;
+	} else {
+		while (tmp->next) {
+			tmp = tmp->next;
+		}
+		tmp->next = malloc(sizeof(struct Gamestate));
+		tmp = tmp->next;
+	}
+	tmp->name = NULL;
+	tmp->fade = false;
+	tmp->fade_counter = 0;
+	tmp->handle = NULL;
+	tmp->loaded = false;
+	tmp->paused = false;
+	tmp->started = false;
+	tmp->pending_load = false;
+	tmp->pending_start = false;
+	tmp->after = NULL;
+	tmp->next = NULL;
+	return tmp;
+}
+
+struct Gamestate* FindGamestate(struct Game *game, const char* name) {
+	struct Gamestate *tmp = game->_priv.gamestate_list;
+	while (tmp) {
+		if (!strcmp(name, tmp->name)) {
+			return tmp;
+		}
+		tmp = tmp->next;
+	}
+	return NULL;
+}
 
 void LoadGamestate(struct Game *game, const char* name) {
-	PrintConsole(game, "load finished %s", name);
+	struct Gamestate *gs = FindGamestate(game, name);
+	if (gs) {
+		if (!gs->loaded) {
+			PrintConsole(game, "Gamestate %s already loaded.", name);
+			return;
+		}
+		gs->pending_load = true;
+	} else {
+		gs = AddNewGamestate(game);
+		gs->name = strdup(name);
+		gs->fade = true;
+		gs->fade_counter = 0;
+		gs->pending_load = true;
+	}
+	PrintConsole(game, "Gamestate %s marked to be LOADED.", name);
 }
 
 void UnloadGamestate(struct Game *game, const char* name) {
-	PrintConsole(game, "unload finished %s", name);
+	struct Gamestate *gs = FindGamestate(game, name);
+	if (gs) {
+		if (!gs->loaded) {
+			PrintConsole(game, "Gamestate %s already unloaded.", name);
+			return;
+		}
+		gs->pending_load = true;
+		PrintConsole(game, "Gamestate %s marked to be UNLOADED.", name);
+	} else {
+		PrintConsole(game, "Tried to unload nonexisitent gamestate %s", name);
+	}
 }
 
 void StartGamestate(struct Game *game, const char* name) {
-	PrintConsole(game, "start finished %s", name);
+	struct Gamestate *gs = FindGamestate(game, name);
+	if (gs) {
+		if (gs->started) {
+			PrintConsole(game, "Gamestate %s already started.", name);
+			return;
+		}
+		gs->pending_start = true;
+		PrintConsole(game, "Gamestate %s marked to be STARTED.", name);
+	} else {
+		PrintConsole(game, "Tried to start nonexisitent gamestate %s", name);
+	}
 }
 
 void StopGamestate(struct Game *game, const char* name) {
-	PrintConsole(game, "stop finished %s", name);
+	struct Gamestate *gs = FindGamestate(game, name);
+	if (gs) {
+		if (!gs->started) {
+			PrintConsole(game, "Gamestate %s already stopped.", name);
+			return;
+		}
+		gs->pending_start = true;
+		PrintConsole(game, "Gamestate %s marked to be STOPPED.", name);
+	} else {
+		PrintConsole(game, "Tried to stop nonexisitent gamestate %s", name);
+	}
 }
 
 void PauseGamestate(struct Game *game, const char* name) {
-	PrintConsole(game, "pause finished %s", name);
+	struct Gamestate *gs = FindGamestate(game, name);
+	if (gs) {
+		if (!gs->started) {
+			PrintConsole(game, "Tried to pause gamestate %s which is not started.", name);
+			return;
+		}
+		if (gs->paused) {
+			PrintConsole(game, "Gamestate %s already paused.", name);
+			return;
+		}
+		gs->paused = true;
+		PrintConsole(game, "Gamestate %s paused.", name);
+	} else {
+		PrintConsole(game, "Tried to pause nonexisitent gamestate %s", name);
+	}
 }
 
 void ResumeGamestate(struct Game *game, const char* name) {
-	PrintConsole(game, "resume finished %s", name);
+	struct Gamestate *gs = FindGamestate(game, name);
+	if (gs) {
+		if (!gs->started) {
+			PrintConsole(game, "Tried to resume gamestate %s which is not started.", name);
+			return;
+		}
+		if (!gs->paused) {
+			PrintConsole(game, "Gamestate %s already resumed.", name);
+			return;
+		}
+		gs->paused = false;
+		PrintConsole(game, "Gamestate %s resumed.", name);
+	} else {
+		PrintConsole(game, "Tried to resume nonexisitent gamestate %s", name);
+	}
 }
 
 void SwitchGamestate(struct Game *game, const char* current, const char* n) {
