@@ -18,17 +18,25 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_primitives.h>
-#include <allegro5/allegro_font.h>
 
-/*! \brief Draws rectangle filled with vertical gradient. */
-void al_draw_vertical_gradient_rect(float x, float y, float w, float h, ALLEGRO_COLOR top, ALLEGRO_COLOR bottom);
-/*! \brief Draws rectangle filled with horizontal gradient. */
-void al_draw_horizontal_gradient_rect(float x, float y, float w, float h, ALLEGRO_COLOR left, ALLEGRO_COLOR right);
-/*! \brief Draws text with shadow.
- *
- * Draws given text two times: once with color (0,0,0,128) and 1px off in both x and y axis,
- * and second time with actual given color and position.
- */
-void al_draw_text_with_shadow(ALLEGRO_FONT *font, ALLEGRO_COLOR color, float x, float y, int flags, char const *text);
+struct Game;
+
+struct Gamestate {
+	char* name;
+	void* handle;
+	bool loaded, pending_load;
+	bool started, pending_start;
+	bool paused;
+	bool fade;
+	unsigned char fade_counter;
+	char** after;
+	struct Gamestate* next;
+};
+
+void LoadGamestate(struct Game *game, const char* name);
+void UnloadGamestate(struct Game *game, const char* name);
+void StartGamestate(struct Game *game, const char* name);
+void StopGamestate(struct Game *game, const char* name);
+void PauseGamestate(struct Game *game, const char* name);
+void ResumeGamestate(struct Game *game, const char* name);
+void SwitchGamestate(struct Game *game, const char* current, const char* n);

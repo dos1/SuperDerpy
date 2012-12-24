@@ -27,382 +27,89 @@
 #include <getopt.h>
 #include <locale.h>
 #include <signal.h>
-#include "gamestates/menu.h"
-#include "gamestates/loading.h"
+#include "utils.h"
 #include "config.h"
+#include "main.h"
 
-/*! \brief Macro for preloading gamestate.
- *
- *  Preloading of state happens when loading screen is displayed.
- */
-#define PRELOAD_STATE(state, name) case state:\
-	PrintConsole(game, "Preload %s...", #state); DrawConsole(game); al_flip_display(); name ## _Preload(game, progress); break;
-/*! \brief Macro for unloading gamestate.
- *
- *  Unloading of state happens after it's fadeout.
- */
-#define UNLOAD_STATE(state, name) case state:\
-	PrintConsole(game, "Unload %s...", #state); name ## _Unload(game); break;
-/*! \brief Macro for loading gamestate.
- *
- *  Loading of state means setting it as active and running it.
- */
-#define LOAD_STATE(state, name) case state:\
-	PrintConsole(game, "Load %s...", #state); name ## _Load(game); break;
-/*! \brief Macro for sending keydown events to gamestate. */
-#define KEYDOWN_STATE(state, name) else if (game.gamestate==state) { if (name ## _Keydown(&game, &ev)) break; }
-/*! \brief Macro for drawing active gamestate. */
-#define DRAW_STATE(state, name) case state:\
-	name ## _Draw(game); break;
-/*! \brief Macro for invoking logic function of active gamestate. */
-#define LOGIC_STATE(state, name) case state:\
-	name ## _Logic(game); break;
-/*! \brief Macro for invoking pause function of active gamestate. */
-#define PAUSE_STATE(state, name) case state:\
-	PrintConsole(game, "Pause %s...", #state); name ## _Pause(game); break;
-/*! \brief Macro for invoking resume function of active gamestate. */
-#define RESUME_STATE(state, name) case state:\
-	PrintConsole(game, "Resume %s...", #state); name ## _Resume(game); break;
-
-char* GetDataFilePath(char* filename) {
-
-	char *result = 0;
-
-	if (al_filename_exists(filename)) {
-		return strdup(filename);
-	}
-
-	char origfn[255] = "data/";
-	strcat(origfn, filename);
-
-	if (al_filename_exists(origfn)) {
-		return strdup(origfn);
-	}
-
-	void TestPath(char* subpath) {
-		ALLEGRO_PATH *tail = al_create_path(filename);
-		ALLEGRO_PATH *path = al_get_standard_path(ALLEGRO_RESOURCES_PATH);
-		ALLEGRO_PATH *data = al_create_path(subpath);
-		al_join_paths(path, data);
-		al_join_paths(path, tail);
-		//printf("Testing for %s\n", al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
-		if (al_filename_exists(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP))) {
-			result = strdup(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
-		}
-		al_destroy_path(tail);
-		al_destroy_path(data);
-		al_destroy_path(path);
-	}
-	TestPath("../share/superderpy/data/");
-	TestPath("../data/");
-	TestPath("../Resources/data/");
-	TestPath("data/");
-
-	if (!result) {
-		printf("FATAL: Could not find data file: %s!\n", filename);
-		exit(1);
-	}
-	return result;
-}
-
-void PrintConsole(struct Game *game, char* format, ...) {
-	va_list vl;
-	va_start(vl, format);
-	char text[255] = {};
-	vsprintf(text, format, vl);
-	va_end(vl);
-	if (game->debug) { printf("%s\n", text); fflush(stdout); }
-	ALLEGRO_BITMAP *con = al_create_bitmap(al_get_bitmap_width(game->console), al_get_bitmap_height(game->console));
-	al_set_target_bitmap(con);
-	al_clear_to_color(al_map_rgba(0,0,0,80));
-	al_draw_bitmap_region(game->console, 0, al_get_bitmap_height(game->console)*0.2, al_get_bitmap_width(game->console), al_get_bitmap_height(game->console)*0.8, 0, 0, 0);
-	al_draw_text(game->font_console, al_map_rgb(255,255,255), game->viewportWidth*0.005, al_get_bitmap_height(game->console)*0.81, ALLEGRO_ALIGN_LEFT, text);
-	al_set_target_bitmap(game->console);
-	al_clear_to_color(al_map_rgba(0,0,0,0));
-	al_draw_bitmap(con, 0, 0, 0);
-	al_set_target_bitmap(al_get_backbuffer(game->display));
-	al_destroy_bitmap(con);
-}
 
 void DrawConsole(struct Game *game) {
-	if (game->showconsole) {
-		al_draw_bitmap(game->console, 0, 0, 0);
+	if (game->_priv.showconsole) {
+		al_draw_bitmap(game->_priv.console, 0, 0, 0);
 		double game_time = al_get_time();
-		if(game_time - game->fps_count.old_time >= 1.0) {
-			game->fps_count.fps = game->fps_count.frames_done / (game_time - game->fps_count.old_time);
-			game->fps_count.frames_done = 0;
-			game->fps_count.old_time = game_time;
+		if(game_time - game->_priv.fps_count.old_time >= 1.0) {
+			game->_priv.fps_count.fps = game->_priv.fps_count.frames_done / (game_time - game->_priv.fps_count.old_time);
+			game->_priv.fps_count.frames_done = 0;
+			game->_priv.fps_count.old_time = game_time;
 		}
 		char sfps[6] = { };
-		sprintf(sfps, "%.0f", game->fps_count.fps);
-		al_draw_text_with_shadow(game->font, al_map_rgb(255,255,255), game->viewportWidth*0.99, 0, ALLEGRO_ALIGN_RIGHT, sfps);
+		sprintf(sfps, "%.0f", game->_priv.fps_count.fps);
+		DrawTextWithShadow(game->_priv.font, al_map_rgb(255,255,255), game->viewport.width*0.99, 0, ALLEGRO_ALIGN_RIGHT, sfps);
 	}
-	game->fps_count.frames_done++;
+	game->_priv.fps_count.frames_done++;
 }
 
-void PreloadGameState(struct Game *game, void (*progress)(struct Game*, float)) {
-	if (game->loadstate<1) {
-		PrintConsole(game, "ERROR: Attempted to preload invalid gamestate %d! Loading GAMESTATE_MENU instead...", game->loadstate);
-		game->loadstate = GAMESTATE_MENU;
-	}
-	if ((game->loadstate==GAMESTATE_MENU) && (game->menu.loaded)) {
-		PrintConsole(game, "GAMESTATE_MENU already loaded, skipping...");
-		return;
-	}
-	switch (game->loadstate) {
-		PRELOAD_STATE(GAMESTATE_MENU, Menu)
-		PRELOAD_STATE(GAMESTATE_LOADING, Loading)
-		default:
-			PrintConsole(game, "ERROR: Attempted to preload unknown gamestate %d!", game->loadstate);
-		break;
-	}
-	PrintConsole(game, "finished");
-}
-
-void UnloadGameState(struct Game *game) {
-	switch (game->gamestate) {
-		case GAMESTATE_MENU:
-			if (game->shuttingdown) {
-				PrintConsole(game, "Unload GAMESTATE_MENU..."); Menu_Unload(game);
-			} else {
-				PrintConsole(game, "Just stopping GAMESTATE_MENU..."); Menu_Stop(game);
-			}
-			break;
-		UNLOAD_STATE(GAMESTATE_LOADING, Loading)
-		default:
-			PrintConsole(game, "ERROR: Attempted to unload unknown gamestate %d!", game->gamestate);
-			break;
-	}
-	PrintConsole(game, "finished");
-}
-
-void LoadGameState(struct Game *game) {
-	game->gamestate = game->loadstate;
-	game->loadstate = -1;
-	switch (game->gamestate) {
-		LOAD_STATE(GAMESTATE_MENU, Menu)
-		LOAD_STATE(GAMESTATE_LOADING, Loading)
-		default:
-			PrintConsole(game, "ERROR: Attempted to load unknown gamestate %d!", game->loadstate);
-	}
-	PrintConsole(game, "finished");
-}
-
-void DrawGameState(struct Game *game) {
-	switch (game->gamestate) {
-		DRAW_STATE(GAMESTATE_MENU, Menu)
-		DRAW_STATE(GAMESTATE_LOADING, Loading)
-		default:
-			game->showconsole = true;
-			al_clear_to_color(al_map_rgb(0,0,0));
-			PrintConsole(game, "ERROR: Unknown gamestate %d reached! (5 sec sleep)", game->gamestate);
-			DrawConsole(game);
-			al_flip_display();
-			al_rest(5.0);
-			PrintConsole(game, "Returning to menu...");
-			game->gamestate = GAMESTATE_LOADING;
-			game->loadstate = GAMESTATE_MENU;
-			break;
-	}
-}
-
-void LogicGameState(struct Game *game) {
-	switch (game->gamestate) {
-		LOGIC_STATE(GAMESTATE_MENU, Menu)
-		default:
-			// not every gamestate needs to have logic function
-			break;
-	}
-}
-
-void PauseGameState(struct Game *game) {
-	switch (game->loadstate) {
-//		PAUSE_STATE(GAMESTATE_LEVEL, Level)
-		default:
-			// not every gamestate needs to have pause function
-			break;
-	}
-}
-
-void ResumeGameState(struct Game *game) {
-	switch (game->loadstate) {
-//		RESUME_STATE(GAMESTATE_LEVEL, Level)
-		default:
-			// not every gamestate needs to have resume function
-			break;
-	}
-}
-
-void FadeGameState(struct Game *game, bool in) {
-	ALLEGRO_BITMAP* bitmap = al_create_bitmap(game->viewportWidth, game->viewportHeight);
-	al_set_target_bitmap(bitmap);
+void DrawGamestates(struct Game *game) {
 	al_clear_to_color(al_map_rgb(0,0,0));
-	al_set_target_bitmap(al_get_backbuffer(game->display));
-	float fadeloop;
-	if (in) {
-		fadeloop = 255;
-	} else {
-		fadeloop = 0;
-	}
-	while ((in && fadeloop>=0) || (!in && fadeloop<255)) {
-		ALLEGRO_EVENT ev;
-		al_wait_for_event(game->event_queue, &ev);
-		if ((ev.type == ALLEGRO_EVENT_TIMER) && (ev.timer.source == game->timer)) {
-			LogicGameState(game);
-			if (in) {
-				fadeloop-=10;
-			} else {
-				fadeloop+=10;
-			}
-		}
-		if (al_is_event_queue_empty(game->event_queue)) {
-			DrawGameState(game);
-			al_draw_tinted_bitmap(bitmap,al_map_rgba_f(1,1,1,fadeloop/255.0),0,0,0);
-			DrawConsole(game);
-			al_flip_display();
-		}
-	}
-	al_destroy_bitmap(bitmap);
-	al_clear_to_color(al_map_rgb(0,0,0));
-	if (in) {
-		DrawGameState(game);
-	}
 }
 
-/*! \brief Scales bitmap using software linear filtering method to current target. */
-void ScaleBitmap(ALLEGRO_BITMAP* source, int width, int height) {
-	if ((al_get_bitmap_width(source)==width) && (al_get_bitmap_height(source)==height)) {
-		al_draw_bitmap(source, 0, 0, 0);
-		return;
-	}
-	int x, y;
-	al_lock_bitmap(al_get_target_bitmap(), ALLEGRO_PIXEL_FORMAT_ANY, ALLEGRO_LOCK_WRITEONLY);
-	al_lock_bitmap(source, ALLEGRO_PIXEL_FORMAT_ANY, ALLEGRO_LOCK_READONLY);
-
-	/* linear filtering code written by SiegeLord */
-
-	ALLEGRO_COLOR interpolate(ALLEGRO_COLOR c1, ALLEGRO_COLOR c2, float frac) {
-		return al_map_rgba_f(c1.r + frac * (c2.r - c1.r),
-												 c1.g + frac * (c2.g - c1.g),
-												 c1.b + frac * (c2.b - c1.b),
-												 c1.a + frac * (c2.a - c1.a));
-	}
-
-	for (y = 0; y < height; y++) {
-		float pixy = ((float)y / height) * ((float)al_get_bitmap_height(source) - 1);
-		float pixy_f = floor(pixy);
-		for (x = 0; x < width; x++) {
-			float pixx = ((float)x / width) * ((float)al_get_bitmap_width(source) - 1);
-			float pixx_f = floor(pixx);
-
-			ALLEGRO_COLOR a = al_get_pixel(source, pixx_f, pixy_f);
-			ALLEGRO_COLOR b = al_get_pixel(source, pixx_f + 1, pixy_f);
-			ALLEGRO_COLOR c = al_get_pixel(source, pixx_f, pixy_f + 1);
-			ALLEGRO_COLOR d = al_get_pixel(source, pixx_f + 1, pixy_f + 1);
-
-			ALLEGRO_COLOR ab = interpolate(a, b, pixx - pixx_f);
-			ALLEGRO_COLOR cd = interpolate(c, d, pixx - pixx_f);
-			ALLEGRO_COLOR result = interpolate(ab, cd, pixy - pixy_f);
-
-			al_put_pixel(x, y, result);
-		}
-	}
-	al_unlock_bitmap(al_get_target_bitmap());
-	al_unlock_bitmap(source);
+void LogicGamestates(struct Game *game) {
+	return;
 }
-
-ALLEGRO_BITMAP* LoadScaledBitmap(char* filename, int width, int height) {
-	bool memoryscale = !atoi(GetConfigOptionDefault("SuperDerpy", "GPU_scaling", "1"));
-	ALLEGRO_BITMAP *source, *target = al_create_bitmap(width, height);
-	al_set_target_bitmap(target);
-	al_clear_to_color(al_map_rgba(0,0,0,0));
-	char* origfn = GetDataFilePath(filename);
-	void GenerateBitmap() {
-		if (memoryscale) al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
-
-		source = al_load_bitmap( origfn );
-		if (memoryscale) {
-			al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR | ALLEGRO_MAG_LINEAR);
-			ScaleBitmap(source, width, height);
-		}
-		else {
-			al_draw_scaled_bitmap(source, 0, 0, al_get_bitmap_width(source), al_get_bitmap_height(source), 0, 0, width, height, 0);
-		}
-		/*al_save_bitmap(cachefn, target);
-		PrintConsole(game, "Cache bitmap %s generated.", filename);*/
-		al_destroy_bitmap(source);
-	}
-
-	/*source = al_load_bitmap( cachefn );
-	if (source) {
-		if ((al_get_bitmap_width(source)!=width) || (al_get_bitmap_height(source)!=height)) {
-			al_destroy_bitmap(source);*/
-	GenerateBitmap();
-	free(origfn);
-	return target;
-	/*	}
-		return source;
-	} else GenerateBitmap();
-	return target;*/
-}
-
 
 void SetupViewport(struct Game *game) {
-	game->viewportWidth = al_get_display_width(game->display);
-	game->viewportHeight = al_get_display_height(game->display);
-	if (atoi(GetConfigOptionDefault("SuperDerpy", "letterbox", "0"))) {
+	game->viewport.width = al_get_display_width(game->display);
+	game->viewport.height = al_get_display_height(game->display);
+	if (atoi(GetConfigOptionDefault(game, "SuperDerpy", "letterbox", "0"))) {
 		float const aspectRatio = (float)1920 / (float)1080; // full HD
-		int clipWidth = game->viewportWidth, clipHeight = game->viewportWidth / aspectRatio;
-		int clipX = 0, clipY = (game->viewportHeight - clipHeight) / 2;
+		int clipWidth = game->viewport.width, clipHeight = game->viewport.width / aspectRatio;
+		int clipX = 0, clipY = (game->viewport.height - clipHeight) / 2;
 		if (clipY <= 0) {
-			clipHeight = game->viewportHeight;
-			clipWidth = game->viewportHeight * aspectRatio;
-			clipX = (game->viewportWidth - clipWidth) / 2;
+			clipHeight = game->viewport.height;
+			clipWidth = game->viewport.height * aspectRatio;
+			clipX = (game->viewport.width - clipWidth) / 2;
 			clipY = 0;
 		}
 		al_set_clipping_rectangle(clipX, clipY, clipWidth, clipHeight);
 
-		/*float scaleX = (float)clipWidth  / (float)800,
-					scaleY = (float)clipHeight / (float)450;*/
 		ALLEGRO_TRANSFORM projection;
 		al_build_transform(&projection, clipX, clipY, 1, 1, 0.0f);
 		al_use_transform(&projection);
-		game->viewportWidth = clipWidth;
-		game->viewportHeight = clipHeight;
-	} else if ((atoi(GetConfigOptionDefault("SuperDerpy", "rotate", "1"))) && (game->viewportHeight > game->viewportWidth)) {
+		game->viewport.width = clipWidth;
+		game->viewport.height = clipHeight;
+	} else if ((atoi(GetConfigOptionDefault(game, "SuperDerpy", "rotate", "1"))) && (game->viewport.height > game->viewport.width)) {
 		ALLEGRO_TRANSFORM projection;
 		al_identity_transform(&projection);
 		al_rotate_transform(&projection, 0.5*ALLEGRO_PI);
-		al_translate_transform(&projection, game->viewportWidth, 0);
+		al_translate_transform(&projection, game->viewport.width, 0);
 		al_use_transform(&projection);
-		int temp = game->viewportHeight;
-		game->viewportHeight = game->viewportWidth;
-		game->viewportWidth = temp;
+		int temp = game->viewport.height;
+		game->viewport.height = game->viewport.width;
+		game->viewport.width = temp;
 	}
 }
 
-int Shared_Load(struct Game *game) {
-	game->font = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewportHeight*0.09,0 );
-	if(!game->font) {
+int Console_Load(struct Game *game) {
+	game->_priv.font = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.09,0 );
+	if(!game->_priv.font) {
 		fprintf(stderr, "failed to load game font!\n");
 		return -1;
 	}
-	game->font_console = al_load_ttf_font(GetDataFilePath("fonts/DejaVuSansMono.ttf"),game->viewportHeight*0.018,0 );
-	if(!game->font_console) {
+	game->_priv.font_console = al_load_ttf_font(GetDataFilePath("fonts/DejaVuSansMono.ttf"),game->viewport.height*0.018,0 );
+	if(!game->_priv.font_console) {
 		fprintf(stderr, "failed to load console font!\n");
 		return -1;
 	}
-	game->console = al_create_bitmap(game->viewportWidth, game->viewportHeight*0.12);
-	al_set_target_bitmap(game->console);
+	game->_priv.console = al_create_bitmap(game->viewport.width, game->viewport.height*0.12);
+	al_set_target_bitmap(game->_priv.console);
 	al_clear_to_color(al_map_rgba(0,0,0,80));
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 	return 0;
 }
 
-void Shared_Unload(struct Game *game) {
-	al_destroy_font(game->font);
-	al_destroy_font(game->font_console);
-	al_destroy_bitmap(game->console);
+void Console_Unload(struct Game *game) {
+	al_destroy_font(game->_priv.font);
+	al_destroy_font(game->_priv.font_console);
+	al_destroy_bitmap(game->_priv.console);
 }
 
 void derp(int sig) {
@@ -424,23 +131,23 @@ int main(int argc, char **argv){
 		return -1;
 	}
 
-	InitConfig();
-
 	struct Game game;
 
-	game.fps_count.frames_done = 0;
-	game.fps_count.fps = 0;
-	game.fps_count.old_time = 0;
+	InitConfig(&game);
 
-	game.fullscreen = atoi(GetConfigOptionDefault("SuperDerpy", "fullscreen", "1"));
-	game.music = atoi(GetConfigOptionDefault("SuperDerpy", "music", "7"));
-	game.voice = atoi(GetConfigOptionDefault("SuperDerpy", "voice", "10"));
-	game.fx = atoi(GetConfigOptionDefault("SuperDerpy", "fx", "10"));
-	game.debug = atoi(GetConfigOptionDefault("SuperDerpy", "debug", "0"));
-	game.width = atoi(GetConfigOptionDefault("SuperDerpy", "width", "800"));
-	if (game.width<320) game.width=320;
-	game.height = atoi(GetConfigOptionDefault("SuperDerpy", "height", "450"));
-	if (game.height<200) game.height=180;
+	game._priv.fps_count.frames_done = 0;
+	game._priv.fps_count.fps = 0;
+	game._priv.fps_count.old_time = 0;
+
+	game.config.fullscreen = atoi(GetConfigOptionDefault(&game, "SuperDerpy", "fullscreen", "1"));
+	game.config.music = atoi(GetConfigOptionDefault(&game, "SuperDerpy", "music", "7"));
+	game.config.voice = atoi(GetConfigOptionDefault(&game, "SuperDerpy", "voice", "10"));
+	game.config.fx = atoi(GetConfigOptionDefault(&game, "SuperDerpy", "fx", "10"));
+	game.config.debug = atoi(GetConfigOptionDefault(&game, "SuperDerpy", "debug", "0"));
+	game.config.width = atoi(GetConfigOptionDefault(&game, "SuperDerpy", "width", "800"));
+	if (game.config.width<320) game.config.width=320;
+	game.config.height = atoi(GetConfigOptionDefault(&game, "SuperDerpy", "height", "450"));
+	if (game.config.height<180) game.config.height=180;
 
 	if(!al_init_image_addon()) {
 		fprintf(stderr, "failed to initialize image addon!\n");
@@ -469,11 +176,6 @@ int main(int argc, char **argv){
 		return -1;
 	}
 	
-	/*	if (!al_reserve_samples(10)){
-		fprintf(stderr, "failed to reserve samples!\n");
-		return -1;
-	}
- */
 	al_init_font_addon();
 
 	if(!al_init_ttf_addon()){
@@ -481,37 +183,38 @@ int main(int argc, char **argv){
 		return -1;
 	}
 
-	if (game.fullscreen) al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
+	if (game.config.fullscreen) al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
 	else al_set_new_display_flags(ALLEGRO_WINDOWED);
-	al_set_new_display_option(ALLEGRO_VSYNC, 2-atoi(GetConfigOptionDefault("SuperDerpy", "vsync", "1")), ALLEGRO_SUGGEST);
-	al_set_new_display_option(ALLEGRO_OPENGL, atoi(GetConfigOptionDefault("SuperDerpy", "opengl", "1")), ALLEGRO_SUGGEST);
+	al_set_new_display_option(ALLEGRO_VSYNC, 2-atoi(GetConfigOptionDefault(&game, "SuperDerpy", "vsync", "1")), ALLEGRO_SUGGEST);
+	al_set_new_display_option(ALLEGRO_OPENGL, atoi(GetConfigOptionDefault(&game, "SuperDerpy", "opengl", "1")), ALLEGRO_SUGGEST);
 	al_set_new_display_option(ALLEGRO_SAMPLE_BUFFERS, 1, ALLEGRO_SUGGEST);
 	al_set_new_display_option(ALLEGRO_SAMPLES, 8, ALLEGRO_SUGGEST);
 
-	game.display = al_create_display(game.width, game.height);
+	game.display = al_create_display(game.config.width, game.config.height);
 	if(!game.display) {
 		fprintf(stderr, "failed to create display!\n");
 		return -1;
 	}
+
 	ALLEGRO_BITMAP *icon = al_load_bitmap(GetDataFilePath("icons/superderpy.png"));
 	al_set_window_title(game.display, "Super Derpy: Muffin Attack");
 	al_set_display_icon(game.display, icon);
 	al_destroy_bitmap(icon);
 
-	if (game.fullscreen) al_hide_mouse_cursor(game.display);
+	if (game.config.fullscreen) al_hide_mouse_cursor(game.display);
 	al_inhibit_screensaver(true);
 
 	SetupViewport(&game);
 
 	al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR | ALLEGRO_MIN_LINEAR);
 
-	int ret = Shared_Load(&game);
+	int ret = Console_Load(&game);
 	if (ret!=0) return ret;
 
-	PrintConsole(&game, "Viewport %dx%d", game.viewportWidth, game.viewportHeight);
+	PrintConsole(&game, "Viewport %dx%d", game.viewport.width, game.viewport.height);
 
-	game.event_queue = al_create_event_queue();
-	if(!game.event_queue) {
+	game._priv.event_queue = al_create_event_queue();
+	if(!game._priv.event_queue) {
 		fprintf(stderr, "failed to create event_queue!\n");
 		al_destroy_display(game.display);
 		return -1;
@@ -526,58 +229,66 @@ int main(int argc, char **argv){
 	al_attach_mixer_to_mixer(game.audio.fx, game.audio.mixer);
 	al_attach_mixer_to_mixer(game.audio.music, game.audio.mixer);
 	al_attach_mixer_to_mixer(game.audio.voice, game.audio.mixer);
-	al_set_mixer_gain(game.audio.fx, game.fx/10.0);
-	al_set_mixer_gain(game.audio.music, game.music/10.0);
-	al_set_mixer_gain(game.audio.voice, game.voice/10.0);
+	al_set_mixer_gain(game.audio.fx, game.config.fx/10.0);
+	al_set_mixer_gain(game.audio.music, game.config.music/10.0);
+	al_set_mixer_gain(game.audio.voice, game.config.voice/10.0);
 
-	al_register_event_source(game.event_queue, al_get_display_event_source(game.display));
-	al_register_event_source(game.event_queue, al_get_keyboard_event_source());
+	al_register_event_source(game._priv.event_queue, al_get_display_event_source(game.display));
+	al_register_event_source(game._priv.event_queue, al_get_keyboard_event_source());
 
-	game.showconsole = game.debug;
+	game._priv.showconsole = game.config.debug;
 
 	al_flip_display();
 	al_clear_to_color(al_map_rgb(0,0,0));
-	game.timer = al_create_timer(ALLEGRO_BPS_TO_SECS(60)); // logic timer
-	if(!game.timer) {
+	game._priv.timer = al_create_timer(ALLEGRO_BPS_TO_SECS(60)); // logic timer
+	if(!game._priv.timer) {
 		fprintf(stderr, "failed to create timer!\n");
 		return -1;
 	}
-	al_register_event_source(game.event_queue, al_get_timer_event_source(game.timer));
+	al_register_event_source(game._priv.event_queue, al_get_timer_event_source(game._priv.timer));
 	al_wait_for_vsync();
-	al_start_timer(game.timer);
+	al_start_timer(game._priv.timer);
 
-	setlocale(LC_NUMERIC, "C"); /* FIXME? */
+	setlocale(LC_NUMERIC, "C");
 
 	game.shuttingdown = false;
-	game.menu.loaded = false;
 	game.restart = false;
-	game.loadstate = GAMESTATE_LOADING;
-	PreloadGameState(&game, NULL);
-	LoadGameState(&game);
-	game.loadstate = GAMESTATE_MENU;
+
+	char* gamestate = strdup("menu"); // FIXME: don't hardcore gamestate
 
 	int c;
 	while ((c = getopt (argc, argv, "l:s:")) != -1)
 		switch (c) {
 			case 'l':
-				//game.level.input.current_level = optarg[0]-'0';
-				game.loadstate = GAMESTATE_LEVEL;
+				free(gamestate);
+				gamestate = strdup("levelX");
+				gamestate[5] = optarg[0];
 				break;
 			case 's':
-				game.loadstate = optarg[0]-'0';
+				free(gamestate);
+				gamestate = strdup(optarg);
 				break;
 		}
 
+	LoadGamestate(&game, gamestate);
+	StartGamestate(&game, gamestate);
+	//free(gamestate);
+
 	while(1) {
 		ALLEGRO_EVENT ev;
-		if (al_is_event_queue_empty(game.event_queue)) {
-			DrawGameState(&game);
+		if (al_is_event_queue_empty(game._priv.event_queue)) {
+
+			// TODO: process gamestates
+			DrawGamestates(&game);
 			DrawConsole(&game);
 			al_flip_display();
+
 		} else {
-			al_wait_for_event(game.event_queue, &ev);
-			if ((ev.type == ALLEGRO_EVENT_TIMER) && (ev.timer.source == game.timer)) {
-				LogicGameState(&game);
+
+			al_wait_for_event(game._priv.event_queue, &ev);
+
+			if ((ev.type == ALLEGRO_EVENT_TIMER) && (ev.timer.source == game._priv.timer)) {
+				LogicGamestates(&game);
 			}
 			else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
 				break;
@@ -585,34 +296,34 @@ int main(int argc, char **argv){
 			else if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
 				/*PrintConsole(&game, "KEYCODE: %s", al_keycode_to_name(ev.keyboard.keycode));*/
 			#ifdef ALLEGRO_MACOSX
-				if ((ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == 104)) {
+				if (ev.keyboard.keycode == 104) { //TODO: report to upstream
 			#else
-				if ((ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_TILDE)) {
+				if (ev.keyboard.keycode == ALLEGRO_KEY_TILDE) {
 			#endif
-					game.showconsole = !game.showconsole;
+					game._priv.showconsole = !game._priv.showconsole;
 				}
-				else if ((game.debug) && (ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_F1)) {
+				else if ((game.config.debug) && (ev.keyboard.keycode == ALLEGRO_KEY_F1)) {
 					int i;
 					for (i=0; i<512; i++) {
-						LogicGameState(&game);
+						LogicGamestates(&game);
 					}
-					game.showconsole = true;
+					game._priv.showconsole = true;
 					PrintConsole(&game, "DEBUG: 512 frames skipped...");
-				}	else if ((game.debug) && (ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_F10)) {
-					double speed = ALLEGRO_BPS_TO_SECS(al_get_timer_speed(game.timer)); // inverting
+				}	else if ((game.config.debug) && (ev.keyboard.keycode == ALLEGRO_KEY_F10)) {
+					double speed = ALLEGRO_BPS_TO_SECS(al_get_timer_speed(game._priv.timer)); // inverting
 					speed -= 10;
 					if (speed<10) speed = 10;
-					al_set_timer_speed(game.timer, ALLEGRO_BPS_TO_SECS(speed));
-					game.showconsole = true;
+					al_set_timer_speed(game._priv.timer, ALLEGRO_BPS_TO_SECS(speed));
+					game._priv.showconsole = true;
 					PrintConsole(&game, "DEBUG: Gameplay speed: %.2fx", speed/60.0);
-				}	else if ((game.debug) && (ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_F11)) {
-					double speed = ALLEGRO_BPS_TO_SECS(al_get_timer_speed(game.timer)); // inverting
+				}	else if ((game.config.debug) && (ev.keyboard.keycode == ALLEGRO_KEY_F11)) {
+					double speed = ALLEGRO_BPS_TO_SECS(al_get_timer_speed(game._priv.timer)); // inverting
 					speed += 10;
 					if (speed>600) speed = 600;
-					al_set_timer_speed(game.timer, ALLEGRO_BPS_TO_SECS(speed));
-					game.showconsole = true;
+					al_set_timer_speed(game._priv.timer, ALLEGRO_BPS_TO_SECS(speed));
+					game._priv.showconsole = true;
 					PrintConsole(&game, "DEBUG: Gameplay speed: %.2fx", speed/60.0);
-				} else if ((game.debug) && (ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_F12)) {
+				} else if ((game.config.debug) && (ev.keyboard.keycode == ALLEGRO_KEY_F12)) {
 					ALLEGRO_PATH *path = al_get_standard_path(ALLEGRO_USER_DOCUMENTS_PATH);
 					char filename[255] = { };
 					sprintf(filename, "SuperDerpy_%ld_%ld.png", time(NULL), clock());
@@ -620,48 +331,54 @@ int main(int argc, char **argv){
 					al_save_bitmap(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP), al_get_backbuffer(game.display));
 					PrintConsole(&game, "Screenshot stored in %s", al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
 					al_destroy_path(path);
+				} else if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
+					break;
 				}
-				KEYDOWN_STATE(GAMESTATE_MENU, Menu)
-				KEYDOWN_STATE(GAMESTATE_LOADING, Loading)
-				else {
-					game.showconsole = true;
-					PrintConsole(&game, "ERROR: Keystroke in unknown (%d) gamestate! (5 sec sleep)", game.gamestate);
+				// TODO: redirect keydown events to gamestates
+
+				//KEYDOWN_STATE(GAMESTATE_MENU, Menu)
+				//KEYDOWN_STATE(GAMESTATE_LOADING, Loading)
+				/*else {
+					game._priv.showconsole = true;
+					//PrintConsole(&game, "ERROR: Keystroke in unknown (%d) gamestate! (5 sec sleep)", game.gamestate);
 					DrawConsole(&game);
 					al_flip_display();
 					al_rest(5.0);
 					PrintConsole(&game, "Returning to menu...");
-					game.gamestate = GAMESTATE_LOADING;
-					game.loadstate = GAMESTATE_MENU;
-				}
-			} else if (game.gamestate == GAMESTATE_LEVEL) {
+					//game.gamestate = GAMESTATE_LOADING;
+					//game.loadstate = GAMESTATE_MENU;
+				}*/
+			//} else if (game.gamestate == GAMESTATE_LEVEL) {
 				//Level_ProcessEvent(&game, &ev);
 			}
 		}
 	}
 	game.shuttingdown = true;
-	UnloadGameState(&game);
-	if (game.gamestate != GAMESTATE_LOADING) {
-		game.gamestate = GAMESTATE_LOADING;
-		UnloadGameState(&game);
-	}
+
+	// FIXME: proper gamestates unload handling
+	StopGamestate(&game, gamestate);
+	UnloadGamestate(&game, gamestate);
+	free(gamestate);
+	// TODO: unload loading
 	al_clear_to_color(al_map_rgb(0,0,0));
 	PrintConsole(&game, "Shutting down...");
 	DrawConsole(&game);
 	al_flip_display();
 	al_rest(0.1);
-	al_destroy_timer(game.timer);
-	Shared_Unload(&game);
+	al_destroy_timer(game._priv.timer);
+	Console_Unload(&game);
 	al_destroy_display(game.display);
-	al_destroy_event_queue(game.event_queue);
+	al_destroy_event_queue(game._priv.event_queue);
 	al_destroy_mixer(game.audio.fx);
 	al_destroy_mixer(game.audio.music);
 	al_destroy_mixer(game.audio.mixer);
 	al_destroy_voice(game.audio.v);
 	al_uninstall_audio();
-	DeinitConfig();
+	DeinitConfig(&game);
+	al_shutdown_ttf_addon();
+	al_shutdown_font_addon();
+	al_uninstall_system();
 	if (game.restart) {
-		al_shutdown_ttf_addon();
-		al_shutdown_font_addon();
 #ifdef ALLEGRO_MACOSX
 		return _al_mangled_main(argc, argv);
 #else

@@ -21,38 +21,36 @@
 #include <allegro5/allegro.h>
 #include "config.h"
 
-ALLEGRO_CONFIG *config;
-
-void InitConfig(void) {
+void InitConfig(struct Game *game) {
 	ALLEGRO_PATH *path = al_get_standard_path(ALLEGRO_USER_SETTINGS_PATH);
 	ALLEGRO_PATH *data = al_create_path("SuperDerpy.ini");
 	al_join_paths(path, data);
-	config = al_load_config_file(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
-	if (!config) config=al_create_config();
+	game->config.config = al_load_config_file(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
+	if (!game->config.config) game->config.config=al_create_config();
 	al_destroy_path(path);
 	al_destroy_path(data);
 }
 
-void SetConfigOption(char* section, char* name, char* value) {
-	al_set_config_value(config, section, name, value);
+void SetConfigOption(struct Game *game, char* section, char* name, char* value) {
+	al_set_config_value(game->config.config, section, name, value);
 }
 
-const char* GetConfigOption(char* section, char* name) {
-	return al_get_config_value(config, section, name);
+const char* GetConfigOption(struct Game *game, char* section, char* name) {
+	return al_get_config_value(game->config.config, section, name);
 }
 
-const char* GetConfigOptionDefault(char* section, char* name, const char* def) {
-	const char* ret = GetConfigOption(section, name);
+const char* GetConfigOptionDefault(struct Game *game, char* section, char* name, const char* def) {
+	const char* ret = GetConfigOption(game, section, name);
 	if (!ret) return def; else return ret;
 }
 
-void DeinitConfig(void) {
+void DeinitConfig(struct Game *game) {
 	ALLEGRO_PATH *path = al_get_standard_path(ALLEGRO_USER_SETTINGS_PATH);
 	ALLEGRO_PATH *data = al_create_path("SuperDerpy.ini");
 	al_make_directory(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
 	al_join_paths(path, data);
-	al_save_config_file(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP), config);
+	al_save_config_file(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP), game->config.config);
 	al_destroy_path(path);
 	al_destroy_path(data);
-	al_destroy_config(config);
+	al_destroy_config(game->config.config);
 }

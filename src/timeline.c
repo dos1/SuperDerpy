@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 #include <allegro5/allegro.h>
-#include "main.h"
+#include "utils.h"
 #include "timeline.h"
 
 unsigned int lastid;
@@ -243,7 +243,7 @@ struct TM_Action* TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Ac
 		(*action->function)(game, action, TM_ACTIONSTATE_INIT);
 		action->active = false;
 		action->timer = al_create_timer(delay/1000.0);
-		al_register_event_source(game->event_queue, al_get_timer_event_source(action->timer));
+		al_register_event_source(game->_priv.event_queue, al_get_timer_event_source(action->timer));
 		al_start_timer(action->timer);
 	} else {
 		PrintConsole(game, "Timeline Manager: background: init action (%d - %s)", action->id, action->name);
@@ -287,7 +287,7 @@ void TM_AddDelay(int delay) {
 	PrintConsole(game, "Timeline Manager: queue: adding delay %d ms (%d)", delay, tmp->id);
 	tmp->delay = delay;
 	tmp->timer = al_create_timer(delay/1000.0);
-	al_register_event_source(game->event_queue, al_get_timer_event_source(tmp->timer));
+	al_register_event_source(game->_priv.event_queue, al_get_timer_event_source(tmp->timer));
 }
 
 void TM_Destroy(void) {

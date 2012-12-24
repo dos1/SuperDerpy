@@ -19,6 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 #include <stdio.h>
+#include "../allegro_utils.h"
 #include "loading.h"
 
 void Progress(struct Game *game, float p) {
@@ -49,7 +50,7 @@ void Loading_Draw(struct Game *game) {
 
 	al_stop_timer(game->timer);
 
-	PreloadGameState(game, &Progress);
+	LoadGamestate(game, "");
 
 	al_wait_for_vsync();
 	al_start_timer(game->timer);
@@ -73,7 +74,7 @@ void Loading_Draw(struct Game *game) {
 	al_clear_to_color(al_map_rgb(0,0,0));
 	DrawConsole(game);
 	al_flip_display();
-	LoadGameState(game);
+	StartGamestate(game, "");
 }
 
 void Loading_Load(struct Game *game) {
