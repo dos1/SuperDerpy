@@ -600,16 +600,19 @@ int main(int argc, char **argv){
 				break;
 		}
 
+	bool draw=false;
 	while(1) {
 		ALLEGRO_EVENT ev;
-		if (al_is_event_queue_empty(game.event_queue)) {
+		if (draw && al_is_event_queue_empty(game.event_queue)) {
 			DrawGameState(&game);
 			DrawConsole(&game);
 			al_flip_display();
+			draw=false;
 		} else {
 			al_wait_for_event(game.event_queue, &ev);
 			if ((ev.type == ALLEGRO_EVENT_TIMER) && (ev.timer.source == game.timer)) {
 				LogicGameState(&game);
+				draw=true;
 			}
 			else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
 				break;
