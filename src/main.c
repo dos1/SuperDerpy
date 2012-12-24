@@ -29,12 +29,6 @@
 #include <signal.h>
 #include "gamestates/menu.h"
 #include "gamestates/loading.h"
-#include "gamestates/about.h"
-#include "gamestates/intro.h"
-#include "gamestates/map.h"
-#include "gamestates/level.h"
-#include "gamestates/pause.h"
-#include "gamestates/disclaimer.h"
 #include "config.h"
 
 /*! \brief Macro for preloading gamestate.
@@ -158,11 +152,6 @@ void PreloadGameState(struct Game *game, void (*progress)(struct Game*, float)) 
 	switch (game->loadstate) {
 		PRELOAD_STATE(GAMESTATE_MENU, Menu)
 		PRELOAD_STATE(GAMESTATE_LOADING, Loading)
-		PRELOAD_STATE(GAMESTATE_ABOUT, About)
-		PRELOAD_STATE(GAMESTATE_INTRO, Intro)
-		PRELOAD_STATE(GAMESTATE_MAP, Map)
-		PRELOAD_STATE(GAMESTATE_LEVEL, Level)
-		PRELOAD_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
 		default:
 			PrintConsole(game, "ERROR: Attempted to preload unknown gamestate %d!", game->loadstate);
 		break;
@@ -179,13 +168,7 @@ void UnloadGameState(struct Game *game) {
 				PrintConsole(game, "Just stopping GAMESTATE_MENU..."); Menu_Stop(game);
 			}
 			break;
-		UNLOAD_STATE(GAMESTATE_PAUSE, Pause)
 		UNLOAD_STATE(GAMESTATE_LOADING, Loading)
-		UNLOAD_STATE(GAMESTATE_ABOUT, About)
-		UNLOAD_STATE(GAMESTATE_INTRO, Intro)
-		UNLOAD_STATE(GAMESTATE_MAP, Map)
-		UNLOAD_STATE(GAMESTATE_LEVEL, Level)
-		UNLOAD_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
 		default:
 			PrintConsole(game, "ERROR: Attempted to unload unknown gamestate %d!", game->gamestate);
 			break;
@@ -199,11 +182,6 @@ void LoadGameState(struct Game *game) {
 	switch (game->gamestate) {
 		LOAD_STATE(GAMESTATE_MENU, Menu)
 		LOAD_STATE(GAMESTATE_LOADING, Loading)
-		LOAD_STATE(GAMESTATE_ABOUT, About)
-		LOAD_STATE(GAMESTATE_INTRO, Intro)
-		LOAD_STATE(GAMESTATE_MAP, Map)
-		LOAD_STATE(GAMESTATE_LEVEL, Level)
-		LOAD_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
 		default:
 			PrintConsole(game, "ERROR: Attempted to load unknown gamestate %d!", game->loadstate);
 	}
@@ -213,13 +191,7 @@ void LoadGameState(struct Game *game) {
 void DrawGameState(struct Game *game) {
 	switch (game->gamestate) {
 		DRAW_STATE(GAMESTATE_MENU, Menu)
-		DRAW_STATE(GAMESTATE_PAUSE, Pause)
 		DRAW_STATE(GAMESTATE_LOADING, Loading)
-		DRAW_STATE(GAMESTATE_ABOUT, About)
-		DRAW_STATE(GAMESTATE_INTRO, Intro)
-		DRAW_STATE(GAMESTATE_MAP, Map)
-		DRAW_STATE(GAMESTATE_LEVEL, Level)
-		DRAW_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
 		default:
 			game->showconsole = true;
 			al_clear_to_color(al_map_rgb(0,0,0));
@@ -236,11 +208,7 @@ void DrawGameState(struct Game *game) {
 
 void LogicGameState(struct Game *game) {
 	switch (game->gamestate) {
-		LOGIC_STATE(GAMESTATE_ABOUT, About)
 		LOGIC_STATE(GAMESTATE_MENU, Menu)
-		LOGIC_STATE(GAMESTATE_MAP, Map)
-		LOGIC_STATE(GAMESTATE_INTRO, Intro)
-		LOGIC_STATE(GAMESTATE_LEVEL, Level)
 		default:
 			// not every gamestate needs to have logic function
 			break;
@@ -249,7 +217,7 @@ void LogicGameState(struct Game *game) {
 
 void PauseGameState(struct Game *game) {
 	switch (game->loadstate) {
-		PAUSE_STATE(GAMESTATE_LEVEL, Level)
+//		PAUSE_STATE(GAMESTATE_LEVEL, Level)
 		default:
 			// not every gamestate needs to have pause function
 			break;
@@ -258,7 +226,7 @@ void PauseGameState(struct Game *game) {
 
 void ResumeGameState(struct Game *game) {
 	switch (game->loadstate) {
-		RESUME_STATE(GAMESTATE_LEVEL, Level)
+//		RESUME_STATE(GAMESTATE_LEVEL, Level)
 		default:
 			// not every gamestate needs to have resume function
 			break;
@@ -592,7 +560,7 @@ int main(int argc, char **argv){
 	while ((c = getopt (argc, argv, "l:s:")) != -1)
 		switch (c) {
 			case 'l':
-				game.level.input.current_level = optarg[0]-'0';
+				//game.level.input.current_level = optarg[0]-'0';
 				game.loadstate = GAMESTATE_LEVEL;
 				break;
 			case 's':
@@ -653,14 +621,8 @@ int main(int argc, char **argv){
 					PrintConsole(&game, "Screenshot stored in %s", al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
 					al_destroy_path(path);
 				}
-				KEYDOWN_STATE(GAMESTATE_PAUSE, Pause)
 				KEYDOWN_STATE(GAMESTATE_MENU, Menu)
 				KEYDOWN_STATE(GAMESTATE_LOADING, Loading)
-				KEYDOWN_STATE(GAMESTATE_ABOUT, About)
-				KEYDOWN_STATE(GAMESTATE_INTRO, Intro)
-				KEYDOWN_STATE(GAMESTATE_MAP, Map)
-				KEYDOWN_STATE(GAMESTATE_LEVEL, Level)
-				KEYDOWN_STATE(GAMESTATE_DISCLAIMER, Disclaimer)
 				else {
 					game.showconsole = true;
 					PrintConsole(&game, "ERROR: Keystroke in unknown (%d) gamestate! (5 sec sleep)", game.gamestate);
@@ -672,7 +634,7 @@ int main(int argc, char **argv){
 					game.loadstate = GAMESTATE_MENU;
 				}
 			} else if (game.gamestate == GAMESTATE_LEVEL) {
-				Level_ProcessEvent(&game, &ev);
+				//Level_ProcessEvent(&game, &ev);
 			}
 		}
 	}

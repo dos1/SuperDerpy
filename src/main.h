@@ -52,117 +52,6 @@ enum gamestate_enum {
 	GAMESTATE_DISCLAIMER
 };
 
-/*! \brief Structure representing obstacles and power-ups flying through the level. */
-struct Obstacle {
-		ALLEGRO_BITMAP **bitmap; /*!< Pointer to bitmap used by obstacle. */
-		float x; /*!< Horizontal position on the screen, in range 0-100. */
-		float y; /*!< Vertical position on the screen, in range 0-100. */
-		float speed; /*!< Horizontal speed of obstracle. */
-		float angle; /*!< Angle of bitmap rotation in radians. */
-		int points; /*!< Number of points given when hit by player. Positive gives HP to power, negative takes it. */
-		bool hit; /*!< Indicates if this obstacle was already hit by the player or not. */
-
-		int cols; /*!< Number of columns in spritesheet. */
-		int rows; /*!< Number of rows in spritesheet. */
-		int pos; /*!< Current position in spritesheet. */
-		int blanks; /*!< Number of blank frames at the end of the spritesheet. */
-		float tmp_pos; /*!< Temporary counter used to slow down spritesheet animation. */
-		float anim_speed; /*!< Speed of spritesheet animation. */
-
-		void (*callback)(struct Game*, struct Obstacle*); /*!< Pointer to function called to update obstacle position, animate it, etc. */
-		void *data; /*!< Pointer passed to callback function. */
-		struct Obstacle *prev; /*!< Previous obstacle on the list. */
-		struct Obstacle *next; /*!< Next obstacle on the list. */
-};
-
-/*! \brief Structure representing one spritesheet animation of Derpy. */
-struct Spritesheet {
-		char* name; /*!< Readable name of the spritesheet. */
-		ALLEGRO_BITMAP* bitmap; /*!< Spritesheet bitmap. */
-		int rows; /*!< Number of rows in the spritesheet. */
-		int cols; /*!< Number of columns in the spritesheet. */
-		int blanks; /*!< Number of blank frames at the end of the spritesheet. */
-		float speed; /*!< Speed modifier of spritesheet animation. */
-		float aspect; /*!< Aspect ratio of the frame. */
-		float scale; /*!< Scale modifier of the frame. */
-		char* successor; /*!< Name of animation successor. If it's not blank, then animation will be played only once. */
-		struct Spritesheet* next; /*!< Next spritesheet in the queue. */
-};
-
-/* Gamestate structs */
-
-/*! \brief Resources used by Moonwalk level module. */
-struct Moonwalk {
-		double derpy_pos; /*!< Position of Derpy on screen. */
-};
-
-/*! \brief Resources used by Dodger level module. */
-struct Dodger {
-		struct {
-				ALLEGRO_BITMAP *pie1; /*!< Pie bitmap. */
-				ALLEGRO_BITMAP *pie2; /*!< Pie bitmap (crossed). */
-				ALLEGRO_BITMAP *muffin; /*!< Good muffin bitmap. */
-				ALLEGRO_BITMAP *badmuffin; /*!< Bad muffin bitmap. */
-				ALLEGRO_BITMAP *cherry; /*!< Cherry bitmap. */
-				ALLEGRO_BITMAP *pig; /*!< Pig spritesheet bitmap. */
-				ALLEGRO_BITMAP *screwball; /*!< Screwball spritesheet bitmap. */
-		} obst_bmps; /*!< Obstacle bitmaps. */
-		struct Obstacle *obstacles; /*!< List of obstacles being currently rendered. */
-} dodger;
-
-/*! \brief Resources used by Level state and shared between level modules. */
-struct Level {
-		struct {
-			int current_level; /*!< Level number. */
-		} input; /*!< Gamestate input data. */
-		int current_level; /*!< Level number. */
-		float speed; /*!< Speed of the player. */
-		float speed_modifier; /*!< Modifier of the speed of the player. */
-		float bg_pos; /*!< Position of the background layer of the scene. */
-		float st_pos; /*!< Position of the stage layer of the scene. */
-		float fg_pos; /*!< Position of the foreground layer of the scene. */
-		float cl_pos; /*!< Position of the clouds layer of the scene. */
-		float derpy_x; /*!< Horizontal position of Derpy (0-1). */
-		float derpy_y; /*!< Vertical position of Derpy (0-1). */
-		float derpy_angle; /*!< Angle of Derpy sprite on screen (radians). */
-		float hp; /*!< Player health points (0-1). */
-		bool handle_input; /*!< When false, player looses control over Derpy. */
-		bool failed; /*!< Indicates if player failed level. */
-		bool unloading; /*!< Indicated if level is already being unloaded. */
-		float meter_alpha; /*!< Alpha level of HP meter. */
-		int sheet_rows; /*!< Number of rows in current spritesheet. */
-		int sheet_cols; /*!< Number of cols in current spritesheet. */
-		int sheet_pos; /*!< Frame position in current spritesheet. */
-		int sheet_blanks; /*!< Number of blank frames at the end of current spritesheet. */
-		char* sheet_successor; /*!< Successor of current animation. If blank, then it's looped. */
-		float sheet_tmp; /*!< Temporary counter used to slow down spritesheet animation. */
-		float sheet_speed; /*!< Current speed of Derpy animation. */
-		float sheet_speed_modifier; /*!< Modifier of speed, specified by current spritesheet. */
-		float sheet_scale; /*!< Scale modifier of current spritesheet. */
-		ALLEGRO_FONT *letter_font; /*!< Font used in letter from Twilight on first level. */
-		ALLEGRO_SAMPLE *sample; /*!< Sample with background music. */
-		ALLEGRO_SAMPLE_INSTANCE *music; /*!< Sample instance with background music. */
-		unsigned int music_pos; /*!< Position of sample instance. Used when pausing game. */
-		ALLEGRO_BITMAP *background; /*!< Bitmap of the background layer of the scene. */
-		ALLEGRO_BITMAP *stage; /*!< Bitmap of the stage layer of the scene. */
-		ALLEGRO_BITMAP *foreground; /*!< Bitmap of the foreground layer of the scene. */
-		ALLEGRO_BITMAP *clouds; /*!< Bitmap of the clouds layer of the scene. */
-		ALLEGRO_BITMAP *welcome; /*!< Bitmap of the welcome text (for instance "Level 1: Fluttershy"). */
-		ALLEGRO_BITMAP **derpy_sheet; /*!< Pointer to active Derpy sprite sheet. */
-		ALLEGRO_BITMAP *derpy; /*!< Derpy sprite. */
-		ALLEGRO_BITMAP *meter_bmp; /*!< Bitmap of the HP meter. */
-		ALLEGRO_BITMAP *meter_image; /*!< Derpy image used in the HP meter. */
-		ALLEGRO_BITMAP *letter; /*!< Bitmap with letter from Twilight. */
-		bool debug_show_sprite_frames; /*!< When true, displays colorful borders around spritesheets and their active areas. */
-		struct Spritesheet* derpy_sheets; /*!< List of spritesheets of Derpy character. */
-		//struct Spritesheet* pony_sheets; /*!< List of spritesheets of character rescued by Derpy. */
-		struct {
-				ALLEGRO_BITMAP *owl; /*!< Owlicious bitmap. */
-		} level1; /*!< Resources used by level 1. */
-		struct Moonwalk moonwalk; /*!< Moonwalk module data. */
-		struct Dodger dodger; /*!< Dodger module data. */
-};
-
 /*! \brief Enum of menu states in Menu and Pause game states. */
 enum menustate_enum {
 	MENUSTATE_MAIN,
@@ -220,54 +109,6 @@ struct Loading {
 		ALLEGRO_BITMAP *image; /*!< Loading background. */
 };
 
-/*! \brief Resources used by Pause state. */
-struct Pause {
-		ALLEGRO_BITMAP *bitmap; /*!< Bitmap with screenshot. */
-		ALLEGRO_BITMAP *derpy; /*!< Derpy on foreground. */
-};
-
-/*! \brief Resources used by About state. */
-struct About {
-		ALLEGRO_BITMAP *image; /*!< Background bitmap. */
-		ALLEGRO_BITMAP *text_bitmap; /*!< Bitmap with scrolled text. */
-		ALLEGRO_BITMAP *letter; /*!< Paper bitmap. */
-		ALLEGRO_SAMPLE *sample; /*!< Sample with background music. */
-		ALLEGRO_SAMPLE_INSTANCE *music; /*!< Sample instance with background music. */
-		ALLEGRO_FONT *font; /*!< Font used in the text on letter. */
-		float x; /*!< Horizontal position of the text. */
-		int fadeloop; /*!< Loop counter used in fades. */
-};
-
-/*! \brief Resources used by Map state. */
-struct Map {
-		ALLEGRO_BITMAP *map; /*!< Background table bitmap. */
-		ALLEGRO_BITMAP *map_bg; /*!< Map bitmap. */
-		ALLEGRO_BITMAP *highlight; /*!< Level highlights bitmap. */
-		ALLEGRO_BITMAP *arrow; /*!< Arrow bitmap. */
-		int selected; /*!< Number of currently selected level. */
-		int available; /*!< Number of highest available level. */
-		float arrowpos; /*!< Vertical position of the arrow. */
-		ALLEGRO_SAMPLE *sample; /*!< Sample with backgrond music. */
-		ALLEGRO_SAMPLE *click_sample; /*!< Sample with click sound. */
-		ALLEGRO_SAMPLE_INSTANCE *music; /*!< Sample instance with background music. */
-		ALLEGRO_SAMPLE_INSTANCE *click; /*!< Sample instance with click sound. */
-};
-
-/*! \brief Resources used by Intro state. */
-struct Intro {
-		int position; /*!< Position of the page. */
-		int page; /*!< Current page number. */
-		bool in_animation; /*!< Animation as in page transition animation. */
-		float anim; /*!< Counter used for spritesheet animations. */
-		ALLEGRO_BITMAP *table; /*!< Background paper bitmap, two pages long. */
-		ALLEGRO_BITMAP *table_bitmap; /*!< Unscaled background paper bitmap. */
-		ALLEGRO_BITMAP *frame; /*!< Bitmap with frame around the screen. */
-		ALLEGRO_BITMAP *animsprites[5]; /*!< Array with spritesheet bitmaps. */
-		ALLEGRO_FONT *font; /*!< Font used for text. */
-		ALLEGRO_SAMPLE *sample; /*!< Background music sample. */
-		ALLEGRO_SAMPLE_INSTANCE *music; /*!< Sample instance with background music. */
-		ALLEGRO_AUDIO_STREAM *audiostream; /*!< Audiostream used for Celestia voice. */
-};
 
 /*! \brief Main struct of the game. */
 struct Game {
@@ -277,7 +118,7 @@ struct Game {
 		enum gamestate_enum gamestate; /*!< Current game state. */
 		enum gamestate_enum loadstate; /*!< Game state to be loaded. */
 		ALLEGRO_EVENT_QUEUE *event_queue; /*!< Main event queue. */
-		ALLEGRO_TIMER *timer; /*!< Main FPS timer. */
+		ALLEGRO_TIMER *timer; /*!< Main LPS timer. */
 		ALLEGRO_BITMAP *console; /*!< Bitmap with game console. */
 		int viewportWidth; /*!< Actual available width of viewport. */
 		int viewportHeight; /*!< Actual available height of viewport. */
@@ -294,11 +135,6 @@ struct Game {
 		bool restart; /*!< If true then restart of the game is pending. */
 		struct Menu menu; /*!< Resources used by Menu state. */
 		struct Loading loading; /*!< Resources used by Menu state. */
-		struct Intro intro; /*!< Resources used by Intro state. */
-		struct About about; /*!< Resources used by About state. */
-		struct Map map; /*!< Resources used by Map state. */
-		struct Level level; /*!< Resources used by Level state. */
-		struct Pause pause; /*!< Resources used by Pause state. */
 		struct {
 				ALLEGRO_VOICE *v; /*!< Main voice used by the game. */
 				ALLEGRO_MIXER *mixer; /*!< Main mixer of the game. */

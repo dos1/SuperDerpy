@@ -3,25 +3,8 @@ SET(SRC_LIST
   allegro_utils.c
   config.c
   timeline.c
-  gamestates/about.c
-  gamestates/disclaimer.c
-  gamestates/intro.c
-  gamestates/level.c
   gamestates/loading.c
-  gamestates/map.c
   gamestates/menu.c
-  gamestates/pause.c
-  levels/level1.c
-  levels/level2.c
-  levels/level3.c
-  levels/level4.c
-  levels/level5.c
-  levels/level6.c
-	levels/actions.c
-	levels/modules/moonwalk.c
-	levels/modules/dodger.c
-	levels/modules/dodger/actions.c
-	levels/modules/dodger/callbacks.c
 )
 
 find_package(Allegro5 REQUIRED)
