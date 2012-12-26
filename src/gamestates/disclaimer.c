@@ -39,12 +39,13 @@ void Gamestate_Start(struct Game *game, struct Disclaimer_Resources* data) {
 	FadeGamestate(game, true);
 }
 
-int Gamestate_Keydown(struct Game *game, struct Disclaimer_Resources* data, ALLEGRO_EVENT *ev) {
-	StopGamestate(game, "disclaimer");
-	UnloadGamestate(game, "disclaimer");
-	LoadGamestate(game, "intro");
-	StartGamestate(game, "intro");
-	return 0;
+void Gamestate_ProcessEvent(struct Game *game, struct Disclaimer_Resources* data, ALLEGRO_EVENT *ev) {
+	if (ev->type==ALLEGRO_EVENT_KEY_DOWN) {
+		StopGamestate(game, "disclaimer");
+		UnloadGamestate(game, "disclaimer");
+		LoadGamestate(game, "intro");
+		StartGamestate(game, "intro");
+	}
 }
 
 void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
@@ -68,4 +69,3 @@ void Gamestate_Reload(struct Game *game, struct Disclaimer_Resources* data) {}
 
 void Gamestate_Resume(struct Game *game, struct Disclaimer_Resources* data) {}
 void Gamestate_Pause(struct Game *game, struct Disclaimer_Resources* data) {}
-void Gamestate_ProcessEvent(struct Game *game, struct Disclaimer_Resources* data, ALLEGRO_EVENT *ev) {}

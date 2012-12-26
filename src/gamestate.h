@@ -48,7 +48,6 @@ struct Gamestate {
 			void (*Gamestate_Unload)(struct Game *game, void* data);
 
 			void (*Gamestate_ProcessEvent)(struct Game *game, void* data, ALLEGRO_EVENT *ev);
-			void (*Gamestate_Keydown)(struct Game *game, void* data, ALLEGRO_EVENT *ev); // TODO: rly?
 			void (*Gamestate_Reload)(struct Game *game, void* data);
 
 			int *Gamestate_ProgressCount;

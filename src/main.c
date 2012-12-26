@@ -70,16 +70,6 @@ void LogicGamestates(struct Game *game) {
 	}
 }
 
-void KeydownGamestates(struct Game *game, ALLEGRO_EVENT *ev) {
-	struct Gamestate *tmp = game->_priv.gamestates;
-	while (tmp) {
-		if ((tmp->loaded) && (tmp->started) && (!tmp->paused)) {
-			(*tmp->api.Gamestate_Keydown)(game, tmp->data, ev);
-		}
-		tmp = tmp->next;
-	}
-}
-
 void EventGamestates(struct Game *game, ALLEGRO_EVENT *ev) {
 	struct Gamestate *tmp = game->_priv.gamestates;
 	while (tmp) {
@@ -321,13 +311,13 @@ int main(int argc, char **argv){
 
 			while (tmp) {
 				if ((tmp->pending_load) && (!tmp->loaded)) {
-					PrintConsole(&game, "Loading gamestate %s...", tmp->name);
+					PrintConsole(&game, "Loading gamestate \"%s\"...", tmp->name);
 					// TODO: take proper game name
 					char libname[1024];
 					sprintf(libname, "libsuperderpy-%s-%s.so", "muffinattack", tmp->name);
 					tmp->handle = dlopen(libname,RTLD_NOW);
 					if (!tmp->handle) {
-						PrintConsole(&game, "Error while loading gamestate %s: %s", tmp->name, dlerror());
+						PrintConsole(&game, "Error while loading gamestate \"%s\": %s", tmp->name, dlerror());
 						tmp->pending_load = false;
 					} else {
 
@@ -348,7 +338,6 @@ int main(int argc, char **argv){
 						if (!(tmp->api.Gamestate_Unload = dlsym(tmp->handle, "Gamestate_Unload"))) { gs_error(); continue; }
 
 						if (!(tmp->api.Gamestate_ProcessEvent = dlsym(tmp->handle, "Gamestate_ProcessEvent"))) { gs_error(); continue; }
-						if (!(tmp->api.Gamestate_Keydown = dlsym(tmp->handle, "Gamestate_Keydown"))) { gs_error(); continue; }
 						if (!(tmp->api.Gamestate_Reload = dlsym(tmp->handle, "Gamestate_Reload"))) { gs_error(); continue; }
 
 						if (!(tmp->api.Gamestate_ProgressCount = dlsym(tmp->handle, "Gamestate_ProgressCount"))) { gs_error(); continue; }
@@ -359,13 +348,13 @@ int main(int argc, char **argv){
 						tmp->pending_load = false;
 					}
 				} else if ((tmp->pending_start) && (tmp->started)) {
-					PrintConsole(&game, "Stopping gamestate %s...", tmp->name);
+					PrintConsole(&game, "Stopping gamestate \"%s\"...", tmp->name);
 					(*tmp->api.Gamestate_Stop)(&game, tmp->data);
 					tmp->started = false;
 					tmp->pending_start = false;
 				}
 				else if ((tmp->pending_load) && (tmp->loaded)) {
-					PrintConsole(&game, "Unloading gamestate %s...", tmp->name);
+					PrintConsole(&game, "Unloading gamestate \"%s\"...", tmp->name);
 					tmp->loaded = false;
 					tmp->pending_load = false;
 					(*tmp->api.Gamestate_Unload)(&game, tmp->data);
@@ -373,10 +362,10 @@ int main(int argc, char **argv){
 					tmp->handle = NULL;
 				} else if ((tmp->pending_start) && (!tmp->started)) {
 					if (!tmp->loaded) {
-						PrintConsole(&game, "Tried to start not loaded gamestate %s!", tmp->name);
+						PrintConsole(&game, "Tried to start not loaded gamestate \"%s\"!", tmp->name);
 						tmp->pending_start = false;
 					} else {
-						PrintConsole(&game, "Starting gamestate %s...", tmp->name);
+						PrintConsole(&game, "Starting gamestate \"%s\"...", tmp->name);
 						(*tmp->api.Gamestate_Start)(&game, tmp->data);
 						tmp->started = true;
 						tmp->pending_start = false;
@@ -449,36 +438,22 @@ int main(int argc, char **argv){
 					PrintConsole(&game, "Screenshot stored in %s", al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
 					al_destroy_path(path);
 				}
-				// TODO: redirect keydown events to gamestates
-					KeydownGamestates(&game, &ev);
-				/*else {
-					game._priv.showconsole = true;
-					//PrintConsole(&game, "ERROR: Keystroke in unknown (%d) gamestate! (5 sec sleep)", game.gamestate);
-					DrawConsole(&game);
-					al_flip_display();
-					al_rest(5.0);
-					PrintConsole(&game, "Returning to menu...");
-					//game.gamestate = GAMESTATE_LOADING;
-					//game.loadstate = GAMESTATE_MENU;
-				}*/
-			} else {
-				EventGamestates(&game, &ev);
-				//Level_ProcessEvent(&game, &ev);
 			}
+			EventGamestates(&game, &ev);
 		}
 	}
 	game.shuttingdown = true;
 
-	// in case of reload
+	// in case of restart
 	struct Gamestate *tmp = game._priv.gamestates;
 	while (tmp) {
 		if (tmp->started) {
-			PrintConsole(&game, "Stopping gamestate %s...", tmp->name);
+			PrintConsole(&game, "Stopping gamestate \"%s\"...", tmp->name);
 			(*tmp->api.Gamestate_Stop)(&game, tmp->data);
 			tmp->started = false;
 		}
 		if (tmp->loaded) {
-			PrintConsole(&game, "Unloading gamestate %s...", tmp->name);
+			PrintConsole(&game, "Unloading gamestate \"%s\"...", tmp->name);
 			(*tmp->api.Gamestate_Unload)(&game, tmp->data);
 			dlclose(tmp->handle);
 			tmp->loaded = false;
