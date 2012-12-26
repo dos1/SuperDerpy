@@ -35,20 +35,21 @@ struct Gamestate {
 	unsigned char fade_counter;
 	char** after; // TODO: and this one too?
 	struct Gamestate* next;
+	void* data;
 	struct {
-			void (*Gamestate_Draw)(struct Game *game);
-			void (*Gamestate_Logic)(struct Game *game);
+			void (*Gamestate_Draw)(struct Game *game, void* data);
+			void (*Gamestate_Logic)(struct Game *game, void* data);
 
-			void (*Gamestate_Load)(struct Game *game, void (*progress)(struct Game *game));
-			void (*Gamestate_Start)(struct Game *game);
-			void (*Gamestate_Pause)(struct Game *game);
-			void (*Gamestate_Resume)(struct Game *game);
-			void (*Gamestate_Stop)(struct Game *game);
-			void (*Gamestate_Unload)(struct Game *game);
+			void* (*Gamestate_Load)(struct Game *game, void (*progress)(struct Game *game));
+			void (*Gamestate_Start)(struct Game *game, void* data);
+			void (*Gamestate_Pause)(struct Game *game, void* data);
+			void (*Gamestate_Resume)(struct Game *game, void* data);
+			void (*Gamestate_Stop)(struct Game *game, void* data);
+			void (*Gamestate_Unload)(struct Game *game, void* data);
 
-			void (*Gamestate_ProcessEvent)(struct Game *game, ALLEGRO_EVENT *ev);
-			void (*Gamestate_Keydown)(struct Game *game, ALLEGRO_EVENT *ev); // TODO: rly?
-			void (*Gamestate_Reload)(struct Game *game);
+			void (*Gamestate_ProcessEvent)(struct Game *game, void* data, ALLEGRO_EVENT *ev);
+			void (*Gamestate_Keydown)(struct Game *game, void* data, ALLEGRO_EVENT *ev); // TODO: rly?
+			void (*Gamestate_Reload)(struct Game *game, void* data);
 
 			int *Gamestate_ProgressCount;
 	} api;

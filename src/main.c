@@ -62,7 +62,7 @@ void DrawGamestates(struct Game *game) {
 	while (tmp) {
 		if ((tmp->loaded) && (tmp->started)) {
 			//PrintConsole(game, "drawing %s", tmp->name);
-			(*tmp->api.Gamestate_Draw)(game);
+			(*tmp->api.Gamestate_Draw)(game, tmp->data);
 		}
 		tmp = tmp->next;
 	}
@@ -78,7 +78,7 @@ void LogicGamestates(struct Game *game) {
 	while (tmp) {
 		if ((tmp->loaded) && (tmp->started) && (!tmp->paused)) {
 			//PrintConsole(game, "logic %s", tmp->name);
-			(*tmp->api.Gamestate_Logic)(game);
+			(*tmp->api.Gamestate_Logic)(game, tmp->data);
 		}
 		tmp = tmp->next;
 	}
@@ -88,7 +88,7 @@ void KeydownGamestates(struct Game *game, ALLEGRO_EVENT *ev) {
 	struct Gamestate *tmp = game->_priv.gamestates;
 	while (tmp) {
 		if ((tmp->loaded) && (tmp->started) && (!tmp->paused)) {
-			(*tmp->api.Gamestate_Keydown)(game, ev);
+			(*tmp->api.Gamestate_Keydown)(game, tmp->data, ev);
 		}
 		tmp = tmp->next;
 	}
@@ -98,7 +98,7 @@ void EventGamestates(struct Game *game, ALLEGRO_EVENT *ev) {
 	struct Gamestate *tmp = game->_priv.gamestates;
 	while (tmp) {
 		if ((tmp->loaded) && (tmp->started) && (!tmp->paused)) {
-			(*tmp->api.Gamestate_ProcessEvent)(game, ev);
+			(*tmp->api.Gamestate_ProcessEvent)(game, tmp->data, ev);
 		}
 		tmp = tmp->next;
 	}
@@ -365,14 +365,14 @@ int main(int argc, char **argv){
 
 						if (!(tmp->api.Gamestate_ProgressCount = dlsym(tmp->handle, "Gamestate_ProgressCount"))) { gs_error(); continue; }
 
-						(*tmp->api.Gamestate_Load)(&game, NULL);
+						tmp->data = (*tmp->api.Gamestate_Load)(&game, NULL);
 
 						tmp->loaded = true;
 						tmp->pending_load = false;
 					}
 				} else if ((tmp->pending_start) && (tmp->started)) {
 					PrintConsole(&game, "Stopping gamestate %s...", tmp->name);
-					(*tmp->api.Gamestate_Stop)(&game);
+					(*tmp->api.Gamestate_Stop)(&game, tmp->data);
 					tmp->started = false;
 					tmp->pending_start = false;
 				}
@@ -380,7 +380,7 @@ int main(int argc, char **argv){
 					PrintConsole(&game, "Unloading gamestate %s...", tmp->name);
 					tmp->loaded = false;
 					tmp->pending_load = false;
-					(*tmp->api.Gamestate_Unload)(&game);
+					(*tmp->api.Gamestate_Unload)(&game, tmp->data);
 					dlclose(tmp->handle);
 					tmp->handle = NULL;
 				} else if ((tmp->pending_start) && (!tmp->started)) {
@@ -389,7 +389,7 @@ int main(int argc, char **argv){
 						tmp->pending_start = false;
 					} else {
 						PrintConsole(&game, "Starting gamestate %s...", tmp->name);
-						(*tmp->api.Gamestate_Start)(&game);
+						(*tmp->api.Gamestate_Start)(&game, tmp->data);
 						tmp->started = true;
 						tmp->pending_start = false;
 					}

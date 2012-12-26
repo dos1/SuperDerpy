@@ -19,8 +19,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-void Gamestate_Draw(struct Game *game);
-void Gamestate_Preload(struct Game *game, void (*progress)(struct Game*, float));
-void Gamestate_Unload(struct Game *game);
-void Gamestate_Load(struct Game *game);
-int Gamestate_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
+struct Disclaimer_Resources {
+		ALLEGRO_FONT *font, *font_small;
+};
