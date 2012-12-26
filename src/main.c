@@ -28,6 +28,9 @@
 #include <locale.h>
 #include <signal.h>
 #include <dlfcn.h>
+#include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_acodec.h>
+#include <allegro5/allegro_ttf.h>
 #include "utils.h"
 #include "config.h"
 #include "main.h"

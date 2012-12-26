@@ -19,6 +19,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-struct Disclaimer_Resources {
+struct DisclaimerResources {
 		ALLEGRO_FONT *font, *font_small;
 };

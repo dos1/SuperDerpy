@@ -20,12 +20,13 @@
  */
 
 #include <stdio.h>
+#include <allegro5/allegro_ttf.h>
 #include "../utils.h"
 #include "about.h"
 
 int Gamestate_ProgressCount = 0;
 
-void Gamestate_Logic(struct Game *game, struct About_Resources* data) {
+void Gamestate_Logic(struct Game *game, struct AboutResources* data) {
 	if (al_get_sample_instance_position(data->music)<700000) { return; }
 	if (data->fadeloop==0) {
 		PrintConsole(game, "Fade in");
@@ -35,7 +36,7 @@ void Gamestate_Logic(struct Game *game, struct About_Resources* data) {
 	data->x+=0.00025;
 }
 
-void Gamestate_Draw(struct Game *game, struct About_Resources* data) {
+void Gamestate_Draw(struct Game *game, struct AboutResources* data) {
 	/*PrintConsole(game, "%d", al_get_sample_instance_position(data->music));*/
 	if ((al_get_sample_instance_position(data->music)<700000) || (data->fadeloop==0)) {
 		al_clear_to_color(al_map_rgba(0,0,0,0));
@@ -56,12 +57,12 @@ void Gamestate_Draw(struct Game *game, struct About_Resources* data) {
 	}
 }
 
-void Gamestate_Start(struct Game *game, struct About_Resources* data) {
+void Gamestate_Start(struct Game *game, struct AboutResources* data) {
 	al_play_sample_instance(data->music);
 	data->fadeloop = 0;
 }
 
-void Gamestate_ProcessEvent(struct Game *game, struct About_Resources *data, ALLEGRO_EVENT *ev) {
+void Gamestate_ProcessEvent(struct Game *game, struct AboutResources *data, ALLEGRO_EVENT *ev) {
 	if (ev->type == ALLEGRO_EVENT_KEY_DOWN) {
 		if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
 			SwitchGamestate(game, "about", "menu");
@@ -71,7 +72,7 @@ void Gamestate_ProcessEvent(struct Game *game, struct About_Resources *data, ALL
 
 void* Gamestate_Load(struct Game *game, void (*progress)(struct Game *game)) {
 
-	struct About_Resources *data = malloc(sizeof(struct About_Resources));
+	struct AboutResources *data = malloc(sizeof(struct AboutResources));
 
 	data->image =LoadScaledBitmap(game, "table.png", game->viewport.width, game->viewport.height);
 	data->letter = LoadScaledBitmap(game, "about/letter.png", game->viewport.height*1.3, game->viewport.height*1.3 );
@@ -186,7 +187,7 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game *game)) {
 	return data;
 }
 
-void Gamestate_Unload(struct Game *game, struct About_Resources* data) {
+void Gamestate_Unload(struct Game *game, struct AboutResources* data) {
 	al_destroy_bitmap(data->image);
 	al_destroy_bitmap(data->letter);
 	al_destroy_bitmap(data->text_bitmap);
@@ -196,13 +197,14 @@ void Gamestate_Unload(struct Game *game, struct About_Resources* data) {
 	free(data);
 }
 
-void Gamestate_Stop(struct Game *game, struct About_Resources* data) {
+void Gamestate_Stop(struct Game *game, struct AboutResources* data) {
 	if (data->fadeloop!=0) {
 		FadeGamestate(game, false);
 	}
+	al_stop_sample_instance(data->music);
 }
 
-void Gamestate_Reload(struct Game *game, struct About_Resources* data) {}
+void Gamestate_Reload(struct Game *game, struct AboutResources* data) {}
 
-void Gamestate_Resume(struct Game *game, struct About_Resources* data) {}
-void Gamestate_Pause(struct Game *game, struct About_Resources* data) {}
+void Gamestate_Resume(struct Game *game, struct AboutResources* data) {}
+void Gamestate_Pause(struct Game *game, struct AboutResources* data) {}

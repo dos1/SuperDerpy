@@ -19,14 +19,15 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+#include <allegro5/allegro_ttf.h>
 #include "../utils.h"
 #include "disclaimer.h"
 
 int Gamestate_ProgressCount = 0;
 
-void Gamestate_Logic(struct Game *game, struct Disclaimer_Resources* data) {}
+void Gamestate_Logic(struct Game *game, struct DisclaimerResources* data) {}
 
-void Gamestate_Draw(struct Game *game, struct Disclaimer_Resources* data) {
+void Gamestate_Draw(struct Game *game, struct DisclaimerResources* data) {
 	al_clear_to_color(al_map_rgb(0,0,0));
 	DrawTextWithShadow(data->font, al_map_rgb(255,255,255), game->viewport.width/2, game->viewport.height*0.3, ALLEGRO_ALIGN_CENTRE, "This is an early development preview of the game.");
 	DrawTextWithShadow(data->font, al_map_rgb(255,255,255), game->viewport.width/2, game->viewport.height*0.4, ALLEGRO_ALIGN_CENTRE, "It's not supposed to be complete!");
@@ -35,35 +36,35 @@ void Gamestate_Draw(struct Game *game, struct Disclaimer_Resources* data) {
 	DrawTextWithShadow(data->font_small, al_map_rgb(255,255,255), game->viewport.width/2, game->viewport.height*0.9, ALLEGRO_ALIGN_CENTRE, "Press any key to continue...");
 }
 
-void Gamestate_Start(struct Game *game, struct Disclaimer_Resources* data) {
+void Gamestate_Start(struct Game *game, struct DisclaimerResources* data) {
 	FadeGamestate(game, true);
 }
 
-void Gamestate_ProcessEvent(struct Game *game, struct Disclaimer_Resources* data, ALLEGRO_EVENT *ev) {
+void Gamestate_ProcessEvent(struct Game *game, struct DisclaimerResources* data, ALLEGRO_EVENT *ev) {
 	if (ev->type==ALLEGRO_EVENT_KEY_DOWN) {
-		SwitchGamestate(game, "disclaimer", "about");
+		SwitchGamestate(game, "disclaimer", "intro");
 	}
 }
 
 void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
-	struct Disclaimer_Resources *data = malloc(sizeof(struct Disclaimer_Resources));
+	struct DisclaimerResources *data = malloc(sizeof(struct DisclaimerResources));
 	data->font_small = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.05,0 );
 	data->font = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.065,0 );
 	if (progress) (*progress)(game);
 	return data;
 }
 
-void Gamestate_Stop(struct Game *game, struct Disclaimer_Resources* data) {
+void Gamestate_Stop(struct Game *game, struct DisclaimerResources* data) {
 	FadeGamestate(game, false);
 }
 
-void Gamestate_Unload(struct Game *game, struct Disclaimer_Resources* data) {
+void Gamestate_Unload(struct Game *game, struct DisclaimerResources* data) {
 	al_destroy_font(data->font);
 	al_destroy_font(data->font_small);
 	free(data);
 }
 
-void Gamestate_Reload(struct Game *game, struct Disclaimer_Resources* data) {}
+void Gamestate_Reload(struct Game *game, struct DisclaimerResources* data) {}
 
-void Gamestate_Resume(struct Game *game, struct Disclaimer_Resources* data) {}
-void Gamestate_Pause(struct Game *game, struct Disclaimer_Resources* data) {}
+void Gamestate_Resume(struct Game *game, struct DisclaimerResources* data) {}
+void Gamestate_Pause(struct Game *game, struct DisclaimerResources* data) {}

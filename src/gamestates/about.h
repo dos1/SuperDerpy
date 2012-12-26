@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-struct About_Resources {
+struct AboutResources {
 	ALLEGRO_BITMAP *image; /*!< Background bitmap. */
 	ALLEGRO_BITMAP *text_bitmap; /*!< Bitmap with scrolled text. */
 	ALLEGRO_BITMAP *letter; /*!< Paper bitmap. */

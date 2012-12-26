@@ -12,7 +12,7 @@ ENDMACRO()
 
 #GAMESTATE("menu")
 GAMESTATE("disclaimer")
-#GAMESTATE("intro")
+GAMESTATE("intro")
 #GAMESTATE("map")
 ##GAMESTATE("level")
 GAMESTATE("about")

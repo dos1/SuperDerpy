@@ -18,11 +18,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-#include "../main.h"
 
-void Intro_Draw(struct Game *game);
-void Intro_Logic(struct Game *game);
-void Intro_Preload(struct Game *game, void (*progress)(struct Game*, float));
-void Intro_Unload(struct Game *game);
-void Intro_Load(struct Game *game);
-int Intro_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_audio.h>
+
+/*! \brief Resources used by Intro state. */
+struct IntroResources {
+	int position; /*!< Position of the page. */
+	int page; /*!< Current page number. */
+	bool in_animation; /*!< Animation as in page transition animation. */
+	float anim; /*!< Counter used for spritesheet animations. */
+	ALLEGRO_BITMAP *table; /*!< Background paper bitmap, two pages long. */
+	ALLEGRO_BITMAP *table_bitmap; /*!< Unscaled background paper bitmap. */
+	ALLEGRO_BITMAP *frame; /*!< Bitmap with frame around the screen. */
+	ALLEGRO_BITMAP *animsprites[5]; /*!< Array with spritesheet bitmaps. */
+	ALLEGRO_FONT *font; /*!< Font used for text. */
+	ALLEGRO_SAMPLE *sample; /*!< Background music sample. */
+	ALLEGRO_SAMPLE_INSTANCE *music; /*!< Sample instance with background music. */
+	ALLEGRO_AUDIO_STREAM *audiostream; /*!< Audiostream used for Celestia voice. */
+};
