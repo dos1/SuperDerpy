@@ -52,8 +52,6 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 	data->font_small = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.05,0 );
 	data->font = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.065,0 );
 	if (progress) (*progress)(game);
-	//PrintConsole(game, "Preloading GAMESTATE_INTRO...");
-	//Intro_Preload(game, progress);
 	return data;
 }
 

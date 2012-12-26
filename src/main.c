@@ -49,19 +49,11 @@ void DrawConsole(struct Game *game) {
 	game->_priv.fps_count.frames_done++;
 }
 
-int counter=0;
-
 void DrawGamestates(struct Game *game) {
-	/*if (counter<0) {
-		PrintConsole(game, "logiced %d", abs(counter));
-		counter=0;
-	}
-	counter++;*/
 	al_clear_to_color(al_map_rgb(0,0,0));
 	struct Gamestate *tmp = game->_priv.gamestates;
 	while (tmp) {
 		if ((tmp->loaded) && (tmp->started)) {
-			//PrintConsole(game, "drawing %s", tmp->name);
 			(*tmp->api.Gamestate_Draw)(game, tmp->data);
 		}
 		tmp = tmp->next;
@@ -69,15 +61,9 @@ void DrawGamestates(struct Game *game) {
 }
 
 void LogicGamestates(struct Game *game) {
-	/*if (counter>0) {
-		PrintConsole(game, "drawed %d", abs(counter));
-		counter=0;
-	}
-	counter--;*/
 	struct Gamestate *tmp = game->_priv.gamestates;
 	while (tmp) {
 		if ((tmp->loaded) && (tmp->started) && (!tmp->paused)) {
-			//PrintConsole(game, "logic %s", tmp->name);
 			(*tmp->api.Gamestate_Logic)(game, tmp->data);
 		}
 		tmp = tmp->next;
@@ -322,7 +308,7 @@ int main(int argc, char **argv){
 
 	LoadGamestate(&game, gamestate);
 	StartGamestate(&game, gamestate);
-	//free(gamestate);
+	free(gamestate);
 
 	bool redraw = false;
 
@@ -331,6 +317,8 @@ int main(int argc, char **argv){
 		if (redraw && al_is_event_queue_empty(game._priv.event_queue)) {
 
 			struct Gamestate *tmp = game._priv.gamestates;
+			bool gameActive = false;
+
 			while (tmp) {
 				if ((tmp->pending_load) && (!tmp->loaded)) {
 					PrintConsole(&game, "Loading gamestate %s...", tmp->name);
@@ -394,8 +382,17 @@ int main(int argc, char **argv){
 						tmp->pending_start = false;
 					}
 				}
+
+				if ((tmp->started) || (tmp->pending_start) || (tmp->pending_load)) gameActive = true;
+
 				tmp=tmp->next;
 			}
+
+			if (!gameActive) {
+				PrintConsole(&game, "No gamestates left, exiting...");
+				break;
+			}
+
 
 			DrawGamestates(&game);
 			DrawConsole(&game);
@@ -451,9 +448,6 @@ int main(int argc, char **argv){
 					al_save_bitmap(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP), al_get_backbuffer(game.display));
 					PrintConsole(&game, "Screenshot stored in %s", al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
 					al_destroy_path(path);
-				} else if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
-					// TODO: handle shutting down with gamestates correctly (unloading last gamestate)
-					break;
 				}
 				// TODO: redirect keydown events to gamestates
 					KeydownGamestates(&game, &ev);
@@ -475,10 +469,23 @@ int main(int argc, char **argv){
 	}
 	game.shuttingdown = true;
 
-	// FIXME: proper gamestates unload handling
-	StopGamestate(&game, gamestate);
-	UnloadGamestate(&game, gamestate);
-	free(gamestate);
+	// in case of reload
+	struct Gamestate *tmp = game._priv.gamestates;
+	while (tmp) {
+		if (tmp->started) {
+			PrintConsole(&game, "Stopping gamestate %s...", tmp->name);
+			(*tmp->api.Gamestate_Stop)(&game, tmp->data);
+			tmp->started = false;
+		}
+		if (tmp->loaded) {
+			PrintConsole(&game, "Unloading gamestate %s...", tmp->name);
+			(*tmp->api.Gamestate_Unload)(&game, tmp->data);
+			dlclose(tmp->handle);
+			tmp->loaded = false;
+		}
+		tmp=tmp->next;
+	}
+
 	// TODO: unload loading
 	al_clear_to_color(al_map_rgb(0,0,0));
 	PrintConsole(&game, "Shutting down...");
