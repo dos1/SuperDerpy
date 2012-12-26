@@ -20,13 +20,16 @@
  */
 #include <stdio.h>
 #include <math.h>
+#include "../utils.h"
 #include "../config.h"
 #include "map.h"
 
-void Map_Draw(struct Game *game) {
-	al_draw_bitmap(game->map.map, 0, 0, 0);
+int Gamestate_ProgressCount = 0;
+
+void Gamestate_Draw(struct Game *game, struct MapResources* data) {
+	al_draw_bitmap(data->map, 0, 0, 0);
 	float x=0,y=0;
-	switch (game->map.selected) {
+	switch (data->selected) {
 		case 1:
 			x=0.2;
 			y=0.25;
@@ -52,104 +55,105 @@ void Map_Draw(struct Game *game) {
 			y=0.675;
 			break;
 	}
-	al_draw_scaled_bitmap(game->map.arrow, 0, 0, al_get_bitmap_width(game->map.arrow), al_get_bitmap_height(game->map.arrow), (game->viewportWidth-game->viewportHeight*1.6)/2+game->viewportHeight*1.6*x, game->viewportHeight*y + ((sin(game->map.arrowpos)+0.5)/20.0)*game->viewportHeight, game->viewportHeight*1.6*0.1, game->viewportHeight*0.16, 0);
+	al_draw_scaled_bitmap(data->arrow, 0, 0, al_get_bitmap_width(data->arrow), al_get_bitmap_height(data->arrow), (game->viewport.width-game->viewport.height*1.6)/2+game->viewport.height*1.6*x, game->viewport.height*y + ((sin(data->arrowpos)+0.5)/20.0)*game->viewport.height, game->viewport.height*1.6*0.1, game->viewport.height*0.16, 0);
 }
 
-void Map_Logic(struct Game *game) {
-	game->map.arrowpos += 0.1;
+void Gamestate_Logic(struct Game *game, struct MapResources* data) {
+	data->arrowpos += 0.1;
 }
 
-void Map_Load(struct Game *game) {
-	al_play_sample_instance(game->map.music);
-	FadeGameState(game, true);
+void Gamestate_Start(struct Game *game, struct MapResources* data) {
+	al_play_sample_instance(data->music);
+	FadeGamestate(game, true);
 }
 
-int Map_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
-	if ((((game->map.selected<4) || (game->map.selected==6)) && (ev->keyboard.keycode==ALLEGRO_KEY_LEFT)) || ((game->map.selected>4) && (game->map.selected!=6) && (ev->keyboard.keycode==ALLEGRO_KEY_RIGHT)) || ((game->map.selected==4) && (ev->keyboard.keycode==ALLEGRO_KEY_UP)) || ((game->map.selected==6) && (ev->keyboard.keycode==ALLEGRO_KEY_DOWN))) {
-		game->map.selected--;
-		al_play_sample_instance(game->map.click);
-	} else if (((game->map.selected<3) && (ev->keyboard.keycode==ALLEGRO_KEY_RIGHT)) || ((game->map.selected==4) && (ev->keyboard.keycode==ALLEGRO_KEY_LEFT)) || ((game->map.selected==3) && (ev->keyboard.keycode==ALLEGRO_KEY_DOWN)) || ((game->map.selected==5) && (ev->keyboard.keycode==ALLEGRO_KEY_UP))) {
-		game->map.selected++;
-		al_play_sample_instance(game->map.click);
+void Gamestate_ProcessEvent(struct Game *game, struct MapResources* data, ALLEGRO_EVENT *ev) {
+	if (ev->type!=ALLEGRO_EVENT_KEY_DOWN) return;
+	if ((((data->selected<4) || (data->selected==6)) && (ev->keyboard.keycode==ALLEGRO_KEY_LEFT)) || ((data->selected>4) && (data->selected!=6) && (ev->keyboard.keycode==ALLEGRO_KEY_RIGHT)) || ((data->selected==4) && (ev->keyboard.keycode==ALLEGRO_KEY_UP)) || ((data->selected==6) && (ev->keyboard.keycode==ALLEGRO_KEY_DOWN))) {
+		data->selected--;
+		al_play_sample_instance(data->click);
+	} else if (((data->selected<3) && (ev->keyboard.keycode==ALLEGRO_KEY_RIGHT)) || ((data->selected==4) && (ev->keyboard.keycode==ALLEGRO_KEY_LEFT)) || ((data->selected==3) && (ev->keyboard.keycode==ALLEGRO_KEY_DOWN)) || ((data->selected==5) && (ev->keyboard.keycode==ALLEGRO_KEY_UP))) {
+		data->selected++;
+		al_play_sample_instance(data->click);
 	} else if ((ev->keyboard.keycode==ALLEGRO_KEY_LEFT) || (ev->keyboard.keycode==ALLEGRO_KEY_RIGHT) || (ev->keyboard.keycode==ALLEGRO_KEY_UP) || (ev->keyboard.keycode==ALLEGRO_KEY_DOWN)) {
-		al_play_sample_instance(game->map.click);
+		al_play_sample_instance(data->click);
 	} else if (ev->keyboard.keycode==ALLEGRO_KEY_ENTER) {
-		al_play_sample_instance(game->map.click);
-		game->level.input.current_level = game->map.selected;
-		PrintConsole(game, "Selecting level %d...", game->map.selected);
-		UnloadGameState(game);
-		game->gamestate = GAMESTATE_LOADING;
-		game->loadstate = GAMESTATE_LEVEL;
-		return 0;
+		al_play_sample_instance(data->click);
+		//game->level.input.current_level = data->selected;
+		PrintConsole(game, "Selecting level %d...", data->selected);
+		char gamestate[7] = {};
+		sprintf(gamestate, "level%d", data->selected);
+		SwitchGamestate(game, "map", gamestate);
+		return;
 	} else if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
-		UnloadGameState(game);
-		game->loadstate = GAMESTATE_MENU;
-		LoadGameState(game);
-		return 0;
-	} else { return 0; }
-	if (game->map.selected<1) game->map.selected=1;
-	if (game->map.selected>game->map.available) game->map.selected=game->map.available;
-	return 0;
+		SwitchGamestate(game, "map", "menu");
+		return;
+	}
+	if (data->selected<1) data->selected=1;
+	if (data->selected>data->available) data->selected=data->available;
 }
 
-void Map_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
-	PROGRESS_INIT(7);
+void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 
-	game->map.available = atoi(GetConfigOptionDefault("MuffinAttack", "level", "1"));
-	if ((game->map.available<1) || (game->map.available>6)) game->map.available=1;
-	game->map.selected = game->map.available;
-	PrintConsole(game, "Last level available: %d", game->map.selected);
-	game->map.arrowpos = 0;
+	struct MapResources *data = malloc(sizeof(struct MapResources));
+	data->available = atoi(GetConfigOptionDefault(game, "MuffinAttack", "level", "1"));
+	if ((data->available<1) || (data->available>6)) data->available=1;
+	data->selected = data->available;
+	PrintConsole(game, "Last level available: %d", data->selected);
+	data->arrowpos = 0;
 
-	game->map.map_bg = LoadScaledBitmap("map/background.png", game->viewportHeight*1.6, game->viewportHeight);
-	PROGRESS;
+	data->map_bg = LoadScaledBitmap(game, "map/background.png", game->viewport.height*1.6, game->viewport.height);
 	char filename[30] = { };
-	sprintf(filename, "map/highlight%d.png", game->map.available);
-	game->map.highlight = LoadScaledBitmap(filename, game->viewportHeight*1.6, game->viewportHeight);
-	PROGRESS;
+	sprintf(filename, "map/highlight%d.png", data->available);
+	data->highlight = LoadScaledBitmap(game, filename, game->viewport.height*1.6, game->viewport.height);
 
-	game->map.arrow = al_load_bitmap( GetDataFilePath("map/arrow.png") );
-	PROGRESS;
+	data->arrow = al_load_bitmap( GetDataFilePath("map/arrow.png") );
 
-	game->map.click_sample = al_load_sample( GetDataFilePath("menu/click.flac") );
-	PROGRESS;
-	game->map.sample = al_load_sample( GetDataFilePath("map/map.flac") );
-	PROGRESS;
+	data->click_sample = al_load_sample( GetDataFilePath("menu/click.flac") );
+	data->sample = al_load_sample( GetDataFilePath("map/map.flac") );
 
-	game->map.music = al_create_sample_instance(game->map.sample);
-	al_attach_sample_instance_to_mixer(game->map.music, game->audio.music);
-	al_set_sample_instance_playmode(game->map.music, ALLEGRO_PLAYMODE_LOOP);
+	data->music = al_create_sample_instance(data->sample);
+	al_attach_sample_instance_to_mixer(data->music, game->audio.music);
+	al_set_sample_instance_playmode(data->music, ALLEGRO_PLAYMODE_LOOP);
 
-	game->map.click = al_create_sample_instance(game->map.click_sample);
-	al_attach_sample_instance_to_mixer(game->map.click, game->audio.fx);
-	al_set_sample_instance_playmode(game->map.click, ALLEGRO_PLAYMODE_ONCE);
+	data->click = al_create_sample_instance(data->click_sample);
+	al_attach_sample_instance_to_mixer(data->click, game->audio.fx);
+	al_set_sample_instance_playmode(data->click, ALLEGRO_PLAYMODE_ONCE);
 
-	if (!game->map.sample){
+	if (!data->sample){
 		fprintf(stderr, "Audio clip sample not loaded!\n" );
 		exit(-1);
 	}
-	if (!game->map.click_sample){
+	if (!data->click_sample){
 		fprintf(stderr, "Audio clip sample#2 not loaded!\n" );
 		exit(-1);
 	}
 
-	game->map.map = LoadScaledBitmap("table.png", game->viewportWidth, game->viewportHeight);
-	PROGRESS;
-	al_set_target_bitmap(game->map.map);
-	al_draw_bitmap(game->map.map_bg, (game->viewportWidth-game->viewportHeight*1.6)/2, 0 ,0);
-	al_draw_bitmap(game->map.highlight, (game->viewportWidth-game->viewportHeight*1.6)/2, 0 ,0);
+	data->map = LoadScaledBitmap(game, "table.png", game->viewport.width, game->viewport.height);
+	al_set_target_bitmap(data->map);
+	al_draw_bitmap(data->map_bg, (game->viewport.width-game->viewport.height*1.6)/2, 0 ,0);
+	al_draw_bitmap(data->highlight, (game->viewport.width-game->viewport.height*1.6)/2, 0 ,0);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
-	PROGRESS;
+
+	return data;
 }
 
-void Map_Unload(struct Game *game) {
-	FadeGameState(game, false);
-	al_destroy_bitmap(game->map.map);
-	al_destroy_bitmap(game->map.map_bg);
-	al_destroy_bitmap(game->map.highlight);
-	al_destroy_bitmap(game->map.arrow);
-	al_destroy_sample_instance(game->map.music);
-	al_destroy_sample(game->map.sample);
-	al_destroy_sample_instance(game->map.click);
-	al_destroy_sample(game->map.click_sample);
+void Gamestate_Unload(struct Game *game, struct MapResources* data) {
+	al_destroy_bitmap(data->map);
+	al_destroy_bitmap(data->map_bg);
+	al_destroy_bitmap(data->highlight);
+	al_destroy_bitmap(data->arrow);
+	al_destroy_sample_instance(data->music);
+	al_destroy_sample(data->sample);
+	al_destroy_sample_instance(data->click);
+	al_destroy_sample(data->click_sample);
 }
+
+void Gamestate_Stop(struct Game *game, struct MapResources* data) {
+	FadeGamestate(game, false);
+	al_stop_sample_instance(data->music);
+}
+
+void Gamestate_Pause(struct Game *game, struct MapResources* data) {}
+void Gamestate_Resume(struct Game *game, struct MapResources* data) {}
+void Gamestate_Reload(struct Game *game, struct MapResources* data) {}

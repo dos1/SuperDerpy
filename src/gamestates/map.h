@@ -18,11 +18,22 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-#include "../main.h"
 
-void Map_Draw(struct Game *game);
-void Map_Logic(struct Game *game);
-void Map_Preload(struct Game *game, void (*progress)(struct Game*, float));
-void Map_Unload(struct Game *game);
-void Map_Load(struct Game *game);
-int Map_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_audio.h>
+
+/*! \brief Resources used by Map state. */
+struct MapResources {
+	ALLEGRO_BITMAP *map; /*!< Background table bitmap. */
+	ALLEGRO_BITMAP *map_bg; /*!< Map bitmap. */
+	ALLEGRO_BITMAP *highlight; /*!< Level highlights bitmap. */
+	ALLEGRO_BITMAP *arrow; /*!< Arrow bitmap. */
+	int selected; /*!< Number of currently selected level. */
+	int available; /*!< Number of highest available level. */
+	float arrowpos; /*!< Vertical position of the arrow. */
+	ALLEGRO_SAMPLE *sample; /*!< Sample with backgrond music. */
+	ALLEGRO_SAMPLE *click_sample; /*!< Sample with click sound. */
+	ALLEGRO_SAMPLE_INSTANCE *music; /*!< Sample instance with background music. */
+	ALLEGRO_SAMPLE_INSTANCE *click; /*!< Sample instance with click sound. */
+};
