@@ -27,6 +27,7 @@
 #include <getopt.h>
 #include <locale.h>
 #include <signal.h>
+#include <dlfcn.h>
 #include "utils.h"
 #include "config.h"
 #include "main.h"
@@ -51,31 +52,53 @@ void DrawConsole(struct Game *game) {
 int counter=0;
 
 void DrawGamestates(struct Game *game) {
-	if (counter<0) {
+	/*if (counter<0) {
 		PrintConsole(game, "logiced %d", abs(counter));
 		counter=0;
 	}
-	counter++;
+	counter++;*/
 	al_clear_to_color(al_map_rgb(0,0,0));
-	struct Gamestate *tmp = game->_priv.gamestate_list;
+	struct Gamestate *tmp = game->_priv.gamestates;
 	while (tmp) {
 		if ((tmp->loaded) && (tmp->started)) {
 			//PrintConsole(game, "drawing %s", tmp->name);
+			(*tmp->api.Gamestate_Draw)(game);
 		}
 		tmp = tmp->next;
 	}
 }
 
 void LogicGamestates(struct Game *game) {
-	if (counter>0) {
+	/*if (counter>0) {
 		PrintConsole(game, "drawed %d", abs(counter));
 		counter=0;
 	}
-	counter--;
-	struct Gamestate *tmp = game->_priv.gamestate_list;
+	counter--;*/
+	struct Gamestate *tmp = game->_priv.gamestates;
 	while (tmp) {
 		if ((tmp->loaded) && (tmp->started) && (!tmp->paused)) {
 			//PrintConsole(game, "logic %s", tmp->name);
+			(*tmp->api.Gamestate_Logic)(game);
+		}
+		tmp = tmp->next;
+	}
+}
+
+void KeydownGamestates(struct Game *game, ALLEGRO_EVENT *ev) {
+	struct Gamestate *tmp = game->_priv.gamestates;
+	while (tmp) {
+		if ((tmp->loaded) && (tmp->started) && (!tmp->paused)) {
+			(*tmp->api.Gamestate_Keydown)(game, ev);
+		}
+		tmp = tmp->next;
+	}
+}
+
+void EventGamestates(struct Game *game, ALLEGRO_EVENT *ev) {
+	struct Gamestate *tmp = game->_priv.gamestates;
+	while (tmp) {
+		if ((tmp->loaded) && (tmp->started) && (!tmp->paused)) {
+			(*tmp->api.Gamestate_ProcessEvent)(game, ev);
 		}
 		tmp = tmp->next;
 	}
@@ -238,8 +261,7 @@ int main(int argc, char **argv){
 
 	PrintConsole(&game, "Viewport %dx%d", game.viewport.width, game.viewport.height);
 
-	game._priv.gamestate = NULL;
-	game._priv.gamestate_list = NULL;
+	game._priv.gamestates = NULL;
 
 	game._priv.event_queue = al_create_event_queue();
 	if(!game._priv.event_queue) {
@@ -282,7 +304,7 @@ int main(int argc, char **argv){
 	game.shuttingdown = false;
 	game.restart = false;
 
-	char* gamestate = strdup("menu"); // FIXME: don't hardcore gamestate
+	char* gamestate = strdup("disclaimer"); // FIXME: don't hardcore gamestate
 
 	int c;
 	while ((c = getopt (argc, argv, "l:s:")) != -1)
@@ -308,25 +330,69 @@ int main(int argc, char **argv){
 		ALLEGRO_EVENT ev;
 		if (redraw && al_is_event_queue_empty(game._priv.event_queue)) {
 
-			struct Gamestate *tmp = game._priv.gamestate_list;
+			struct Gamestate *tmp = game._priv.gamestates;
 			while (tmp) {
 				if ((tmp->pending_load) && (!tmp->loaded)) {
 					PrintConsole(&game, "Loading gamestate %s...", tmp->name);
-					tmp->loaded = true;
-					tmp->pending_load = false;
-				} else if ((tmp->pending_load) && (tmp->loaded)) {
+					// TODO: take proper game name
+					char libname[1024];
+					sprintf(libname, "libsuperderpy-%s-%s.so", "muffinattack", tmp->name);
+					tmp->handle = dlopen(libname,RTLD_NOW);
+					if (!tmp->handle) {
+						PrintConsole(&game, "Error while loading gamestate %s: %s", tmp->name, dlerror());
+						tmp->pending_load = false;
+					} else {
+
+						void gs_error() {
+							PrintConsole(&game, "Error on resolving gamestate symbol: %s", dlerror());
+							tmp->pending_load = false;
+							tmp=tmp->next;
+						}
+
+						if (!(tmp->api.Gamestate_Draw = dlsym(tmp->handle, "Gamestate_Draw"))) { gs_error(); continue; }
+						if (!(tmp->api.Gamestate_Logic = dlsym(tmp->handle, "Gamestate_Logic"))) { gs_error(); continue; }
+
+						if (!(tmp->api.Gamestate_Load = dlsym(tmp->handle, "Gamestate_Load"))) { gs_error(); continue; }
+						if (!(tmp->api.Gamestate_Start = dlsym(tmp->handle, "Gamestate_Start"))) { gs_error(); continue; }
+						if (!(tmp->api.Gamestate_Pause = dlsym(tmp->handle, "Gamestate_Pause"))) { gs_error(); continue; }
+						if (!(tmp->api.Gamestate_Resume = dlsym(tmp->handle, "Gamestate_Resume"))) { gs_error(); continue; }
+						if (!(tmp->api.Gamestate_Stop = dlsym(tmp->handle, "Gamestate_Stop"))) { gs_error(); continue; }
+						if (!(tmp->api.Gamestate_Unload = dlsym(tmp->handle, "Gamestate_Unload"))) { gs_error(); continue; }
+
+						if (!(tmp->api.Gamestate_ProcessEvent = dlsym(tmp->handle, "Gamestate_ProcessEvent"))) { gs_error(); continue; }
+						if (!(tmp->api.Gamestate_Keydown = dlsym(tmp->handle, "Gamestate_Keydown"))) { gs_error(); continue; }
+						if (!(tmp->api.Gamestate_Reload = dlsym(tmp->handle, "Gamestate_Reload"))) { gs_error(); continue; }
+
+						if (!(tmp->api.Gamestate_ProgressCount = dlsym(tmp->handle, "Gamestate_ProgressCount"))) { gs_error(); continue; }
+
+						(*tmp->api.Gamestate_Load)(&game, NULL);
+
+						tmp->loaded = true;
+						tmp->pending_load = false;
+					}
+				} else if ((tmp->pending_start) && (tmp->started)) {
+					PrintConsole(&game, "Stopping gamestate %s...", tmp->name);
+					(*tmp->api.Gamestate_Stop)(&game);
+					tmp->started = false;
+					tmp->pending_start = false;
+				}
+				else if ((tmp->pending_load) && (tmp->loaded)) {
 					PrintConsole(&game, "Unloading gamestate %s...", tmp->name);
 					tmp->loaded = false;
 					tmp->pending_load = false;
+					(*tmp->api.Gamestate_Unload)(&game);
+					dlclose(tmp->handle);
 					tmp->handle = NULL;
 				} else if ((tmp->pending_start) && (!tmp->started)) {
-					PrintConsole(&game, "Starting gamestate %s...", tmp->name);
-					tmp->started = true;
-					tmp->pending_start = false;
-				} else if ((tmp->pending_start) && (tmp->started)) {
-					PrintConsole(&game, "Stopping gamestate %s...", tmp->name);
-					tmp->started = false;
-					tmp->pending_start = false;
+					if (!tmp->loaded) {
+						PrintConsole(&game, "Tried to start not loaded gamestate %s!", tmp->name);
+						tmp->pending_start = false;
+					} else {
+						PrintConsole(&game, "Starting gamestate %s...", tmp->name);
+						(*tmp->api.Gamestate_Start)(&game);
+						tmp->started = true;
+						tmp->pending_start = false;
+					}
 				}
 				tmp=tmp->next;
 			}
@@ -386,12 +452,11 @@ int main(int argc, char **argv){
 					PrintConsole(&game, "Screenshot stored in %s", al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
 					al_destroy_path(path);
 				} else if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
+					// TODO: handle shutting down with gamestates correctly (unloading last gamestate)
 					break;
 				}
 				// TODO: redirect keydown events to gamestates
-
-				//KEYDOWN_STATE(GAMESTATE_MENU, Menu)
-				//KEYDOWN_STATE(GAMESTATE_LOADING, Loading)
+					KeydownGamestates(&game, &ev);
 				/*else {
 					game._priv.showconsole = true;
 					//PrintConsole(&game, "ERROR: Keystroke in unknown (%d) gamestate! (5 sec sleep)", game.gamestate);
@@ -402,7 +467,8 @@ int main(int argc, char **argv){
 					//game.gamestate = GAMESTATE_LOADING;
 					//game.loadstate = GAMESTATE_MENU;
 				}*/
-			//} else if (game.gamestate == GAMESTATE_LEVEL) {
+			} else {
+				EventGamestates(&game, &ev);
 				//Level_ProcessEvent(&game, &ev);
 			}
 		}
@@ -429,9 +495,9 @@ int main(int argc, char **argv){
 	al_destroy_voice(game.audio.v);
 	al_uninstall_audio();
 	DeinitConfig(&game);
+	al_uninstall_system();
 	al_shutdown_ttf_addon();
 	al_shutdown_font_addon();
-	al_uninstall_system();
 	if (game.restart) {
 #ifdef ALLEGRO_MACOSX
 		return _al_mangled_main(argc, argv);

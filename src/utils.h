@@ -38,7 +38,7 @@ void DrawTextWithShadow(ALLEGRO_FONT *font, ALLEGRO_COLOR color, float x, float 
 ALLEGRO_BITMAP* LoadScaledBitmap(struct Game *game, char* filename, int width, int height);
 
 /*! \brief Displays fade in or fade out animation on current gamestate. */
-void FadeGameState(struct Game *game, bool in);
+void FadeGamestate(struct Game *game, bool in);
 
 /*! \brief Finds path for data file. */
 char* GetDataFilePath(char* filename);

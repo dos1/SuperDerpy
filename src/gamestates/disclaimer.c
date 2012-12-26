@@ -18,44 +18,58 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-#include <stdio.h>
-#include "intro.h"
-#include "menu.h"
-#include "about.h"
+//#include <stdio.h>
+#include "../utils.h"
 
-void Disclaimer_Draw(struct Game *game) {
+struct {
+		ALLEGRO_FONT *font, *font_small;
+} res;
+// FIXME: bad bad bad bad!
+
+void Gamestate_Logic(struct Game *game) {
+}
+
+void Gamestate_Draw(struct Game *game) {
 	al_clear_to_color(al_map_rgb(0,0,0));
-	al_draw_text_with_shadow(game->menu.font_selected, al_map_rgb(255,255,255), game->viewportWidth/2, game->viewportHeight*0.3, ALLEGRO_ALIGN_CENTRE, "This is an early development preview of the game.");
-	al_draw_text_with_shadow(game->menu.font_selected, al_map_rgb(255,255,255), game->viewportWidth/2, game->viewportHeight*0.4, ALLEGRO_ALIGN_CENTRE, "It's not supposed to be complete!");
-	al_draw_text_with_shadow(game->menu.font_selected, al_map_rgb(255,255,255), game->viewportWidth/2, game->viewportHeight*0.5, ALLEGRO_ALIGN_CENTRE, "Keep in mind that everything may be changed");
-	al_draw_text_with_shadow(game->menu.font_selected, al_map_rgb(255,255,255), game->viewportWidth/2, game->viewportHeight*0.6, ALLEGRO_ALIGN_CENTRE, "and many things surely will change.");
-	al_draw_text_with_shadow(game->menu.font, al_map_rgb(255,255,255), game->viewportWidth/2, game->viewportHeight*0.9, ALLEGRO_ALIGN_CENTRE, "Press any key to continue...");
+	DrawTextWithShadow(res.font, al_map_rgb(255,255,255), game->viewport.width/2, game->viewport.height*0.3, ALLEGRO_ALIGN_CENTRE, "This is an early development preview of the game.");
+	DrawTextWithShadow(res.font, al_map_rgb(255,255,255), game->viewport.width/2, game->viewport.height*0.4, ALLEGRO_ALIGN_CENTRE, "It's not supposed to be complete!");
+	DrawTextWithShadow(res.font, al_map_rgb(255,255,255), game->viewport.width/2, game->viewport.height*0.5, ALLEGRO_ALIGN_CENTRE, "Keep in mind that everything may be changed");
+	DrawTextWithShadow(res.font, al_map_rgb(255,255,255), game->viewport.width/2, game->viewport.height*0.6, ALLEGRO_ALIGN_CENTRE, "and many things surely will change.");
+	DrawTextWithShadow(res.font_small, al_map_rgb(255,255,255), game->viewport.width/2, game->viewport.height*0.9, ALLEGRO_ALIGN_CENTRE, "Press any key to continue...");
 }
 
-void Disclaimer_Load(struct Game *game) {
-	FadeGameState(game, true);
+void Gamestate_Start(struct Game *game) {
+	FadeGamestate(game, true);
 }
 
-int Disclaimer_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
-	UnloadGameState(game);
-	game->loadstate = GAMESTATE_INTRO;
-	LoadGameState(game);
+int Gamestate_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
+	StopGamestate(game, "disclaimer");
+	UnloadGamestate(game, "disclaimer");
+	LoadGamestate(game, "intro");
+	StartGamestate(game, "intro");
 	return 0;
 }
 
-void Disclaimer_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
-	if (!game->menu.loaded) {
-		game->menu.font = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewportHeight*0.05,0 );
-		game->menu.font_selected = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewportHeight*0.065,0 );
-	}
-	PrintConsole(game, "Preloading GAMESTATE_INTRO...");
-	Intro_Preload(game, progress);
+void Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
+	res.font_small = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.05,0 );
+	res.font = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.065,0 );
+	//PrintConsole(game, "Preloading GAMESTATE_INTRO...");
+	//Intro_Preload(game, progress);
 }
 
-void Disclaimer_Unload(struct Game *game) {
-	FadeGameState(game, false);
-	if (!game->menu.loaded) {
-		al_destroy_font(game->menu.font);
-		al_destroy_font(game->menu.font_selected);
-	}
+void Gamestate_Stop(struct Game *game) {
+	FadeGamestate(game, false);
 }
+
+void Gamestate_Unload(struct Game *game) {
+	al_destroy_font(res.font);
+	al_destroy_font(res.font_small);
+}
+
+void Gamestate_Reload(struct Game *game) {}
+
+void Gamestate_Resume(struct Game *game) {}
+void Gamestate_Pause(struct Game *game) {}
+void Gamestate_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev) {}
+
+int Gamestate_ProgressCount = 0;

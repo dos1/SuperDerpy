@@ -23,10 +23,10 @@
 #include "gamestate.h"
 
 struct Gamestate* AddNewGamestate(struct Game *game) {
-	struct Gamestate *tmp = game->_priv.gamestate_list;
+	struct Gamestate *tmp = game->_priv.gamestates;
 	if (!tmp) {
-		game->_priv.gamestate_list = malloc(sizeof(struct Gamestate));
-		tmp = game->_priv.gamestate_list;
+		game->_priv.gamestates = malloc(sizeof(struct Gamestate));
+		tmp = game->_priv.gamestates;
 	} else {
 		while (tmp->next) {
 			tmp = tmp->next;
@@ -49,7 +49,7 @@ struct Gamestate* AddNewGamestate(struct Game *game) {
 }
 
 struct Gamestate* FindGamestate(struct Game *game, const char* name) {
-	struct Gamestate *tmp = game->_priv.gamestate_list;
+	struct Gamestate *tmp = game->_priv.gamestates;
 	while (tmp) {
 		if (!strcmp(name, tmp->name)) {
 			return tmp;

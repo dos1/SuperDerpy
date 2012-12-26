@@ -21,6 +21,8 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
+#include "allegro5/allegro.h"
+
 struct Game;
 
 struct Gamestate {
@@ -29,10 +31,27 @@ struct Gamestate {
 	bool loaded, pending_load;
 	bool started, pending_start;
 	bool paused;
-	bool fade;
+	bool fade; // TODO: or maybe should it be in API?
 	unsigned char fade_counter;
-	char** after;
+	char** after; // TODO: and this one too?
 	struct Gamestate* next;
+	struct {
+			void (*Gamestate_Draw)(struct Game *game);
+			void (*Gamestate_Logic)(struct Game *game);
+
+			void (*Gamestate_Load)(struct Game *game, void (*progress)(struct Game *game));
+			void (*Gamestate_Start)(struct Game *game);
+			void (*Gamestate_Pause)(struct Game *game);
+			void (*Gamestate_Resume)(struct Game *game);
+			void (*Gamestate_Stop)(struct Game *game);
+			void (*Gamestate_Unload)(struct Game *game);
+
+			void (*Gamestate_ProcessEvent)(struct Game *game, ALLEGRO_EVENT *ev);
+			void (*Gamestate_Keydown)(struct Game *game, ALLEGRO_EVENT *ev); // TODO: rly?
+			void (*Gamestate_Reload)(struct Game *game);
+
+			int *Gamestate_ProgressCount;
+	} api;
 };
 
 void LoadGamestate(struct Game *game, const char* name);

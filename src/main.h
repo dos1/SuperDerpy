@@ -62,8 +62,8 @@ struct Game {
 		} audio; /*!< Audio resources. */
 
 		struct {
-				struct Gamestate *gamestate; /*!< Current gamestate. */
-				struct Gamestate *gamestate_list; /*!< List of known gamestates. */
+				//struct Gamestate *gamestate; /*!< Current gamestate. */
+				struct Gamestate *gamestates; /*!< List of known gamestates. */
 				ALLEGRO_FONT *font; /*!< Main font used in game. */
 				ALLEGRO_FONT *font_console; /*!< Font used in game console. */
 				ALLEGRO_BITMAP *console; /*!< Bitmap with game console. */

@@ -18,10 +18,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-#include "../main.h"
 
-void Disclaimer_Draw(struct Game *game);
-void Disclaimer_Preload(struct Game *game, void (*progress)(struct Game*, float));
-void Disclaimer_Unload(struct Game *game);
-void Disclaimer_Load(struct Game *game);
-int Disclaimer_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
+void Gamestate_Draw(struct Game *game);
+void Gamestate_Preload(struct Game *game, void (*progress)(struct Game*, float));
+void Gamestate_Unload(struct Game *game);
+void Gamestate_Load(struct Game *game);
+int Gamestate_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
