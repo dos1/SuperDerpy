@@ -18,11 +18,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-#include "../main.h"
 
-void About_Draw(struct Game *game);
-void About_Logic(struct Game *game);
-void About_Preload(struct Game *game, void (*progress)(struct Game*, float));
-void About_Unload(struct Game *game);
-void About_Load(struct Game *game);
-int About_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
+struct About_Resources {
+	ALLEGRO_BITMAP *image; /*!< Background bitmap. */
+	ALLEGRO_BITMAP *text_bitmap; /*!< Bitmap with scrolled text. */
+	ALLEGRO_BITMAP *letter; /*!< Paper bitmap. */
+	ALLEGRO_SAMPLE *sample; /*!< Sample with background music. */
+	ALLEGRO_SAMPLE_INSTANCE *music; /*!< Sample instance with background music. */
+	ALLEGRO_FONT *font; /*!< Font used in the text on letter. */
+	float x; /*!< Horizontal position of the text. */
+	int fadeloop; /*!< Loop counter used in fades. */
+};

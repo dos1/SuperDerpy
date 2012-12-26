@@ -18,89 +18,86 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
+
 #include <stdio.h>
+#include "../utils.h"
 #include "about.h"
 
-void About_Logic(struct Game *game) {
-	if (al_get_sample_instance_position(game->about.music)<700000) { return; }
-	if (game->about.fadeloop==0) {
+int Gamestate_ProgressCount = 0;
+
+void Gamestate_Logic(struct Game *game, struct About_Resources* data) {
+	if (al_get_sample_instance_position(data->music)<700000) { return; }
+	if (data->fadeloop==0) {
 		PrintConsole(game, "Fade in");
-		game->about.fadeloop=1;
-		FadeGameState(game, true);
+		data->fadeloop=1;
+		FadeGamestate(game, true);
 	}
-	game->about.x+=0.00025;
+	data->x+=0.00025;
 }
 
-void About_Draw(struct Game *game) {
-	/*PrintConsole(game, "%d", al_get_sample_instance_position(game->about.music));*/
-	if ((al_get_sample_instance_position(game->about.music)<700000) || (game->about.fadeloop==0)) {
+void Gamestate_Draw(struct Game *game, struct About_Resources* data) {
+	/*PrintConsole(game, "%d", al_get_sample_instance_position(data->music));*/
+	if ((al_get_sample_instance_position(data->music)<700000) || (data->fadeloop==0)) {
 		al_clear_to_color(al_map_rgba(0,0,0,0));
 		return;
 	}
 
-	al_draw_scaled_bitmap(game->about.image,0,0,al_get_bitmap_width(game->about.image),al_get_bitmap_height(game->about.image),0,0,game->viewportWidth, game->viewportHeight,0);
-	al_draw_bitmap(game->about.letter, game->viewportWidth-al_get_bitmap_width(game->about.letter), -game->viewportHeight*0.1, 0);
-	float x = game->about.x;
+	al_draw_scaled_bitmap(data->image,0,0,al_get_bitmap_width(data->image),al_get_bitmap_height(data->image),0,0,game->viewport.width, game->viewport.height,0);
+	al_draw_bitmap(data->letter, game->viewport.width-al_get_bitmap_width(data->letter), -game->viewport.height*0.1, 0);
+	float x = data->x;
 	if (x<0) x=0;
 	ALLEGRO_BITMAP* subbitmap;
-	subbitmap = al_create_sub_bitmap(game->about.text_bitmap, 0, x*al_get_bitmap_height(game->about.text_bitmap), al_get_bitmap_width(game->about.text_bitmap), game->viewportHeight);
-	al_draw_rotated_bitmap(subbitmap, al_get_bitmap_width(subbitmap)/2.0, al_get_bitmap_height(subbitmap)/2.0, game->viewportWidth-al_get_bitmap_width(game->about.letter)+al_get_bitmap_width(subbitmap), game->viewportHeight*0.1+al_get_bitmap_height(subbitmap)/2.0, -0.11, 0);
+	subbitmap = al_create_sub_bitmap(data->text_bitmap, 0, x*al_get_bitmap_height(data->text_bitmap), al_get_bitmap_width(data->text_bitmap), game->viewport.height);
+	al_draw_rotated_bitmap(subbitmap, al_get_bitmap_width(subbitmap)/2.0, al_get_bitmap_height(subbitmap)/2.0, game->viewport.width-al_get_bitmap_width(data->letter)+al_get_bitmap_width(subbitmap), game->viewport.height*0.1+al_get_bitmap_height(subbitmap)/2.0, -0.11, 0);
 	al_destroy_bitmap(subbitmap);
-	if ((game->about.x>1) && (game->about.x<10)) {
-		game->about.x=10;
-		UnloadGameState(game);
-		game->loadstate = GAMESTATE_MENU;
-		LoadGameState(game);
+	if ((data->x>1) && (data->x<10)) {
+		data->x=10;
+		SwitchGamestate(game, "about", "menu");
 	}
 }
 
-void About_Load(struct Game *game) {
-	al_play_sample_instance(game->about.music);
-	game->about.fadeloop = 0;
-	About_Draw(game);
+void Gamestate_Start(struct Game *game, struct About_Resources* data) {
+	al_play_sample_instance(data->music);
+	data->fadeloop = 0;
 }
 
-int About_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
-	if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
-		UnloadGameState(game);
-		game->loadstate = GAMESTATE_MENU;
-		LoadGameState(game);
+void Gamestate_ProcessEvent(struct Game *game, struct About_Resources *data, ALLEGRO_EVENT *ev) {
+	if (ev->type == ALLEGRO_EVENT_KEY_DOWN) {
+		if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
+			SwitchGamestate(game, "about", "menu");
+		}
 	}
-	return 0;
 }
 
-void About_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
-	PROGRESS_INIT(5);
+void* Gamestate_Load(struct Game *game, void (*progress)(struct Game *game)) {
 
-	game->about.image =LoadScaledBitmap("table.png", game->viewportWidth, game->viewportHeight);
-	PROGRESS;
-	game->about.letter = LoadScaledBitmap("about/letter.png", game->viewportHeight*1.3, game->viewportHeight*1.3 );
-	PROGRESS;
+	struct About_Resources *data = malloc(sizeof(struct About_Resources));
 
-	game->about.sample = al_load_sample( GetDataFilePath("about/about.flac") );
-	PROGRESS;
+	data->image =LoadScaledBitmap(game, "table.png", game->viewport.width, game->viewport.height);
+	data->letter = LoadScaledBitmap(game, "about/letter.png", game->viewport.height*1.3, game->viewport.height*1.3 );
 
-	game->about.music = al_create_sample_instance(game->about.sample);
-	al_attach_sample_instance_to_mixer(game->about.music, game->audio.music);
-	al_set_sample_instance_playmode(game->about.music, ALLEGRO_PLAYMODE_LOOP);
-	al_set_sample_instance_position(game->about.music, game->music ? 420000 : 700000);
+	data->sample = al_load_sample( GetDataFilePath("about/about.flac") );
 
-	game->about.font = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewportHeight*0.035,0 );
-	PROGRESS;
-	game->about.x = -0.1;
-	if (!game->about.sample){
+	data->music = al_create_sample_instance(data->sample);
+	al_attach_sample_instance_to_mixer(data->music, game->audio.music);
+	al_set_sample_instance_playmode(data->music, ALLEGRO_PLAYMODE_LOOP);
+	al_set_sample_instance_position(data->music, game->config.music ? 420000 : 700000);
+
+	data->font = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.035,0 );
+	data->x = -0.1;
+	if (!data->sample){
 		fprintf(stderr, "Audio clip sample not loaded!\n" );
 		exit(-1);
 	}
-	game->about.text_bitmap = al_create_bitmap(game->viewportHeight*1.6*0.4, game->viewportHeight*3.225);
-	al_set_target_bitmap(game->about.text_bitmap);
+	data->text_bitmap = al_create_bitmap(game->viewport.height*1.6*0.4, game->viewport.height*3.225);
+	al_set_target_bitmap(data->text_bitmap);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
-	al_draw_text(game->about.font, al_map_rgb(0,0,0), 0.5*al_get_bitmap_width(game->about.text_bitmap), 0.015*al_get_bitmap_height(game->about.text_bitmap), ALLEGRO_ALIGN_CENTRE, "Super Derpy: Muffin Attack");
-	al_draw_text(game->about.font, al_map_rgb(0,0,0), 0.5*al_get_bitmap_width(game->about.text_bitmap), 0.035*al_get_bitmap_height(game->about.text_bitmap), ALLEGRO_ALIGN_CENTRE, "Version 0.1a (Development Preview)");
+	al_draw_text(data->font, al_map_rgb(0,0,0), 0.5*al_get_bitmap_width(data->text_bitmap), 0.015*al_get_bitmap_height(data->text_bitmap), ALLEGRO_ALIGN_CENTRE, "Super Derpy: Muffin Attack");
+	al_draw_text(data->font, al_map_rgb(0,0,0), 0.5*al_get_bitmap_width(data->text_bitmap), 0.035*al_get_bitmap_height(data->text_bitmap), ALLEGRO_ALIGN_CENTRE, "Version 0.1a (Development Preview)");
 	
 	float y=0.07;
 	void draw_text(char* text) {
-		al_draw_text(game->about.font, al_map_rgb(0,0,0), 0, y*al_get_bitmap_height(game->about.text_bitmap), ALLEGRO_ALIGN_LEFT, text);
+		al_draw_text(data->font, al_map_rgb(0,0,0), 0, y*al_get_bitmap_height(data->text_bitmap), ALLEGRO_ALIGN_LEFT, text);
 		y+=0.0131;
 	}
 
@@ -184,17 +181,28 @@ void About_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	draw_text("or its associates.");
 	draw_text("");
 	draw_text("http://www.superderpy.com/");
-	PROGRESS;
+
+	al_set_target_backbuffer(game->display);
+	return data;
 }
 
-void About_Unload(struct Game *game) {
-	if (game->about.fadeloop!=0) {
-		FadeGameState(game, false);
-	}
-	al_destroy_bitmap(game->about.image);
-	al_destroy_bitmap(game->about.letter);
-	al_destroy_bitmap(game->about.text_bitmap);
-	al_destroy_sample_instance(game->about.music);
-	al_destroy_sample(game->about.sample);
-	al_destroy_font(game->about.font);
+void Gamestate_Unload(struct Game *game, struct About_Resources* data) {
+	al_destroy_bitmap(data->image);
+	al_destroy_bitmap(data->letter);
+	al_destroy_bitmap(data->text_bitmap);
+	al_destroy_sample_instance(data->music);
+	al_destroy_sample(data->sample);
+	al_destroy_font(data->font);
+	free(data);
 }
+
+void Gamestate_Stop(struct Game *game, struct About_Resources* data) {
+	if (data->fadeloop!=0) {
+		FadeGamestate(game, false);
+	}
+}
+
+void Gamestate_Reload(struct Game *game, struct About_Resources* data) {}
+
+void Gamestate_Resume(struct Game *game, struct About_Resources* data) {}
+void Gamestate_Pause(struct Game *game, struct About_Resources* data) {}

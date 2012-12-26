@@ -41,10 +41,7 @@ void Gamestate_Start(struct Game *game, struct Disclaimer_Resources* data) {
 
 void Gamestate_ProcessEvent(struct Game *game, struct Disclaimer_Resources* data, ALLEGRO_EVENT *ev) {
 	if (ev->type==ALLEGRO_EVENT_KEY_DOWN) {
-		StopGamestate(game, "disclaimer");
-		UnloadGamestate(game, "disclaimer");
-		LoadGamestate(game, "intro");
-		StartGamestate(game, "intro");
+		SwitchGamestate(game, "disclaimer", "about");
 	}
 }
 
@@ -63,6 +60,7 @@ void Gamestate_Stop(struct Game *game, struct Disclaimer_Resources* data) {
 void Gamestate_Unload(struct Game *game, struct Disclaimer_Resources* data) {
 	al_destroy_font(data->font);
 	al_destroy_font(data->font_small);
+	free(data);
 }
 
 void Gamestate_Reload(struct Game *game, struct Disclaimer_Resources* data) {}

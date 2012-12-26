@@ -310,6 +310,19 @@ int main(int argc, char **argv){
 			bool gameActive = false;
 
 			while (tmp) {
+				if ((tmp->pending_start) && (tmp->started)) {
+					PrintConsole(&game, "Stopping gamestate \"%s\"...", tmp->name);
+					(*tmp->api.Gamestate_Stop)(&game, tmp->data);
+					tmp->started = false;
+					tmp->pending_start = false;
+				} else if ((tmp->pending_load) && (tmp->loaded)) {
+					PrintConsole(&game, "Unloading gamestate \"%s\"...", tmp->name);
+					tmp->loaded = false;
+					tmp->pending_load = false;
+					(*tmp->api.Gamestate_Unload)(&game, tmp->data);
+					dlclose(tmp->handle);
+					tmp->handle = NULL;
+				}
 				if ((tmp->pending_load) && (!tmp->loaded)) {
 					PrintConsole(&game, "Loading gamestate \"%s\"...", tmp->name);
 					// TODO: take proper game name
@@ -347,19 +360,6 @@ int main(int argc, char **argv){
 						tmp->loaded = true;
 						tmp->pending_load = false;
 					}
-				} else if ((tmp->pending_start) && (tmp->started)) {
-					PrintConsole(&game, "Stopping gamestate \"%s\"...", tmp->name);
-					(*tmp->api.Gamestate_Stop)(&game, tmp->data);
-					tmp->started = false;
-					tmp->pending_start = false;
-				}
-				else if ((tmp->pending_load) && (tmp->loaded)) {
-					PrintConsole(&game, "Unloading gamestate \"%s\"...", tmp->name);
-					tmp->loaded = false;
-					tmp->pending_load = false;
-					(*tmp->api.Gamestate_Unload)(&game, tmp->data);
-					dlclose(tmp->handle);
-					tmp->handle = NULL;
 				} else if ((tmp->pending_start) && (!tmp->started)) {
 					if (!tmp->loaded) {
 						PrintConsole(&game, "Tried to start not loaded gamestate \"%s\"!", tmp->name);
