@@ -174,7 +174,9 @@ void Gamestate_Draw(struct Game *game, struct IntroResources* data) {
 		PrintConsole(game, "This was the last page.");
 		data->in_animation = false;
 		data->page--;
-		SwitchGamestate(game, "intro", "map");
+		StopGamestate(game, "intro");
+		LoadGamestate(game, "map");
+		StartGamestate(game, "map");
 	}
 }
 
@@ -187,7 +189,9 @@ void Gamestate_Start(struct Game *game, struct IntroResources* data) {
 void Gamestate_ProcessEvent(struct Game *game, struct IntroResources* data, ALLEGRO_EVENT *ev) {
 	if (ev->type != ALLEGRO_EVENT_KEY_DOWN) return;
 	if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
-		SwitchGamestate(game, "intro", "map");
+		StopGamestate(game, "intro");
+		LoadGamestate(game, "map");
+		StartGamestate(game, "map");
 		return;
 	}
 	if (!data->in_animation) {

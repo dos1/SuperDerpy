@@ -10,7 +10,7 @@ MACRO(GAMESTATE name)
 
 ENDMACRO()
 
-#GAMESTATE("menu")
+GAMESTATE("menu")
 GAMESTATE("disclaimer")
 GAMESTATE("intro")
 GAMESTATE("map")

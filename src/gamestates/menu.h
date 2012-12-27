@@ -18,7 +18,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-#include "../main.h"
+
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_audio.h>
 
 /*! \brief Enum of menu states in Menu and Pause game states. */
 enum menustate_enum {
@@ -31,7 +34,7 @@ enum menustate_enum {
 };
 
 /*! \brief Resources used by Menu state. */
-struct Menu {
+struct MenuResources {
 		ALLEGRO_BITMAP *image; /*!< Bitmap with lower portion of menu landscape. */
 		ALLEGRO_BITMAP *cloud; /*!< Bitmap with bigger cloud. */
 		ALLEGRO_BITMAP *cloud2; /*!< Bitmap with small cloud. */
@@ -71,12 +74,5 @@ struct Menu {
 		} options; /*!< Options which can be changed in menu. */
 };
 
-void DrawMenuState(struct Game *game);
-void Menu_Draw(struct Game *game);
-void Menu_Logic(struct Game *game);
-void Menu_Preload(struct Game *game, void (*progress)(struct Game*, float));
-void Menu_Stop(struct Game *game);
-void Menu_Unload(struct Game *game);
-void Menu_Load(struct Game *game);
-int Menu_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
-void ChangeMenuState(struct Game *game, enum menustate_enum state);
+//void DrawMenuState(struct Game *game);
+//void ChangeMenuState(struct Game *game, enum menustate_enum state);

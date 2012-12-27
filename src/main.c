@@ -283,7 +283,7 @@ int main(int argc, char **argv){
 	game.shuttingdown = false;
 	game.restart = false;
 
-	char* gamestate = strdup("disclaimer"); // FIXME: don't hardcore gamestate
+	char* gamestate = strdup("menu"); // FIXME: don't hardcore gamestate
 
 	int c;
 	while ((c = getopt (argc, argv, "l:s:")) != -1)
@@ -310,26 +310,41 @@ int main(int argc, char **argv){
 		if (redraw && al_is_event_queue_empty(game._priv.event_queue)) {
 
 			struct Gamestate *tmp = game._priv.gamestates;
-			bool gameActive = false;
-
 			// FIXME: move to function
 			// TODO: support dependences
 			while (tmp) {
 				if ((tmp->pending_start) && (tmp->started)) {
 					PrintConsole(&game, "Stopping gamestate \"%s\"...", tmp->name);
+					al_clear_to_color(al_map_rgb(255,255,0));
+					DrawConsole(&game);
+					al_flip_display();
 					(*tmp->api.Gamestate_Stop)(&game, tmp->data);
 					tmp->started = false;
 					tmp->pending_start = false;
-				} else if ((tmp->pending_load) && (tmp->loaded)) {
+				}
+
+				tmp=tmp->next;
+			}
+
+			tmp = game._priv.gamestates;
+			// FIXME: move to function
+			// TODO: support dependences
+			while (tmp) {
+				if ((tmp->pending_load) && (tmp->loaded)) {
 					PrintConsole(&game, "Unloading gamestate \"%s\"...", tmp->name);
+					al_clear_to_color(al_map_rgb(255,0,0));
+					DrawConsole(&game);
+					al_flip_display();
 					tmp->loaded = false;
 					tmp->pending_load = false;
 					(*tmp->api.Gamestate_Unload)(&game, tmp->data);
 					dlclose(tmp->handle);
 					tmp->handle = NULL;
-				}
-				if ((tmp->pending_load) && (!tmp->loaded)) {
+				} else if ((tmp->pending_load) && (!tmp->loaded)) {
 					PrintConsole(&game, "Loading gamestate \"%s\"...", tmp->name);
+					al_clear_to_color(al_map_rgb(0,0,255));
+					DrawConsole(&game);
+					al_flip_display();
 					// TODO: take proper game name
 					char libname[1024];
 					sprintf(libname, "libsuperderpy-%s-%s.so", "muffinattack", tmp->name);
@@ -365,20 +380,27 @@ int main(int argc, char **argv){
 						tmp->loaded = true;
 						tmp->pending_load = false;
 					}
-				} else if ((tmp->pending_start) && (!tmp->started)) {
-					if (!tmp->loaded) {
-						PrintConsole(&game, "Tried to start not loaded gamestate \"%s\"!", tmp->name);
-						tmp->pending_start = false;
-					} else {
-						PrintConsole(&game, "Starting gamestate \"%s\"...", tmp->name);
-						(*tmp->api.Gamestate_Start)(&game, tmp->data);
-						tmp->started = true;
-						tmp->pending_start = false;
-					}
+				}
+
+				tmp=tmp->next;
+			}
+
+			bool gameActive = false;
+			tmp=game._priv.gamestates;
+
+			while (tmp) {
+
+				if ((tmp->pending_start) && (!tmp->started) && (tmp->loaded)) {
+					PrintConsole(&game, "Starting gamestate \"%s\"...", tmp->name);
+					al_clear_to_color(al_map_rgb(0,255,255));
+					DrawConsole(&game);
+					al_flip_display();
+					(*tmp->api.Gamestate_Start)(&game, tmp->data);
+					tmp->started = true;
+					tmp->pending_start = false;
 				}
 
 				if ((tmp->started) || (tmp->pending_start) || (tmp->pending_load)) gameActive = true;
-
 				tmp=tmp->next;
 			}
 
@@ -386,7 +408,6 @@ int main(int argc, char **argv){
 				PrintConsole(&game, "No gamestates left, exiting...");
 				break;
 			}
-
 
 			DrawGamestates(&game);
 			DrawConsole(&game);
@@ -452,11 +473,17 @@ int main(int argc, char **argv){
 	while (tmp) {
 		if (tmp->started) {
 			PrintConsole(&game, "Stopping gamestate \"%s\"...", tmp->name);
+			al_clear_to_color(al_map_rgb(255,255,0));
+			DrawConsole(&game);
+			al_flip_display();
 			(*tmp->api.Gamestate_Stop)(&game, tmp->data);
 			tmp->started = false;
 		}
 		if (tmp->loaded) {
 			PrintConsole(&game, "Unloading gamestate \"%s\"...", tmp->name);
+			al_clear_to_color(al_map_rgb(255,0,0));
+			DrawConsole(&game);
+			al_flip_display();
 			(*tmp->api.Gamestate_Unload)(&game, tmp->data);
 			dlclose(tmp->handle);
 			tmp->loaded = false;

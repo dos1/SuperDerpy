@@ -63,7 +63,7 @@ void LoadGamestate(struct Game *game, const char* name) {
 	struct Gamestate *gs = FindGamestate(game, name);
 	if (gs) {
 		if (gs->loaded) {
-			PrintConsole(game, "Gamestate %s already loaded.", name);
+			PrintConsole(game, "Gamestate \"%s\" already loaded.", name);
 			return;
 		}
 		gs->pending_load = true;
@@ -74,20 +74,21 @@ void LoadGamestate(struct Game *game, const char* name) {
 		gs->fade_counter = 0;
 		gs->pending_load = true;
 	}
-	PrintConsole(game, "Gamestate %s marked to be LOADED.", name);
+	PrintConsole(game, "Gamestate \"%s\" marked to be LOADED.", name);
 }
 
 void UnloadGamestate(struct Game *game, const char* name) {
 	struct Gamestate *gs = FindGamestate(game, name);
 	if (gs) {
 		if (!gs->loaded) {
-			PrintConsole(game, "Gamestate %s already unloaded.", name);
+			PrintConsole(game, "Gamestate \"%s\" already unloaded.", name);
 			return;
 		}
+		if (gs->started) gs->pending_start=true;
 		gs->pending_load = true;
-		PrintConsole(game, "Gamestate %s marked to be UNLOADED.", name);
+		PrintConsole(game, "Gamestate \"%s\" marked to be UNLOADED.", name);
 	} else {
-		PrintConsole(game, "Tried to unload nonexisitent gamestate %s", name);
+		PrintConsole(game, "Tried to unload nonexisitent gamestate \"%s\"", name);
 	}
 }
 
@@ -95,13 +96,13 @@ void StartGamestate(struct Game *game, const char* name) {
 	struct Gamestate *gs = FindGamestate(game, name);
 	if (gs) {
 		if (gs->started) {
-			PrintConsole(game, "Gamestate %s already started.", name);
+			PrintConsole(game, "Gamestate \"%s\" already started.", name);
 			return;
 		}
 		gs->pending_start = true;
-		PrintConsole(game, "Gamestate %s marked to be STARTED.", name);
+		PrintConsole(game, "Gamestate \"%s\" marked to be STARTED.", name);
 	} else {
-		PrintConsole(game, "Tried to start nonexisitent gamestate %s", name);
+		PrintConsole(game, "Tried to start nonexisitent gamestate \"%s\"", name);
 	}
 }
 
@@ -109,13 +110,13 @@ void StopGamestate(struct Game *game, const char* name) {
 	struct Gamestate *gs = FindGamestate(game, name);
 	if (gs) {
 		if (!gs->started) {
-			PrintConsole(game, "Gamestate %s already stopped.", name);
+			PrintConsole(game, "Gamestate \"%s\" already stopped.", name);
 			return;
 		}
 		gs->pending_start = true;
-		PrintConsole(game, "Gamestate %s marked to be STOPPED.", name);
+		PrintConsole(game, "Gamestate \"%s\" marked to be STOPPED.", name);
 	} else {
-		PrintConsole(game, "Tried to stop nonexisitent gamestate %s", name);
+		PrintConsole(game, "Tried to stop nonexisitent gamestate \"%s\"", name);
 	}
 }
 
@@ -123,17 +124,17 @@ void PauseGamestate(struct Game *game, const char* name) {
 	struct Gamestate *gs = FindGamestate(game, name);
 	if (gs) {
 		if (!gs->started) {
-			PrintConsole(game, "Tried to pause gamestate %s which is not started.", name);
+			PrintConsole(game, "Tried to pause gamestate \"%s\" which is not started.", name);
 			return;
 		}
 		if (gs->paused) {
-			PrintConsole(game, "Gamestate %s already paused.", name);
+			PrintConsole(game, "Gamestate \"%s\" already paused.", name);
 			return;
 		}
 		gs->paused = true;
-		PrintConsole(game, "Gamestate %s paused.", name);
+		PrintConsole(game, "Gamestate \"%s\" paused.", name);
 	} else {
-		PrintConsole(game, "Tried to pause nonexisitent gamestate %s", name);
+		PrintConsole(game, "Tried to pause nonexisitent gamestate \"%s\"", name);
 	}
 }
 
@@ -141,17 +142,17 @@ void ResumeGamestate(struct Game *game, const char* name) {
 	struct Gamestate *gs = FindGamestate(game, name);
 	if (gs) {
 		if (!gs->started) {
-			PrintConsole(game, "Tried to resume gamestate %s which is not started.", name);
+			PrintConsole(game, "Tried to resume gamestate \"%s\" which is not started.", name);
 			return;
 		}
 		if (!gs->paused) {
-			PrintConsole(game, "Gamestate %s already resumed.", name);
+			PrintConsole(game, "Gamestate \"%s\" already resumed.", name);
 			return;
 		}
 		gs->paused = false;
-		PrintConsole(game, "Gamestate %s resumed.", name);
+		PrintConsole(game, "Gamestate \"%s\" resumed.", name);
 	} else {
-		PrintConsole(game, "Tried to resume nonexisitent gamestate %s", name);
+		PrintConsole(game, "Tried to resume nonexisitent gamestate \"%s\"", name);
 	}
 }
 
