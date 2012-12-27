@@ -25,7 +25,7 @@
 #include "../utils.h"
 #include "menu.h"
 
-int Gamestate_ProgressCount = 0;
+int Gamestate_ProgressCount = 24;
 
 void DrawMenuState(struct Game *game, struct MenuResources *data) {
 	ALLEGRO_FONT *font;
@@ -186,15 +186,20 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 	data->options.fps = game->config.fps;
 	data->options.width = game->config.width;
 	data->options.height = game->config.height;
-	data->loaded = true;
+	(*progress)(game);
 	data->image = LoadScaledBitmap(game,  "menu/menu.png", game->viewport.width, game->viewport.width*(1240.0/3910.0));
+	(*progress)(game);
 	data->mountain = LoadScaledBitmap(game,  "menu/mountain.png", game->viewport.height*1.6*0.055, game->viewport.height/9 );
+	(*progress)(game);
 	data->cloud = LoadScaledBitmap(game,  "menu/cloud.png", game->viewport.height*1.6*0.5, game->viewport.height*0.25 );
+	(*progress)(game);
 	data->cloud2 = LoadScaledBitmap(game,  "menu/cloud2.png", game->viewport.height*1.6*0.2, game->viewport.height*0.1 );
+	(*progress)(game);
 	data->logo = LoadScaledBitmap(game,  "menu/logo.png", game->viewport.height*1.6*0.3, game->viewport.height*0.35 );
 	data->blurbg = al_create_bitmap(game->viewport.height*1.6*0.3, game->viewport.height*0.35);
 	data->blurbg2 = al_create_bitmap(game->viewport.height*1.6*0.3, game->viewport.height*0.35);
 	data->logoblur = al_create_bitmap(game->viewport.height*1.6*0.3+4, game->viewport.height*0.35+4);
+	(*progress)(game);
 	al_set_target_bitmap(data->logoblur);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 	float alpha = (1.0/40.0);
@@ -206,36 +211,52 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 				al_draw_tinted_bitmap(data->logo, color, bx, by, 0);
 		}
 	}
+	(*progress)(game);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 	data->glass = LoadScaledBitmap(game,  "menu/glass.png", game->viewport.height*1.6*0.3, game->viewport.height*0.35 );
+	(*progress)(game);
 	//data->pinkcloud = LoadScaledBitmap(game,  "menu/pinkcloud.png", game->viewport.width*0.33125, game->viewport.height*0.8122);
 	data->pinkcloud = LoadScaledBitmap(game,  "menu/pinkcloud.png", game->viewport.height*0.8122*(1171.0/2218.0), game->viewport.height*0.8122);
+	(*progress)(game);
 	al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
 	data->rain = al_load_bitmap( GetDataFilePath("menu/rain.png") );
+	(*progress)(game);
 	data->pie = al_load_bitmap( GetDataFilePath("menu/pie.png") );
+	(*progress)(game);
 	al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR | ALLEGRO_MIN_LINEAR);
 
 	data->sample = al_load_sample( GetDataFilePath("menu/menu.flac") );
+	(*progress)(game);
 	data->rain_sample = al_load_sample( GetDataFilePath("menu/rain.flac") );
+	(*progress)(game);
 	data->click_sample = al_load_sample( GetDataFilePath("menu/click.flac") );
+	(*progress)(game);
 	data->mountain_position = game->viewport.width*0.7;
+	(*progress)(game);
 
 	data->music = al_create_sample_instance(data->sample);
 	al_attach_sample_instance_to_mixer(data->music, game->audio.music);
 	al_set_sample_instance_playmode(data->music, ALLEGRO_PLAYMODE_LOOP);
+	(*progress)(game);
 
 	data->rain_sound = al_create_sample_instance(data->rain_sample);
 	al_attach_sample_instance_to_mixer(data->rain_sound, game->audio.fx);
 	al_set_sample_instance_playmode(data->rain_sound, ALLEGRO_PLAYMODE_LOOP);
+	(*progress)(game);
 
 	data->click = al_create_sample_instance(data->click_sample);
 	al_attach_sample_instance_to_mixer(data->click, game->audio.fx);
 	al_set_sample_instance_playmode(data->click, ALLEGRO_PLAYMODE_ONCE);
+	(*progress)(game);
 
 	data->font_title = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.16,0 );
+	(*progress)(game);
 	data->font_subtitle = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.08,0 );
+	(*progress)(game);
 	data->font = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.05,0 );
+	(*progress)(game);
 	data->font_selected = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.065,0 );
+	(*progress)(game);
 
 	if (!data->sample){
 		fprintf(stderr, "Audio clip sample not loaded!\n" );
@@ -261,6 +282,7 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 	al_draw_scaled_bitmap(data->pie, 0, 0, al_get_bitmap_width(data->pie), al_get_bitmap_height(data->pie), al_get_bitmap_width(data->pie_bitmap)*0.1, al_get_bitmap_height(data->pie_bitmap)*0.3, game->viewport.height*1.6*0.09, game->viewport.height*0.06, ALLEGRO_FLIP_HORIZONTAL);
 	al_draw_scaled_bitmap(data->pie, 0, 0, al_get_bitmap_width(data->pie), al_get_bitmap_height(data->pie), al_get_bitmap_width(data->pie_bitmap)*0.3, al_get_bitmap_height(data->pie_bitmap)*0.6, game->viewport.height*1.6*0.13, game->viewport.height*0.1, 0);
 	al_destroy_bitmap(data->pie);
+	(*progress)(game);
 
 	al_set_new_bitmap_flags(ALLEGRO_VIDEO_BITMAP);
 	data->rain_bitmap = al_create_bitmap(al_get_bitmap_width(data->pinkcloud_bitmap)*0.5, al_get_bitmap_height(data->pinkcloud_bitmap)*0.1);
@@ -269,6 +291,7 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 	al_draw_scaled_bitmap(data->rain,0, 0, al_get_bitmap_width(data->rain), al_get_bitmap_height(data->rain), 0, 0, al_get_bitmap_width(data->rain_bitmap), al_get_bitmap_height(data->rain_bitmap),0);
 	al_destroy_bitmap(data->rain);
+	(*progress)(game);
 
 	al_set_target_backbuffer(game->display);
 	return data;
@@ -510,6 +533,6 @@ void Gamestate_ProcessEvent(struct Game *game, struct MenuResources* data, ALLEG
 }
 
 
-void Gamestate_Pause(struct Game *game, struct IntroResources* data) {}
-void Gamestate_Resume(struct Game *game, struct IntroResources* data) {}
-void Gamestate_Reload(struct Game *game, struct IntroResources* data) {}
+void Gamestate_Pause(struct Game *game, struct MenuResources* data) {}
+void Gamestate_Resume(struct Game *game, struct MenuResources* data) {}
+void Gamestate_Reload(struct Game *game, struct MenuResources* data) {}

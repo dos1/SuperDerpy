@@ -24,7 +24,7 @@
 #include "../utils.h"
 #include "intro.h"
 
-int Gamestate_ProgressCount = 0;
+int Gamestate_ProgressCount = 11;
 
 void AnimPage(struct Game *game, struct IntroResources *data, int page, ALLEGRO_COLOR tint) {
 	int offset = 0;
@@ -216,28 +216,39 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 	struct IntroResources *data = malloc(sizeof(struct IntroResources));
 
 	data->animsprites[0] = LoadScaledBitmap(game, "intro/1.png", (int)(game->viewport.height*1.6*0.3125)*2, game->viewport.height*0.63*2);
+	(*progress)(game);
 	data->animsprites[1] = LoadScaledBitmap(game, "intro/2.png", (int)(game->viewport.height*1.7*0.3125)*4, game->viewport.height*0.47*3);
+	(*progress)(game);
 	data->animsprites[2] = LoadScaledBitmap(game, "intro/3.png", (int)(game->viewport.height*1.6*0.3125)*3, game->viewport.height*0.63*3);
+	(*progress)(game);
 	data->animsprites[3] = LoadScaledBitmap(game, "intro/4.png", (int)(game->viewport.height*1.6*0.3125)*2, game->viewport.height*0.63*2);
+	(*progress)(game);
 	data->animsprites[4] = LoadScaledBitmap(game, "intro/5.png", (int)(game->viewport.height*1.6*0.3125)*5, game->viewport.height*0.63*3);
+	(*progress)(game);
 
 	data->table_bitmap =LoadScaledBitmap(game, "intro/paper.png", game->viewport.width, game->viewport.height);
+	(*progress)(game);
 	data->frame =LoadScaledBitmap(game, "intro/frame.png", game->viewport.width, game->viewport.height);
+	(*progress)(game);
 
 	data->sample = al_load_sample( GetDataFilePath("intro/intro.flac") );
+	(*progress)(game);
 
 	data->music = al_create_sample_instance(data->sample);
 	al_attach_sample_instance_to_mixer(data->music, game->audio.music);
 	al_set_sample_instance_gain(data->music, 0.75);
 	al_set_sample_instance_playmode(data->music, ALLEGRO_PLAYMODE_LOOP);
+	(*progress)(game);
 
 	if (!data->sample){
 		fprintf(stderr, "Audio clip sample not loaded!\n" );
 		exit(-1);
 	}
 	data->table = al_create_bitmap(game->viewport.width*2, game->viewport.height);
+	(*progress)(game);
 
 	data->font = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.04,0 );
+	(*progress)(game);
 
 	return data;
 }

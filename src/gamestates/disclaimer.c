@@ -23,7 +23,7 @@
 #include "../utils.h"
 #include "disclaimer.h"
 
-int Gamestate_ProgressCount = 0;
+int Gamestate_ProgressCount = 2;
 
 void Gamestate_Logic(struct Game *game, struct DisclaimerResources* data) {}
 
@@ -49,8 +49,9 @@ void Gamestate_ProcessEvent(struct Game *game, struct DisclaimerResources* data,
 void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 	struct DisclaimerResources *data = malloc(sizeof(struct DisclaimerResources));
 	data->font_small = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.05,0 );
+	(*progress)(game);
 	data->font = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.065,0 );
-	if (progress) (*progress)(game);
+	(*progress)(game);
 	return data;
 }
 

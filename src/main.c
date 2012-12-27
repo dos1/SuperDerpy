@@ -310,6 +310,8 @@ int main(int argc, char **argv){
 		if (redraw && al_is_event_queue_empty(game._priv.event_queue)) {
 
 			struct Gamestate *tmp = game._priv.gamestates;
+			int toLoad = 0, loaded = 0;
+
 			// FIXME: move to function
 			// TODO: support dependences
 			while (tmp) {
@@ -323,12 +325,14 @@ int main(int argc, char **argv){
 					tmp->pending_start = false;
 				}
 
+				if ((tmp->pending_load) && (!tmp->loaded)) toLoad++;
 				tmp=tmp->next;
 			}
 
 			tmp = game._priv.gamestates;
 			// FIXME: move to function
 			// TODO: support dependences
+
 			while (tmp) {
 				if ((tmp->pending_load) && (tmp->loaded)) {
 					PrintConsole(&game, "Unloading gamestate \"%s\"...", tmp->name);
@@ -352,11 +356,13 @@ int main(int argc, char **argv){
 					if (!tmp->handle) {
 						PrintConsole(&game, "Error while loading gamestate \"%s\": %s", tmp->name, dlerror());
 						tmp->pending_load = false;
+						tmp->pending_start = false;
 					} else {
 
 						void gs_error() {
 							PrintConsole(&game, "Error on resolving gamestate symbol: %s", dlerror());
 							tmp->pending_load = false;
+							tmp->pending_start = false;
 							tmp=tmp->next;
 						}
 
@@ -375,7 +381,19 @@ int main(int argc, char **argv){
 
 						if (!(tmp->api.Gamestate_ProgressCount = dlsym(tmp->handle, "Gamestate_ProgressCount"))) { gs_error(); continue; }
 
-						tmp->data = (*tmp->api.Gamestate_Load)(&game, NULL);
+						int p = 0;
+						void progress(struct Game *game) {
+							p++;
+							al_set_target_backbuffer(game->display);
+							al_clear_to_color(al_map_rgb(0,0,255));
+							float progress = ((p / (*(tmp->api.Gamestate_ProgressCount) ? (float)*(tmp->api.Gamestate_ProgressCount) : 1))/(float)toLoad)+(loaded/(float)toLoad);
+							PrintConsole(game, "[%s] Progress: %d% (%d/%d)", tmp->name, (int)(progress*100), p, *(tmp->api.Gamestate_ProgressCount));
+							DrawConsole(game);
+							al_flip_display();
+						}
+
+						tmp->data = (*tmp->api.Gamestate_Load)(&game, &progress);
+						loaded++;
 
 						tmp->loaded = true;
 						tmp->pending_load = false;

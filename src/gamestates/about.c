@@ -24,7 +24,7 @@
 #include "../utils.h"
 #include "about.h"
 
-int Gamestate_ProgressCount = 0;
+int Gamestate_ProgressCount = 7;
 
 void Gamestate_Logic(struct Game *game, struct AboutResources* data) {
 	if (al_get_sample_instance_position(data->music)<700000) { return; }
@@ -75,16 +75,21 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game *game)) {
 	struct AboutResources *data = malloc(sizeof(struct AboutResources));
 
 	data->image =LoadScaledBitmap(game, "table.png", game->viewport.width, game->viewport.height);
+	(*progress)(game);
 	data->letter = LoadScaledBitmap(game, "about/letter.png", game->viewport.height*1.3, game->viewport.height*1.3 );
+	(*progress)(game);
 
 	data->sample = al_load_sample( GetDataFilePath("about/about.flac") );
+	(*progress)(game);
 
 	data->music = al_create_sample_instance(data->sample);
 	al_attach_sample_instance_to_mixer(data->music, game->audio.music);
 	al_set_sample_instance_playmode(data->music, ALLEGRO_PLAYMODE_LOOP);
 	al_set_sample_instance_position(data->music, game->config.music ? 420000 : 700000);
+	(*progress)(game);
 
 	data->font = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.035,0 );
+	(*progress)(game);
 	data->x = -0.1;
 	if (!data->sample){
 		fprintf(stderr, "Audio clip sample not loaded!\n" );
@@ -95,7 +100,8 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game *game)) {
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 	al_draw_text(data->font, al_map_rgb(0,0,0), 0.5*al_get_bitmap_width(data->text_bitmap), 0.015*al_get_bitmap_height(data->text_bitmap), ALLEGRO_ALIGN_CENTRE, "Super Derpy: Muffin Attack");
 	al_draw_text(data->font, al_map_rgb(0,0,0), 0.5*al_get_bitmap_width(data->text_bitmap), 0.035*al_get_bitmap_height(data->text_bitmap), ALLEGRO_ALIGN_CENTRE, "Version 0.1a (Development Preview)");
-	
+	(*progress)(game);
+
 	float y=0.07;
 	void draw_text(char* text) {
 		al_draw_text(data->font, al_map_rgb(0,0,0), 0, y*al_get_bitmap_height(data->text_bitmap), ALLEGRO_ALIGN_LEFT, text);
@@ -182,6 +188,7 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game *game)) {
 	draw_text("or its associates.");
 	draw_text("");
 	draw_text("http://www.superderpy.com/");
+	(*progress)(game);
 
 	al_set_target_backbuffer(game->display);
 	return data;

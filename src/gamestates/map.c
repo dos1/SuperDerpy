@@ -24,7 +24,7 @@
 #include "../config.h"
 #include "map.h"
 
-int Gamestate_ProgressCount = 0;
+int Gamestate_ProgressCount = 10;
 
 void Gamestate_Draw(struct Game *game, struct MapResources* data) {
 	al_draw_bitmap(data->map, 0, 0, 0);
@@ -101,24 +101,32 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 	data->selected = data->available;
 	PrintConsole(game, "Last level available: %d", data->selected);
 	data->arrowpos = 0;
+	(*progress)(game);
 
 	data->map_bg = LoadScaledBitmap(game, "map/background.png", game->viewport.height*1.6, game->viewport.height);
+	(*progress)(game);
 	char filename[30] = { };
 	sprintf(filename, "map/highlight%d.png", data->available);
 	data->highlight = LoadScaledBitmap(game, filename, game->viewport.height*1.6, game->viewport.height);
+	(*progress)(game);
 
 	data->arrow = al_load_bitmap( GetDataFilePath("map/arrow.png") );
+	(*progress)(game);
 
 	data->click_sample = al_load_sample( GetDataFilePath("menu/click.flac") );
+	(*progress)(game);
 	data->sample = al_load_sample( GetDataFilePath("map/map.flac") );
+	(*progress)(game);
 
 	data->music = al_create_sample_instance(data->sample);
 	al_attach_sample_instance_to_mixer(data->music, game->audio.music);
 	al_set_sample_instance_playmode(data->music, ALLEGRO_PLAYMODE_LOOP);
+	(*progress)(game);
 
 	data->click = al_create_sample_instance(data->click_sample);
 	al_attach_sample_instance_to_mixer(data->click, game->audio.fx);
 	al_set_sample_instance_playmode(data->click, ALLEGRO_PLAYMODE_ONCE);
+	(*progress)(game);
 
 	if (!data->sample){
 		fprintf(stderr, "Audio clip sample not loaded!\n" );
@@ -130,10 +138,12 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 	}
 
 	data->map = LoadScaledBitmap(game, "table.png", game->viewport.width, game->viewport.height);
+	(*progress)(game);
 	al_set_target_bitmap(data->map);
 	al_draw_bitmap(data->map_bg, (game->viewport.width-game->viewport.height*1.6)/2, 0 ,0);
 	al_draw_bitmap(data->highlight, (game->viewport.width-game->viewport.height*1.6)/2, 0 ,0);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
+	(*progress)(game);
 
 	return data;
 }

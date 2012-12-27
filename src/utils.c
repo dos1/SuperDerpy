@@ -162,7 +162,6 @@ ALLEGRO_BITMAP* LoadScaledBitmap(struct Game *game, char* filename, int width, i
 	return target;*/
 }
 
-
 char* GetDataFilePath(char* filename) {
 
 	//TODO: support for current game
