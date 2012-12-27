@@ -312,6 +312,8 @@ int main(int argc, char **argv){
 			struct Gamestate *tmp = game._priv.gamestates;
 			bool gameActive = false;
 
+			// FIXME: move to function
+			// TODO: support dependences
 			while (tmp) {
 				if ((tmp->pending_start) && (tmp->started)) {
 					PrintConsole(&game, "Stopping gamestate \"%s\"...", tmp->name);
@@ -402,47 +404,45 @@ int main(int argc, char **argv){
 			else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
 				break;
 			}
-			else if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
-				/*PrintConsole(&game, "KEYCODE: %s", al_keycode_to_name(ev.keyboard.keycode));*/
-			#ifdef ALLEGRO_MACOSX
-				if (ev.keyboard.keycode == 104) { //TODO: report to upstream
-			#else
-				if (ev.keyboard.keycode == ALLEGRO_KEY_TILDE) {
-			#endif
-					game._priv.showconsole = !game._priv.showconsole;
-				}
-				else if ((game.config.debug) && (ev.keyboard.keycode == ALLEGRO_KEY_F1)) {
-					int i;
-					for (i=0; i<512; i++) {
-						LogicGamestates(&game);
-					}
-					game._priv.showconsole = true;
-					PrintConsole(&game, "DEBUG: 512 frames skipped...");
-				}	else if ((game.config.debug) && (ev.keyboard.keycode == ALLEGRO_KEY_F10)) {
-					double speed = ALLEGRO_BPS_TO_SECS(al_get_timer_speed(game._priv.timer)); // inverting
-					speed -= 10;
-					if (speed<10) speed = 10;
-					al_set_timer_speed(game._priv.timer, ALLEGRO_BPS_TO_SECS(speed));
-					game._priv.showconsole = true;
-					PrintConsole(&game, "DEBUG: Gameplay speed: %.2fx", speed/60.0);
-				}	else if ((game.config.debug) && (ev.keyboard.keycode == ALLEGRO_KEY_F11)) {
-					double speed = ALLEGRO_BPS_TO_SECS(al_get_timer_speed(game._priv.timer)); // inverting
-					speed += 10;
-					if (speed>600) speed = 600;
-					al_set_timer_speed(game._priv.timer, ALLEGRO_BPS_TO_SECS(speed));
-					game._priv.showconsole = true;
-					PrintConsole(&game, "DEBUG: Gameplay speed: %.2fx", speed/60.0);
-				} else if ((game.config.debug) && (ev.keyboard.keycode == ALLEGRO_KEY_F12)) {
-					ALLEGRO_PATH *path = al_get_standard_path(ALLEGRO_USER_DOCUMENTS_PATH);
-					char filename[255] = { };
-					sprintf(filename, "SuperDerpy_%ld_%ld.png", time(NULL), clock());
-					al_set_path_filename(path, filename);
-					al_save_bitmap(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP), al_get_backbuffer(game.display));
-					PrintConsole(&game, "Screenshot stored in %s", al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
-					al_destroy_path(path);
-				}
+		#ifdef ALLEGRO_MACOSX
+			else if ((ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == 104)) { //TODO: report to upstream
+		#else
+			else if ((ev.type == ALLEGRO_EVENT_KEY_DOWN) && (ev.keyboard.keycode == ALLEGRO_KEY_TILDE)) {
+		#endif
+				game._priv.showconsole = !game._priv.showconsole;
 			}
-			EventGamestates(&game, &ev);
+			else if ((ev.type == ALLEGRO_EVENT_KEY_DOWN) && (game.config.debug) && (ev.keyboard.keycode == ALLEGRO_KEY_F1)) {
+				int i;
+				for (i=0; i<512; i++) {
+					LogicGamestates(&game);
+				}
+				game._priv.showconsole = true;
+				PrintConsole(&game, "DEBUG: 512 frames skipped...");
+			}	else if ((ev.type == ALLEGRO_EVENT_KEY_DOWN) && (game.config.debug) && (ev.keyboard.keycode == ALLEGRO_KEY_F10)) {
+				double speed = ALLEGRO_BPS_TO_SECS(al_get_timer_speed(game._priv.timer)); // inverting
+				speed -= 10;
+				if (speed<10) speed = 10;
+				al_set_timer_speed(game._priv.timer, ALLEGRO_BPS_TO_SECS(speed));
+				game._priv.showconsole = true;
+				PrintConsole(&game, "DEBUG: Gameplay speed: %.2fx", speed/60.0);
+			}	else if ((ev.type == ALLEGRO_EVENT_KEY_DOWN) && (game.config.debug) && (ev.keyboard.keycode == ALLEGRO_KEY_F11)) {
+				double speed = ALLEGRO_BPS_TO_SECS(al_get_timer_speed(game._priv.timer)); // inverting
+				speed += 10;
+				if (speed>600) speed = 600;
+				al_set_timer_speed(game._priv.timer, ALLEGRO_BPS_TO_SECS(speed));
+				game._priv.showconsole = true;
+				PrintConsole(&game, "DEBUG: Gameplay speed: %.2fx", speed/60.0);
+			} else if ((ev.type == ALLEGRO_EVENT_KEY_DOWN) && (game.config.debug) && (ev.keyboard.keycode == ALLEGRO_KEY_F12)) {
+				ALLEGRO_PATH *path = al_get_standard_path(ALLEGRO_USER_DOCUMENTS_PATH);
+				char filename[255] = { };
+				sprintf(filename, "SuperDerpy_%ld_%ld.png", time(NULL), clock());
+				al_set_path_filename(path, filename);
+				al_save_bitmap(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP), al_get_backbuffer(game.display));
+				PrintConsole(&game, "Screenshot stored in %s", al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
+				al_destroy_path(path);
+			} else {
+				EventGamestates(&game, &ev);
+			}
 		}
 	}
 	game.shuttingdown = true;
@@ -464,7 +464,7 @@ int main(int argc, char **argv){
 		tmp=tmp->next;
 	}
 
-	// TODO: unload loading
+	// TODO: proper loading state handling
 	al_clear_to_color(al_map_rgb(0,0,0));
 	PrintConsole(&game, "Shutting down...");
 	DrawConsole(&game);

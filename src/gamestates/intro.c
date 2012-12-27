@@ -260,6 +260,7 @@ void Gamestate_Stop(struct Game *game, struct IntroResources* data) {
 	if (data->audiostream) {
 		al_set_audio_stream_playing(data->audiostream, false);
 	}
+	al_stop_sample_instance(data->music);
 }
 
 void Gamestate_Pause(struct Game *game, struct IntroResources* data) {}

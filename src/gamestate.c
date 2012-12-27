@@ -62,7 +62,7 @@ struct Gamestate* FindGamestate(struct Game *game, const char* name) {
 void LoadGamestate(struct Game *game, const char* name) {
 	struct Gamestate *gs = FindGamestate(game, name);
 	if (gs) {
-		if (!gs->loaded) {
+		if (gs->loaded) {
 			PrintConsole(game, "Gamestate %s already loaded.", name);
 			return;
 		}
