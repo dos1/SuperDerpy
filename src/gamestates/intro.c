@@ -181,6 +181,13 @@ void Gamestate_Draw(struct Game *game, struct IntroResources* data) {
 }
 
 void Gamestate_Start(struct Game *game, struct IntroResources* data) {
+	data->audiostream = NULL;
+	data->position = 0;
+	data->page = 0;
+	data->in_animation = false;
+	data->anim = 0;
+
+	FillPage(game, data, 1);
 	al_play_sample_instance(data->music);
 	FadeGamestate(game, true);
 	al_set_audio_stream_playing(data->audiostream, true);
@@ -208,12 +215,6 @@ void Gamestate_ProcessEvent(struct Game *game, struct IntroResources* data, ALLE
 void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 	struct IntroResources *data = malloc(sizeof(struct IntroResources));
 
-	data->audiostream = NULL;
-	data->position = 0;
-	data->page = 0;
-	data->in_animation = false;
-	data->anim = 0;
-
 	data->animsprites[0] = LoadScaledBitmap(game, "intro/1.png", (int)(game->viewport.height*1.6*0.3125)*2, game->viewport.height*0.63*2);
 	data->animsprites[1] = LoadScaledBitmap(game, "intro/2.png", (int)(game->viewport.height*1.7*0.3125)*4, game->viewport.height*0.47*3);
 	data->animsprites[2] = LoadScaledBitmap(game, "intro/3.png", (int)(game->viewport.height*1.6*0.3125)*3, game->viewport.height*0.63*3);
@@ -238,15 +239,10 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 
 	data->font = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.04,0 );
 
-	FillPage(game, data, 1);
-	al_set_target_bitmap(al_get_backbuffer(game->display));
 	return data;
 }
 
 void Gamestate_Unload(struct Game *game, struct IntroResources* data) {
-	if (data->audiostream) {
-		al_destroy_audio_stream(data->audiostream);
-	}
 	al_destroy_bitmap(data->frame);
 	al_destroy_bitmap(data->table);
 	int i;
@@ -263,6 +259,7 @@ void Gamestate_Stop(struct Game *game, struct IntroResources* data) {
 	FadeGamestate(game, false);
 	if (data->audiostream) {
 		al_set_audio_stream_playing(data->audiostream, false);
+		al_destroy_audio_stream(data->audiostream);
 	}
 	al_stop_sample_instance(data->music);
 }
