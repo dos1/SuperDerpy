@@ -37,7 +37,7 @@ void AnimPage(struct Game *game, struct IntroResources *data, int page, ALLEGRO_
 	if (page==3) { amount1=3; amount2=3; }
 	if (page==5) { amount1=5; amount2=3; anim*=2; }
 
-	if (page<6) al_draw_tinted_bitmap_region(data->animsprites[page-1],tint,game->viewport.height*1.6*0.3125*(int)fmod(anim,amount1),game->viewport.height*0.63*(((int)(anim/amount1))%amount2),game->viewport.height*1.6*0.3125, game->viewport.height*0.63,offset+game->viewport.width*0.09, game->viewport.height*0.18,0);
+	if (page<6) al_draw_tinted_bitmap_region(data->animsprites[page-1],tint,al_get_bitmap_width(data->animsprites[page-1])/amount1*(int)fmod(anim,amount1),al_get_bitmap_height(data->animsprites[page-1])/amount2*(((int)(anim/amount1))%amount2),al_get_bitmap_width(data->animsprites[page-1])/amount1, al_get_bitmap_height(data->animsprites[page-1])/amount2,offset+game->viewport.width*0.09, game->viewport.height*0.18,0);
 
 	amount1 = 2;
 	amount2 = 2;
@@ -45,7 +45,7 @@ void AnimPage(struct Game *game, struct IntroResources *data, int page, ALLEGRO_
 	if (page==2) { amount1=3; amount2=3; }
 	if (page==4) { amount1=5; amount2=3; anim*=2; }
 
-	if (page<5) al_draw_tinted_bitmap_region(data->animsprites[page],tint,game->viewport.height*1.6*0.3125*(int)fmod(anim,amount1),game->viewport.height*0.63*(((int)(anim/amount1))%amount2),game->viewport.height*1.6*0.3125, game->viewport.height*0.63,offset+game->viewport.width*1.09, game->viewport.height*0.18,0);
+	if (page<5) al_draw_tinted_bitmap_region(data->animsprites[page],tint,al_get_bitmap_width(data->animsprites[page])/amount1*(int)fmod(anim,amount1),al_get_bitmap_height(data->animsprites[page])/amount2*(((int)(anim/amount1))%amount2),al_get_bitmap_width(data->animsprites[page])/amount1, al_get_bitmap_height(data->animsprites[page])/amount2,offset+game->viewport.width*1.09, game->viewport.height*0.18,0);
 }
 
 void FillPage(struct Game *game, struct IntroResources *data, int page) {
@@ -211,7 +211,7 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 	data->anim = 0;
 
 	data->animsprites[0] = LoadScaledBitmap(game, "intro/1.png", (int)(game->viewport.height*1.6*0.3125)*2, game->viewport.height*0.63*2);
-	data->animsprites[1] = LoadScaledBitmap(game, "intro/2.png", (int)(game->viewport.height*1.6*0.3125)*4, game->viewport.height*0.63*3);
+	data->animsprites[1] = LoadScaledBitmap(game, "intro/2.png", (int)(game->viewport.height*1.7*0.3125)*4, game->viewport.height*0.47*3);
 	data->animsprites[2] = LoadScaledBitmap(game, "intro/3.png", (int)(game->viewport.height*1.6*0.3125)*3, game->viewport.height*0.63*3);
 	data->animsprites[3] = LoadScaledBitmap(game, "intro/4.png", (int)(game->viewport.height*1.6*0.3125)*2, game->viewport.height*0.63*2);
 	data->animsprites[4] = LoadScaledBitmap(game, "intro/5.png", (int)(game->viewport.height*1.6*0.3125)*5, game->viewport.height*0.63*3);
