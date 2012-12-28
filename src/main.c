@@ -119,6 +119,7 @@ int Console_Load(struct Game *game) {
 	game->_priv.font_console = NULL;
 	game->_priv.console = NULL;
 	game->_priv.font_console = al_load_ttf_font(GetDataFilePath(game, "fonts/DejaVuSansMono.ttf"),game->viewport.height*0.018,0 );
+	//game->_priv.font_console = al_load_ttf_font(GetDataFilePath(game, "fonts/PerfectDOSVGA437.ttf"),game->viewport.height*0.022,0 );
 	game->_priv.font = al_load_ttf_font(GetDataFilePath(game, "fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.09,0 );
 	game->_priv.console = al_create_bitmap(game->viewport.width, game->viewport.height*0.12);
 	al_set_target_bitmap(game->_priv.console);

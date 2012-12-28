@@ -98,13 +98,14 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game *game)) {
 	data->text_bitmap = al_create_bitmap(game->viewport.height*1.6*0.4, game->viewport.height*3.225);
 	al_set_target_bitmap(data->text_bitmap);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
-	al_draw_text(data->font, al_map_rgb(0,0,0), 0.5*al_get_bitmap_width(data->text_bitmap), 0.015*al_get_bitmap_height(data->text_bitmap), ALLEGRO_ALIGN_CENTRE, "Super Derpy: Muffin Attack");
-	al_draw_text(data->font, al_map_rgb(0,0,0), 0.5*al_get_bitmap_width(data->text_bitmap), 0.035*al_get_bitmap_height(data->text_bitmap), ALLEGRO_ALIGN_CENTRE, "Version 0.1a (Development Preview)");
+	al_draw_text(data->font, al_map_rgb(0,0,0), (int)(0.5*al_get_bitmap_width(data->text_bitmap)), (int)(0.015*al_get_bitmap_height(data->text_bitmap)), ALLEGRO_ALIGN_CENTRE, "Super Derpy: Muffin Attack");
+	al_draw_text(data->font, al_map_rgb(0,0,0), (int)(0.5*al_get_bitmap_width(data->text_bitmap)), (int)(0.035*al_get_bitmap_height(data->text_bitmap)), ALLEGRO_ALIGN_CENTRE, "Version 0.1a (Development Preview)");
 	(*progress)(game);
 
+	al_set_target_bitmap(data->text_bitmap);
 	float y=0.07;
 	void draw_text(char* text) {
-		al_draw_text(data->font, al_map_rgb(0,0,0), 0, y*al_get_bitmap_height(data->text_bitmap), ALLEGRO_ALIGN_LEFT, text);
+		al_draw_text(data->font, al_map_rgb(0,0,0), 0, (int)(y*al_get_bitmap_height(data->text_bitmap)), ALLEGRO_ALIGN_LEFT, text);
 		y+=0.0131;
 	}
 

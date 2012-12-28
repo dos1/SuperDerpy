@@ -44,8 +44,8 @@ void DrawHorizontalGradientRect(float x, float y, float w, float h, ALLEGRO_COLO
 }
 
 void DrawTextWithShadow(ALLEGRO_FONT *font, ALLEGRO_COLOR color, float x, float y, int flags, char const *text) {
-	al_draw_text(font, al_map_rgba(0,0,0,128), x+1, y+1, flags, text);
-	al_draw_text(font, color, x, y, flags, text);
+	al_draw_text(font, al_map_rgba(0,0,0,128), (int)x+1, (int)y+1, flags, text);
+	al_draw_text(font, color, (int)x, (int)y, flags, text);
 }
 
 void FadeGamestate(struct Game *game, bool in) {
@@ -180,18 +180,13 @@ void FatalError(struct Game *game, bool fatal, char* format, ...) {
 		PrintConsole(game, text);
 	}
 
+	al_set_target_backbuffer(game->display);
+	al_clear_to_color(al_map_rgb(0,0,170));
+	al_flip_display();
+	al_rest(1.1);
+
 	bool done = false;
 	while (!done) {
-		ALLEGRO_KEYBOARD_STATE kb;
-		al_get_keyboard_state(&kb);
-
-		int i;
-		for (i=0; i<ALLEGRO_KEY_MAX; i++) {
-			if (al_key_down(&kb, i)) {
-				done = true;
-				break;
-			}
-		}
 
 		al_set_target_backbuffer(game->display);
 		al_clear_to_color(al_map_rgb(0,0,170));
@@ -225,6 +220,17 @@ void FatalError(struct Game *game, bool fatal, char* format, ...) {
 		}
 
 		al_flip_display();
+
+		ALLEGRO_KEYBOARD_STATE kb;
+		al_get_keyboard_state(&kb);
+
+		int i;
+		for (i=0; i<ALLEGRO_KEY_MAX; i++) {
+			if (al_key_down(&kb, i)) {
+				done = true;
+				break;
+			}
+		}
 	}
 }
 
