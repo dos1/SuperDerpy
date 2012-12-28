@@ -79,7 +79,7 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game *game)) {
 	data->letter = LoadScaledBitmap(game, "about/letter.png", game->viewport.height*1.3, game->viewport.height*1.3 );
 	(*progress)(game);
 
-	data->sample = al_load_sample( GetDataFilePath("about/about.flac") );
+	data->sample = al_load_sample( GetDataFilePath(game, "about/about.flac") );
 	(*progress)(game);
 
 	data->music = al_create_sample_instance(data->sample);
@@ -88,7 +88,7 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game *game)) {
 	al_set_sample_instance_position(data->music, game->config.music ? 420000 : 700000);
 	(*progress)(game);
 
-	data->font = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.035,0 );
+	data->font = al_load_ttf_font(GetDataFilePath(game, "fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.035,0 );
 	(*progress)(game);
 	data->x = -0.1;
 	if (!data->sample){

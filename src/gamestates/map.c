@@ -110,12 +110,12 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 	data->highlight = LoadScaledBitmap(game, filename, game->viewport.height*1.6, game->viewport.height);
 	(*progress)(game);
 
-	data->arrow = al_load_bitmap( GetDataFilePath("map/arrow.png") );
+	data->arrow = al_load_bitmap( GetDataFilePath(game, "map/arrow.png") );
 	(*progress)(game);
 
-	data->click_sample = al_load_sample( GetDataFilePath("menu/click.flac") );
+	data->click_sample = al_load_sample( GetDataFilePath(game, "menu/click.flac") );
 	(*progress)(game);
-	data->sample = al_load_sample( GetDataFilePath("map/map.flac") );
+	data->sample = al_load_sample( GetDataFilePath(game, "map/map.flac") );
 	(*progress)(game);
 
 	data->music = al_create_sample_instance(data->sample);

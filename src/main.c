@@ -116,16 +116,10 @@ void SetupViewport(struct Game *game) {
 }
 
 int Console_Load(struct Game *game) {
-	game->_priv.font = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.09,0 );
-	if(!game->_priv.font) {
-		fprintf(stderr, "failed to load game font!\n");
-		return -1;
-	}
-	game->_priv.font_console = al_load_ttf_font(GetDataFilePath("fonts/DejaVuSansMono.ttf"),game->viewport.height*0.018,0 );
-	if(!game->_priv.font_console) {
-		fprintf(stderr, "failed to load console font!\n");
-		return -1;
-	}
+	game->_priv.font_console = NULL;
+	game->_priv.console = NULL;
+	game->_priv.font_console = al_load_ttf_font(GetDataFilePath(game, "fonts/DejaVuSansMono.ttf"),game->viewport.height*0.018,0 );
+	game->_priv.font = al_load_ttf_font(GetDataFilePath(game, "fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.09,0 );
 	game->_priv.console = al_create_bitmap(game->viewport.width, game->viewport.height*0.12);
 	al_set_target_bitmap(game->_priv.console);
 	al_clear_to_color(al_map_rgba(0,0,0,80));
@@ -223,7 +217,14 @@ int main(int argc, char **argv){
 		return -1;
 	}
 
-	ALLEGRO_BITMAP *icon = al_load_bitmap(GetDataFilePath("icons/superderpy.png"));
+	SetupViewport(&game);
+
+	int ret = Console_Load(&game);
+	if (ret!=0) return ret;
+
+	PrintConsole(&game, "Viewport %dx%d", game.viewport.width, game.viewport.height);
+
+	ALLEGRO_BITMAP *icon = al_load_bitmap(GetDataFilePath(&game, "icons/superderpy.png"));
 	al_set_window_title(game.display, "Super Derpy: Muffin Attack");
 	al_set_display_icon(game.display, icon);
 	al_destroy_bitmap(icon);
@@ -231,20 +232,13 @@ int main(int argc, char **argv){
 	if (game.config.fullscreen) al_hide_mouse_cursor(game.display);
 	al_inhibit_screensaver(true);
 
-	SetupViewport(&game);
-
 	al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR | ALLEGRO_MIN_LINEAR);
-
-	int ret = Console_Load(&game);
-	if (ret!=0) return ret;
-
-	PrintConsole(&game, "Viewport %dx%d", game.viewport.width, game.viewport.height);
 
 	game._priv.gamestates = NULL;
 
 	game._priv.event_queue = al_create_event_queue();
 	if(!game._priv.event_queue) {
-		fprintf(stderr, "failed to create event_queue!\n");
+		FatalError(&game, true, "Failed to create event queue.");
 		al_destroy_display(game.display);
 		return -1;
 	}
@@ -272,7 +266,7 @@ int main(int argc, char **argv){
 	al_wait_for_vsync();
 	game._priv.timer = al_create_timer(ALLEGRO_BPS_TO_SECS(60)); // logic timer
 	if(!game._priv.timer) {
-		fprintf(stderr, "failed to create timer!\n");
+		FatalError(&game, true, "Failed to create logic timer.");
 		return -1;
 	}
 	al_register_event_source(game._priv.event_queue, al_get_timer_event_source(game._priv.timer));
@@ -354,13 +348,15 @@ int main(int argc, char **argv){
 					sprintf(libname, "libsuperderpy-%s-%s.so", "muffinattack", tmp->name);
 					tmp->handle = dlopen(libname,RTLD_NOW);
 					if (!tmp->handle) {
-						PrintConsole(&game, "Error while loading gamestate \"%s\": %s", tmp->name, dlerror());
+						//PrintConsole(&game, "Error while loading gamestate \"%s\": %s", tmp->name, dlerror());
+						FatalError(&game, true, "Error while loading gamestate \"%s\": %s", tmp->name, dlerror());
+
 						tmp->pending_load = false;
 						tmp->pending_start = false;
 					} else {
 
 						void gs_error() {
-							PrintConsole(&game, "Error on resolving gamestate symbol: %s", dlerror());
+							FatalError(&game, true, "Error on resolving gamestate symbol: %s", dlerror());
 							tmp->pending_load = false;
 							tmp->pending_start = false;
 							tmp=tmp->next;

@@ -48,9 +48,9 @@ void Gamestate_ProcessEvent(struct Game *game, struct DisclaimerResources* data,
 
 void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 	struct DisclaimerResources *data = malloc(sizeof(struct DisclaimerResources));
-	data->font_small = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.05,0 );
+	data->font_small = al_load_ttf_font(GetDataFilePath(game, "fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.05,0 );
 	(*progress)(game);
-	data->font = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.065,0 );
+	data->font = al_load_ttf_font(GetDataFilePath(game, "fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.065,0 );
 	(*progress)(game);
 	return data;
 }

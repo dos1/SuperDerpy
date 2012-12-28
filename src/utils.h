@@ -40,7 +40,7 @@ ALLEGRO_BITMAP* LoadScaledBitmap(struct Game *game, char* filename, int width, i
 void FadeGamestate(struct Game *game, bool in);
 
 /*! \brief Finds path for data file. */
-char* GetDataFilePath(char* filename);
+char* GetDataFilePath(struct Game *game, char* filename);
 
 /*! \brief Print some message on game console.
  *
@@ -49,3 +49,5 @@ char* GetDataFilePath(char* filename);
  * It needs to be called in printf style.
  */
 void PrintConsole(struct Game *game, char* format, ...);
+
+void FatalError(struct Game *game, bool exit, char* format, ...);

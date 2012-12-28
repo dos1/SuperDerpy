@@ -52,7 +52,7 @@ void FillPage(struct Game *game, struct IntroResources *data, int page) {
 	char filename[30] = { };
 	sprintf(filename, "intro/%d.flac", page);
 
-	data->audiostream = al_load_audio_stream(GetDataFilePath(filename), 4, 1024);
+	data->audiostream = al_load_audio_stream(GetDataFilePath(game, filename), 4, 1024);
 	al_attach_audio_stream_to_mixer(data->audiostream, game->audio.voice);
 	al_set_audio_stream_playing(data->audiostream, false);
 	al_set_audio_stream_gain(data->audiostream, 1.75);
@@ -231,7 +231,7 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 	data->frame =LoadScaledBitmap(game, "intro/frame.png", game->viewport.width, game->viewport.height);
 	(*progress)(game);
 
-	data->sample = al_load_sample( GetDataFilePath("intro/intro.flac") );
+	data->sample = al_load_sample( GetDataFilePath(game, "intro/intro.flac") );
 	(*progress)(game);
 
 	data->music = al_create_sample_instance(data->sample);
@@ -247,7 +247,7 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 	data->table = al_create_bitmap(game->viewport.width*2, game->viewport.height);
 	(*progress)(game);
 
-	data->font = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.04,0 );
+	data->font = al_load_ttf_font(GetDataFilePath(game, "fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.04,0 );
 	(*progress)(game);
 
 	return data;

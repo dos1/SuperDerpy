@@ -132,7 +132,7 @@ ALLEGRO_BITMAP* LoadScaledBitmap(struct Game *game, char* filename, int width, i
 	ALLEGRO_BITMAP *source, *target = al_create_bitmap(width, height);
 	al_set_target_bitmap(target);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
-	char* origfn = GetDataFilePath(filename);
+	char* origfn = GetDataFilePath(game, filename);
 	void GenerateBitmap() {
 		if (memoryscale) al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
 
@@ -162,7 +162,73 @@ ALLEGRO_BITMAP* LoadScaledBitmap(struct Game *game, char* filename, int width, i
 	return target;*/
 }
 
-char* GetDataFilePath(char* filename) {
+void FatalError(struct Game *game, bool fatal, char* format, ...) {
+	char text[1024] = {};
+	if (!game->_priv.console) {
+		va_list vl;
+		va_start(vl, format);
+		vsprintf(text, format, vl);
+		va_end(vl);
+		printf("%s\n", text);
+		if (!game->_priv.font_console) exit(1);
+	} else {
+		PrintConsole(game, "Fatal Error, displaying BSOD...");
+		va_list vl;
+		va_start(vl, format);
+		vsprintf(text, format, vl);
+		va_end(vl);
+		PrintConsole(game, text);
+	}
+
+	bool done = false;
+	while (!done) {
+		ALLEGRO_KEYBOARD_STATE kb;
+		al_get_keyboard_state(&kb);
+
+		int i;
+		for (i=0; i<ALLEGRO_KEY_MAX; i++) {
+			if (al_key_down(&kb, i)) {
+				done = true;
+				break;
+			}
+		}
+
+		al_set_target_backbuffer(game->display);
+		al_clear_to_color(al_map_rgb(0,0,170));
+
+		char *header = "SUPER DERPY";
+
+		al_draw_filled_rectangle(game->viewport.width/2 - al_get_text_width(game->_priv.font_console, header)/2 - 4, (int)(game->viewport.height * 0.32), 4 + game->viewport.width/2 + al_get_text_width(game->_priv.font_console, header)/2, (int)(game->viewport.height * 0.32) + al_get_font_line_height(game->_priv.font_console), al_map_rgb(170,170,170));
+
+		al_draw_text(game->_priv.font_console, al_map_rgb(0, 0, 170), game->viewport.width/2, (int)(game->viewport.height * 0.32), ALLEGRO_ALIGN_CENTRE, header);
+
+		char *header2 = "A fatal exception 0xD3RP has occured at 0028:M00F11NZ in GST SD(01) +";
+
+		al_draw_text(game->_priv.font_console, al_map_rgb(255,255,255), game->viewport.width/2, (int)(game->viewport.height * 0.32+2*al_get_font_line_height(game->_priv.font_console)*1.25), ALLEGRO_ALIGN_CENTRE, header2);
+		al_draw_textf(game->_priv.font_console, al_map_rgb(255,255,255), game->viewport.width/2 - al_get_text_width(game->_priv.font_console, header2)/2, (int)(game->viewport.height * 0.32+3*al_get_font_line_height(game->_priv.font_console)*1.25), ALLEGRO_ALIGN_LEFT, "%p and system just doesn't know what went wrong.", game);
+
+		al_draw_text(game->_priv.font_console, al_map_rgb(255,255,255), game->viewport.width/2, (int)(game->viewport.height * 0.32+5*al_get_font_line_height(game->_priv.font_console)*1.25), ALLEGRO_ALIGN_CENTRE, text);
+
+		al_draw_text(game->_priv.font_console, al_map_rgb(255,255,255), game->viewport.width/2 - al_get_text_width(game->_priv.font_console, header2)/2, (int)(game->viewport.height * 0.32+7*al_get_font_line_height(game->_priv.font_console)*1.25), ALLEGRO_ALIGN_LEFT, "* Press any key to terminate this error.");
+		al_draw_text(game->_priv.font_console, al_map_rgb(255,255,255), game->viewport.width/2 - al_get_text_width(game->_priv.font_console, header2)/2, (int)(game->viewport.height * 0.32+8*al_get_font_line_height(game->_priv.font_console)*1.25), ALLEGRO_ALIGN_LEFT, "* Press any key to destroy all muffins in the world.");
+		al_draw_text(game->_priv.font_console, al_map_rgb(255,255,255), game->viewport.width/2 - al_get_text_width(game->_priv.font_console, header2)/2, (int)(game->viewport.height * 0.32+9*al_get_font_line_height(game->_priv.font_console)*1.25), ALLEGRO_ALIGN_LEFT, "* Just kidding, please press any key anyway.");
+
+
+		if (fatal) {
+			al_draw_text(game->_priv.font_console, al_map_rgb(255,255,255), game->viewport.width/2 - al_get_text_width(game->_priv.font_console, header2)/2, (int)(game->viewport.height * 0.32+11*al_get_font_line_height(game->_priv.font_console)*1.25), ALLEGRO_ALIGN_LEFT, "This is fatal error. My bad.");
+
+			al_draw_text(game->_priv.font_console, al_map_rgb(255,255,255), game->viewport.width/2, (int)(game->viewport.height * 0.32+13*al_get_font_line_height(game->_priv.font_console)*1.25), ALLEGRO_ALIGN_CENTRE, "Press any key to quit _");
+		} else {
+			al_draw_text(game->_priv.font_console, al_map_rgb(255,255,255), game->viewport.width/2 - al_get_text_width(game->_priv.font_console, header2)/2, (int)(game->viewport.height * 0.32+11*al_get_font_line_height(game->_priv.font_console)*1.25), ALLEGRO_ALIGN_LEFT, "Anything I can do to help?");
+
+			al_draw_text(game->_priv.font_console, al_map_rgb(255,255,255), game->viewport.width/2, (int)(game->viewport.height * 0.32+13*al_get_font_line_height(game->_priv.font_console)*1.25), ALLEGRO_ALIGN_CENTRE, "Press any key to continue _");
+		}
+
+		al_flip_display();
+	}
+}
+
+char* GetDataFilePath(struct Game *game, char* filename) {
 
 	//TODO: support for current game
 
@@ -199,7 +265,7 @@ char* GetDataFilePath(char* filename) {
 	TestPath("data/");
 
 	if (!result) {
-		printf("FATAL: Could not find data file: %s!\n", filename);
+		FatalError(game, true, "Could not find data file: %s!", filename);
 		exit(1);
 	}
 	return result;
@@ -216,8 +282,8 @@ void PrintConsole(struct Game *game, char* format, ...) {
 	ALLEGRO_BITMAP *con = al_create_bitmap(al_get_bitmap_width(game->_priv.console), al_get_bitmap_height(game->_priv.console));
 	al_set_target_bitmap(con);
 	al_clear_to_color(al_map_rgba(0,0,0,80));
-	al_draw_bitmap_region(game->_priv.console, 0, al_get_bitmap_height(game->_priv.console)*0.2, al_get_bitmap_width(game->_priv.console), al_get_bitmap_height(game->_priv.console)*0.8, 0, 0, 0);
-	al_draw_text(game->_priv.font_console, al_map_rgb(255,255,255), game->viewport.width*0.005, al_get_bitmap_height(game->_priv.console)*0.81, ALLEGRO_ALIGN_LEFT, text);
+	al_draw_bitmap_region(game->_priv.console, 0, (int)(al_get_bitmap_height(game->_priv.console)*0.2), al_get_bitmap_width(game->_priv.console), (int)(al_get_bitmap_height(game->_priv.console)*0.8), 0, 0, 0);
+	al_draw_text(game->_priv.font_console, al_map_rgb(255,255,255), (int)(game->viewport.width*0.005), (int)(al_get_bitmap_height(game->_priv.console)*0.81), ALLEGRO_ALIGN_LEFT, text);
 	al_set_target_bitmap(game->_priv.console);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 	al_draw_bitmap(con, 0, 0, 0);

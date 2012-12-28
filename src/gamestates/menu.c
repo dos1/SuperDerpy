@@ -219,17 +219,17 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 	data->pinkcloud = LoadScaledBitmap(game,  "menu/pinkcloud.png", game->viewport.height*0.8122*(1171.0/2218.0), game->viewport.height*0.8122);
 	(*progress)(game);
 	al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
-	data->rain = al_load_bitmap( GetDataFilePath("menu/rain.png") );
+	data->rain = al_load_bitmap( GetDataFilePath(game, "menu/rain.png") );
 	(*progress)(game);
-	data->pie = al_load_bitmap( GetDataFilePath("menu/pie.png") );
+	data->pie = al_load_bitmap( GetDataFilePath(game, "menu/pie.png") );
 	(*progress)(game);
 	al_set_new_bitmap_flags(ALLEGRO_MAG_LINEAR | ALLEGRO_MIN_LINEAR);
 
-	data->sample = al_load_sample( GetDataFilePath("menu/menu.flac") );
+	data->sample = al_load_sample( GetDataFilePath(game, "menu/menu.flac") );
 	(*progress)(game);
-	data->rain_sample = al_load_sample( GetDataFilePath("menu/rain.flac") );
+	data->rain_sample = al_load_sample( GetDataFilePath(game, "menu/rain.flac") );
 	(*progress)(game);
-	data->click_sample = al_load_sample( GetDataFilePath("menu/click.flac") );
+	data->click_sample = al_load_sample( GetDataFilePath(game, "menu/click.flac") );
 	(*progress)(game);
 	data->mountain_position = game->viewport.width*0.7;
 	(*progress)(game);
@@ -249,13 +249,13 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 	al_set_sample_instance_playmode(data->click, ALLEGRO_PLAYMODE_ONCE);
 	(*progress)(game);
 
-	data->font_title = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.16,0 );
+	data->font_title = al_load_ttf_font(GetDataFilePath(game, "fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.16,0 );
 	(*progress)(game);
-	data->font_subtitle = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.08,0 );
+	data->font_subtitle = al_load_ttf_font(GetDataFilePath(game, "fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.08,0 );
 	(*progress)(game);
-	data->font = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.05,0 );
+	data->font = al_load_ttf_font(GetDataFilePath(game, "fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.05,0 );
 	(*progress)(game);
-	data->font_selected = al_load_ttf_font(GetDataFilePath("fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.065,0 );
+	data->font_selected = al_load_ttf_font(GetDataFilePath(game, "fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.065,0 );
 	(*progress)(game);
 
 	if (!data->sample){
