@@ -517,12 +517,12 @@ int main(int argc, char **argv){
 		tmp=tmp->next;
 	}
 
-	// TODO: proper loading state handling
 	al_clear_to_color(al_map_rgb(0,0,0));
 	PrintConsole(&game, "Shutting down...");
 	DrawConsole(&game);
 	al_flip_display();
 	al_rest(0.1);
+	(*game._priv.loading.Unload)(&game, game._priv.loading.data);
 	al_destroy_timer(game._priv.timer);
 	Console_Unload(&game);
 	al_destroy_display(game.display);
