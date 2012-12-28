@@ -298,6 +298,29 @@ int main(int argc, char **argv){
 	StartGamestate(&game, gamestate);
 	free(gamestate);
 
+	char libname[1024] = {};
+	sprintf(libname, "libsuperderpy-%s-loading.so", "muffinattack");
+	void *handle = dlopen(libname,RTLD_NOW);
+	if (!handle) {
+		FatalError(&game, true, "Error while initializing loading screen %s", dlerror());
+		exit(1);
+	} else {
+
+		void gs_error() {
+			FatalError(&game, true, "Error on resolving loading symbol: %s", dlerror());
+			exit(1);
+		}
+
+		if (!(game._priv.loading.Draw = dlsym(handle, "Draw"))) { gs_error(); }
+
+		if (!(game._priv.loading.Load = dlsym(handle, "Load"))) { gs_error(); }
+		if (!(game._priv.loading.Start = dlsym(handle, "Start"))) { gs_error(); }
+		if (!(game._priv.loading.Stop = dlsym(handle, "Stop"))) { gs_error(); }
+		if (!(game._priv.loading.Unload = dlsym(handle, "Unload"))) { gs_error(); }
+	}
+
+	game._priv.loading.data = (*game._priv.loading.Load)(&game);
+
 	bool redraw = false;
 
 	while(1) {
@@ -312,9 +335,6 @@ int main(int argc, char **argv){
 			while (tmp) {
 				if ((tmp->pending_start) && (tmp->started)) {
 					PrintConsole(&game, "Stopping gamestate \"%s\"...", tmp->name);
-					al_clear_to_color(al_map_rgb(255,255,0));
-					DrawConsole(&game);
-					al_flip_display();
 					(*tmp->api.Gamestate_Stop)(&game, tmp->data);
 					tmp->started = false;
 					tmp->pending_start = false;
@@ -331,9 +351,6 @@ int main(int argc, char **argv){
 			while (tmp) {
 				if ((tmp->pending_load) && (tmp->loaded)) {
 					PrintConsole(&game, "Unloading gamestate \"%s\"...", tmp->name);
-					al_clear_to_color(al_map_rgb(255,0,0));
-					DrawConsole(&game);
-					al_flip_display();
 					tmp->loaded = false;
 					tmp->pending_load = false;
 					(*tmp->api.Gamestate_Unload)(&game, tmp->data);
@@ -341,9 +358,6 @@ int main(int argc, char **argv){
 					tmp->handle = NULL;
 				} else if ((tmp->pending_load) && (!tmp->loaded)) {
 					PrintConsole(&game, "Loading gamestate \"%s\"...", tmp->name);
-					al_clear_to_color(al_map_rgb(0,0,255));
-					DrawConsole(&game);
-					al_flip_display();
 					// TODO: take proper game name
 					char libname[1024];
 					sprintf(libname, "libsuperderpy-%s-%s.so", "muffinattack", tmp->name);
@@ -382,9 +396,9 @@ int main(int argc, char **argv){
 						void progress(struct Game *game) {
 							p++;
 							al_set_target_backbuffer(game->display);
-							al_clear_to_color(al_map_rgb(0,0,255));
 							float progress = ((p / (*(tmp->api.Gamestate_ProgressCount) ? (float)*(tmp->api.Gamestate_ProgressCount) : 1))/(float)toLoad)+(loaded/(float)toLoad);
-							PrintConsole(game, "[%s] Progress: %d% (%d/%d)", tmp->name, (int)(progress*100), p, *(tmp->api.Gamestate_ProgressCount));
+							if (game->config.debug) PrintConsole(game, "[%s] Progress: %d% (%d/%d)", tmp->name, (int)(progress*100), p, *(tmp->api.Gamestate_ProgressCount));
+							(*game->_priv.loading.Draw)(game, game->_priv.loading.data, progress);
 							DrawConsole(game);
 							al_flip_display();
 						}
@@ -407,9 +421,6 @@ int main(int argc, char **argv){
 
 				if ((tmp->pending_start) && (!tmp->started) && (tmp->loaded)) {
 					PrintConsole(&game, "Starting gamestate \"%s\"...", tmp->name);
-					al_clear_to_color(al_map_rgb(0,255,255));
-					DrawConsole(&game);
-					al_flip_display();
 					(*tmp->api.Gamestate_Start)(&game, tmp->data);
 					tmp->started = true;
 					tmp->pending_start = false;

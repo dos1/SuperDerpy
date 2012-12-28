@@ -76,6 +76,17 @@ struct Game {
 
 				ALLEGRO_CONFIG *config;
 
+				struct {
+						void (*Draw)(struct Game *game, void* data, float p);
+
+						void* (*Load)(struct Game *game);
+						void (*Start)(struct Game *game, void* data);
+						void (*Stop)(struct Game *game, void* data);
+						void (*Unload)(struct Game *game, void* data);
+
+						void* data;
+				} loading;
+
 		} _priv; /*!< Private resources. Do not use in gamestates! */
 
 		bool shuttingdown; /*!< If true then shut down of the game is pending. */

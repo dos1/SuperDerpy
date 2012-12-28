@@ -18,10 +18,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-#include "../main.h"
 
-void Loading_Draw(struct Game *game);
-void Loading_Preload(struct Game *game, void (*progress)(struct Game*, float));
-void Loading_Unload(struct Game *game);
-void Loading_Load(struct Game *game);
-int Loading_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
+
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_font.h>
+
+/*! \brief Resources used by Loading state. */
+struct LoadingResources {
+	ALLEGRO_BITMAP *loading_bitmap; /*!< Rendered loading bitmap. */
+	ALLEGRO_BITMAP *image; /*!< Loading background. */
+};
