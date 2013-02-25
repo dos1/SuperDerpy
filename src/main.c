@@ -499,17 +499,11 @@ int main(int argc, char **argv){
 	while (tmp) {
 		if (tmp->started) {
 			PrintConsole(&game, "Stopping gamestate \"%s\"...", tmp->name);
-			al_clear_to_color(al_map_rgb(255,255,0));
-			DrawConsole(&game);
-			al_flip_display();
 			(*tmp->api.Gamestate_Stop)(&game, tmp->data);
 			tmp->started = false;
 		}
 		if (tmp->loaded) {
 			PrintConsole(&game, "Unloading gamestate \"%s\"...", tmp->name);
-			al_clear_to_color(al_map_rgb(255,0,0));
-			DrawConsole(&game);
-			al_flip_display();
 			(*tmp->api.Gamestate_Unload)(&game, tmp->data);
 			dlclose(tmp->handle);
 			tmp->loaded = false;

@@ -333,7 +333,6 @@ void Gamestate_Unload(struct Game *game, struct MenuResources* data) {
 	al_destroy_sample(data->sample);
 	al_destroy_sample(data->rain_sample);
 	al_destroy_sample(data->click_sample);
-	data->loaded = false;
 }
 
 void Gamestate_Start(struct Game *game, struct MenuResources* data) {

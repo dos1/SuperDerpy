@@ -18,77 +18,55 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-#include <stdio.h>
-#include <math.h>
-#include "../levels/level1.h"
-#include "../levels/level2.h"
-#include "../levels/level3.h"
-#include "../levels/level4.h"
-#include "../levels/level5.h"
-#include "../levels/level6.h"
-#include "../config.h"
-#include "pause.h"
-#include "level.h"
+#include "../utils.h"
 #include "../timeline.h"
+#include "level.h"
 
-#define LEVELS(name, ...) switch (game->level.current_level) { \
-	case 1: \
-	Level1_ ## name (__VA_ARGS__); break;\
-	case 2: \
-	Level2_ ## name (__VA_ARGS__); break;\
-	case 3: \
-	Level3_ ## name (__VA_ARGS__); break;\
-	case 4: \
-	Level4_ ## name (__VA_ARGS__); break;\
-	case 5: \
-	Level5_ ## name (__VA_ARGS__); break;\
-	case 6: \
-	Level6_ ## name (__VA_ARGS__); break;\
-}
+#include <stdio.h>
 
-void SelectDerpySpritesheet(struct Game *game, char* name) {
-	struct Spritesheet *tmp = game->level.derpy_sheets;
-	PrintConsole(game, "Selecting Derpy spritesheet: %s", name);
+void SelectSpritesheet(struct Game *game, struct Character *character, char* name) {
+	struct Spritesheet *tmp = character->spritesheets;
+	PrintConsole(game, "Selecting spritesheet for %s: %s", character->name, name);
 	if (!tmp) {
-		PrintConsole(game, "ERROR: No spritesheets registered for Derpy!");
+		PrintConsole(game, "ERROR: No spritesheets registered for %s!", character->name);
 		return;
 	}
 	while (tmp) {
 		if (!strcmp(tmp->name, name)) {
-			game->level.derpy_sheet = &(tmp->bitmap);
-			game->level.sheet_rows = tmp->rows;
-			game->level.sheet_cols = tmp->cols;
-			game->level.sheet_blanks = tmp->blanks;
-			game->level.sheet_speed_modifier = tmp->speed;
-			game->level.sheet_pos = 0;
-			game->level.sheet_scale = tmp->scale;
-			game->level.sheet_successor = tmp->successor;
-			if (game->level.derpy) al_destroy_bitmap(game->level.derpy);
-			game->level.derpy = al_create_bitmap((game->viewportHeight*0.25)*tmp->aspect*tmp->scale, (game->viewportHeight*0.25)*tmp->scale);
-			PrintConsole(game, "SUCCESS: Derpy spritesheet activated: %s (%dx%d)", name, al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy));
+			character->spritesheet = tmp;
+			//game->level.sheet_rows = tmp->rows;
+			//game->level.sheet_cols = tmp->cols;
+			//game->level.sheet_blanks = tmp->blanks;
+			//game->level.sheet_speed_modifier = tmp->speed;
+			character->pos = 0;
+			//game->level.sheet_scale = tmp->scale;
+			//game->level.sheet_successor = tmp->successor;
+			if (character->bitmap) al_destroy_bitmap(character->bitmap);
+			character->bitmap = al_create_bitmap((game->viewport.height*0.25)*tmp->aspect*tmp->scale, (game->viewport.height*0.25)*tmp->scale);
+			PrintConsole(game, "SUCCESS: Spritesheet for %s activated: %s (%dx%d)", character->name, name, al_get_bitmap_width(character->bitmap), al_get_bitmap_height(character->bitmap));
 			return;
 		}
 		tmp = tmp->next;
 	}
-	PrintConsole(game, "ERROR: No spritesheets registered for Derpy with given name: %s", name);
+	PrintConsole(game, "ERROR: No spritesheets registered for %s with given name: %s", character->name, name);
 	return;
 }
 
-void RegisterDerpySpritesheet(struct Game *game, char* name) {
-	struct Spritesheet *s = game->level.derpy_sheets;
+void RegisterSpritesheet(struct Game *game, struct Character *character, char* name) {
+	struct Spritesheet *s = character->spritesheets;
 	while (s) {
 		if (!strcmp(s->name, name)) {
-			//PrintConsole(game, "Derpy spritesheet %s already registered!", name);
+			//PrintConsole(game, "%s spritesheet %s already registered!", character->name, name);
 			return;
 		}
 		s = s->next;
 	}
+	PrintConsole(game, "Registering %s spritesheet: %s", character->name, name);
 	char filename[255] = { };
-	sprintf(filename, "levels/derpy/%s.ini", name);
-	ALLEGRO_CONFIG *config = al_load_config_file(GetDataFilePath(filename));
+	sprintf(filename, "levels/%s/%s.ini", character->name, name);
+	ALLEGRO_CONFIG *config = al_load_config_file(GetDataFilePath(game, filename));
 	s = malloc(sizeof(struct Spritesheet));
-	s->name = malloc((strlen(name)+1)*sizeof(char));
-	strcpy(s->name, name);
+	s->name = strdup(name);
 	s->bitmap = NULL;
 	s->cols = atoi(al_get_config_value(config, "", "cols"));
 	s->rows = atoi(al_get_config_value(config, "", "rows"));
@@ -100,14 +78,14 @@ void RegisterDerpySpritesheet(struct Game *game, char* name) {
 	const char* successor = al_get_config_value(config, "", "successor");
 	if (successor) {
 		s->successor = malloc(255*sizeof(char));
-		strcpy(s->successor, successor);
+		strncpy(s->successor, successor, 255);
 	}
-	s->next = game->level.derpy_sheets;
-	game->level.derpy_sheets = s;
+	s->next = character->spritesheets;
+	character->spritesheets = s;
 	al_destroy_config(config);
-	PrintConsole(game, "Registering Derpy spritesheet: %s", name);
 }
 
+/*
 void Level_Passed(struct Game *game) {
 	if (game->level.current_level<6) {
 		int available = atoi(GetConfigOptionDefault("MuffinAttack", "level", "1"));
@@ -247,6 +225,7 @@ void Level_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev) {
 }
 
 char* GetLevelFilename(struct Game *game, char* filename) {
+	// FIXME: it should work with larger numbers too
 	char* name = strdup(filename);
 	char* ch = strchr(name, '?');
 	ch[0] = '0' + game->level.current_level;
@@ -373,3 +352,4 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 	}
 	LEVELS(PreloadBitmaps, game, &ChildProgress);
 }
+*/

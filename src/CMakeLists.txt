@@ -23,7 +23,7 @@ if(MINGW)
 	set(LINK_FLAGS -Wl,-subsystem,windows)
 endif(MINGW)
 
-SET(CMAKE_INSTALL_RPATH "\$ORIGIN/../lib/superderpy:\$ORIGIN/gamestates:\$ORIGIN:\$ORIGIN/../lib")
+SET(CMAKE_INSTALL_RPATH "\$ORIGIN/../lib/superderpy:\$ORIGIN/gamestates:\$ORIGIN/levels:\$ORIGIN:\$ORIGIN/../lib")
 
 #IF(${PACKAGE_BUILD})
 #  SET(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
@@ -52,6 +52,7 @@ if(ALLEGRO5_MAIN_FOUND)
 endif(ALLEGRO5_MAIN_FOUND)
 
 add_subdirectory(gamestates)
+add_subdirectory(levels)
 
 install(TARGETS ${EXECUTABLE} DESTINATION ${BIN_INSTALL_DIR})
 install(TARGETS "libsuperderpy" DESTINATION ${LIB_INSTALL_DIR})

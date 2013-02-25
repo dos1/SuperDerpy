@@ -25,54 +25,60 @@
 #include "actions.h"
 #include "level2.h"
 
-void Level2_Load(struct Game *game) {
+void Gamestate_Load(struct Game *game) {
 	Moonwalk_Load(game);
+	TM_Init(game);
 	TM_AddAction(&DoMoonwalk, NULL, "moonwalk");
 	TM_AddAction(&PassLevel, NULL, "passlevel");
-	FadeGameState(game, true);
+	//FadeGameState(game, true);
 }
 
-void Level2_Unload(struct Game *game) {
+void Gamestate_Unload(struct Game *game) {
 	Moonwalk_Unload(game);
 }
 
-void Level2_UnloadBitmaps(struct Game *game) {
+void Gamestate_UnloadBitmaps(struct Game *game) {
 	Moonwalk_UnloadBitmaps(game);
 }
 
-void Level2_Preload(struct Game *game) {
-	Moonwalk_Preload(game);
+void Gamestate_Start(struct Game *game) {
+	Moonwalk_Start(game);
 }
 
-inline int Level2_PreloadSteps(void) {
-	return 0+Moonwalk_PreloadSteps();
+void Gamestate_Stop(struct Game *game) {
+	Moonwalk_Stop(game);
 }
 
-void Level2_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float)) {
+void Gamestate_LoadBitmaps(struct Game *game, void (*progress)(struct Game*, float)) {
 	//PROGRESS_INIT(Level2_PreloadSteps());
-	Moonwalk_PreloadBitmaps(game, progress);
+	Moonwalk_LoadBitmaps(game, progress);
 }
 
-void Level2_Draw(struct Game *game) {
+void Gamestate_Draw(struct Game *game) {
 	Moonwalk_Draw(game);
 }
 
-void Level2_Logic(struct Game *game) {
+void Gamestate_Logic(struct Game *game) {
 	Moonwalk_Logic(game);
 }
 
-void Level2_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
-	Moonwalk_Keydown(game, ev);
-}
-
-void Level2_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev) {
+void Gamestate_ProcessEvent(struct Game *game, void* data, ALLEGRO_EVENT *ev) {
 	Moonwalk_ProcessEvent(game, ev);
+	if (ev->type == ALLEGRO_EVENT_KEY_DOWN) {
+		if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
+			SwitchGamestate(game, "level2", "menu");
+		}
+	}
 }
 
-void Level2_Resume(struct Game *game) {
+void Gamestate_Resume(struct Game *game) {
 	Moonwalk_Resume(game);
 }
 
-void Level2_Pause(struct Game *game) {
+void Gamestate_Pause(struct Game *game) {
 	Moonwalk_Pause(game);
 }
+
+void Gamestate_Reload(struct Game *game) {}
+
+int Gamestate_ProgressCount = 0;

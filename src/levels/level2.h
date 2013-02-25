@@ -19,16 +19,3 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 #include "../main.h"
-
-void Level2_Load(struct Game *game);
-void Level2_Unload(struct Game *game);
-void Level2_UnloadBitmaps(struct Game *game);
-void Level2_Preload(struct Game *game);
-void Level2_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float));
-inline int Level2_PreloadSteps(void);
-void Level2_Draw(struct Game *game);
-void Level2_Logic(struct Game *game);
-void Level2_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
-void Level2_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev);
-void Level2_Resume(struct Game *game);
-void Level2_Pause(struct Game *game);

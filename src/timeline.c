@@ -208,8 +208,7 @@ struct TM_Action* TM_AddAction(bool (*func)(struct Game*, struct TM_Action*, enu
 	action->next = NULL;
 	action->function = func;
 	action->arguments = args;
-	action->name = malloc((strlen(name)+1)*sizeof(char));
-	strcpy(action->name, name);
+	action->name = strdup(name);
 	action->timer = NULL;
 	action->active = false;
 	action->delay = 0;
@@ -235,8 +234,7 @@ struct TM_Action* TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Ac
 	action->next = NULL;
 	action->function = func;
 	action->arguments = args;
-	action->name = malloc((strlen(name)+1)*sizeof(char));
-	strcpy(action->name, name);
+	action->name = strdup(name);
 	action->delay = delay;
 	action->id = ++lastid;
 	if (delay) {
@@ -272,8 +270,7 @@ struct TM_Action* TM_AddQueuedBackgroundAction(bool (*func)(struct Game*, struct
 	arguments = TM_AddToArgs(arguments, malloc(sizeof(int)));
 	arguments = TM_AddToArgs(arguments, NULL);
 	*(int*)(arguments->next->value) = delay;
-	arguments->next->next->value = malloc((strlen(name)+1)*sizeof(char));
-	strcpy(arguments->next->next->value, name);
+	arguments->next->next->value = strdup(name);
 
 	arguments->next->next->next = args;
 	return TM_AddAction(*runinbackground, arguments, "TM_BackgroundAction");

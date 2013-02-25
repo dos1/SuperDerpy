@@ -65,7 +65,6 @@ struct MenuResources {
 		ALLEGRO_FONT *font_selected; /*!< Font of selected menu item. */
 		int selected; /*!< Number of selected menu item. */
 		enum menustate_enum menustate; /*!< Current menu page. */
-		bool loaded; /*!< True if Menu state has been already loaded. */
 		struct {
 				bool fullscreen;
 				int fps;

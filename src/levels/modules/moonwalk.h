@@ -24,13 +24,12 @@
 bool DoMoonwalk(struct Game *game, struct TM_Action *action, enum TM_ActionState state);
 void Moonwalk_Draw(struct Game *game);
 void Moonwalk_Logic(struct Game *game);
-void Moonwalk_Preload(struct Game *game);
+void Moonwalk_Start(struct Game *game);
+void Moonwalk_Stop(struct Game *game);
 void Moonwalk_Unload(struct Game *game);
 void Moonwalk_Load(struct Game *game);
-void Moonwalk_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
 void Moonwalk_UnloadBitmaps(struct Game *game);
-void Moonwalk_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float));
+void Moonwalk_LoadBitmaps(struct Game *game, void (*progress)(struct Game*, float));
 void Moonwalk_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev);
 void Moonwalk_Resume(struct Game *game);
 void Moonwalk_Pause(struct Game *game);
-inline int Moonwalk_PreloadSteps(void);
