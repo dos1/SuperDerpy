@@ -22,6 +22,7 @@
 #include <allegro5/allegro_primitives.h>
 #include "../utils.h"
 #include "../gamestate.h"
+#include "../gamestates/level.h"
 #include "actions.h"
 
 bool LevelFailed(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
@@ -160,6 +161,13 @@ bool Welcome(struct Game *game, struct TM_Action *action, enum TM_ActionState st
 
 bool PassLevel(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (state == TM_ACTIONSTATE_DESTROY) {
+		if (*((int*)action->arguments->next->value) < 6) {
+			AdvanceLevel(game, *((int*)action->arguments->next->value), false);
+			SwitchGamestate(game, (char*)action->arguments->value, "map");
+		} else {
+			AdvanceLevel(game, *((int*)action->arguments->next->value), true);
+			SwitchGamestate(game, (char*)action->arguments->value, "about");
+		}
 		//FIXME: data
 		/*Level_Passed(game);
 		Level_Unload(game);

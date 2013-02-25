@@ -18,6 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
+
 #include <stdio.h>
 #include "../gamestates/level.h"
 #include "modules/moonwalk.h"
@@ -25,45 +26,48 @@
 #include "actions.h"
 #include "level2.h"
 
-void Gamestate_Load(struct Game *game) {
-	Moonwalk_Load(game);
-	TM_Init(game);
-	TM_AddAction(&DoMoonwalk, NULL, "moonwalk");
-	TM_AddAction(&PassLevel, NULL, "passlevel");
-	//FadeGameState(game, true);
+
+void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
+
+	struct Level2Resources *data = malloc(sizeof(struct Level2Resources));
+	data->moonwalk = Moonwalk_Load(game, 2);
+	struct TM_Arguments *args = TM_AddToArgs(NULL, strdup("level2"));
+	int* level = malloc(sizeof(int));
+	*level=2;
+	TM_AddToArgs(args, level);
+	TM_AddAction(&PassLevel, args, "passlevel");
+
+	return data;
 }
 
-void Gamestate_Unload(struct Game *game) {
-	Moonwalk_Unload(game);
+
+void Gamestate_Unload(struct Game *game, struct Level2Resources* data) {
+	Moonwalk_Unload(game, data->moonwalk);
+	free(data);
 }
 
-void Gamestate_UnloadBitmaps(struct Game *game) {
-	Moonwalk_UnloadBitmaps(game);
+void Gamestate_Start(struct Game *game, struct Level2Resources* data) {
+	Moonwalk_Start(game, data->moonwalk);
 }
 
-void Gamestate_Start(struct Game *game) {
-	Moonwalk_Start(game);
+void Gamestate_Stop(struct Game *game, struct Level2Resources* data) {
+	Moonwalk_Stop(game, data->moonwalk);
 }
 
-void Gamestate_Stop(struct Game *game) {
-	Moonwalk_Stop(game);
+void Gamestate_Draw(struct Game *game, struct Level2Resources* data) {
+	Moonwalk_Draw(game, data->moonwalk);
+	al_draw_textf(game->_priv.font, al_map_rgb(255,255,255), game->viewport.width/2, game->viewport.height/2.2, ALLEGRO_ALIGN_CENTRE, "Level %d: Not implemented yet!", 2);
+	al_draw_text(game->_priv.font, al_map_rgb(255,255,255), game->viewport.width/2, game->viewport.height/1.8, ALLEGRO_ALIGN_CENTRE, "Have some moonwalk instead.");
+	// FIXME: _priv... please fix me :/
+
 }
 
-void Gamestate_LoadBitmaps(struct Game *game, void (*progress)(struct Game*, float)) {
-	//PROGRESS_INIT(Level2_PreloadSteps());
-	Moonwalk_LoadBitmaps(game, progress);
+void Gamestate_Logic(struct Game *game, struct Level2Resources* data) {
+	Moonwalk_Logic(game, data->moonwalk);
 }
 
-void Gamestate_Draw(struct Game *game) {
-	Moonwalk_Draw(game);
-}
-
-void Gamestate_Logic(struct Game *game) {
-	Moonwalk_Logic(game);
-}
-
-void Gamestate_ProcessEvent(struct Game *game, void* data, ALLEGRO_EVENT *ev) {
-	Moonwalk_ProcessEvent(game, ev);
+void Gamestate_ProcessEvent(struct Game *game, struct Level2Resources* data, ALLEGRO_EVENT *ev) {
+	Moonwalk_ProcessEvent(game, data->moonwalk, ev);
 	if (ev->type == ALLEGRO_EVENT_KEY_DOWN) {
 		if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
 			SwitchGamestate(game, "level2", "menu");
@@ -71,14 +75,14 @@ void Gamestate_ProcessEvent(struct Game *game, void* data, ALLEGRO_EVENT *ev) {
 	}
 }
 
-void Gamestate_Resume(struct Game *game) {
-	Moonwalk_Resume(game);
+void Gamestate_Resume(struct Game *game, struct Level2Resources* data) {
+	Moonwalk_Resume(game, data->moonwalk);
 }
 
-void Gamestate_Pause(struct Game *game) {
-	Moonwalk_Pause(game);
+void Gamestate_Pause(struct Game *game, struct Level2Resources* data) {
+	Moonwalk_Pause(game, data->moonwalk);
 }
 
-void Gamestate_Reload(struct Game *game) {}
+void Gamestate_Reload(struct Game *game, struct Level2Resources* data) {}
 
 int Gamestate_ProgressCount = 0;

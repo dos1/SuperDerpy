@@ -21,15 +21,23 @@
 #include "../../main.h"
 #include "../../timeline.h"
 
+struct Moonwalk {
+	struct Character *derpy;
+	int current_level;
+	ALLEGRO_BITMAP *background;
+	ALLEGRO_SAMPLE *sample;
+	ALLEGRO_SAMPLE_INSTANCE *music;
+};
+
 bool DoMoonwalk(struct Game *game, struct TM_Action *action, enum TM_ActionState state);
-void Moonwalk_Draw(struct Game *game);
-void Moonwalk_Logic(struct Game *game);
-void Moonwalk_Start(struct Game *game);
-void Moonwalk_Stop(struct Game *game);
-void Moonwalk_Unload(struct Game *game);
-void Moonwalk_Load(struct Game *game);
-void Moonwalk_UnloadBitmaps(struct Game *game);
-void Moonwalk_LoadBitmaps(struct Game *game, void (*progress)(struct Game*, float));
-void Moonwalk_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev);
-void Moonwalk_Resume(struct Game *game);
-void Moonwalk_Pause(struct Game *game);
+void Moonwalk_Draw(struct Game *game, struct Moonwalk *data);
+void Moonwalk_Logic(struct Game *game, struct Moonwalk *data);
+void Moonwalk_Start(struct Game *game, struct Moonwalk *data);
+void Moonwalk_Stop(struct Game *game, struct Moonwalk *data);
+void Moonwalk_Unload(struct Game *game, struct Moonwalk *data);
+struct Moonwalk* Moonwalk_Load(struct Game *game, int current_level);
+void Moonwalk_UnloadBitmaps(struct Game *game, struct Moonwalk *data);
+void Moonwalk_LoadBitmaps(struct Game *game, struct Moonwalk *data, void (*progress)(struct Game*, float));
+void Moonwalk_ProcessEvent(struct Game *game, struct Moonwalk *data, ALLEGRO_EVENT *ev);
+void Moonwalk_Resume(struct Game *game, struct Moonwalk *data);
+void Moonwalk_Pause(struct Game *game, struct Moonwalk *data);

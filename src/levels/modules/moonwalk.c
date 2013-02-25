@@ -21,61 +21,91 @@
 #include <stdio.h>
 #include <math.h>
 #include "../../gamestates/level.h"
+#include "../../utils.h"
 #include "moonwalk.h"
 
 // TODO: use Walk action instead
 bool DoMoonwalk(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
+	struct Character *derpy = action->arguments->value;
 	if (state == TM_ACTIONSTATE_START) {
-		//SelectDerpySpritesheet(game, "walk");
-		//game->level.sheet_speed_modifier = 0.94;
-		//game->level.moonwalk.derpy_pos = -0.2;
+		SelectSpritesheet(game, derpy, "walk");
+		SetCharacterPosition(game, derpy, -0.2, 0.71, 0);
 	}
 	else if (state == TM_ACTIONSTATE_RUNNING) {
-		//game->level.moonwalk.derpy_pos=game->level.moonwalk.derpy_pos+0.00092;
-		//if (game->level.moonwalk.derpy_pos>1) {
+		MoveCharacter(game, derpy, 0.0009 , 0, 0);
+		AnimateCharacter(game, derpy, 0.97);
+		if (derpy->x > 1) { // FIXME: getter
 			return true;
-		//}
+		}
 	}
 	return false;
 }
 
-void Moonwalk_Logic(struct Game *game) {}
-
-void Moonwalk_Draw(struct Game *game) {
-/*	al_set_target_bitmap(game->level.derpy);
-	al_clear_to_color(al_map_rgba(0,0,0,0));
-	al_draw_bitmap_region(*(game->level.derpy_sheet),al_get_bitmap_width(game->level.derpy)*(game->level.sheet_pos%6),al_get_bitmap_height(game->level.derpy)*(game->level.sheet_pos/6),al_get_bitmap_width(game->level.derpy), al_get_bitmap_height(game->level.derpy),0,0,0);
-	al_set_target_bitmap(al_get_backbuffer(game->display));
-
-	al_draw_scaled_bitmap(game->level.stage,0,0,al_get_bitmap_width(game->level.stage),al_get_bitmap_height(game->level.stage),0,0,game->viewport.width, game->viewport.height,0);
-	al_draw_bitmap(game->level.derpy, game->level.moonwalk.derpy_pos*game->viewport.width, game->viewport.height*0.95-al_get_bitmap_height(game->level.derpy), ALLEGRO_FLIP_HORIZONTAL);
-	al_draw_textf(game->font, al_map_rgb(255,255,255), game->viewport.width/2, game->viewport.height/2.2, ALLEGRO_ALIGN_CENTRE, "Level %d: Not implemented yet!", game->level.current_level);
-	al_draw_text(game->font, al_map_rgb(255,255,255), game->viewport.width/2, game->viewport.height/1.8, ALLEGRO_ALIGN_CENTRE, "Have some moonwalk instead.");*/
+void Moonwalk_Logic(struct Game *game, struct Moonwalk *data) {
+	TM_Process();
 }
 
-void Moonwalk_Start(struct Game *game) {
-	/*game->level.moonwalk.derpy_pos = 0;
-	al_play_sample_instance(game->level.music);*/
+void Moonwalk_Draw(struct Game *game, struct Moonwalk *data) {
+	al_draw_scaled_bitmap(data->background,0,0,al_get_bitmap_width(data->background),al_get_bitmap_height(data->background),0,0,game->viewport.width, game->viewport.height, 0);
+	DrawCharacter(game, data->derpy, ALLEGRO_FLIP_HORIZONTAL);
 }
 
-void Moonwalk_LoadBitmaps(struct Game *game, void (*progress)(struct Game*, float)) {
-	// nasty hack: overwrite level background
-	/*al_destroy_bitmap(game->level.stage);
-	game->level.stage = LoadScaledBitmap("levels/moonwalk/disco.jpg", game->viewport.width, game->viewport.height);
-*/
-	al_set_target_bitmap(al_get_backbuffer(game->display));
+void Moonwalk_Start(struct Game *game, struct Moonwalk *data) {
+	SelectSpritesheet(game, data->derpy, "walk");
+	al_play_sample_instance(data->music);
 }
 
-void Moonwalk_Load(struct Game *game) {
-	//RegisterSpritesheet(game, DERPY, "walk");
-	// nasty hack: overwrite level music
-	//al_destroy_sample(game->level.sample);
-	//game->level.sample = al_load_sample( GetDataFilePath("levels/moonwalk/moonwalk.flac") );
+
+void load_bitmaps(struct Game *game, struct Moonwalk *data) {
+	data->background = LoadScaledBitmap(game, "levels/moonwalk/disco.jpg", game->viewport.width, game->viewport.height);
+	LoadSpritesheets(game, data->derpy);
 }
 
-void Moonwalk_UnloadBitmaps(struct Game *game) {}
-void Moonwalk_Stop(struct Game *game) {}
-void Moonwalk_Unload(struct Game *game) {}
-void Moonwalk_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev) {}
-void Moonwalk_Resume(struct Game *game) {}
-void Moonwalk_Pause(struct Game *game) {}
+
+void unload_bitmaps(struct Game *game, struct Moonwalk *data) {
+	UnloadSpritesheets(game, data->derpy);
+	al_destroy_bitmap(data->background);
+}
+
+struct Moonwalk* Moonwalk_Load(struct Game *game, int current_level) {
+	struct Moonwalk *data = malloc(sizeof(struct Moonwalk));
+
+	data->derpy = CreateCharacter(game, "derpy");
+
+	RegisterSpritesheet(game, data->derpy, "walk");
+
+	data->current_level = current_level;
+
+	load_bitmaps(game, data);
+
+	data->sample = al_load_sample( GetDataFilePath(game, "levels/moonwalk/moonwalk.flac") );
+
+	data->music = al_create_sample_instance(data->sample);
+	al_attach_sample_instance_to_mixer(data->music, game->audio.music);
+	al_set_sample_instance_playmode(data->music, ALLEGRO_PLAYMODE_LOOP);
+
+
+	TM_Init(game);
+	TM_AddAction(&DoMoonwalk, TM_AddToArgs(NULL, data->derpy), "moonwalk");
+
+	return data;
+}
+
+void Moonwalk_Stop(struct Game *game, struct Moonwalk *data) {
+	al_set_sample_instance_playing(data->music, false);
+}
+
+void Moonwalk_Unload(struct Game *game, struct Moonwalk *data) {
+	unload_bitmaps(game, data);
+	DestroyCharacter(game, data->derpy);
+	free(data);
+	TM_Destroy();
+}
+void Moonwalk_ProcessEvent(struct Game *game, struct Moonwalk *data, ALLEGRO_EVENT *ev) {}
+void Moonwalk_Resume(struct Game *game, struct Moonwalk *data) {}
+void Moonwalk_Pause(struct Game *game, struct Moonwalk *data) {}
+
+void Moonwalk_Reload(struct Game *game, struct Moonwalk *data) {
+	unload_bitmaps(game, data);
+	load_bitmaps(game, data);
+}

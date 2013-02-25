@@ -19,3 +19,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 #include "../main.h"
+
+struct Moonwalk;
+struct Level2Resources {
+		struct Moonwalk *moonwalk;
+};

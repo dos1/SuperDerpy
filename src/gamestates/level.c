@@ -53,6 +53,29 @@ void SelectSpritesheet(struct Game *game, struct Character *character, char* nam
 	return;
 }
 
+void LoadSpritesheets(struct Game *game, struct Character *character) {
+	PrintConsole(game, "Loading spritesheets for character %s...", character->name);
+	struct Spritesheet *tmp = character->spritesheets;
+	while (tmp) {
+		if (!tmp->bitmap) {
+			char filename[255] = { };
+			snprintf(filename, 255, "levels/%s/%s.png", character->name, tmp->name);
+			tmp->bitmap = LoadScaledBitmap(game, filename, (int)(game->viewport.height*0.25*tmp->aspect*tmp->scale)*tmp->cols, (int)(game->viewport.height*0.25*tmp->scale)*tmp->rows);
+		}
+		tmp = tmp->next;
+	}
+}
+
+void UnloadSpritesheets(struct Game *game, struct Character *character) {
+	PrintConsole(game, "Unloading spritesheets for character %s...", character->name);
+	struct Spritesheet *tmp = character->spritesheets;
+	while (tmp) {
+		if (tmp->bitmap) al_destroy_bitmap(tmp->bitmap);
+		tmp->bitmap = NULL;
+		tmp = tmp->next;
+	}
+}
+
 void RegisterSpritesheet(struct Game *game, struct Character *character, char* name) {
 	struct Spritesheet *s = character->spritesheets;
 	while (s) {
@@ -86,6 +109,66 @@ void RegisterSpritesheet(struct Game *game, struct Character *character, char* n
 	al_destroy_config(config);
 }
 
+struct Character* CreateCharacter(struct Game *game, char* name) {
+	PrintConsole(game, "Creating character %s...", name);
+	struct Character *character = malloc(sizeof(struct Character));
+	character->name = strdup(name);
+	character->angle = 0;
+	character->bitmap = NULL;
+	character->data = NULL;
+	character->pos = 0;
+	character->pos_tmp = 0;
+	character->x = -1;
+	character->y = -1;
+	character->spritesheets = NULL;
+	character->spritesheet = NULL;
+	return character;
+}
+
+void DestroyCharacter(struct Game *game, struct Character *character) {
+	PrintConsole(game, "Destroying character %s...", character->name);
+	UnloadSpritesheets(game, character);
+	struct Spritesheet *tmp, *s = character->spritesheets;
+	tmp = s;
+	while (s) {
+		tmp = s;
+		s = s->next;
+		free(tmp);
+	}
+
+	if (character->bitmap) al_destroy_bitmap(character->bitmap);
+	free(character->name);
+	free(character);
+}
+
+void AnimateCharacter(struct Game *game, struct Character *character, float speed_modifier) {
+	if ((character->spritesheet->speed) && (speed_modifier)) {
+		character->pos_tmp+=character->spritesheet->speed*speed_modifier;
+		while (character->pos_tmp >= 1) {
+			character->pos++;
+			character->pos_tmp--;
+		}
+		if (character->pos>=character->spritesheet->cols*character->spritesheet->rows-character->spritesheet->blanks) {
+			character->pos=0;
+			if (character->spritesheet->successor) {
+				SelectSpritesheet(game, character, character->spritesheet->successor);
+			}
+		}
+	}
+}
+
+void MoveCharacter(struct Game *game, struct Character *character, float x, float y, float angle) {
+	character->x += x;
+	character->y += y;
+	character->angle += angle;
+}
+
+void SetCharacterPosition(struct Game *game, struct Character *character, float x, float y, float angle) {
+	character->x = x;
+	character->y = y;
+	character->angle = angle;
+}
+
 void AdvanceLevel(struct Game *game, int current_level, bool last) {
 	if (last) {
 		int available = atoi(GetConfigOptionDefault(game, "MuffinAttack", "level", "1"));
@@ -101,6 +184,28 @@ void AdvanceLevel(struct Game *game, int current_level, bool last) {
 		SetConfigOption(game, "MuffinAttack", "completed", "1");
 	}
 }
+
+/*char* GetLevelFilename(struct Game *game, char* filename) {
+	// FIXME: it should work with larger numbers too
+	char* name = strdup(filename);
+	char* ch = strchr(name, '?');
+	ch[0] = '0' + game->level.current_level;
+	return name;
+}*/
+
+void DrawCharacter(struct Game *game, struct Character *character, int flags) {
+	// TODO: support for additional states, like being hit (transparency, color tilt etc.)
+	bool colision = false;
+
+	al_set_target_bitmap(character->bitmap);
+	al_clear_to_color(al_map_rgba(0,0,0,0));
+	al_draw_bitmap_region(character->spritesheet->bitmap, al_get_bitmap_width(character->bitmap)*(character->pos%character->spritesheet->cols),al_get_bitmap_height(character->bitmap)*(character->pos/character->spritesheet->cols),al_get_bitmap_width(character->bitmap), al_get_bitmap_height(character->bitmap),0,0,0);
+	al_set_target_bitmap(al_get_backbuffer(game->display));
+
+	al_draw_tinted_rotated_bitmap(character->bitmap, al_map_rgba(255,255-colision*255,255-colision*255,255), al_get_bitmap_width(character->bitmap), al_get_bitmap_height(character->bitmap)/2, character->x*game->viewport.width + game->viewport.width*0.1953125, character->y*game->viewport.height + al_get_bitmap_height(character->bitmap)/2, character->angle, flags); // FIXME: viewport height? omg character should have its dimensions ;_;
+
+}
+
 /*
 void Level_Logic(struct Game *game) {
 	LEVELS(Logic, game);
@@ -222,14 +327,6 @@ int Level_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 void Level_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev) {
 	LEVELS(ProcessEvent, game, ev);
 	TM_HandleEvent(ev);
-}
-
-char* GetLevelFilename(struct Game *game, char* filename) {
-	// FIXME: it should work with larger numbers too
-	char* name = strdup(filename);
-	char* ch = strchr(name, '?');
-	ch[0] = '0' + game->level.current_level;
-	return name;
 }
 
 void Level_Preload(struct Game *game, void (*progress)(struct Game*, float)) {

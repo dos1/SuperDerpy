@@ -42,8 +42,9 @@ struct Character {
 	struct Spritesheet *spritesheets; /*!< List of all spritesheets registered to character. */
 	ALLEGRO_BITMAP* bitmap;
 	int pos; /*!< Current spritesheet position. */
-	float x; /*!< Horizontal position of character (0-1). */
-	float y; /*!< Vertical position of character (0-1). */
+	float pos_tmp; /*!< A counter used to slow down spritesheet animation. */
+	float x; /*!< Horizontal position of character (0 - left, 1 - right side of maximal square). */
+	float y; /*!< Vertical position of character (0 - top, 1 - bottom). */
 	float angle; /*!< Characters display angle (radians). */
 	void* data; /*!< Additional, custom character data (HP etc.). */
 };
@@ -55,8 +56,17 @@ void AdvanceLevel(struct Game *game, int current_level, bool last);
 /*! \brief Replaces first '?' char in filename with current level number. */
 char* GetLevelFilename(struct Game *game, char* filename);
 
-void DrawCharacter(struct Game *game, struct Character *character);
+void DrawCharacter(struct Game *game, struct Character *character, int flags);
 
+struct Character* CreateCharacter(struct Game *game, char* name);
+void DestroyCharacter(struct Game *game, struct Character *character);
+
+void LoadSpritesheets(struct Game *game, struct Character *character);
+void UnloadSpritesheets(struct Game *game, struct Character *character);
+
+void AnimateCharacter(struct Game *game, struct Character *character, float speed_modifier);
+void MoveCharacter(struct Game *game, struct Character *character, float x, float y, float angle);
+void SetCharacterPosition(struct Game *game, struct Character *character, float x, float y, float angle);
 
 /*void Level_Passed(struct Game *game);
 void Level_Pause(struct Game *game);
