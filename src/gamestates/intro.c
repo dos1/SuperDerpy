@@ -50,7 +50,7 @@ void AnimPage(struct Game *game, struct IntroResources *data, int page, ALLEGRO_
 
 void FillPage(struct Game *game, struct IntroResources *data, int page) {
 	char filename[30] = { };
-	sprintf(filename, "intro/%d.flac", page);
+	snprintf(filename, 30, "intro/%d.flac", page);
 
 	data->audiostream = al_load_audio_stream(GetDataFilePath(game, filename), 4, 1024);
 	al_attach_audio_stream_to_mixer(data->audiostream, game->audio.voice);

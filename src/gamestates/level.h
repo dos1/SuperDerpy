@@ -51,7 +51,7 @@ struct Character {
 
 void SelectSpritesheet(struct Game *game, struct Character *character, char* name);
 void RegisterSpritesheet(struct Game *game, struct Character *character, char* name);
-void AdvanceLevel(struct Game *game);
+void AdvanceLevel(struct Game *game, int current_level, bool last);
 /*! \brief Replaces first '?' char in filename with current level number. */
 char* GetLevelFilename(struct Game *game, char* filename);
 

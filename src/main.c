@@ -46,7 +46,7 @@ void DrawConsole(struct Game *game) {
 			game->_priv.fps_count.old_time = game_time;
 		}
 		char sfps[6] = { };
-		sprintf(sfps, "%.0f", game->_priv.fps_count.fps);
+		snprintf(sfps, 6, "%.0f", game->_priv.fps_count.fps);
 		DrawTextWithShadow(game->_priv.font, al_map_rgb(255,255,255), game->viewport.width*0.99, 0, ALLEGRO_ALIGN_RIGHT, sfps);
 	}
 	game->_priv.fps_count.frames_done++;
@@ -299,7 +299,7 @@ int main(int argc, char **argv){
 	free(gamestate);
 
 	char libname[1024] = {};
-	sprintf(libname, "libsuperderpy-%s-loading.so", "muffinattack");
+	snprintf(libname, 1024, "libsuperderpy-%s-loading.so", "muffinattack");
 	void *handle = dlopen(libname,RTLD_NOW);
 	if (!handle) {
 		FatalError(&game, true, "Error while initializing loading screen %s", dlerror());
@@ -360,7 +360,7 @@ int main(int argc, char **argv){
 					PrintConsole(&game, "Loading gamestate \"%s\"...", tmp->name);
 					// TODO: take proper game name
 					char libname[1024];
-					sprintf(libname, "libsuperderpy-%s-%s.so", "muffinattack", tmp->name);
+					snprintf(libname, 1024, "libsuperderpy-%s-%s.so", "muffinattack", tmp->name);
 					tmp->handle = dlopen(libname,RTLD_NOW);
 					if (!tmp->handle) {
 						//PrintConsole(&game, "Error while loading gamestate \"%s\": %s", tmp->name, dlerror());
@@ -482,7 +482,7 @@ int main(int argc, char **argv){
 			} else if ((ev.type == ALLEGRO_EVENT_KEY_DOWN) && (game.config.debug) && (ev.keyboard.keycode == ALLEGRO_KEY_F12)) {
 				ALLEGRO_PATH *path = al_get_standard_path(ALLEGRO_USER_DOCUMENTS_PATH);
 				char filename[255] = { };
-				sprintf(filename, "SuperDerpy_%ld_%ld.png", time(NULL), clock());
+				snprintf(filename, 255, "SuperDerpy_%ld_%ld.png", time(NULL), clock());
 				al_set_path_filename(path, filename);
 				al_save_bitmap(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP), al_get_backbuffer(game.display));
 				PrintConsole(&game, "Screenshot stored in %s", al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));

@@ -81,8 +81,8 @@ void Gamestate_ProcessEvent(struct Game *game, struct MapResources* data, ALLEGR
 		al_play_sample_instance(data->click);
 		//game->level.input.current_level = data->selected;
 		PrintConsole(game, "Selecting level %d...", data->selected);
-		char gamestate[7] = {};
-		sprintf(gamestate, "level%d", data->selected);
+		char gamestate[255] = {};
+		snprintf(gamestate, 255, "level%d", data->selected);
 		SwitchGamestate(game, "map", gamestate);
 		return;
 	} else if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
@@ -106,7 +106,7 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 	data->map_bg = LoadScaledBitmap(game, "map/background.png", game->viewport.height*1.6, game->viewport.height);
 	(*progress)(game);
 	char filename[30] = { };
-	sprintf(filename, "map/highlight%d.png", data->available);
+	snprintf(filename, 30, "map/highlight%d.png", data->available);
 	data->highlight = LoadScaledBitmap(game, filename, game->viewport.height*1.6, game->viewport.height);
 	(*progress)(game);
 

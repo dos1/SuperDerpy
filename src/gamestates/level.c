@@ -20,6 +20,7 @@
  */
 #include "../utils.h"
 #include "../timeline.h"
+#include "../config.h"
 #include "level.h"
 
 #include <stdio.h>
@@ -63,7 +64,7 @@ void RegisterSpritesheet(struct Game *game, struct Character *character, char* n
 	}
 	PrintConsole(game, "Registering %s spritesheet: %s", character->name, name);
 	char filename[255] = { };
-	sprintf(filename, "levels/%s/%s.ini", character->name, name);
+	snprintf(filename, 255, "levels/%s/%s.ini", character->name, name);
 	ALLEGRO_CONFIG *config = al_load_config_file(GetDataFilePath(game, filename));
 	s = malloc(sizeof(struct Spritesheet));
 	s->name = strdup(name);
@@ -85,23 +86,22 @@ void RegisterSpritesheet(struct Game *game, struct Character *character, char* n
 	al_destroy_config(config);
 }
 
-/*
-void Level_Passed(struct Game *game) {
-	if (game->level.current_level<6) {
-		int available = atoi(GetConfigOptionDefault("MuffinAttack", "level", "1"));
+void AdvanceLevel(struct Game *game, int current_level, bool last) {
+	if (last) {
+		int available = atoi(GetConfigOptionDefault(game, "MuffinAttack", "level", "1"));
 		available++;
 		if ((available<2) || (available>7)) available=1;
-		if (available==(game->level.current_level+1)) {
-			char* text = malloc(2*sizeof(char));
-			sprintf(text, "%d", available);
-			SetConfigOption("MuffinAttack", "level", text);
+		if (available==(current_level+1)) {
+			char* text = malloc(255*sizeof(char));
+			snprintf(text, 255, "%d", available);
+			SetConfigOption(game, "MuffinAttack", "level", text);
 			free(text);
 		}
 	} else {
-		SetConfigOption("MuffinAttack", "completed", "1");
+		SetConfigOption(game, "MuffinAttack", "completed", "1");
 	}
 }
-
+/*
 void Level_Logic(struct Game *game) {
 	LEVELS(Logic, game);
 

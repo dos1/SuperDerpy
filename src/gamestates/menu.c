@@ -54,15 +54,15 @@ void DrawMenuState(struct Game *game, struct MenuResources *data) {
 			break;
 		case MENUSTATE_AUDIO:
 			font = data->font; if (data->selected==0) font = data->font_selected;
-			if (game->config.music) sprintf(text, "Music volume: %d0%%", game->config.music);
+			if (game->config.music) snprintf(text, 255, "Music volume: %d0%%", game->config.music);
 			else sprintf(text, "Music disabled");
 			DrawTextWithShadow(font, al_map_rgb(255,255,255), game->viewport.width*0.5, game->viewport.height*0.5, ALLEGRO_ALIGN_CENTRE, text);
 			font = data->font; if (data->selected==1) font = data->font_selected;
-			if (game->config.fx) sprintf(text, "Effects volume: %d0%%", game->config.fx);
+			if (game->config.fx) snprintf(text, 255, "Effects volume: %d0%%", game->config.fx);
 			else sprintf(text, "Effects disabled");
 			DrawTextWithShadow(font, al_map_rgb(255,255,255), game->viewport.width*0.5, game->viewport.height*0.6, ALLEGRO_ALIGN_CENTRE, text);
 			font = data->font; if (data->selected==2) font = data->font_selected;
-			if (game->config.voice) sprintf(text, "Voice volume: %d0%%", game->config.voice);
+			if (game->config.voice) snprintf(text, 255, "Voice volume: %d0%%", game->config.voice);
 			else sprintf(text, "Voice disabled");
 			DrawTextWithShadow(font, al_map_rgb(255,255,255), game->viewport.width*0.5, game->viewport.height*0.7, ALLEGRO_ALIGN_CENTRE, text);
 			font = data->font; if (data->selected==3) font = data->font_selected;
@@ -392,21 +392,21 @@ void Gamestate_ProcessEvent(struct Game *game, struct MenuResources* data, ALLEG
 					case 0:
 						game->config.music--;
 						if (game->config.music<0) game->config.music=10;
-						sprintf(text, "%d", game->config.music);
+						snprintf(text, 255, "%d", game->config.music);
 						SetConfigOption(game, "SuperDerpy", "music", text);
 						al_set_mixer_gain(game->audio.music, game->config.music/10.0);
 						break;
 					case 1:
 						game->config.fx--;
 						if (game->config.fx<0) game->config.fx=10;
-						sprintf(text, "%d", game->config.fx);
+						snprintf(text, 255, "%d", game->config.fx);
 						SetConfigOption(game, "SuperDerpy", "fx", text);
 						al_set_mixer_gain(game->audio.fx, game->config.fx/10.0);
 						break;
 					case 2:
 						game->config.voice--;
 						if (game->config.voice<0) game->config.voice=10;
-						sprintf(text, "%d", game->config.voice);
+						snprintf(text, 255, "%d", game->config.voice);
 						SetConfigOption(game, "SuperDerpy", "voice", text);
 						al_set_mixer_gain(game->audio.voice, game->config.voice/10.0);
 						break;
