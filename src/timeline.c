@@ -22,7 +22,7 @@
 #include "utils.h"
 #include "timeline.h"
 
-// FIXME: pack into Timeline structure
+// FIXME: pack into Timeline structure (multipe instances support)
 unsigned int lastid;
 struct Game* game = NULL;
 struct TM_Action *queue, *background;

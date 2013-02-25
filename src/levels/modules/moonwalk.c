@@ -24,7 +24,7 @@
 #include "../../utils.h"
 #include "moonwalk.h"
 
-// TODO: use Walk action instead
+// TODO: maybe use Walk action instead
 bool DoMoonwalk(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	struct Character *derpy = action->arguments->value;
 	if (state == TM_ACTIONSTATE_START) {
@@ -53,6 +53,7 @@ void Moonwalk_Draw(struct Game *game, struct Moonwalk *data) {
 void Moonwalk_Start(struct Game *game, struct Moonwalk *data) {
 	SelectSpritesheet(game, data->derpy, "walk");
 	al_play_sample_instance(data->music);
+	// TODO: find some way to restart Timeline
 }
 
 
@@ -84,7 +85,6 @@ struct Moonwalk* Moonwalk_Load(struct Game *game, int current_level) {
 	al_attach_sample_instance_to_mixer(data->music, game->audio.music);
 	al_set_sample_instance_playmode(data->music, ALLEGRO_PLAYMODE_LOOP);
 
-
 	TM_Init(game);
 	TM_AddAction(&DoMoonwalk, TM_AddToArgs(NULL, data->derpy), "moonwalk");
 
@@ -101,9 +101,20 @@ void Moonwalk_Unload(struct Game *game, struct Moonwalk *data) {
 	free(data);
 	TM_Destroy();
 }
+
 void Moonwalk_ProcessEvent(struct Game *game, struct Moonwalk *data, ALLEGRO_EVENT *ev) {}
-void Moonwalk_Resume(struct Game *game, struct Moonwalk *data) {}
-void Moonwalk_Pause(struct Game *game, struct Moonwalk *data) {}
+
+void Moonwalk_Pause(struct Game *game, struct Moonwalk *data) {
+	data->music_pos = al_get_sample_instance_position(data->music);
+	al_set_sample_instance_playing(data->music, false);
+	TM_Pause();
+}
+
+void Moonwalk_Resume(struct Game *game, struct Moonwalk *data) {
+	al_set_sample_instance_position(data->music, data->music_pos);
+	al_set_sample_instance_playing(data->music, true);
+	TM_Resume();
+}
 
 void Moonwalk_Reload(struct Game *game, struct Moonwalk *data) {
 	unload_bitmaps(game, data);

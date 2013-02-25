@@ -23,4 +23,5 @@
 struct Moonwalk;
 struct Level2Resources {
 		struct Moonwalk *moonwalk;
+		ALLEGRO_FONT *font;
 };

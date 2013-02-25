@@ -27,6 +27,7 @@ struct Moonwalk {
 	ALLEGRO_BITMAP *background;
 	ALLEGRO_SAMPLE *sample;
 	ALLEGRO_SAMPLE_INSTANCE *music;
+	int music_pos;
 };
 
 bool DoMoonwalk(struct Game *game, struct TM_Action *action, enum TM_ActionState state);

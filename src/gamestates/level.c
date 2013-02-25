@@ -25,6 +25,9 @@
 
 #include <stdio.h>
 
+// TODO: move this file to better place
+// it's now a place for level related utilities - certainly not a gamestate
+
 void SelectSpritesheet(struct Game *game, struct Character *character, char* name) {
 	struct Spritesheet *tmp = character->spritesheets;
 	PrintConsole(game, "Selecting spritesheet for %s: %s", character->name, name);

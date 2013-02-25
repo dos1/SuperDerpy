@@ -20,10 +20,12 @@
  */
 
 #include <stdio.h>
+#include "allegro5/allegro_ttf.h"
 #include "../gamestates/level.h"
 #include "modules/moonwalk.h"
 #include "../timeline.h"
 #include "actions.h"
+#include "../utils.h"
 #include "level2.h"
 
 
@@ -31,18 +33,24 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 
 	struct Level2Resources *data = malloc(sizeof(struct Level2Resources));
 	data->moonwalk = Moonwalk_Load(game, 2);
+	(*progress)(game);
+
 	struct TM_Arguments *args = TM_AddToArgs(NULL, strdup("level2"));
 	int* level = malloc(sizeof(int));
 	*level=2;
 	TM_AddToArgs(args, level);
 	TM_AddAction(&PassLevel, args, "passlevel");
+	(*progress)(game);
+
+	data->font = al_load_ttf_font(GetDataFilePath(game, "fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.09,0 );
+	(*progress)(game);
 
 	return data;
 }
 
-
 void Gamestate_Unload(struct Game *game, struct Level2Resources* data) {
 	Moonwalk_Unload(game, data->moonwalk);
+	al_destroy_font(data->font);
 	free(data);
 }
 
@@ -56,10 +64,9 @@ void Gamestate_Stop(struct Game *game, struct Level2Resources* data) {
 
 void Gamestate_Draw(struct Game *game, struct Level2Resources* data) {
 	Moonwalk_Draw(game, data->moonwalk);
-	al_draw_textf(game->_priv.font, al_map_rgb(255,255,255), game->viewport.width/2, game->viewport.height/2.2, ALLEGRO_ALIGN_CENTRE, "Level %d: Not implemented yet!", 2);
-	al_draw_text(game->_priv.font, al_map_rgb(255,255,255), game->viewport.width/2, game->viewport.height/1.8, ALLEGRO_ALIGN_CENTRE, "Have some moonwalk instead.");
-	// FIXME: _priv... please fix me :/
 
+	al_draw_textf(data->font, al_map_rgb(255,255,255), game->viewport.width/2, game->viewport.height/2.2, ALLEGRO_ALIGN_CENTRE, "Level %d: Not implemented yet!", 2);
+	al_draw_text(data->font, al_map_rgb(255,255,255), game->viewport.width/2, game->viewport.height/1.8, ALLEGRO_ALIGN_CENTRE, "Have some moonwalk instead.");
 }
 
 void Gamestate_Logic(struct Game *game, struct Level2Resources* data) {
@@ -85,4 +92,4 @@ void Gamestate_Pause(struct Game *game, struct Level2Resources* data) {
 
 void Gamestate_Reload(struct Game *game, struct Level2Resources* data) {}
 
-int Gamestate_ProgressCount = 0;
+int Gamestate_ProgressCount = 3;
