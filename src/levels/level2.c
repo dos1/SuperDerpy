@@ -1,5 +1,5 @@
-/*! \file level2.c
- *  \brief Level 2 code.
+/*! \file levelX.c
+ *  \brief Level placeholder code.
  */
 /*
  * Copyright (c) Sebastian Krzyszkowiak <dos@dosowisko.net>
@@ -19,6 +19,18 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+#define LEVEL 2
+
+//macro magic
+#define CONCAT_REAL(a,b) a ## b
+#define STRINGIZE_REAL(A) #A
+#define CONCAT(a,b) CONCAT_REAL(a,b)
+#define STRINGIZE(A) STRINGIZE_REAL(A)
+
+#define LevelXResources CONCAT(CONCAT(Level,LEVEL),Resources)
+#define levelx STRINGIZE(CONCAT(level,LEVEL))
+#define levelxh STRINGIZE(CONCAT(level,LEVEL).h)
+
 #include <stdio.h>
 #include "allegro5/allegro_ttf.h"
 #include "../gamestates/level.h"
@@ -26,18 +38,18 @@
 #include "../timeline.h"
 #include "actions.h"
 #include "../utils.h"
-#include "level2.h"
+#include levelxh
 
 
 void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 
-	struct Level2Resources *data = malloc(sizeof(struct Level2Resources));
-	data->moonwalk = Moonwalk_Load(game, 2);
+	struct LevelXResources *data = malloc(sizeof(struct LevelXResources));
+	data->moonwalk = Moonwalk_Load(game, LEVEL);
 	(*progress)(game);
 
-	struct TM_Arguments *args = TM_AddToArgs(NULL, strdup("level2"));
+	struct TM_Arguments *args = TM_AddToArgs(NULL, strdup(levelx));
 	int* level = malloc(sizeof(int));
-	*level=2;
+	*level=LEVEL;
 	TM_AddToArgs(args, level);
 	TM_AddAction(&PassLevel, args, "passlevel");
 	(*progress)(game);
@@ -48,48 +60,48 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 	return data;
 }
 
-void Gamestate_Unload(struct Game *game, struct Level2Resources* data) {
+void Gamestate_Unload(struct Game *game, struct LevelXResources* data) {
 	Moonwalk_Unload(game, data->moonwalk);
 	al_destroy_font(data->font);
 	free(data);
 }
 
-void Gamestate_Start(struct Game *game, struct Level2Resources* data) {
+void Gamestate_Start(struct Game *game, struct LevelXResources* data) {
 	Moonwalk_Start(game, data->moonwalk);
 }
 
-void Gamestate_Stop(struct Game *game, struct Level2Resources* data) {
+void Gamestate_Stop(struct Game *game, struct LevelXResources* data) {
 	Moonwalk_Stop(game, data->moonwalk);
 }
 
-void Gamestate_Draw(struct Game *game, struct Level2Resources* data) {
+void Gamestate_Draw(struct Game *game, struct LevelXResources* data) {
 	Moonwalk_Draw(game, data->moonwalk);
 
-	al_draw_textf(data->font, al_map_rgb(255,255,255), game->viewport.width/2, game->viewport.height/2.2, ALLEGRO_ALIGN_CENTRE, "Level %d: Not implemented yet!", 2);
+	al_draw_textf(data->font, al_map_rgb(255,255,255), game->viewport.width/2, game->viewport.height/2.2, ALLEGRO_ALIGN_CENTRE, "Level %d: Not implemented yet!", LEVEL);
 	al_draw_text(data->font, al_map_rgb(255,255,255), game->viewport.width/2, game->viewport.height/1.8, ALLEGRO_ALIGN_CENTRE, "Have some moonwalk instead.");
 }
 
-void Gamestate_Logic(struct Game *game, struct Level2Resources* data) {
+void Gamestate_Logic(struct Game *game, struct LevelXResources* data) {
 	Moonwalk_Logic(game, data->moonwalk);
 }
 
-void Gamestate_ProcessEvent(struct Game *game, struct Level2Resources* data, ALLEGRO_EVENT *ev) {
+void Gamestate_ProcessEvent(struct Game *game, struct LevelXResources* data, ALLEGRO_EVENT *ev) {
 	Moonwalk_ProcessEvent(game, data->moonwalk, ev);
 	if (ev->type == ALLEGRO_EVENT_KEY_DOWN) {
 		if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
-			SwitchGamestate(game, "level2", "menu");
+			SwitchGamestate(game, levelx, "map");
 		}
 	}
 }
 
-void Gamestate_Resume(struct Game *game, struct Level2Resources* data) {
+void Gamestate_Resume(struct Game *game, struct LevelXResources* data) {
 	Moonwalk_Resume(game, data->moonwalk);
 }
 
-void Gamestate_Pause(struct Game *game, struct Level2Resources* data) {
+void Gamestate_Pause(struct Game *game, struct LevelXResources* data) {
 	Moonwalk_Pause(game, data->moonwalk);
 }
 
-void Gamestate_Reload(struct Game *game, struct Level2Resources* data) {}
+void Gamestate_Reload(struct Game *game, struct LevelXResources* data) {}
 
 int Gamestate_ProgressCount = 3;

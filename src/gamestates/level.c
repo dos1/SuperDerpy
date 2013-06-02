@@ -173,7 +173,7 @@ void SetCharacterPosition(struct Game *game, struct Character *character, float 
 }
 
 void AdvanceLevel(struct Game *game, int current_level, bool last) {
-	if (last) {
+	if (!last) {
 		int available = atoi(GetConfigOptionDefault(game, "MuffinAttack", "level", "1"));
 		available++;
 		if ((available<2) || (available>7)) available=1;

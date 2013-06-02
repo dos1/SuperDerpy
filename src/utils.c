@@ -172,7 +172,7 @@ void FatalError(struct Game *game, bool fatal, char* format, ...) {
 		printf("%s\n", text);
 		if (!game->_priv.font_console) exit(1);
 	} else {
-		PrintConsole(game, "Fatal Error, displaying BSOD...");
+		PrintConsole(game, "Fatal Error, displaying Blue Screen of Derp...");
 		va_list vl;
 		va_start(vl, format);
 		vsnprintf(text, 1024, format, vl);

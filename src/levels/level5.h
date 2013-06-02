@@ -20,15 +20,8 @@
  */
 #include "../main.h"
 
-void Level5_Load(struct Game *game);
-void Level5_Unload(struct Game *game);
-void Level5_UnloadBitmaps(struct Game *game);
-void Level5_Preload(struct Game *game);
-void Level5_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float));
-inline int Level5_PreloadSteps(void);
-void Level5_Draw(struct Game *game);
-void Level5_Logic(struct Game *game);
-void Level5_Keydown(struct Game *game, ALLEGRO_EVENT *ev);
-void Level5_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev);
-void Level5_Resume(struct Game *game);
-void Level5_Pause(struct Game *game);
+struct Moonwalk;
+struct Level5Resources {
+		struct Moonwalk *moonwalk;
+		ALLEGRO_FONT *font;
+};

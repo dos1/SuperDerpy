@@ -23,6 +23,7 @@
 #include "actions.h"
 #include "modules/dodger.h"
 #include "modules/dodger/actions.h"
+#include "level1.h"
 
 void Level1_Load(struct Game *game) {
 	Dodger_Load(game);
@@ -56,11 +57,11 @@ void Level1_Load(struct Game *game) {
 	// cutscene goes here */
 	TM_AddAction(&PassLevel, NULL, "passlevel");
 
-	// init level specific obstacle for Dodger module
+	// init level specific obstacle (owl) for Dodger module
 	struct Obstacle *obst = malloc(sizeof(struct Obstacle));
 	obst->prev = NULL;
 	obst->next = NULL;
-	obst->x = (game->viewportHeight*1.33625)/game->viewportWidth*100;
+	obst->x = (game->viewport.height*1.33625)/game->viewport.width*100;
 	obst->y = 55;
 	obst->speed = 1;
 	obst->points = 0;
@@ -99,16 +100,16 @@ inline int Level1_PreloadSteps(void) {
 
 void Level1_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float)) {
 	PROGRESS_INIT(Level1_PreloadSteps());
-	game->level.level1.owl = LoadScaledBitmap("levels/1/owl.png", game->viewportHeight*0.1275, game->viewportHeight*0.1275);
+	game->level.level1.owl = LoadScaledBitmap("levels/1/owl.png", game->viewport.height*0.1275, game->viewport.height*0.1275);
 	PROGRESS;
-	game->level.letter_font = al_load_ttf_font(GetDataFilePath("fonts/DejaVuSans.ttf"),game->viewportHeight*0.0225,0 );
+	game->level.letter_font = al_load_ttf_font(GetDataFilePath("fonts/DejaVuSans.ttf"),game->viewport.height*0.0225,0 );
 	PROGRESS;
-	game->level.letter = LoadScaledBitmap("levels/1/letter.png", game->viewportHeight*1.3, game->viewportHeight*1.2);
+	game->level.letter = LoadScaledBitmap("levels/1/letter.png", game->viewport.height*1.3, game->viewport.height*1.2);
 	al_set_target_bitmap(game->level.letter);
 	float y = 0.20;
 	float x = 0.19;
 	void draw_text(char* text) {
-		al_draw_text(game->level.letter_font, al_map_rgb(0,0,0), al_get_bitmap_width(game->level.letter)*x, game->viewportHeight*y, ALLEGRO_ALIGN_LEFT, text);
+		al_draw_text(game->level.letter_font, al_map_rgb(0,0,0), al_get_bitmap_width(game->level.letter)*x, game->viewport.height*y, ALLEGRO_ALIGN_LEFT, text);
 		y+=0.028;
 	}
 	draw_text("Dear Derpy,");
@@ -148,8 +149,8 @@ void Level1_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, flo
 
 	al_set_target_bitmap(game->level.welcome);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
-	al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.1, ALLEGRO_ALIGN_CENTRE, "Level 1");
-	al_draw_text_with_shadow(game->menu.font_subtitle, al_map_rgb(255,255,255), game->viewportWidth*0.5, game->viewportHeight*0.275, ALLEGRO_ALIGN_CENTRE, "Fluttershy");
+	al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), game->viewport.width*0.5, game->viewport.height*0.1, ALLEGRO_ALIGN_CENTRE, "Level 1");
+	al_draw_text_with_shadow(game->menu.font_subtitle, al_map_rgb(255,255,255), game->viewport.width*0.5, game->viewport.height*0.275, ALLEGRO_ALIGN_CENTRE, "Fluttershy");
 	PROGRESS;
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 

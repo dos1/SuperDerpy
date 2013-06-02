@@ -1,4 +1,4 @@
-add_library("libsuperderpy-muffinattack-levels" SHARED "actions.c" "../gamestates/level.c" "modules/moonwalk.c")
+add_library("libsuperderpy-muffinattack-levels" SHARED "actions.c" "../gamestates/level.c" "modules/moonwalk.c" "modules/dodger.c")
 
 SET_TARGET_PROPERTIES("libsuperderpy-muffinattack-levels" PROPERTIES PREFIX "")
 
@@ -21,7 +21,7 @@ ENDMACRO()
 
 #GAMESTATE("level1")
 GAMESTATE("level2")
-#GAMESTATE("level3")
-#GAMESTATE("level4")
-#GAMESTATE("level5")
-#GAMESTATE("level6")
+GAMESTATE("level3")
+GAMESTATE("level4")
+GAMESTATE("level5")
+GAMESTATE("level6")

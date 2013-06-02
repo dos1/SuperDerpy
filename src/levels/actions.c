@@ -192,7 +192,7 @@ bool Letter(struct Game *game, struct TM_Action *action, enum TM_ActionState sta
 		*stream = al_load_audio_stream(GetDataFilePath(game, "levels/1/letter.flac"), 4, 1024);
 		al_attach_audio_stream_to_mixer(*stream, game->audio.voice);
 		al_set_audio_stream_playing(*stream, false);
-		al_set_audio_stream_gain(*stream, 2.00);
+		al_set_audio_stream_gain(*stream, 2.00); // FIXME: fix audio file instead of gaining it here...
 		action->arguments = TM_AddToArgs(action->arguments, (void*)f);
 		action->arguments = TM_AddToArgs(action->arguments, (void*)stream);
 		action->arguments->next->next = NULL;
