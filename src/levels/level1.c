@@ -19,14 +19,17 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 #include <stdio.h>
+#include "allegro5/allegro_ttf.h"
 #include "../gamestates/level.h"
 #include "actions.h"
+#include "../utils.h"
 #include "modules/dodger.h"
 #include "modules/dodger/actions.h"
 #include "level1.h"
 
-void Level1_Load(struct Game *game) {
-	Dodger_Load(game, 1);
+int Gamestate_ProgressCount = 9001;
+
+void Gamestate_Start(struct Game *game, struct Level1Resources* data) {
 	TM_AddBackgroundAction(&FadeIn, NULL, 0, "fadein");
 	TM_AddDelay(1000);
 	TM_AddQueuedBackgroundAction(&Welcome, NULL, 0, "welcome");
@@ -75,41 +78,43 @@ void Level1_Load(struct Game *game) {
 	obst->angle = 0;
 	obst->callback = NULL;
 	obst->data = NULL;
-	obst->bitmap = &(game->level.level1.owl);
-	game->level.dodger.obstacles = obst;
+	obst->bitmap = &(data->owl);
+	data->dodger->obstacles = obst;
 }
 
-void Level1_Unload(struct Game *game) {
-	Dodger_Unload(game);
+void Gamestate_Reload(struct Game *game, struct Level1Resources* data) {}
+
+void Gamestate_Stop(struct Game *game, struct Level1Resources* data) {
+
 }
 
-void Level1_UnloadBitmaps(struct Game *game) {
-	Dodger_UnloadBitmaps(game);
-	al_destroy_font(game->level.letter_font);
-	al_destroy_bitmap(game->level.letter);
-	al_destroy_bitmap(game->level.level1.owl);
+void Gamestate_Unload(struct Game *game, struct Level1Resources* data) {
+	Dodger_Unload(game, data->dodger);
 }
 
-void Level1_Preload(struct Game *game) {
-	Dodger_Preload(game);
+void Gamestate_UnloadBitmaps(struct Game *game, struct Level1Resources* data) {
+	Dodger_UnloadBitmaps(game, data->dodger);
+	al_destroy_font(data->letter_font);
+	al_destroy_bitmap(data->letter);
+	al_destroy_bitmap(data->owl);
 }
 
-inline int Level1_PreloadSteps(void) {
-	return 4+Dodger_PreloadSteps();
-}
 
-void Level1_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, float)) {
-	PROGRESS_INIT(Level1_PreloadSteps());
-	game->level.level1.owl = LoadScaledBitmap("levels/1/owl.png", game->viewport.height*0.1275, game->viewport.height*0.1275);
-	PROGRESS;
-	game->level.letter_font = al_load_ttf_font(GetDataFilePath("fonts/DejaVuSans.ttf"),game->viewport.height*0.0225,0 );
-	PROGRESS;
-	game->level.letter = LoadScaledBitmap("levels/1/letter.png", game->viewport.height*1.3, game->viewport.height*1.2);
-	al_set_target_bitmap(game->level.letter);
+void Gamestate_PreloadBitmaps(struct Game *game, struct Level1Resources* data) {
+	data->welcome = al_create_bitmap(game->viewport.width, game->viewport.height/2);
+
+	data->font_title = al_load_ttf_font(GetDataFilePath(game, "fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.16,0 );
+	data->font_subtitle = al_load_ttf_font(GetDataFilePath(game, "fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.08,0 );
+	data->font = al_load_ttf_font(GetDataFilePath(game, "fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.05,0 );
+
+	data->owl = LoadScaledBitmap(game, "levels/1/owl.png", game->viewport.height*0.1275, game->viewport.height*0.1275);
+	data->letter_font = al_load_ttf_font(GetDataFilePath(game, "fonts/DejaVuSans.ttf"),game->viewport.height*0.0225,0 );
+	data->letter = LoadScaledBitmap(game, "levels/1/letter.png", game->viewport.height*1.3, game->viewport.height*1.2);
+	al_set_target_bitmap(data->letter);
 	float y = 0.20;
 	float x = 0.19;
 	void draw_text(char* text) {
-		al_draw_text(game->level.letter_font, al_map_rgb(0,0,0), al_get_bitmap_width(game->level.letter)*x, game->viewport.height*y, ALLEGRO_ALIGN_LEFT, text);
+		al_draw_text(data->letter_font, al_map_rgb(0,0,0), al_get_bitmap_width(data->letter)*x, game->viewport.height*y, ALLEGRO_ALIGN_LEFT, text);
 		y+=0.028;
 	}
 	draw_text("Dear Derpy,");
@@ -143,40 +148,62 @@ void Level1_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, flo
 	x = 0.26;
 	draw_text("Yours,");
 	draw_text("Twilight Sparkle");
-	al_draw_text_with_shadow(game->menu.font, al_map_rgb(255,255,255), al_get_bitmap_width(game->level.letter)*0.5, al_get_bitmap_height(game->level.letter)*0.8, ALLEGRO_ALIGN_CENTRE, "Press enter to continue...");
+	DrawTextWithShadow(data->font, al_map_rgb(255,255,255), al_get_bitmap_width(data->letter)*0.5, al_get_bitmap_height(data->letter)*0.8, ALLEGRO_ALIGN_CENTRE, "Press enter to continue...");
 	al_set_target_bitmap(al_get_backbuffer(game->display));
-	PROGRESS;
 
-	al_set_target_bitmap(game->level.welcome);
+	al_set_target_bitmap(data->welcome);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
-	al_draw_text_with_shadow(game->menu.font_title, al_map_rgb(255,255,255), game->viewport.width*0.5, game->viewport.height*0.1, ALLEGRO_ALIGN_CENTRE, "Level 1");
-	al_draw_text_with_shadow(game->menu.font_subtitle, al_map_rgb(255,255,255), game->viewport.width*0.5, game->viewport.height*0.275, ALLEGRO_ALIGN_CENTRE, "Fluttershy");
-	PROGRESS;
+	DrawTextWithShadow(data->font_title, al_map_rgb(255,255,255), game->viewport.width*0.5, game->viewport.height*0.1, ALLEGRO_ALIGN_CENTRE, "Level 1");
+	DrawTextWithShadow(data->font_subtitle, al_map_rgb(255,255,255), game->viewport.width*0.5, game->viewport.height*0.275, ALLEGRO_ALIGN_CENTRE, "Fluttershy");
+
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 
-	Dodger_PreloadBitmaps(game, progress);
+	Dodger_PreloadBitmaps(game, data->dodger);
 }
 
-void Level1_Draw(struct Game *game) {
-	Dodger_Draw(game);
+struct Level1Resources* Gamestate_Load(struct Game *game) {
+	TM_Init(game);
+
+	struct Level1Resources *data = malloc(sizeof(struct Level1Resources));
+	struct Character *character = CreateCharacter(game, "derpy");
+	RegisterSpritesheet(game, character, "walk");
+	RegisterSpritesheet(game, character, "stand");
+	RegisterSpritesheet(game, character, "fly");
+	RegisterSpritesheet(game, character, "run");
+	SelectSpritesheet(game, character, "stand");
+	data->dodger = Dodger_Load(game, character);
+
+	Gamestate_PreloadBitmaps(game, data);
+	LoadSpritesheets(game, character);
+	return data;
 }
 
-void Level1_Logic(struct Game *game) {
-	Dodger_Logic(game);
+
+void Gamestate_Draw(struct Game *game, struct Level1Resources* data) {
+	Dodger_Draw(game, data->dodger);
 }
 
-void Level1_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
-	Dodger_Keydown(game, ev);
+void Gamestate_Logic(struct Game *game, struct Level1Resources* data) {
+	Dodger_Logic(game, data->dodger);
 }
 
-void Level1_ProcessEvent(struct Game *game, ALLEGRO_EVENT *ev) {
-	Dodger_ProcessEvent(game, ev);
+void Gamestate_Keydown(struct Game *game, struct Level1Resources* data, ALLEGRO_EVENT *ev) {
+	Dodger_Keydown(game, data->dodger, ev);
 }
 
-void Level1_Resume(struct Game *game) {
-	Dodger_Resume(game);
+void Gamestate_ProcessEvent(struct Game *game, struct Level1Resources* data, ALLEGRO_EVENT *ev) {
+	Dodger_ProcessEvent(game, data->dodger, ev);
+	if (ev->type == ALLEGRO_EVENT_KEY_DOWN) {
+		if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
+			SwitchGamestate(game, "level1", "map");
+		}
+	}
 }
 
-void Level1_Pause(struct Game *game) {
-	Dodger_Pause(game);
+void Gamestate_Resume(struct Game *game, struct Level1Resources* data) {
+	Dodger_Resume(game, data->dodger);
+}
+
+void Gamestate_Pause(struct Game *game, struct Level1Resources* data) {
+	Dodger_Pause(game, data->dodger);
 }

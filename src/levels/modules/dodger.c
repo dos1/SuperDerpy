@@ -31,18 +31,16 @@ void Dodger_Logic(struct Game *game, struct Dodger* data) {
 	struct ALLEGRO_KEYBOARD_STATE keyboard;
 	al_get_keyboard_state(&keyboard);
 	if (data->handle_input) {
-		if (data->derpy_angle > 0) { data->derpy_angle -= 0.02; if (data->derpy_angle < 0) data->derpy_angle = 0; }
-		if (data->derpy_angle < 0) { data->derpy_angle += 0.02; if (data->derpy_angle > 0) data->derpy_angle = 0; }
+		if (data->character->angle > 0) { data->character->angle -= 0.02; if (data->character->angle < 0) data->character->angle = 0; }
+		if (data->character->angle < 0) { data->character->angle += 0.02; if (data->character->angle > 0) data->character->angle = 0; }
 		if (al_key_down(&keyboard, ALLEGRO_KEY_UP)) {
-			data->derpy_y -= 0.005;
-			data->derpy_angle -= 0.03;
-			if (data->derpy_angle < -0.15) data->derpy_angle = -0.15;
+			MoveCharacter(game, data->character, 0, -0.005, -0.03);
+			if (data->character->angle < -0.15) data->character->angle = -0.15;
 			/*PrintConsole(game, "Derpy Y position: %f", data->derpy_y);*/
 		}
 		if (al_key_down(&keyboard, ALLEGRO_KEY_DOWN)) {
-			data->derpy_y += 0.005;
-			data->derpy_angle += 0.03;
-			if (data->derpy_angle > 0.15) data->derpy_angle = 0.15;
+			MoveCharacter(game, data->character, 0, 0.005, 0.03);
+			if (data->character->angle > 0.15) data->character->angle = 0.15;
 			/*PrintConsole(game, "Derpy Y position: %f", data->derpy_y);*/
 		}
 		/*if ((data->derpy_y > 0.6) && (data->flying)) {
@@ -56,18 +54,18 @@ void Dodger_Logic(struct Game *game, struct Dodger* data) {
 			data->sheet_speed = tps(game, 60*2.4);
 		}
 		if (!data->flying) data->sheet_speed = tps(game, 60*0.0020/data->speed); */
-		if (data->derpy_y < 0) data->derpy_y=0;
-		else if (data->derpy_y > 0.8) data->derpy_y=0.8;
+		if ( data->character->y < 0)  data->character->y=0;
+		else if ( data->character->y > 0.8)  data->character->y=0.8;
 
-		data->derpy_y += data->derpy_angle / 30;
+		 data->character->y += data->character->angle / 30;
 	}
 
-	int derpyx = data->derpy_x*game->viewport.height*1.6;
-	int derpyy = data->derpy_y*game->viewport.height;
-	int derpyw = al_get_bitmap_width(data->derpy);
-	int derpyh = al_get_bitmap_height(data->derpy);
-	int derpyo = game->viewport.height*1.6*0.1953125-al_get_bitmap_width(data->derpy); /* offset */
-	struct Obstacle *tmp = data->dodger.obstacles;
+	int derpyx = data->character->x*game->viewport.height*1.6;
+	int derpyy = data->character->y*game->viewport.height;
+	int derpyw = al_get_bitmap_width(data->character->bitmap);
+	int derpyh = al_get_bitmap_height(data->character->bitmap);
+	int derpyo = game->viewport.height*1.6*0.1953125-al_get_bitmap_width(data->character->bitmap); /* offset */
+	struct Obstacle *tmp = data->obstacles;
 	while (tmp) {
 		/*PrintConsole(game, "DRAWING %f %f", tmp->x, tmp->y);*/
 		int x = (tmp->x/100.0)*game->viewport.width;
@@ -105,7 +103,7 @@ void Dodger_Logic(struct Game *game, struct Dodger* data) {
 					TM_AddBackgroundAction(&LevelFailed, NULL, 0, "levelfailed");
 				}
 			}
-			tmp->x -= data->speed*data->speed_modifier*tmp->speed*100*al_get_bitmap_width(data->stage)/(float)game->viewport.width;
+			tmp->x -= data->speed*data->speed_modifier*tmp->speed*100*al_get_display_width(game->display)/(float)game->viewport.width;
 			if (tmp->callback) tmp->callback(game, tmp);
 			tmp = tmp->next;
 		} else {
@@ -114,7 +112,7 @@ void Dodger_Logic(struct Game *game, struct Dodger* data) {
 			if (tmp->prev)
 				tmp->prev->next = tmp->next;
 			else
-				data->dodger.obstacles = tmp->next;
+				data->obstacles = tmp->next;
 			struct Obstacle *t = tmp;
 			tmp = tmp->next;
 			free(t);
@@ -125,13 +123,13 @@ void Dodger_Logic(struct Game *game, struct Dodger* data) {
 }
 
 void Dodger_Draw(struct Game *game, struct Dodger* data) {
-	int derpyx = data->derpy_x*game->viewport.height*1.6;
-	int derpyy = data->derpy_y*game->viewport.height;
-	int derpyw = al_get_bitmap_width(data->derpy);
-	int derpyh = al_get_bitmap_height(data->derpy);
-	int derpyo = game->viewport.height*1.6*0.1953125-al_get_bitmap_width(data->derpy); /* offset */
+	int derpyx = data->character->x*game->viewport.height*1.6;
+	int derpyy = data->character->y*game->viewport.height;
+	int derpyw = al_get_bitmap_width(data->character->bitmap);
+	int derpyh = al_get_bitmap_height(data->character->bitmap);
+	int derpyo = game->viewport.height*1.6*0.1953125-al_get_bitmap_width(data->character->bitmap); /* offset */
 	bool colision = false;
-	struct Obstacle *tmp = data->dodger.obstacles;
+	struct Obstacle *tmp = data->obstacles;
 	while (tmp) {
 		/*PrintConsole(game, "DRAWING %f %f", tmp->x, tmp->y);*/
 		int x = (tmp->x/100.0)*game->viewport.width;
@@ -162,7 +160,7 @@ void Dodger_Draw(struct Game *game, struct Dodger* data) {
 			if (tmp->prev)
 				tmp->prev->next = tmp->next;
 			else
-				data->dodger.obstacles = tmp->next;
+				data->obstacles = tmp->next;
 			struct Obstacle *t = tmp;
 			tmp = tmp->next;
 			free(t);
@@ -170,12 +168,12 @@ void Dodger_Draw(struct Game *game, struct Dodger* data) {
 	}
 	/*if (colision) data->hp-=tps(game, 60*0.002);*/
 
-	al_set_target_bitmap(data->derpy);
+	al_set_target_bitmap(data->character->bitmap);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
-	al_draw_bitmap_region(*(data->derpy_sheet),al_get_bitmap_width(data->derpy)*(data->sheet_pos%data->sheet_cols),al_get_bitmap_height(data->derpy)*(data->sheet_pos/data->sheet_cols),al_get_bitmap_width(data->derpy), al_get_bitmap_height(data->derpy),0,0,0);
+	al_draw_bitmap_region(data->character->spritesheet->bitmap,al_get_bitmap_width(data->character->bitmap)*(data->character->pos%data->character->spritesheet->cols),al_get_bitmap_height(data->character->bitmap)*(data->character->pos/data->character->spritesheet->cols),al_get_bitmap_width(data->character->bitmap), al_get_bitmap_height(data->character->bitmap),0,0,0);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 
-	al_draw_tinted_rotated_bitmap(data->derpy, al_map_rgba(255,255-colision*255,255-colision*255,255), al_get_bitmap_width(data->derpy), al_get_bitmap_height(data->derpy)/2, derpyx+game->viewport.height*1.6*0.1953125, derpyy + al_get_bitmap_height(data->derpy)/2, data->derpy_angle, 0);
+	al_draw_tinted_rotated_bitmap(data->character->bitmap, al_map_rgba(255,255-colision*255,255-colision*255,255), al_get_bitmap_width(data->character->bitmap), al_get_bitmap_height(data->character->bitmap)/2, derpyx+game->viewport.height*1.6*0.1953125, derpyy + al_get_bitmap_height(data->character->bitmap)/2, data->character->angle, 0);
 
 	/*		if ((((x>=derpyx+0.36*derpyw) && (x<=derpyx+0.94*derpyw)) || ((x+w>=derpyx+0.36*derpyw) && (x+w<=derpyx+0.94*derpyw))) &&
 		(((y>=derpyy+0.26*derpyh) && (y<=derpyy+0.76*derpyh)) || ((y+h>=derpyy+0.26*derpyh) && (y+h<=derpyy+0.76*derpyh)))) {
@@ -186,14 +184,10 @@ void Dodger_Draw(struct Game *game, struct Dodger* data) {
 	}
 }
 
-struct Dodger* Dodger_Load(struct Game *game, int current_level) {
+struct Dodger* Dodger_Load(struct Game *game, struct Character *character) {
 	struct Dodger *data = malloc(sizeof(struct Dodger));
-	data->dodger.obstacles = NULL;
-	data->character = CreateCharacter(game, "derpy");
-	RegisterSpritesheet(game, data->character, "walk");
-	RegisterSpritesheet(game, data->character, "stand");
-	RegisterSpritesheet(game, data->character, "fly");
-	RegisterSpritesheet(game, data->character, "run");
+	data->obstacles = NULL;
+	data->character = character;
 	return data;
 }
 
@@ -231,36 +225,36 @@ inline int Dodger_PreloadSteps(void) {
 	return 7;
 }
 
-void Dodger_PreloadBitmaps(struct Game *game, struct Dodger* data, void (*progress)(struct Game*, float)) {
+void Dodger_PreloadBitmaps(struct Game *game, struct Dodger* data) {
 	//PROGRESS_INIT(Dodger_PreloadSteps());
-	data->dodger.obst_bmps.pie1 = LoadScaledBitmap(game, "levels/dodger/pie1.png", game->viewport.height*1.6*0.1, game->viewport.height*0.08);
+	data->obst_bmps.pie1 = LoadScaledBitmap(game, "levels/dodger/pie1.png", game->viewport.height*1.6*0.1, game->viewport.height*0.08);
 
-	data->dodger.obst_bmps.pie2 = LoadScaledBitmap(game, "levels/dodger/pie2.png", game->viewport.height*1.6*0.1, game->viewport.height*0.08);
+	data->obst_bmps.pie2 = LoadScaledBitmap(game, "levels/dodger/pie2.png", game->viewport.height*1.6*0.1, game->viewport.height*0.08);
 
-	data->dodger.obst_bmps.pig = LoadScaledBitmap(game, "levels/dodger/pig.png", (int)(game->viewport.height*1.6*0.15)*3, (int)(game->viewport.height*0.2)*3);
+	data->obst_bmps.pig = LoadScaledBitmap(game, "levels/dodger/pig.png", (int)(game->viewport.height*1.6*0.15)*3, (int)(game->viewport.height*0.2)*3);
 
-	data->dodger.obst_bmps.screwball = LoadScaledBitmap(game, "levels/dodger/screwball.png", (int)(game->viewport.height*0.2)*4*1.4, (int)(game->viewport.height*0.2)*4);
+	data->obst_bmps.screwball = LoadScaledBitmap(game, "levels/dodger/screwball.png", (int)(game->viewport.height*0.2)*4*1.4, (int)(game->viewport.height*0.2)*4);
 
-	data->dodger.obst_bmps.muffin = LoadScaledBitmap(game, "levels/dodger/muffin.png", game->viewport.height*1.6*0.07, game->viewport.height*0.1);
+	data->obst_bmps.muffin = LoadScaledBitmap(game, "levels/dodger/muffin.png", game->viewport.height*1.6*0.07, game->viewport.height*0.1);
 
-	data->dodger.obst_bmps.cherry = LoadScaledBitmap(game, "levels/dodger/cherry.png", game->viewport.height*1.6*0.03, game->viewport.height*0.08);
+	data->obst_bmps.cherry = LoadScaledBitmap(game, "levels/dodger/cherry.png", game->viewport.height*1.6*0.03, game->viewport.height*0.08);
 
-	data->dodger.obst_bmps.badmuffin = LoadScaledBitmap(game, "levels/dodger/badmuffin.png", game->viewport.height*1.6*0.07, game->viewport.height*0.1);
+	data->obst_bmps.badmuffin = LoadScaledBitmap(game, "levels/dodger/badmuffin.png", game->viewport.height*1.6*0.07, game->viewport.height*0.1);
 
 }
 
 void Dodger_UnloadBitmaps(struct Game *game, struct Dodger* data) {
-	al_destroy_bitmap(data->dodger.obst_bmps.pie1);
-	al_destroy_bitmap(data->dodger.obst_bmps.pie2);
-	al_destroy_bitmap(data->dodger.obst_bmps.pig);
-	al_destroy_bitmap(data->dodger.obst_bmps.cherry);
-	al_destroy_bitmap(data->dodger.obst_bmps.muffin);
-	al_destroy_bitmap(data->dodger.obst_bmps.badmuffin);
-	al_destroy_bitmap(data->dodger.obst_bmps.screwball);
+	al_destroy_bitmap(data->obst_bmps.pie1);
+	al_destroy_bitmap(data->obst_bmps.pie2);
+	al_destroy_bitmap(data->obst_bmps.pig);
+	al_destroy_bitmap(data->obst_bmps.cherry);
+	al_destroy_bitmap(data->obst_bmps.muffin);
+	al_destroy_bitmap(data->obst_bmps.badmuffin);
+	al_destroy_bitmap(data->obst_bmps.screwball);
 }
 
 void Dodger_Unload(struct Game *game, struct Dodger* data) {
-	struct Obstacle *t = data->dodger.obstacles;
+	struct Obstacle *t = data->obstacles;
 	if (t) {
 		while (t->next) {
 			if (t->prev) free(t->prev);
@@ -268,13 +262,7 @@ void Dodger_Unload(struct Game *game, struct Dodger* data) {
 		}
 		free(t);
 	}
-	struct Spritesheet *tmp, *s = data->derpy_sheets;
-	tmp = s;
-	while (s) {
-		tmp = s;
-		s = s->next;
-		free(tmp);
-	}
+
 	DestroyCharacter(game, data->character);
 	free(data);
 }
