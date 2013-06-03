@@ -26,7 +26,7 @@
 #include "level1.h"
 
 void Level1_Load(struct Game *game) {
-	Dodger_Load(game);
+	Dodger_Load(game, 1);
 	TM_AddBackgroundAction(&FadeIn, NULL, 0, "fadein");
 	TM_AddDelay(1000);
 	TM_AddQueuedBackgroundAction(&Welcome, NULL, 0, "welcome");
