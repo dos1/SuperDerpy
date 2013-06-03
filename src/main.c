@@ -403,6 +403,11 @@ int main(int argc, char **argv){
 							al_flip_display();
 						}
 
+						// initially draw loading screen with empty bar
+						(*game._priv.loading.Draw)(&game, game._priv.loading.data, 0);
+						DrawConsole(&game);
+						al_flip_display();
+
 						tmp->data = (*tmp->api.Gamestate_Load)(&game, &progress);
 						loaded++;
 
