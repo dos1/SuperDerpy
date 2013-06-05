@@ -45,11 +45,8 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 	data->moonwalk = Moonwalk_Load(game, LEVEL);
 	(*progress)(game);
 
-	struct TM_Arguments *args = TM_AddToArgs(NULL, strdup(levelx));
-	int* level = malloc(sizeof(int));
-	*level=LEVEL;
-	TM_AddToArgs(args, level);
-	TM_AddAction(&PassLevel, args, "passlevel");
+	TM_WrapArg(int, level, LEVEL);
+	TM_AddAction(&PassLevel, TM_AddToArgs(NULL, 2, strdup(levelx), level), "passlevel");
 	(*progress)(game);
 
 	data->font = al_load_ttf_font(GetDataFilePath(game, "fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.09,0 );

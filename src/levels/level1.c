@@ -60,10 +60,8 @@ void Gamestate_Start(struct Game *game, struct Level1Resources* data) {
 
 	// cutscene goes here */
 
-	struct TM_Arguments *args = TM_AddToArgs(NULL, strdup("level1"));
 	TM_WrapArg(int, level, 1);
-	TM_AddToArgs(args, level);
-	TM_AddAction(&PassLevel, args, "passlevel");
+	TM_AddAction(&PassLevel, TM_AddToArgs(NULL, 2, strdup("level1"), level), "passlevel");
 
 	// init level specific obstacle (owl) for Dodger module
 	struct Obstacle *obst = malloc(sizeof(struct Obstacle));

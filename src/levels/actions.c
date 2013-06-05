@@ -64,8 +64,7 @@ bool Stop(struct Game *game, struct TM_Action *action, enum TM_ActionState state
 
 bool FadeIn(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (!action->arguments) {
-		action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(float)));
-		action->arguments = TM_AddToArgs(action->arguments, (void*)al_create_bitmap(game->viewport.width, game->viewport.height));
+		action->arguments = TM_AddToArgs(action->arguments, 2, malloc(sizeof(float)), (void*)al_create_bitmap(game->viewport.width, game->viewport.height));
 	}
 	float* fadeloop;
 	ALLEGRO_BITMAP* fade_bitmap;
@@ -94,8 +93,7 @@ bool FadeIn(struct Game *game, struct TM_Action *action, enum TM_ActionState sta
 
 bool FadeOut(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (!action->arguments) {
-		action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(float)));
-		action->arguments = TM_AddToArgs(action->arguments, (void*)al_create_bitmap(game->viewport.width, game->viewport.height));
+		action->arguments = TM_AddToArgs(action->arguments, 2, malloc(sizeof(float)), (void*)al_create_bitmap(game->viewport.width, game->viewport.height));
 	}
 	float* fadeloop;
 	ALLEGRO_BITMAP* fade_bitmap;
@@ -126,8 +124,7 @@ bool FadeOut(struct Game *game, struct TM_Action *action, enum TM_ActionState st
 bool Welcome(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	float* tmp; bool* in;
 	if (!action->arguments) {
-		action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(float)));
-		action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(bool)));
+		action->arguments = TM_AddToArgs(action->arguments, 2, malloc(sizeof(float)), malloc(sizeof(bool)));
 	}
 	tmp = (float*)action->arguments->value;
 	in = (bool*)action->arguments->next->value;
@@ -184,17 +181,14 @@ bool PassLevel(struct Game *game, struct TM_Action *action, enum TM_ActionState 
 
 bool Letter(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	if (state == TM_ACTIONSTATE_INIT) {
-		float* f = (float*)malloc(sizeof(float));
-		*f = 0;
-		ALLEGRO_AUDIO_STREAM** stream = (ALLEGRO_AUDIO_STREAM**)malloc(sizeof(ALLEGRO_AUDIO_STREAM*));
+		TM_WrapArg(float, f, 0);
+		TM_WrapArg(ALLEGRO_AUDIO_STREAM*, stream, al_load_audio_stream(GetDataFilePath(game, "levels/1/letter.flac"), 4, 1024));
 		//FIXME: GetLevelFilename
 		//*stream = al_load_audio_stream(GetDataFilePath(game, GetLevelFilename(game, "levels/?/letter.flac")), 4, 1024);
-		*stream = al_load_audio_stream(GetDataFilePath(game, "levels/1/letter.flac"), 4, 1024);
 		al_attach_audio_stream_to_mixer(*stream, game->audio.voice);
 		al_set_audio_stream_playing(*stream, false);
 		al_set_audio_stream_gain(*stream, 2.00); // FIXME: fix audio file instead of gaining it here...
-		action->arguments = TM_AddToArgs(action->arguments, (void*)f);
-		action->arguments = TM_AddToArgs(action->arguments, (void*)stream);
+		action->arguments = TM_AddToArgs(action->arguments, 2, f, stream);
 		action->arguments->next->next = NULL;
 	} else if (state == TM_ACTIONSTATE_DESTROY) {
 		ALLEGRO_AUDIO_STREAM** stream = (ALLEGRO_AUDIO_STREAM**)action->arguments->next->value;

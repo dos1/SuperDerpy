@@ -86,7 +86,7 @@ struct Moonwalk* Moonwalk_Load(struct Game *game, int current_level) {
 	al_set_sample_instance_playmode(data->music, ALLEGRO_PLAYMODE_LOOP);
 
 	TM_Init(game);
-	TM_AddAction(&DoMoonwalk, TM_AddToArgs(NULL, data->derpy), "moonwalk");
+	TM_AddAction(&DoMoonwalk, TM_AddToArgs(NULL, 1, data->derpy), "moonwalk");
 
 	return data;
 }

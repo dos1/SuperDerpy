@@ -78,7 +78,7 @@ void TM_AddDelay(int delay);
 /*! \brief Destroy timeline. */
 void TM_Destroy(void);
 /*! \brief Add data to TM_Arguments queue. */
-struct TM_Arguments* TM_AddToArgs(struct TM_Arguments* args, void* arg);
+struct TM_Arguments* TM_AddToArgs(struct TM_Arguments* args, int num, ...);
 /*! \brief Destroy TM_Arguments queue. */
 void TM_DestroyArgs(struct TM_Arguments* args);
 /*! \brief Check if timeline is initialised. */

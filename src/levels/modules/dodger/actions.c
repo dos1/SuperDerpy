@@ -93,7 +93,7 @@ bool Run(struct Game *game, struct TM_Action *action, enum TM_ActionState state)
 bool GenerateObstacles(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	int* count;
 	if (!action->arguments) {
-		action->arguments = TM_AddToArgs(action->arguments, malloc(sizeof(int)));
+		action->arguments = TM_AddToArgs(action->arguments, 1, malloc(sizeof(int)));
 	}
 	count = (int*)action->arguments->value;
 	if (state == TM_ACTIONSTATE_INIT) {

@@ -266,12 +266,8 @@ bool runinbackground(struct Game* game, struct TM_Action* action, enum TM_Action
 }
 
 struct TM_Action* TM_AddQueuedBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, int delay, char* name) {
-	struct TM_Arguments* arguments = TM_AddToArgs(NULL, (void*) func);
-	arguments = TM_AddToArgs(arguments, malloc(sizeof(int)));
-	arguments = TM_AddToArgs(arguments, NULL);
-	*(int*)(arguments->next->value) = delay;
-	arguments->next->next->value = strdup(name);
-
+	TM_WrapArg(int, del, delay);
+	struct TM_Arguments* arguments = TM_AddToArgs(NULL, 3, (void*) func, del, strdup(name));
 	arguments->next->next->next = args;
 	return TM_AddAction(*runinbackground, arguments, "TM_BackgroundAction");
 }
@@ -343,20 +339,28 @@ void TM_Destroy(void) {
 	game = NULL;
 }
 
-struct TM_Arguments* TM_AddToArgs(struct TM_Arguments* args, void* arg) {
+struct TM_Arguments* TM_AddToArgs(struct TM_Arguments* args, int num, ...) {
+
+	va_list ap;
+	int i;
+	va_start(ap, num);
 	struct TM_Arguments* tmp = args;
-	if (!args) {
-		tmp = malloc(sizeof(struct TM_Arguments));
-		tmp->value = arg;
-		tmp->next = NULL;
-		return tmp;
+	for(i = 0; i < num; i++) {
+		if (!tmp) {
+			tmp = malloc(sizeof(struct TM_Arguments));
+			tmp->value = va_arg(ap, void*);
+			tmp->next = NULL;
+			args = tmp;
+		} else {
+			while (tmp->next) {
+				tmp = tmp->next;
+			}
+			tmp->next = malloc(sizeof(struct TM_Arguments));
+			tmp->next->value = va_arg(ap, void*);
+			tmp->next->next = NULL;
+		}
 	}
-	while (tmp->next) {
-		tmp = tmp->next;
-	}
-	tmp->next = malloc(sizeof(struct TM_Arguments));
-	tmp->next->value = arg;
-	tmp->next->next = NULL;
+	va_end(ap);
 	return args;
 }
 
