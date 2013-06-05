@@ -47,7 +47,7 @@ void Moonwalk_Logic(struct Game *game, struct Moonwalk *data) {
 
 void Moonwalk_Draw(struct Game *game, struct Moonwalk *data) {
 	al_draw_scaled_bitmap(data->background,0,0,al_get_bitmap_width(data->background),al_get_bitmap_height(data->background),0,0,game->viewport.width, game->viewport.height, 0);
-	DrawCharacter(game, data->derpy, ALLEGRO_FLIP_HORIZONTAL);
+	DrawCharacter(game, data->derpy, al_map_rgba(255,255,255,255), ALLEGRO_FLIP_HORIZONTAL);
 }
 
 void Moonwalk_Start(struct Game *game, struct Moonwalk *data) {

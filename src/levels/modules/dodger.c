@@ -27,6 +27,8 @@
 #include "dodger.h"
 #include "dodger/actions.h"
 
+int Dodger_ProgressCount = 0;
+
 void Dodger_Logic(struct Game *game, struct Dodger* data) {
 	struct ALLEGRO_KEYBOARD_STATE keyboard;
 	al_get_keyboard_state(&keyboard);
@@ -57,10 +59,10 @@ void Dodger_Logic(struct Game *game, struct Dodger* data) {
 		if ( data->character->y < 0)  data->character->y=0;
 		else if ( data->character->y > 0.8)  data->character->y=0.8;
 
-		 data->character->y += data->character->angle / 30;
+		MoveCharacter(game, data->character, 0, data->character->angle / 30, 0);
 	}
 
-	int derpyx = data->character->x*game->viewport.height*1.6;
+	int derpyx = data->character->x*game->viewport.width;
 	int derpyy = data->character->y*game->viewport.height;
 	int derpyw = al_get_bitmap_width(data->character->bitmap);
 	int derpyh = al_get_bitmap_height(data->character->bitmap);
@@ -119,6 +121,7 @@ void Dodger_Logic(struct Game *game, struct Dodger* data) {
 		}
 	}
 	/*if (colision) data->hp-=tps(game, 60*0.002);*/
+	AnimateCharacter(game, data->character, data->speed_modifier);
 
 }
 
@@ -168,12 +171,13 @@ void Dodger_Draw(struct Game *game, struct Dodger* data) {
 	}
 	/*if (colision) data->hp-=tps(game, 60*0.002);*/
 
-	al_set_target_bitmap(data->character->bitmap);
+/*	al_set_target_bitmap(data->character->bitmap);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 	al_draw_bitmap_region(data->character->spritesheet->bitmap,al_get_bitmap_width(data->character->bitmap)*(data->character->pos%data->character->spritesheet->cols),al_get_bitmap_height(data->character->bitmap)*(data->character->pos/data->character->spritesheet->cols),al_get_bitmap_width(data->character->bitmap), al_get_bitmap_height(data->character->bitmap),0,0,0);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 
-	al_draw_tinted_rotated_bitmap(data->character->bitmap, al_map_rgba(255,255-colision*255,255-colision*255,255), al_get_bitmap_width(data->character->bitmap), al_get_bitmap_height(data->character->bitmap)/2, derpyx+game->viewport.height*1.6*0.1953125, derpyy + al_get_bitmap_height(data->character->bitmap)/2, data->character->angle, 0);
+	al_draw_tinted_rotated_bitmap(data->character->bitmap, al_map_rgba(255,255-colision*255,255-colision*255,255), al_get_bitmap_width(data->character->bitmap), al_get_bitmap_height(data->character->bitmap)/2, derpyx+game->viewport.height*1.6*0.1953125, derpyy + al_get_bitmap_height(data->character->bitmap)/2, data->character->angle, 0);*/
+	DrawCharacter(game, data->character, al_map_rgba(255,255-colision*255,255-colision*255,255), 0);
 
 	/*		if ((((x>=derpyx+0.36*derpyw) && (x<=derpyx+0.94*derpyw)) || ((x+w>=derpyx+0.36*derpyw) && (x+w<=derpyx+0.94*derpyw))) &&
 		(((y>=derpyy+0.26*derpyh) && (y<=derpyy+0.76*derpyh)) || ((y+h>=derpyy+0.26*derpyh) && (y+h<=derpyy+0.76*derpyh)))) {
@@ -188,17 +192,15 @@ struct Dodger* Dodger_Load(struct Game *game, struct Character *character) {
 	struct Dodger *data = malloc(sizeof(struct Dodger));
 	data->obstacles = NULL;
 	data->character = character;
-	return data;
-}
 
-void Dodger_Keydown(struct Game *game, struct Dodger* data, ALLEGRO_EVENT *ev) {
-	if (data->handle_input) {
-		if (ev->keyboard.keycode==ALLEGRO_KEY_LEFT) {
-			data->speed_modifier = 0.75;
-		} else if (ev->keyboard.keycode==ALLEGRO_KEY_RIGHT) {
-			data->speed_modifier = 1.3;
-		}
-	}
+	data->failed=false;
+	data->hp=1;
+	data->speed = 0;
+	data->speed_modifier = 1;
+	data->handle_input = true;
+	data->debug_show_sprite_frames=false;
+
+	return data;
 }
 
 void Dodger_ProcessEvent(struct Game *game, struct Dodger* data, ALLEGRO_EVENT *ev) {

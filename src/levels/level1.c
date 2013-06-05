@@ -20,6 +20,7 @@
  */
 #include <stdio.h>
 #include "allegro5/allegro_ttf.h"
+#include "../timeline.h"
 #include "../gamestates/level.h"
 #include "actions.h"
 #include "../utils.h"
@@ -27,7 +28,7 @@
 #include "modules/dodger/actions.h"
 #include "level1.h"
 
-int Gamestate_ProgressCount = 9001;
+int Gamestate_ProgressCount = 2;
 
 void Gamestate_Start(struct Game *game, struct Level1Resources* data) {
 	TM_AddBackgroundAction(&FadeIn, NULL, 0, "fadein");
@@ -58,7 +59,11 @@ void Gamestate_Start(struct Game *game, struct Level1Resources* data) {
 	// second part gameplay goes here
 
 	// cutscene goes here */
-	TM_AddAction(&PassLevel, NULL, "passlevel");
+
+	struct TM_Arguments *args = TM_AddToArgs(NULL, strdup("level1"));
+	TM_WrapArg(int, level, 1);
+	TM_AddToArgs(args, level);
+	TM_AddAction(&PassLevel, args, "passlevel");
 
 	// init level specific obstacle (owl) for Dodger module
 	struct Obstacle *obst = malloc(sizeof(struct Obstacle));
@@ -170,8 +175,17 @@ struct Level1Resources* Gamestate_Load(struct Game *game) {
 	RegisterSpritesheet(game, character, "stand");
 	RegisterSpritesheet(game, character, "fly");
 	RegisterSpritesheet(game, character, "run");
-	SelectSpritesheet(game, character, "stand");
+	SelectSpritesheet(game, character, "walk");
+	SetCharacterPosition(game, character, 0.1, 0.7, 0);
 	data->dodger = Dodger_Load(game, character);
+
+	data->failed=false;
+	data->cl_pos=0;
+	data->bg_pos=0;
+	data->fg_pos=0.2;
+	data->st_pos=0.1;
+	data->handle_input = false;
+	data->meter_alpha=0;
 
 	Gamestate_PreloadBitmaps(game, data);
 	LoadSpritesheets(game, character);
@@ -184,14 +198,12 @@ void Gamestate_Draw(struct Game *game, struct Level1Resources* data) {
 }
 
 void Gamestate_Logic(struct Game *game, struct Level1Resources* data) {
+	TM_Process();
 	Dodger_Logic(game, data->dodger);
 }
 
-void Gamestate_Keydown(struct Game *game, struct Level1Resources* data, ALLEGRO_EVENT *ev) {
-	Dodger_Keydown(game, data->dodger, ev);
-}
-
 void Gamestate_ProcessEvent(struct Game *game, struct Level1Resources* data, ALLEGRO_EVENT *ev) {
+	TM_HandleEvent(ev);
 	Dodger_ProcessEvent(game, data->dodger, ev);
 	if (ev->type == ALLEGRO_EVENT_KEY_DOWN) {
 		if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {

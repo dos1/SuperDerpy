@@ -56,7 +56,7 @@ void AdvanceLevel(struct Game *game, int current_level, bool last);
 /*! \brief Replaces first '?' char in filename with current level number. */
 char* GetLevelFilename(struct Game *game, char* filename);
 
-void DrawCharacter(struct Game *game, struct Character *character, int flags);
+void DrawCharacter(struct Game *game, struct Character *character, ALLEGRO_COLOR tilt, int flags);
 
 struct Character* CreateCharacter(struct Game *game, char* name);
 void DestroyCharacter(struct Game *game, struct Character *character);

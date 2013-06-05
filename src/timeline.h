@@ -18,10 +18,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
+
 #ifndef TIMELINE_H
 #define TIMELINE_H
 
 #include "main.h"
+
+#define TM_WrapArg(type, result, val) type* result = malloc(sizeof(type)); *result = val;
 
 /*! \brief State of the TM_Action. */
 enum TM_ActionState {

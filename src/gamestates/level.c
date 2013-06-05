@@ -196,16 +196,13 @@ void AdvanceLevel(struct Game *game, int current_level, bool last) {
 	return name;
 }*/
 
-void DrawCharacter(struct Game *game, struct Character *character, int flags) {
-	// TODO: support for additional states, like being hit (transparency, color tilt etc.)
-	bool colision = false;
-
+void DrawCharacter(struct Game *game, struct Character *character, ALLEGRO_COLOR tilt, int flags) {
 	al_set_target_bitmap(character->bitmap);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 	al_draw_bitmap_region(character->spritesheet->bitmap, al_get_bitmap_width(character->bitmap)*(character->pos%character->spritesheet->cols),al_get_bitmap_height(character->bitmap)*(character->pos/character->spritesheet->cols),al_get_bitmap_width(character->bitmap), al_get_bitmap_height(character->bitmap),0,0,0);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 
-	al_draw_tinted_rotated_bitmap(character->bitmap, al_map_rgba(255,255-colision*255,255-colision*255,255), al_get_bitmap_width(character->bitmap), al_get_bitmap_height(character->bitmap)/2, character->x*game->viewport.width + game->viewport.width*0.1953125, character->y*game->viewport.height + al_get_bitmap_height(character->bitmap)/2, character->angle, flags); // FIXME: viewport height? omg character should have its dimensions ;_;
+	al_draw_tinted_rotated_bitmap(character->bitmap, tilt, al_get_bitmap_width(character->bitmap), al_get_bitmap_height(character->bitmap)/2, character->x*game->viewport.width + game->viewport.width*0.1953125, character->y*game->viewport.height + al_get_bitmap_height(character->bitmap)/2, character->angle, flags); // FIXME: viewport height? omg character should have its dimensions ;_;
 
 }
 

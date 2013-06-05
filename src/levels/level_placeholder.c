@@ -84,6 +84,7 @@ void Gamestate_Logic(struct Game *game, struct LevelXResources* data) {
 }
 
 void Gamestate_ProcessEvent(struct Game *game, struct LevelXResources* data, ALLEGRO_EVENT *ev) {
+	TM_HandleEvent(ev);
 	Moonwalk_ProcessEvent(game, data->moonwalk, ev);
 	if (ev->type == ALLEGRO_EVENT_KEY_DOWN) {
 		if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
