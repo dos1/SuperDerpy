@@ -29,7 +29,7 @@ bool DoMoonwalk(struct Game *game, struct TM_Action *action, enum TM_ActionState
 	struct Character *derpy = action->arguments->value;
 	if (state == TM_ACTIONSTATE_START) {
 		SelectSpritesheet(game, derpy, "walk");
-		SetCharacterPosition(game, derpy, -0.2, 0.71, 0);
+		SetCharacterPosition(game, derpy, -(al_get_bitmap_width(derpy->bitmap)/(float)game->viewport.width)*1.1, 0.71, 0);
 	}
 	else if (state == TM_ACTIONSTATE_RUNNING) {
 		MoveCharacter(game, derpy, 0.0009 , 0, 0);
@@ -51,7 +51,7 @@ void Moonwalk_Draw(struct Game *game, struct Moonwalk *data) {
 }
 
 void Moonwalk_Start(struct Game *game, struct Moonwalk *data) {
-	SelectSpritesheet(game, data->derpy, "walk");
+	SelectSpritesheet(game, data->derpy, "stand");
 	al_play_sample_instance(data->music);
 	// TODO: find some way to restart Timeline
 }
@@ -73,6 +73,7 @@ struct Moonwalk* Moonwalk_Load(struct Game *game, int current_level) {
 
 	data->derpy = CreateCharacter(game, "derpy");
 
+	RegisterSpritesheet(game, data->derpy, "stand");
 	RegisterSpritesheet(game, data->derpy, "walk");
 
 	data->current_level = current_level;

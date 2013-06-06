@@ -173,7 +173,7 @@ struct Level1Resources* Gamestate_Load(struct Game *game) {
 	RegisterSpritesheet(game, character, "stand");
 	RegisterSpritesheet(game, character, "fly");
 	RegisterSpritesheet(game, character, "run");
-	SelectSpritesheet(game, character, "walk");
+	SelectSpritesheet(game, character, "run");
 	SetCharacterPosition(game, character, 0.1, 0.7, 0);
 	data->dodger = Dodger_Load(game, character);
 

@@ -126,11 +126,11 @@ void Dodger_Logic(struct Game *game, struct Dodger* data) {
 }
 
 void Dodger_Draw(struct Game *game, struct Dodger* data) {
-	int derpyx = data->character->x*game->viewport.height*1.6;
+	int derpyx = data->character->x*game->viewport.width;
 	int derpyy = data->character->y*game->viewport.height;
 	int derpyw = al_get_bitmap_width(data->character->bitmap);
 	int derpyh = al_get_bitmap_height(data->character->bitmap);
-	int derpyo = game->viewport.height*1.6*0.1953125-al_get_bitmap_width(data->character->bitmap); /* offset */
+	int derpyo = 0;//game->viewport.height*1.6*0.1953125-al_get_bitmap_width(data->character->bitmap); /* offset */
 	bool colision = false;
 	struct Obstacle *tmp = data->obstacles;
 	while (tmp) {
@@ -198,7 +198,7 @@ struct Dodger* Dodger_Load(struct Game *game, struct Character *character) {
 	data->speed = 0;
 	data->speed_modifier = 1;
 	data->handle_input = true;
-	data->debug_show_sprite_frames=false;
+	data->debug_show_sprite_frames=true;
 
 	return data;
 }
