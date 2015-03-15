@@ -91,18 +91,20 @@ void Gamestate_Logic(struct Game *game, struct dosowiskoResources* data) {
 }
 
 void Gamestate_Draw(struct Game *game, struct dosowiskoResources* data) {
-	char t[255] = "";
-	strcpy(t, data->text);
-	if (data->underscore) {
-		strncat(t, "_", 1);
-	} else {
-		strncat(t, " ", 1);
-	}
-
-	al_set_target_bitmap(data->bitmap);
-	al_clear_to_color(al_map_rgba(0,0,0,0));
 
 	if (!data->fadeout) {
+
+		char t[255] = "";
+		strcpy(t, data->text);
+		if (data->underscore) {
+			strncat(t, "_", 1);
+		} else {
+			strncat(t, " ", 1);
+		}
+
+		al_set_target_bitmap(data->bitmap);
+		al_clear_to_color(al_map_rgba(0,0,0,0));
+
 		al_draw_text(data->font, al_map_rgba(255,255,255,10), game->viewport.width/2, game->viewport.height*0.4167, ALLEGRO_ALIGN_CENTRE, t);
 		al_set_target_backbuffer(game->display);
 
