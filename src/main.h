@@ -64,6 +64,7 @@ struct Game {
 				struct Gamestate *gamestates; /*!< List of known gamestates. */
 				ALLEGRO_FONT *font; /*!< Main font used in game. */
 				ALLEGRO_FONT *font_console; /*!< Font used in game console. */
+				ALLEGRO_FONT *font_bsod; /*!< Font used in Blue Screens of Derp. */
 				ALLEGRO_BITMAP *console; /*!< Bitmap with game console. */
 				ALLEGRO_EVENT_QUEUE *event_queue; /*!< Main event queue. */
 				ALLEGRO_TIMER *timer; /*!< Main LPS timer. */

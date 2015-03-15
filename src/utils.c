@@ -170,7 +170,6 @@ void FatalError(struct Game *game, bool fatal, char* format, ...) {
 		vsnprintf(text, 1024, format, vl);
 		va_end(vl);
 		printf("%s\n", text);
-		if (!game->_priv.font_console) exit(1);
 	} else {
 		PrintConsole(game, "Fatal Error, displaying Blue Screen of Derp...");
 		va_list vl;
@@ -178,6 +177,10 @@ void FatalError(struct Game *game, bool fatal, char* format, ...) {
 		vsnprintf(text, 1024, format, vl);
 		va_end(vl);
 		PrintConsole(game, text);
+	}
+
+	if (!game->_priv.font_bsod) {
+		game->_priv.font_bsod = al_create_builtin_font();
 	}
 
 	al_set_target_backbuffer(game->display);
@@ -193,30 +196,30 @@ void FatalError(struct Game *game, bool fatal, char* format, ...) {
 
 		char *header = "SUPER DERPY";
 
-		al_draw_filled_rectangle(game->viewport.width/2 - al_get_text_width(game->_priv.font_console, header)/2 - 4, (int)(game->viewport.height * 0.32), 4 + game->viewport.width/2 + al_get_text_width(game->_priv.font_console, header)/2, (int)(game->viewport.height * 0.32) + al_get_font_line_height(game->_priv.font_console), al_map_rgb(170,170,170));
+		al_draw_filled_rectangle(game->viewport.width/2 - al_get_text_width(game->_priv.font_bsod, header)/2 - 4, (int)(game->viewport.height * 0.32), 4 + game->viewport.width/2 + al_get_text_width(game->_priv.font_bsod, header)/2, (int)(game->viewport.height * 0.32) + al_get_font_line_height(game->_priv.font_bsod), al_map_rgb(170,170,170));
 
-		al_draw_text(game->_priv.font_console, al_map_rgb(0, 0, 170), game->viewport.width/2, (int)(game->viewport.height * 0.32), ALLEGRO_ALIGN_CENTRE, header);
+		al_draw_text(game->_priv.font_bsod, al_map_rgb(0, 0, 170), game->viewport.width/2, (int)(game->viewport.height * 0.32), ALLEGRO_ALIGN_CENTRE, header);
 
 		char *header2 = "A fatal exception 0xD3RP has occured at 0028:M00F11NZ in GST SD(01) +";
 
-		al_draw_text(game->_priv.font_console, al_map_rgb(255,255,255), game->viewport.width/2, (int)(game->viewport.height * 0.32+2*al_get_font_line_height(game->_priv.font_console)*1.25), ALLEGRO_ALIGN_CENTRE, header2);
-		al_draw_textf(game->_priv.font_console, al_map_rgb(255,255,255), game->viewport.width/2 - al_get_text_width(game->_priv.font_console, header2)/2, (int)(game->viewport.height * 0.32+3*al_get_font_line_height(game->_priv.font_console)*1.25), ALLEGRO_ALIGN_LEFT, "%p and system just doesn't know what went wrong.", game);
+		al_draw_text(game->_priv.font_bsod, al_map_rgb(255,255,255), game->viewport.width/2, (int)(game->viewport.height * 0.32+2*al_get_font_line_height(game->_priv.font_bsod)*1.25), ALLEGRO_ALIGN_CENTRE, header2);
+		al_draw_textf(game->_priv.font_bsod, al_map_rgb(255,255,255), game->viewport.width/2 - al_get_text_width(game->_priv.font_bsod, header2)/2, (int)(game->viewport.height * 0.32+3*al_get_font_line_height(game->_priv.font_bsod)*1.25), ALLEGRO_ALIGN_LEFT, "%p and system just doesn't know what went wrong.", game);
 
-		al_draw_text(game->_priv.font_console, al_map_rgb(255,255,255), game->viewport.width/2, (int)(game->viewport.height * 0.32+5*al_get_font_line_height(game->_priv.font_console)*1.25), ALLEGRO_ALIGN_CENTRE, text);
+		al_draw_text(game->_priv.font_bsod, al_map_rgb(255,255,255), game->viewport.width/2, (int)(game->viewport.height * 0.32+5*al_get_font_line_height(game->_priv.font_bsod)*1.25), ALLEGRO_ALIGN_CENTRE, text);
 
-		al_draw_text(game->_priv.font_console, al_map_rgb(255,255,255), game->viewport.width/2 - al_get_text_width(game->_priv.font_console, header2)/2, (int)(game->viewport.height * 0.32+7*al_get_font_line_height(game->_priv.font_console)*1.25), ALLEGRO_ALIGN_LEFT, "* Press any key to terminate this error.");
-		al_draw_text(game->_priv.font_console, al_map_rgb(255,255,255), game->viewport.width/2 - al_get_text_width(game->_priv.font_console, header2)/2, (int)(game->viewport.height * 0.32+8*al_get_font_line_height(game->_priv.font_console)*1.25), ALLEGRO_ALIGN_LEFT, "* Press any key to destroy all muffins in the world.");
-		al_draw_text(game->_priv.font_console, al_map_rgb(255,255,255), game->viewport.width/2 - al_get_text_width(game->_priv.font_console, header2)/2, (int)(game->viewport.height * 0.32+9*al_get_font_line_height(game->_priv.font_console)*1.25), ALLEGRO_ALIGN_LEFT, "* Just kidding, please press any key anyway.");
+		al_draw_text(game->_priv.font_bsod, al_map_rgb(255,255,255), game->viewport.width/2 - al_get_text_width(game->_priv.font_bsod, header2)/2, (int)(game->viewport.height * 0.32+7*al_get_font_line_height(game->_priv.font_bsod)*1.25), ALLEGRO_ALIGN_LEFT, "* Press any key to terminate this error.");
+		al_draw_text(game->_priv.font_bsod, al_map_rgb(255,255,255), game->viewport.width/2 - al_get_text_width(game->_priv.font_bsod, header2)/2, (int)(game->viewport.height * 0.32+8*al_get_font_line_height(game->_priv.font_bsod)*1.25), ALLEGRO_ALIGN_LEFT, "* Press any key to destroy all muffins in the world.");
+		al_draw_text(game->_priv.font_bsod, al_map_rgb(255,255,255), game->viewport.width/2 - al_get_text_width(game->_priv.font_bsod, header2)/2, (int)(game->viewport.height * 0.32+9*al_get_font_line_height(game->_priv.font_bsod)*1.25), ALLEGRO_ALIGN_LEFT, "* Just kidding, please press any key anyway.");
 
 
 		if (fatal) {
-			al_draw_text(game->_priv.font_console, al_map_rgb(255,255,255), game->viewport.width/2 - al_get_text_width(game->_priv.font_console, header2)/2, (int)(game->viewport.height * 0.32+11*al_get_font_line_height(game->_priv.font_console)*1.25), ALLEGRO_ALIGN_LEFT, "This is fatal error. My bad.");
+			al_draw_text(game->_priv.font_bsod, al_map_rgb(255,255,255), game->viewport.width/2 - al_get_text_width(game->_priv.font_bsod, header2)/2, (int)(game->viewport.height * 0.32+11*al_get_font_line_height(game->_priv.font_bsod)*1.25), ALLEGRO_ALIGN_LEFT, "This is fatal error. My bad.");
 
-			al_draw_text(game->_priv.font_console, al_map_rgb(255,255,255), game->viewport.width/2, (int)(game->viewport.height * 0.32+13*al_get_font_line_height(game->_priv.font_console)*1.25), ALLEGRO_ALIGN_CENTRE, "Press any key to quit _");
+			al_draw_text(game->_priv.font_bsod, al_map_rgb(255,255,255), game->viewport.width/2, (int)(game->viewport.height * 0.32+13*al_get_font_line_height(game->_priv.font_bsod)*1.25), ALLEGRO_ALIGN_CENTRE, "Press any key to quit _");
 		} else {
-			al_draw_text(game->_priv.font_console, al_map_rgb(255,255,255), game->viewport.width/2 - al_get_text_width(game->_priv.font_console, header2)/2, (int)(game->viewport.height * 0.32+11*al_get_font_line_height(game->_priv.font_console)*1.25), ALLEGRO_ALIGN_LEFT, "Anything I can do to help?");
+			al_draw_text(game->_priv.font_bsod, al_map_rgb(255,255,255), game->viewport.width/2 - al_get_text_width(game->_priv.font_bsod, header2)/2, (int)(game->viewport.height * 0.32+11*al_get_font_line_height(game->_priv.font_bsod)*1.25), ALLEGRO_ALIGN_LEFT, "Anything I can do to help?");
 
-			al_draw_text(game->_priv.font_console, al_map_rgb(255,255,255), game->viewport.width/2, (int)(game->viewport.height * 0.32+13*al_get_font_line_height(game->_priv.font_console)*1.25), ALLEGRO_ALIGN_CENTRE, "Press any key to continue _");
+			al_draw_text(game->_priv.font_bsod, al_map_rgb(255,255,255), game->viewport.width/2, (int)(game->viewport.height * 0.32+13*al_get_font_line_height(game->_priv.font_bsod)*1.25), ALLEGRO_ALIGN_CENTRE, "Press any key to continue _");
 		}
 
 		al_flip_display();

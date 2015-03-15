@@ -73,6 +73,7 @@ void LoadGamestate(struct Game *game, const char* name) {
 		gs->fade = true;
 		gs->fade_counter = 0;
 		gs->pending_load = true;
+		gs->showLoading = true;
 	}
 	PrintConsole(game, "Gamestate \"%s\" marked to be LOADED.", name);
 }

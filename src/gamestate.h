@@ -30,6 +30,7 @@ struct Gamestate {
 	void* handle;
 	bool loaded, pending_load;
 	bool started, pending_start;
+	bool showLoading;
 	bool paused;
 	bool fade; // TODO: or maybe should it be in API?
 	unsigned char fade_counter;

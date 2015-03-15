@@ -53,6 +53,7 @@ void DrawConsole(struct Game *game) {
 }
 
 void DrawGamestates(struct Game *game) {
+	al_set_target_backbuffer(game->display);
 	al_clear_to_color(al_map_rgb(0,0,0));
 	struct Gamestate *tmp = game->_priv.gamestates;
 	while (tmp) {
@@ -119,7 +120,11 @@ int Console_Load(struct Game *game) {
 	game->_priv.font_console = NULL;
 	game->_priv.console = NULL;
 	game->_priv.font_console = al_load_ttf_font(GetDataFilePath(game, "fonts/DejaVuSansMono.ttf"),game->viewport.height*0.018,0 );
-	//game->_priv.font_console = al_load_ttf_font(GetDataFilePath(game, "fonts/PerfectDOSVGA437.ttf"),game->viewport.height*0.022,0 );
+	if (game->viewport.height*0.022 >= 16) {
+		game->_priv.font_bsod = al_load_ttf_font(GetDataFilePath(game, "fonts/PerfectDOSVGA437.ttf"),16,0 );
+	} else {
+		game->_priv.font_bsod = al_load_ttf_font(GetDataFilePath(game, "fonts/DejaVuSansMono.ttf"),game->viewport.height*0.022,0 );
+	}
 	game->_priv.font = al_load_ttf_font(GetDataFilePath(game, "fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.09,0 );
 	game->_priv.console = al_create_bitmap(game->viewport.width, game->viewport.height*0.12);
 	al_set_target_bitmap(game->_priv.console);
@@ -160,6 +165,9 @@ int main(int argc, char **argv){
 	game._priv.fps_count.frames_done = 0;
 	game._priv.fps_count.fps = 0;
 	game._priv.fps_count.old_time = 0;
+
+	game._priv.font_bsod = NULL;
+	game._priv.console = NULL;
 
 	game.config.fullscreen = atoi(GetConfigOptionDefault(&game, "SuperDerpy", "fullscreen", "1"));
 	game.config.music = atoi(GetConfigOptionDefault(&game, "SuperDerpy", "music", "7"));
@@ -278,7 +286,7 @@ int main(int argc, char **argv){
 	game.shuttingdown = false;
 	game.restart = false;
 
-	char* gamestate = strdup("menu"); // FIXME: don't hardcore gamestate
+	char* gamestate = strdup("dosowisko"); // FIXME: don't hardcore gamestate
 
 	int c;
 	while ((c = getopt (argc, argv, "l:s:")) != -1)
@@ -295,6 +303,7 @@ int main(int argc, char **argv){
 		}
 
 	LoadGamestate(&game, gamestate);
+	game._priv.gamestates->showLoading = false; // we have only one gamestate right now
 	StartGamestate(&game, gamestate);
 	free(gamestate);
 
@@ -351,13 +360,16 @@ int main(int argc, char **argv){
 			while (tmp) {
 				if ((tmp->pending_load) && (tmp->loaded)) {
 					PrintConsole(&game, "Unloading gamestate \"%s\"...", tmp->name);
+					al_stop_timer(game._priv.timer);
 					tmp->loaded = false;
 					tmp->pending_load = false;
 					(*tmp->api.Gamestate_Unload)(&game, tmp->data);
 					dlclose(tmp->handle);
 					tmp->handle = NULL;
+					al_start_timer(game._priv.timer);
 				} else if ((tmp->pending_load) && (!tmp->loaded)) {
 					PrintConsole(&game, "Loading gamestate \"%s\"...", tmp->name);
+					al_stop_timer(game._priv.timer);
 					// TODO: take proper game name
 					char libname[1024];
 					snprintf(libname, 1024, "libsuperderpy-%s-%s.so", "muffinattack", tmp->name);
@@ -395,25 +407,28 @@ int main(int argc, char **argv){
 						int p = 0;
 						void progress(struct Game *game) {
 							p++;
-							al_set_target_backbuffer(game->display);
+							DrawGamestates(game);
 							float progress = ((p / (*(tmp->api.Gamestate_ProgressCount) ? (float)*(tmp->api.Gamestate_ProgressCount) : 1))/(float)toLoad)+(loaded/(float)toLoad);
 							if (game->config.debug) PrintConsole(game, "[%s] Progress: %d% (%d/%d)", tmp->name, (int)(progress*100), p, *(tmp->api.Gamestate_ProgressCount));
-							(*game->_priv.loading.Draw)(game, game->_priv.loading.data, progress);
+							if (tmp->showLoading) (*game->_priv.loading.Draw)(game, game->_priv.loading.data, progress);
 							DrawConsole(game);
 							al_flip_display();
 						}
 
 						// initially draw loading screen with empty bar
-						(*game._priv.loading.Draw)(&game, game._priv.loading.data, 0);
+						DrawGamestates(&game);
+						if (tmp->showLoading) {
+							(*game._priv.loading.Draw)(&game, game._priv.loading.data, 0);
+						}
 						DrawConsole(&game);
 						al_flip_display();
-
 						tmp->data = (*tmp->api.Gamestate_Load)(&game, &progress);
 						loaded++;
 
 						tmp->loaded = true;
 						tmp->pending_load = false;
 					}
+					al_start_timer(game._priv.timer);
 				}
 
 				tmp=tmp->next;
@@ -424,9 +439,11 @@ int main(int argc, char **argv){
 
 			while (tmp) {
 
-				if ((tmp->pending_start) && (!tmp->started) && (tmp->loaded)) {
+				if ((tmp->pending_start) && (!tmp->started) && (tmp->loaded)) {					
 					PrintConsole(&game, "Starting gamestate \"%s\"...", tmp->name);
+					al_stop_timer(game._priv.timer);
 					(*tmp->api.Gamestate_Start)(&game, tmp->data);
+					al_start_timer(game._priv.timer);
 					tmp->started = true;
 					tmp->pending_start = false;
 				}

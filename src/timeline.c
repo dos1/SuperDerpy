@@ -74,6 +74,7 @@ void TM_Process(void) {
 	struct TM_Action *tmp, *tmp2, *pom = background;
 	tmp = NULL;
 	while (pom!=NULL) {
+		bool destroy = false;
 		if (pom->active) {
 			if (*pom->function) {
 				if ((*pom->function)(game, pom, TM_ACTIONSTATE_RUNNING)) {
@@ -85,6 +86,7 @@ void TM_Process(void) {
 					} else {
 						background = pom->next;
 					}
+					destroy = true;
 				}
 			} else {
 				/* delay handling */
@@ -93,16 +95,24 @@ void TM_Process(void) {
 				} else {
 					background = pom->next;
 				}
+				destroy = true;
 			}
 		}
-		if ((!tmp) || (tmp->next==pom)) {
+
+		if (!destroy) {
 			tmp = pom;
 			pom = pom->next;
 		} else {
 			free(pom->name);
 			free(pom);
 			tmp2 = tmp;
-			if (!tmp) pom=background->next;
+			if (!tmp) {
+				if (background) {
+					pom=background->next;
+				} else {
+					pom=NULL;
+				}
+			}
 			else pom=tmp->next;
 			tmp = tmp2;
 		}
