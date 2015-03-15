@@ -201,6 +201,10 @@ void Gamestate_Unload(struct Game *game, struct dosowiskoResources* data) {
 	al_destroy_font(data->font);
 	al_destroy_sample_instance(data->sound);
 	al_destroy_sample(data->sample);
+	al_destroy_sample_instance(data->kbd);
+	al_destroy_sample(data->kbd_sample);
+	al_destroy_bitmap(data->bitmap);
+	al_destroy_bitmap(data->checkerboard);
 	free(data);
 	TM_Destroy();
 }
