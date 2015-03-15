@@ -49,17 +49,9 @@ bool FadeIn(struct Game *game, struct TM_Action *action, enum TM_ActionState sta
 bool FadeOut(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	struct dosowiskoResources *data = action->arguments->value;
 	if (state == TM_ACTIONSTATE_START) {
-		data->fade=255;
 		data->fadeout = true;
 	}
-	else if (state == TM_ACTIONSTATE_DESTROY) {
-		data->fade=0;
-	}
-	else if (state == TM_ACTIONSTATE_RUNNING) {
-		data->fade-=2;
-		return data->fade <= 0;
-	}
-	return false;
+	return true;
 }
 
 bool End(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
@@ -67,9 +59,9 @@ bool End(struct Game *game, struct TM_Action *action, enum TM_ActionState state)
 	return true;
 }
 
-bool PlayKbd(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
-	struct dosowiskoResources *data = action->arguments->value;
-	if (state == TM_ACTIONSTATE_RUNNING) al_play_sample_instance(data->kbd);
+bool Play(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
+	ALLEGRO_SAMPLE_INSTANCE *data = action->arguments->value;
+	if (state == TM_ACTIONSTATE_RUNNING) al_play_sample_instance(data);
 	return true;
 }
 
@@ -109,21 +101,21 @@ void Gamestate_Draw(struct Game *game, struct dosowiskoResources* data) {
 
 	al_set_target_bitmap(data->bitmap);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
-	al_draw_text(data->font, al_map_rgba(255,255,255,10), game->viewport.width/2, game->viewport.height*0.4167, ALLEGRO_ALIGN_CENTRE, t);
-	al_set_target_backbuffer(game->display);
 
-	al_clear_to_color(al_map_rgb(35, 31, 32));
+	if (!data->fadeout) {
+		al_draw_text(data->font, al_map_rgba(255,255,255,10), game->viewport.width/2, game->viewport.height*0.4167, ALLEGRO_ALIGN_CENTRE, t);
+		al_set_target_backbuffer(game->display);
 
-	double tg = tan(-data->tan/384.0 * ALLEGRO_PI - ALLEGRO_PI/2);
+		al_clear_to_color(al_map_rgb(35, 31, 32));
 
-	int fade = data->fadeout ? 255 : data->fade;
+		double tg = tan(-data->tan/384.0 * ALLEGRO_PI - ALLEGRO_PI/2);
 
-	al_draw_tinted_scaled_bitmap(data->bitmap, al_map_rgba(fade, fade, fade, fade), 0, 0, al_get_bitmap_width(data->bitmap), al_get_bitmap_height(data->bitmap), -tg*al_get_bitmap_width(data->bitmap)*0.05, -tg*al_get_bitmap_height(data->bitmap)*0.05, al_get_bitmap_width(data->bitmap)+tg*0.1*al_get_bitmap_width(data->bitmap), al_get_bitmap_height(data->bitmap)+tg*0.1*al_get_bitmap_height(data->bitmap), 0);
+		int fade = data->fadeout ? 255 : data->fade;
 
-	al_draw_bitmap(data->checkerboard, 0, 0, 0);
+		al_draw_tinted_scaled_bitmap(data->bitmap, al_map_rgba(fade, fade, fade, fade), 0, 0, al_get_bitmap_width(data->bitmap), al_get_bitmap_height(data->bitmap), -tg*al_get_bitmap_width(data->bitmap)*0.05, -tg*al_get_bitmap_height(data->bitmap)*0.05, al_get_bitmap_width(data->bitmap)+tg*0.1*al_get_bitmap_width(data->bitmap), al_get_bitmap_height(data->bitmap)+tg*0.1*al_get_bitmap_height(data->bitmap), 0);
 
-	if (data->fadeout) {
-		al_draw_filled_rectangle(0, 0, game->viewport.width, game->viewport.height, al_map_rgba_f(0,0,0,1-sin(data->fade*2/255.0 * ALLEGRO_PI/4)));
+		al_draw_bitmap(data->checkerboard, 0, 0, 0);
+
 	}
 }
 
@@ -138,11 +130,12 @@ void Gamestate_Start(struct Game *game, struct dosowiskoResources* data) {
 	TM_AddDelay(300);
 	TM_AddQueuedBackgroundAction(FadeIn, TM_AddToArgs(NULL, 1, data), 0, "fadein");
 	TM_AddDelay(1500);
-	TM_AddQueuedBackgroundAction(PlayKbd, TM_AddToArgs(NULL, 1, data), 0, "playkbd");
+	TM_AddAction(Play, TM_AddToArgs(NULL, 1, data->kbd), "playkbd");
 	TM_AddQueuedBackgroundAction(Type, TM_AddToArgs(NULL, 1, data), 0, "type");
-	TM_AddDelay(3000);
+	TM_AddDelay(3200);
+	TM_AddAction(Play, TM_AddToArgs(NULL, 1, data->key), "playkey");
 	TM_AddAction(FadeOut, TM_AddToArgs(NULL, 1, data), "fadeout");
-	TM_AddDelay(300);
+	TM_AddDelay(1000);
 	TM_AddAction(End, NULL, "end");
 	FadeGamestate(game, true);
 	al_play_sample_instance(data->sound);
@@ -179,11 +172,18 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 	al_set_sample_instance_playmode(data->sound, ALLEGRO_PLAYMODE_ONCE);
 	(*progress)(game);
 
-	data->kbd_sample = al_load_sample( GetDataFilePath(game, "keyboard.flac") );
+	data->kbd_sample = al_load_sample( GetDataFilePath(game, "kbd.flac") );
 	data->kbd = al_create_sample_instance(data->kbd_sample);
 	al_attach_sample_instance_to_mixer(data->kbd, game->audio.fx);
 	al_set_sample_instance_playmode(data->kbd, ALLEGRO_PLAYMODE_ONCE);
 	(*progress)(game);
+
+	data->key_sample = al_load_sample( GetDataFilePath(game, "key.flac") );
+	data->key = al_create_sample_instance(data->key_sample);
+	al_attach_sample_instance_to_mixer(data->key, game->audio.fx);
+	al_set_sample_instance_playmode(data->key, ALLEGRO_PLAYMODE_ONCE);
+	(*progress)(game);
+
 
 	return data;
 }
@@ -191,6 +191,8 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 void Gamestate_Stop(struct Game *game, struct dosowiskoResources* data) {
 	FadeGamestate(game, false);
 	al_stop_sample_instance(data->sound);
+	al_stop_sample_instance(data->kbd);
+	al_stop_sample_instance(data->key);
 }
 
 void Gamestate_Unload(struct Game *game, struct dosowiskoResources* data) {
@@ -199,6 +201,8 @@ void Gamestate_Unload(struct Game *game, struct dosowiskoResources* data) {
 	al_destroy_sample(data->sample);
 	al_destroy_sample_instance(data->kbd);
 	al_destroy_sample(data->kbd_sample);
+	al_destroy_sample_instance(data->key);
+	al_destroy_sample(data->key_sample);
 	al_destroy_bitmap(data->bitmap);
 	al_destroy_bitmap(data->checkerboard);
 	free(data);
