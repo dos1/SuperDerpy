@@ -146,7 +146,7 @@ void Intro_Logic(struct Game *game) {
 	game->intro.anim += 1.0/20.0;
 	if (game->intro.in_animation) {
 		int old = game->intro.position%game->viewportWidth;
-		game->intro.position -= 10;
+		game->intro.position -= game->viewportWidth*0.0078125 > 1 ? game->viewportWidth*0.0078125 : 1;
 		if (game->intro.position%game->viewportWidth>old) {
 			game->intro.in_animation = false;
 			FillPage(game, game->intro.page+1);
