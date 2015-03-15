@@ -1,0 +1,45 @@
+\hypertarget{actions_8c}{\section{src/levels/actions.c File Reference}
+\label{actions_8c}\index{src/levels/actions.\+c@{src/levels/actions.\+c}}
+}
+
+
+Level actions for Timeline Manager.  
+
+
+{\ttfamily \#include $<$allegro5/allegro\+\_\+primitives.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}../utils.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../gamestate.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../gamestates/level.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}actions.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{actions_8c_af47a0e8a010bf6619c54b025218a791f}{bool \hyperlink{actions_8c_af47a0e8a010bf6619c54b025218a791f}{Level\+Failed} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structTM__Action}{T\+M\+\_\+\+Action} $\ast$action, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{T\+M\+\_\+\+Action\+State} state)}\label{actions_8c_af47a0e8a010bf6619c54b025218a791f}
+
+\begin{DoxyCompactList}\small\item\em Display level failed screen and set fade-\/out to be run after few seconds. \end{DoxyCompactList}\item 
+\hypertarget{actions_8c_a9d9935c62f8bacc1923acd0d1f8149bf}{bool \hyperlink{actions_8c_a9d9935c62f8bacc1923acd0d1f8149bf}{Show\+Meter} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structTM__Action}{T\+M\+\_\+\+Action} $\ast$action, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{T\+M\+\_\+\+Action\+State} state)}\label{actions_8c_a9d9935c62f8bacc1923acd0d1f8149bf}
+
+\begin{DoxyCompactList}\small\item\em Fade-\/in H\+P meter. \end{DoxyCompactList}\item 
+\hypertarget{actions_8c_a4b59af1bdb93050df607e02275920462}{bool \hyperlink{actions_8c_a4b59af1bdb93050df607e02275920462}{Stop} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structTM__Action}{T\+M\+\_\+\+Action} $\ast$action, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{T\+M\+\_\+\+Action\+State} state)}\label{actions_8c_a4b59af1bdb93050df607e02275920462}
+
+\begin{DoxyCompactList}\small\item\em Stops Derpy. \end{DoxyCompactList}\item 
+\hypertarget{actions_8c_a2b55190c74aadd3e48b3b094f3d117f5}{bool \hyperlink{actions_8c_a2b55190c74aadd3e48b3b094f3d117f5}{Fade\+In} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structTM__Action}{T\+M\+\_\+\+Action} $\ast$action, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{T\+M\+\_\+\+Action\+State} state)}\label{actions_8c_a2b55190c74aadd3e48b3b094f3d117f5}
+
+\begin{DoxyCompactList}\small\item\em Fade-\/in screen. \end{DoxyCompactList}\item 
+\hypertarget{actions_8c_a54e1fe675a65e73e07084aeedcca2b59}{bool \hyperlink{actions_8c_a54e1fe675a65e73e07084aeedcca2b59}{Fade\+Out} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structTM__Action}{T\+M\+\_\+\+Action} $\ast$action, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{T\+M\+\_\+\+Action\+State} state)}\label{actions_8c_a54e1fe675a65e73e07084aeedcca2b59}
+
+\begin{DoxyCompactList}\small\item\em Fade-\/out screen. \end{DoxyCompactList}\item 
+\hypertarget{actions_8c_a8d383a4d947717a13239c94a1ed437a4}{bool \hyperlink{actions_8c_a8d383a4d947717a13239c94a1ed437a4}{Welcome} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structTM__Action}{T\+M\+\_\+\+Action} $\ast$action, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{T\+M\+\_\+\+Action\+State} state)}\label{actions_8c_a8d383a4d947717a13239c94a1ed437a4}
+
+\begin{DoxyCompactList}\small\item\em Show welcome screen (for instance \char`\"{}\+Level 1\+: Fluttershy\char`\"{}). \end{DoxyCompactList}\item 
+\hypertarget{actions_8c_a51e9ed5b383810dfdb7508bbdc9fa045}{bool \hyperlink{actions_8c_a51e9ed5b383810dfdb7508bbdc9fa045}{Pass\+Level} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structTM__Action}{T\+M\+\_\+\+Action} $\ast$action, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{T\+M\+\_\+\+Action\+State} state)}\label{actions_8c_a51e9ed5b383810dfdb7508bbdc9fa045}
+
+\begin{DoxyCompactList}\small\item\em Pass level and fade-\/out after few seconds. \end{DoxyCompactList}\item 
+\hypertarget{actions_8c_ae8e45a00c15c76ba06ab04b38f1fc7b8}{bool \hyperlink{actions_8c_ae8e45a00c15c76ba06ab04b38f1fc7b8}{Letter} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structTM__Action}{T\+M\+\_\+\+Action} $\ast$action, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{T\+M\+\_\+\+Action\+State} state)}\label{actions_8c_ae8e45a00c15c76ba06ab04b38f1fc7b8}
+
+\begin{DoxyCompactList}\small\item\em Shows letter from Twilight on screen. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Level actions for Timeline Manager. 
+

@@ -1,4 +1,4 @@
-/*! \file Level6.h
+/*! \file level6.h
  *  \brief Level 6 headers.
  */
 /*

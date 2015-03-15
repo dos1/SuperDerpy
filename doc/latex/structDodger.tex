@@ -1,17 +1,29 @@
 \hypertarget{structDodger}{\section{Dodger Struct Reference}
 \label{structDodger}\index{Dodger@{Dodger}}
 }
-
-
-Resources used by \hyperlink{structDodger}{Dodger} level module.  
-
-
-
-
-{\ttfamily \#include $<$main.\-h$>$}
-
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structObstacle}{Obstacle} $\ast$ \hyperlink{structDodger_a114a5a2b5b3640ce2bd7b5a9f7486dfc}{obstacles}
+\item 
+\hypertarget{structDodger_a973973b8048bb784aa7614dd2333da80}{struct \hyperlink{structObstacle}{Obstacle} $\ast$ {\bfseries possible\+\_\+obstacles}}\label{structDodger_a973973b8048bb784aa7614dd2333da80}
+
+\item 
+float \hyperlink{structDodger_a1a8788405347cc07d8e3332095deb51b}{speed}
+\item 
+float \hyperlink{structDodger_a0bcffe9e79d8a419d6943ac33b379a9f}{speed\+\_\+modifier}
+\item 
+float \hyperlink{structDodger_a2a05383a1e79a65e33f229f38329c628}{hp}
+\item 
+bool \hyperlink{structDodger_a814b9ffa7fabe1427cc5e28f0f152a53}{debug\+\_\+show\+\_\+sprite\+\_\+frames}
+\item 
+\hypertarget{structDodger_af612d4c6689512afd255af4d9d9a9aee}{struct \hyperlink{structCharacter}{Character} $\ast$ {\bfseries character}}\label{structDodger_af612d4c6689512afd255af4d9d9a9aee}
+
+\item 
+\hypertarget{structDodger_a494d42bd11a7029512ffb303d848e348}{bool {\bfseries failed}}\label{structDodger_a494d42bd11a7029512ffb303d848e348}
+
+\item 
+bool \hyperlink{structDodger_ad73ee458898eeadb95285483a51d354f}{handle\+\_\+input}
 \item 
 \begin{tabbing}
 xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
@@ -23,46 +35,56 @@ struct \{\\
 \>ALLEGRO\_BITMAP $\ast$ \hyperlink{structDodger_a374d77e3c665e735db2c92f457d80273}{cherry}\\
 \>ALLEGRO\_BITMAP $\ast$ \hyperlink{structDodger_a940e169cb64d0cd3d3a532e9b54ab4a0}{pig}\\
 \>ALLEGRO\_BITMAP $\ast$ \hyperlink{structDodger_a703df249c4b1572717c221aa48588df3}{screwball}\\
-\} \hyperlink{structDodger_abbf5585478c85e05e1c60258de290507}{obst\_bmps}\\
+\} \hyperlink{structDodger_a77082385b2097f38e321f99c2ecf98e1}{obst\_bmps}\\
 
-\end{tabbing}\item 
-struct \hyperlink{structObstacle}{Obstacle} $\ast$ \hyperlink{structDodger_a114a5a2b5b3640ce2bd7b5a9f7486dfc}{obstacles}
-\end{DoxyCompactItemize}
+\end{tabbing}\end{DoxyCompactItemize}
 
-
-\subsection{Detailed Description}
-Resources used by \hyperlink{structDodger}{Dodger} level module. 
 
 \subsection{Member Data Documentation}
 \hypertarget{structDodger_a10d42f3b0807e8d538e23d459de7cddc}{\index{Dodger@{Dodger}!badmuffin@{badmuffin}}
 \index{badmuffin@{badmuffin}!Dodger@{Dodger}}
-\subsubsection[{badmuffin}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ Dodger\-::badmuffin}}\label{structDodger_a10d42f3b0807e8d538e23d459de7cddc}
+\subsubsection[{badmuffin}]{\setlength{\rightskip}{0pt plus 5cm}A\+L\+L\+E\+G\+R\+O\+\_\+\+B\+I\+T\+M\+A\+P$\ast$ Dodger\+::badmuffin}}\label{structDodger_a10d42f3b0807e8d538e23d459de7cddc}
 Bad muffin bitmap. \hypertarget{structDodger_a374d77e3c665e735db2c92f457d80273}{\index{Dodger@{Dodger}!cherry@{cherry}}
 \index{cherry@{cherry}!Dodger@{Dodger}}
-\subsubsection[{cherry}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ Dodger\-::cherry}}\label{structDodger_a374d77e3c665e735db2c92f457d80273}
-Cherry bitmap. \hypertarget{structDodger_a9848452f9b8886eaeb49824abd98cfa2}{\index{Dodger@{Dodger}!muffin@{muffin}}
+\subsubsection[{cherry}]{\setlength{\rightskip}{0pt plus 5cm}A\+L\+L\+E\+G\+R\+O\+\_\+\+B\+I\+T\+M\+A\+P$\ast$ Dodger\+::cherry}}\label{structDodger_a374d77e3c665e735db2c92f457d80273}
+Cherry bitmap. \hypertarget{structDodger_a814b9ffa7fabe1427cc5e28f0f152a53}{\index{Dodger@{Dodger}!debug\+\_\+show\+\_\+sprite\+\_\+frames@{debug\+\_\+show\+\_\+sprite\+\_\+frames}}
+\index{debug\+\_\+show\+\_\+sprite\+\_\+frames@{debug\+\_\+show\+\_\+sprite\+\_\+frames}!Dodger@{Dodger}}
+\subsubsection[{debug\+\_\+show\+\_\+sprite\+\_\+frames}]{\setlength{\rightskip}{0pt plus 5cm}bool Dodger\+::debug\+\_\+show\+\_\+sprite\+\_\+frames}}\label{structDodger_a814b9ffa7fabe1427cc5e28f0f152a53}
+When true, displays colorful borders around spritesheets and their active areas. \hypertarget{structDodger_ad73ee458898eeadb95285483a51d354f}{\index{Dodger@{Dodger}!handle\+\_\+input@{handle\+\_\+input}}
+\index{handle\+\_\+input@{handle\+\_\+input}!Dodger@{Dodger}}
+\subsubsection[{handle\+\_\+input}]{\setlength{\rightskip}{0pt plus 5cm}bool Dodger\+::handle\+\_\+input}}\label{structDodger_ad73ee458898eeadb95285483a51d354f}
+When false, player looses control over Derpy. \hypertarget{structDodger_a2a05383a1e79a65e33f229f38329c628}{\index{Dodger@{Dodger}!hp@{hp}}
+\index{hp@{hp}!Dodger@{Dodger}}
+\subsubsection[{hp}]{\setlength{\rightskip}{0pt plus 5cm}float Dodger\+::hp}}\label{structDodger_a2a05383a1e79a65e33f229f38329c628}
+Player health points (0-\/1). \hypertarget{structDodger_a9848452f9b8886eaeb49824abd98cfa2}{\index{Dodger@{Dodger}!muffin@{muffin}}
 \index{muffin@{muffin}!Dodger@{Dodger}}
-\subsubsection[{muffin}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ Dodger\-::muffin}}\label{structDodger_a9848452f9b8886eaeb49824abd98cfa2}
-Good muffin bitmap. \hypertarget{structDodger_abbf5585478c85e05e1c60258de290507}{\index{Dodger@{Dodger}!obst\-\_\-bmps@{obst\-\_\-bmps}}
-\index{obst\-\_\-bmps@{obst\-\_\-bmps}!Dodger@{Dodger}}
-\subsubsection[{obst\-\_\-bmps}]{\setlength{\rightskip}{0pt plus 5cm}struct \{ ... \}   Dodger\-::obst\-\_\-bmps}}\label{structDodger_abbf5585478c85e05e1c60258de290507}
+\subsubsection[{muffin}]{\setlength{\rightskip}{0pt plus 5cm}A\+L\+L\+E\+G\+R\+O\+\_\+\+B\+I\+T\+M\+A\+P$\ast$ Dodger\+::muffin}}\label{structDodger_a9848452f9b8886eaeb49824abd98cfa2}
+Good muffin bitmap. \hypertarget{structDodger_a77082385b2097f38e321f99c2ecf98e1}{\index{Dodger@{Dodger}!obst\+\_\+bmps@{obst\+\_\+bmps}}
+\index{obst\+\_\+bmps@{obst\+\_\+bmps}!Dodger@{Dodger}}
+\subsubsection[{obst\+\_\+bmps}]{\setlength{\rightskip}{0pt plus 5cm}struct \{ ... \}   Dodger\+::obst\+\_\+bmps}}\label{structDodger_a77082385b2097f38e321f99c2ecf98e1}
 \hyperlink{structObstacle}{Obstacle} bitmaps. \hypertarget{structDodger_a114a5a2b5b3640ce2bd7b5a9f7486dfc}{\index{Dodger@{Dodger}!obstacles@{obstacles}}
 \index{obstacles@{obstacles}!Dodger@{Dodger}}
-\subsubsection[{obstacles}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf Obstacle}$\ast$ Dodger\-::obstacles}}\label{structDodger_a114a5a2b5b3640ce2bd7b5a9f7486dfc}
+\subsubsection[{obstacles}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf Obstacle}$\ast$ Dodger\+::obstacles}}\label{structDodger_a114a5a2b5b3640ce2bd7b5a9f7486dfc}
 List of obstacles being currently rendered. \hypertarget{structDodger_a4f7d7343cac6f73d52ad090f3a6a19c3}{\index{Dodger@{Dodger}!pie1@{pie1}}
 \index{pie1@{pie1}!Dodger@{Dodger}}
-\subsubsection[{pie1}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ Dodger\-::pie1}}\label{structDodger_a4f7d7343cac6f73d52ad090f3a6a19c3}
+\subsubsection[{pie1}]{\setlength{\rightskip}{0pt plus 5cm}A\+L\+L\+E\+G\+R\+O\+\_\+\+B\+I\+T\+M\+A\+P$\ast$ Dodger\+::pie1}}\label{structDodger_a4f7d7343cac6f73d52ad090f3a6a19c3}
 Pie bitmap. \hypertarget{structDodger_a10322a7b25a6622f22dbde738d58151c}{\index{Dodger@{Dodger}!pie2@{pie2}}
 \index{pie2@{pie2}!Dodger@{Dodger}}
-\subsubsection[{pie2}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ Dodger\-::pie2}}\label{structDodger_a10322a7b25a6622f22dbde738d58151c}
+\subsubsection[{pie2}]{\setlength{\rightskip}{0pt plus 5cm}A\+L\+L\+E\+G\+R\+O\+\_\+\+B\+I\+T\+M\+A\+P$\ast$ Dodger\+::pie2}}\label{structDodger_a10322a7b25a6622f22dbde738d58151c}
 Pie bitmap (crossed). \hypertarget{structDodger_a940e169cb64d0cd3d3a532e9b54ab4a0}{\index{Dodger@{Dodger}!pig@{pig}}
 \index{pig@{pig}!Dodger@{Dodger}}
-\subsubsection[{pig}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ Dodger\-::pig}}\label{structDodger_a940e169cb64d0cd3d3a532e9b54ab4a0}
+\subsubsection[{pig}]{\setlength{\rightskip}{0pt plus 5cm}A\+L\+L\+E\+G\+R\+O\+\_\+\+B\+I\+T\+M\+A\+P$\ast$ Dodger\+::pig}}\label{structDodger_a940e169cb64d0cd3d3a532e9b54ab4a0}
 Pig spritesheet bitmap. \hypertarget{structDodger_a703df249c4b1572717c221aa48588df3}{\index{Dodger@{Dodger}!screwball@{screwball}}
 \index{screwball@{screwball}!Dodger@{Dodger}}
-\subsubsection[{screwball}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ Dodger\-::screwball}}\label{structDodger_a703df249c4b1572717c221aa48588df3}
-Screwball spritesheet bitmap. 
+\subsubsection[{screwball}]{\setlength{\rightskip}{0pt plus 5cm}A\+L\+L\+E\+G\+R\+O\+\_\+\+B\+I\+T\+M\+A\+P$\ast$ Dodger\+::screwball}}\label{structDodger_a703df249c4b1572717c221aa48588df3}
+Screwball spritesheet bitmap. \hypertarget{structDodger_a1a8788405347cc07d8e3332095deb51b}{\index{Dodger@{Dodger}!speed@{speed}}
+\index{speed@{speed}!Dodger@{Dodger}}
+\subsubsection[{speed}]{\setlength{\rightskip}{0pt plus 5cm}float Dodger\+::speed}}\label{structDodger_a1a8788405347cc07d8e3332095deb51b}
+Speed of the player. \hypertarget{structDodger_a0bcffe9e79d8a419d6943ac33b379a9f}{\index{Dodger@{Dodger}!speed\+\_\+modifier@{speed\+\_\+modifier}}
+\index{speed\+\_\+modifier@{speed\+\_\+modifier}!Dodger@{Dodger}}
+\subsubsection[{speed\+\_\+modifier}]{\setlength{\rightskip}{0pt plus 5cm}float Dodger\+::speed\+\_\+modifier}}\label{structDodger_a0bcffe9e79d8a419d6943ac33b379a9f}
+Modifier of the speed of the player. 
 
-The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-src/\hyperlink{main_8h}{main.\-h}\end{DoxyCompactItemize}
+src/levels/modules/\hyperlink{dodger_8h}{dodger.\+h}\end{DoxyCompactItemize}

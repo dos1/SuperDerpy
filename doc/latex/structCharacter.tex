@@ -1,0 +1,74 @@
+\hypertarget{structCharacter}{\section{Character Struct Reference}
+\label{structCharacter}\index{Character@{Character}}
+}
+
+
+Structure representing one visible character.  
+
+
+
+
+{\ttfamily \#include $<$level.\+h$>$}
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \hyperlink{structCharacter_a35b249bfc82c52eebf91ae3999004105}{name}
+\item 
+struct \hyperlink{structSpritesheet}{Spritesheet} $\ast$ \hyperlink{structCharacter_a8934aff2a077c832127154837f383ef0}{spritesheet}
+\item 
+struct \hyperlink{structSpritesheet}{Spritesheet} $\ast$ \hyperlink{structCharacter_a374e3f2ef020ce410bc7968488798714}{spritesheets}
+\item 
+\hypertarget{structCharacter_a86a4123b1ea1eb5b497542608a61cbda}{A\+L\+L\+E\+G\+R\+O\+\_\+\+B\+I\+T\+M\+A\+P $\ast$ {\bfseries bitmap}}\label{structCharacter_a86a4123b1ea1eb5b497542608a61cbda}
+
+\item 
+int \hyperlink{structCharacter_ad905575b0331709b6188af9423b3aee1}{pos}
+\item 
+float \hyperlink{structCharacter_ac4da775bb44e81c8b33ffb1cb1f75108}{pos\+\_\+tmp}
+\item 
+float \hyperlink{structCharacter_a8db8f4fb44d770f8324dff6714b8dc73}{x}
+\item 
+float \hyperlink{structCharacter_a4e074a7f769265983cb1b06249a6b617}{y}
+\item 
+float \hyperlink{structCharacter_aaea3868e61a383b338ffef0949dc5d0c}{angle}
+\item 
+void $\ast$ \hyperlink{structCharacter_a501e967c7ba98f87aaf55772236f9d30}{data}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Structure representing one visible character. 
+
+\subsection{Member Data Documentation}
+\hypertarget{structCharacter_aaea3868e61a383b338ffef0949dc5d0c}{\index{Character@{Character}!angle@{angle}}
+\index{angle@{angle}!Character@{Character}}
+\subsubsection[{angle}]{\setlength{\rightskip}{0pt plus 5cm}float Character\+::angle}}\label{structCharacter_aaea3868e61a383b338ffef0949dc5d0c}
+Characters display angle (radians). \hypertarget{structCharacter_a501e967c7ba98f87aaf55772236f9d30}{\index{Character@{Character}!data@{data}}
+\index{data@{data}!Character@{Character}}
+\subsubsection[{data}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ Character\+::data}}\label{structCharacter_a501e967c7ba98f87aaf55772236f9d30}
+Additional, custom character data (H\+P etc.). \hypertarget{structCharacter_a35b249bfc82c52eebf91ae3999004105}{\index{Character@{Character}!name@{name}}
+\index{name@{name}!Character@{Character}}
+\subsubsection[{name}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ Character\+::name}}\label{structCharacter_a35b249bfc82c52eebf91ae3999004105}
+Name of the character (used in file paths). \hypertarget{structCharacter_ad905575b0331709b6188af9423b3aee1}{\index{Character@{Character}!pos@{pos}}
+\index{pos@{pos}!Character@{Character}}
+\subsubsection[{pos}]{\setlength{\rightskip}{0pt plus 5cm}int Character\+::pos}}\label{structCharacter_ad905575b0331709b6188af9423b3aee1}
+Current spritesheet position. \hypertarget{structCharacter_ac4da775bb44e81c8b33ffb1cb1f75108}{\index{Character@{Character}!pos\+\_\+tmp@{pos\+\_\+tmp}}
+\index{pos\+\_\+tmp@{pos\+\_\+tmp}!Character@{Character}}
+\subsubsection[{pos\+\_\+tmp}]{\setlength{\rightskip}{0pt plus 5cm}float Character\+::pos\+\_\+tmp}}\label{structCharacter_ac4da775bb44e81c8b33ffb1cb1f75108}
+A counter used to slow down spritesheet animation. \hypertarget{structCharacter_a8934aff2a077c832127154837f383ef0}{\index{Character@{Character}!spritesheet@{spritesheet}}
+\index{spritesheet@{spritesheet}!Character@{Character}}
+\subsubsection[{spritesheet}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf Spritesheet}$\ast$ Character\+::spritesheet}}\label{structCharacter_a8934aff2a077c832127154837f383ef0}
+Current spritesheet used by character. \hypertarget{structCharacter_a374e3f2ef020ce410bc7968488798714}{\index{Character@{Character}!spritesheets@{spritesheets}}
+\index{spritesheets@{spritesheets}!Character@{Character}}
+\subsubsection[{spritesheets}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf Spritesheet}$\ast$ Character\+::spritesheets}}\label{structCharacter_a374e3f2ef020ce410bc7968488798714}
+List of all spritesheets registered to character. \hypertarget{structCharacter_a8db8f4fb44d770f8324dff6714b8dc73}{\index{Character@{Character}!x@{x}}
+\index{x@{x}!Character@{Character}}
+\subsubsection[{x}]{\setlength{\rightskip}{0pt plus 5cm}float Character\+::x}}\label{structCharacter_a8db8f4fb44d770f8324dff6714b8dc73}
+Horizontal position of character (0 -\/ left, 1 -\/ right side of maximal square). \hypertarget{structCharacter_a4e074a7f769265983cb1b06249a6b617}{\index{Character@{Character}!y@{y}}
+\index{y@{y}!Character@{Character}}
+\subsubsection[{y}]{\setlength{\rightskip}{0pt plus 5cm}float Character\+::y}}\label{structCharacter_a4e074a7f769265983cb1b06249a6b617}
+Vertical position of character (0 -\/ top, 1 -\/ bottom). 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/gamestates/\hyperlink{level_8h}{level.\+h}\end{DoxyCompactItemize}

@@ -1,38 +1,33 @@
 \hypertarget{config_8c}{\section{src/config.c File Reference}
-\label{config_8c}\index{src/config.\-c@{src/config.\-c}}
+\label{config_8c}\index{src/config.\+c@{src/config.\+c}}
 }
 
 
 Configuration manager code.  
 
 
-{\ttfamily \#include $<$allegro5/allegro.\-h$>$}\\*
-{\ttfamily \#include \char`\"{}config.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$allegro5/allegro.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}config.\+h\char`\"{}}\\*
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{config_8c_a88ce61c06b65baa2f67f43eb7c8e6379}{void \hyperlink{config_8c_a88ce61c06b65baa2f67f43eb7c8e6379}{Init\-Config} ()}\label{config_8c_a88ce61c06b65baa2f67f43eb7c8e6379}
+\hypertarget{config_8c_aa4e52c0afb3f44601b56baff9bfa3e09}{void \hyperlink{config_8c_aa4e52c0afb3f44601b56baff9bfa3e09}{Init\+Config} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{config_8c_aa4e52c0afb3f44601b56baff9bfa3e09}
 
 \begin{DoxyCompactList}\small\item\em Reads config from file into memory. \end{DoxyCompactList}\item 
-\hypertarget{config_8c_a68a5d186325286714ab452ad9eaaad84}{void \hyperlink{config_8c_a68a5d186325286714ab452ad9eaaad84}{Set\-Config\-Option} (char $\ast$section, char $\ast$name, char $\ast$value)}\label{config_8c_a68a5d186325286714ab452ad9eaaad84}
+\hypertarget{config_8c_acdbb9307510f3bd023860ebdf5b1154d}{void \hyperlink{config_8c_acdbb9307510f3bd023860ebdf5b1154d}{Set\+Config\+Option} (struct \hyperlink{structGame}{Game} $\ast$game, char $\ast$section, char $\ast$name, char $\ast$value)}\label{config_8c_acdbb9307510f3bd023860ebdf5b1154d}
 
 \begin{DoxyCompactList}\small\item\em Sets new value of requested config entry, or created new if no such entry exists. \end{DoxyCompactList}\item 
-\hypertarget{config_8c_aa426843e84388898be521431b2a05200}{const char $\ast$ \hyperlink{config_8c_aa426843e84388898be521431b2a05200}{Get\-Config\-Option} (char $\ast$section, char $\ast$name)}\label{config_8c_aa426843e84388898be521431b2a05200}
+\hypertarget{config_8c_a8b563936aae6f34db06b0161e2d21e6c}{const char $\ast$ \hyperlink{config_8c_a8b563936aae6f34db06b0161e2d21e6c}{Get\+Config\+Option} (struct \hyperlink{structGame}{Game} $\ast$game, char $\ast$section, char $\ast$name)}\label{config_8c_a8b563936aae6f34db06b0161e2d21e6c}
 
 \begin{DoxyCompactList}\small\item\em Returns value of requested config entry. \end{DoxyCompactList}\item 
-\hypertarget{config_8c_a50db3b13fa96a690623758bf8ea165d2}{const char $\ast$ \hyperlink{config_8c_a50db3b13fa96a690623758bf8ea165d2}{Get\-Config\-Option\-Default} (char $\ast$section, char $\ast$name, const char $\ast$def)}\label{config_8c_a50db3b13fa96a690623758bf8ea165d2}
+\hypertarget{config_8c_a2ce9fc588a7fe6459565792c68616107}{const char $\ast$ \hyperlink{config_8c_a2ce9fc588a7fe6459565792c68616107}{Get\+Config\+Option\+Default} (struct \hyperlink{structGame}{Game} $\ast$game, char $\ast$section, char $\ast$name, const char $\ast$def)}\label{config_8c_a2ce9fc588a7fe6459565792c68616107}
 
 \begin{DoxyCompactList}\small\item\em Returns value of requested config entry, or def if no such entry exists. \end{DoxyCompactList}\item 
-\hypertarget{config_8c_a771b6ee4b4a43e5c5ceacd9620921c39}{void \hyperlink{config_8c_a771b6ee4b4a43e5c5ceacd9620921c39}{Deinit\-Config} ()}\label{config_8c_a771b6ee4b4a43e5c5ceacd9620921c39}
+\hypertarget{config_8c_a1dddbfd2c817b3c06dfa269be587aa8e}{void \hyperlink{config_8c_a1dddbfd2c817b3c06dfa269be587aa8e}{Deinit\+Config} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{config_8c_a1dddbfd2c817b3c06dfa269be587aa8e}
 
 \begin{DoxyCompactList}\small\item\em Writes config from memory to file. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsection*{Variables}
-\begin{DoxyCompactItemize}
-\item 
-\hypertarget{config_8c_a204a5cf7317d30554aba26ce67b16e3d}{A\-L\-L\-E\-G\-R\-O\-\_\-\-C\-O\-N\-F\-I\-G $\ast$ {\bfseries config}}\label{config_8c_a204a5cf7317d30554aba26ce67b16e3d}
-
-\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 Configuration manager code. 
+

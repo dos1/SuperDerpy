@@ -1,4 +1,4 @@
-/*! \file actions.h
+/*! \file dodger/actions.h
  *  \brief Header file with Dodger Level module actions for Timeline Manager.
  */
 /*

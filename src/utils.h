@@ -1,5 +1,5 @@
-/*! \file allegro_utils.h
- *  \brief Headers of helper functions for Allegro.
+/*! \file utils.h
+ *  \brief Headers of helper functions.
  */
 /*
  * Copyright (c) Sebastian Krzyszkowiak <dos@dosowisko.net>

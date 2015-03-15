@@ -1,4 +1,4 @@
-/*! \file actions.c
+/*! \file levels/actions.c
  *  \brief Level actions for Timeline Manager.
  */
 /*

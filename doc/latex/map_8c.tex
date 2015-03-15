@@ -1,37 +1,57 @@
 \hypertarget{map_8c}{\section{src/gamestates/map.c File Reference}
-\label{map_8c}\index{src/gamestates/map.\-c@{src/gamestates/map.\-c}}
+\label{map_8c}\index{src/gamestates/map.\+c@{src/gamestates/map.\+c}}
 }
 
 
-View with \hyperlink{structMap}{Map} of levels.  
+View with Map of levels.  
 
 
-{\ttfamily \#include $<$stdio.\-h$>$}\\*
-{\ttfamily \#include $<$math.\-h$>$}\\*
-{\ttfamily \#include \char`\"{}../config.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}map.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$math.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}../utils.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../config.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}map.\+h\char`\"{}}\\*
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{map_8c_a3f1863daf89e16e9185c841d22614e8a}{void {\bfseries Map\-\_\-\-Draw} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{map_8c_a3f1863daf89e16e9185c841d22614e8a}
+\hypertarget{map_8c_aaa6b93c21922ac3443b2413e4813d3e3}{void {\bfseries Gamestate\+\_\+\+Draw} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structMapResources}{Map\+Resources} $\ast$data)}\label{map_8c_aaa6b93c21922ac3443b2413e4813d3e3}
 
 \item 
-\hypertarget{map_8c_a1492908c6d87ce3802b0fd77452be340}{void {\bfseries Map\-\_\-\-Logic} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{map_8c_a1492908c6d87ce3802b0fd77452be340}
+\hypertarget{map_8c_acf3ce5b84fb305defd2b6863dd03df41}{void {\bfseries Gamestate\+\_\+\+Logic} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structMapResources}{Map\+Resources} $\ast$data)}\label{map_8c_acf3ce5b84fb305defd2b6863dd03df41}
 
 \item 
-\hypertarget{map_8c_a03fca81029e780d20f618c33d94ee3f6}{void {\bfseries Map\-\_\-\-Load} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{map_8c_a03fca81029e780d20f618c33d94ee3f6}
+\hypertarget{map_8c_a777f903593d27db9fd94b0d299900cea}{void {\bfseries Gamestate\+\_\+\+Start} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structMapResources}{Map\+Resources} $\ast$data)}\label{map_8c_a777f903593d27db9fd94b0d299900cea}
 
 \item 
-\hypertarget{map_8c_adf1b67581d771d914afd39e478818fba}{int {\bfseries Map\-\_\-\-Keydown} (struct \hyperlink{structGame}{Game} $\ast$game, A\-L\-L\-E\-G\-R\-O\-\_\-\-E\-V\-E\-N\-T $\ast$ev)}\label{map_8c_adf1b67581d771d914afd39e478818fba}
+\hypertarget{map_8c_a045e36bfe801967d260901e8b6e0f285}{void {\bfseries Gamestate\+\_\+\+Process\+Event} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structMapResources}{Map\+Resources} $\ast$data, A\+L\+L\+E\+G\+R\+O\+\_\+\+E\+V\+E\+N\+T $\ast$ev)}\label{map_8c_a045e36bfe801967d260901e8b6e0f285}
 
 \item 
-\hypertarget{map_8c_a8381f50f11a246a19a9c3661d8831875}{void {\bfseries Map\-\_\-\-Preload} (struct \hyperlink{structGame}{Game} $\ast$game, void($\ast$progress)(struct \hyperlink{structGame}{Game} $\ast$, float))}\label{map_8c_a8381f50f11a246a19a9c3661d8831875}
+\hypertarget{map_8c_af758fae038c76d6b12bdff0116ba2748}{void $\ast$ {\bfseries Gamestate\+\_\+\+Load} (struct \hyperlink{structGame}{Game} $\ast$game, void($\ast$progress)(struct \hyperlink{structGame}{Game} $\ast$))}\label{map_8c_af758fae038c76d6b12bdff0116ba2748}
 
 \item 
-\hypertarget{map_8c_aff167311d749efb49cc0535e4a7843fd}{void {\bfseries Map\-\_\-\-Unload} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{map_8c_aff167311d749efb49cc0535e4a7843fd}
+\hypertarget{map_8c_ab0d2390be445d52a36635fd601545bcb}{void {\bfseries Gamestate\+\_\+\+Unload} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structMapResources}{Map\+Resources} $\ast$data)}\label{map_8c_ab0d2390be445d52a36635fd601545bcb}
+
+\item 
+\hypertarget{map_8c_a3d5b860874d64d68a7ad0aa147db450c}{void {\bfseries Gamestate\+\_\+\+Stop} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structMapResources}{Map\+Resources} $\ast$data)}\label{map_8c_a3d5b860874d64d68a7ad0aa147db450c}
+
+\item 
+\hypertarget{map_8c_a96f06ae0d486fa075a29578d3363811d}{void {\bfseries Gamestate\+\_\+\+Pause} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structMapResources}{Map\+Resources} $\ast$data)}\label{map_8c_a96f06ae0d486fa075a29578d3363811d}
+
+\item 
+\hypertarget{map_8c_a1c782f24e33104dd7fdfcc11d70a75a8}{void {\bfseries Gamestate\+\_\+\+Resume} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structMapResources}{Map\+Resources} $\ast$data)}\label{map_8c_a1c782f24e33104dd7fdfcc11d70a75a8}
+
+\item 
+\hypertarget{map_8c_a64069e6a1c1ca6b1d7bb9255a50df457}{void {\bfseries Gamestate\+\_\+\+Reload} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structMapResources}{Map\+Resources} $\ast$data)}\label{map_8c_a64069e6a1c1ca6b1d7bb9255a50df457}
+
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{map_8c_aa41ca88b3d39cbe39bc28897ee08a66f}{int {\bfseries Gamestate\+\_\+\+Progress\+Count} = 10}\label{map_8c_aa41ca88b3d39cbe39bc28897ee08a66f}
 
 \end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-View with \hyperlink{structMap}{Map} of levels. 
+View with Map of levels. 
+

@@ -1,0 +1,79 @@
+\hypertarget{utils_8c}{\section{src/utils.c File Reference}
+\label{utils_8c}\index{src/utils.\+c@{src/utils.\+c}}
+}
+
+
+Helper functions.  
+
+
+{\ttfamily \#include $<$allegro5/allegro\+\_\+primitives.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}stdio.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}config.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}math.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{utils_8c_a46fdfd3edf635078a2c1c3b67f2f22de}{void \hyperlink{utils_8c_a46fdfd3edf635078a2c1c3b67f2f22de}{Draw\+Vertical\+Gradient\+Rect} (float x, float y, float w, float h, A\+L\+L\+E\+G\+R\+O\+\_\+\+C\+O\+L\+O\+R top, A\+L\+L\+E\+G\+R\+O\+\_\+\+C\+O\+L\+O\+R bottom)}\label{utils_8c_a46fdfd3edf635078a2c1c3b67f2f22de}
+
+\begin{DoxyCompactList}\small\item\em Draws rectangle filled with vertical gradient. \end{DoxyCompactList}\item 
+\hypertarget{utils_8c_ae047bd348860c608b81ac543c7927213}{void \hyperlink{utils_8c_ae047bd348860c608b81ac543c7927213}{Draw\+Horizontal\+Gradient\+Rect} (float x, float y, float w, float h, A\+L\+L\+E\+G\+R\+O\+\_\+\+C\+O\+L\+O\+R left, A\+L\+L\+E\+G\+R\+O\+\_\+\+C\+O\+L\+O\+R right)}\label{utils_8c_ae047bd348860c608b81ac543c7927213}
+
+\begin{DoxyCompactList}\small\item\em Draws rectangle filled with horizontal gradient. \end{DoxyCompactList}\item 
+void \hyperlink{utils_8c_afe4abf85153c9b206d2254e4868905bb}{Draw\+Text\+With\+Shadow} (A\+L\+L\+E\+G\+R\+O\+\_\+\+F\+O\+N\+T $\ast$font, A\+L\+L\+E\+G\+R\+O\+\_\+\+C\+O\+L\+O\+R color, float x, float y, int flags, char const $\ast$text)
+\begin{DoxyCompactList}\small\item\em Draws text with shadow. \end{DoxyCompactList}\item 
+\hypertarget{utils_8c_a1a44c31969bc5d9543a03c19625f382b}{void \hyperlink{utils_8c_a1a44c31969bc5d9543a03c19625f382b}{Fade\+Gamestate} (struct \hyperlink{structGame}{Game} $\ast$game, bool in)}\label{utils_8c_a1a44c31969bc5d9543a03c19625f382b}
+
+\begin{DoxyCompactList}\small\item\em Displays fade in or fade out animation on current gamestate. \end{DoxyCompactList}\item 
+\hypertarget{utils_8c_a95f035fc3dfd7397ae24243d156c8195}{void \hyperlink{utils_8c_a95f035fc3dfd7397ae24243d156c8195}{Scale\+Bitmap} (A\+L\+L\+E\+G\+R\+O\+\_\+\+B\+I\+T\+M\+A\+P $\ast$source, int width, int height)}\label{utils_8c_a95f035fc3dfd7397ae24243d156c8195}
+
+\begin{DoxyCompactList}\small\item\em Scales bitmap using software linear filtering method to current target. \end{DoxyCompactList}\item 
+\hypertarget{utils_8c_a35fec9e0c63e1ef7f1a52831f4a3f56c}{A\+L\+L\+E\+G\+R\+O\+\_\+\+B\+I\+T\+M\+A\+P $\ast$ \hyperlink{utils_8c_a35fec9e0c63e1ef7f1a52831f4a3f56c}{Load\+Scaled\+Bitmap} (struct \hyperlink{structGame}{Game} $\ast$game, char $\ast$filename, int width, int height)}\label{utils_8c_a35fec9e0c63e1ef7f1a52831f4a3f56c}
+
+\begin{DoxyCompactList}\small\item\em Loads bitmap into memory and scales it with software linear filtering. \end{DoxyCompactList}\item 
+\hypertarget{utils_8c_ae380f654e0896a0ce6f9661f2cee6226}{void {\bfseries Fatal\+Error} (struct \hyperlink{structGame}{Game} $\ast$game, bool fatal, char $\ast$format,...)}\label{utils_8c_ae380f654e0896a0ce6f9661f2cee6226}
+
+\item 
+\hypertarget{utils_8c_a8fc38a1d9879ed43e37f8a9da35b35d1}{char $\ast$ \hyperlink{utils_8c_a8fc38a1d9879ed43e37f8a9da35b35d1}{Get\+Data\+File\+Path} (struct \hyperlink{structGame}{Game} $\ast$game, char $\ast$filename)}\label{utils_8c_a8fc38a1d9879ed43e37f8a9da35b35d1}
+
+\begin{DoxyCompactList}\small\item\em Finds path for data file. \end{DoxyCompactList}\item 
+void \hyperlink{utils_8c_a83e9560a39a8b6beea953f69553dd28b}{Print\+Console} (struct \hyperlink{structGame}{Game} $\ast$game, char $\ast$format,...)
+\begin{DoxyCompactList}\small\item\em Print some message on game console. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Helper functions. 
+
+
+
+\subsection{Function Documentation}
+\hypertarget{utils_8c_afe4abf85153c9b206d2254e4868905bb}{\index{utils.\+c@{utils.\+c}!Draw\+Text\+With\+Shadow@{Draw\+Text\+With\+Shadow}}
+\index{Draw\+Text\+With\+Shadow@{Draw\+Text\+With\+Shadow}!utils.\+c@{utils.\+c}}
+\subsubsection[{Draw\+Text\+With\+Shadow}]{\setlength{\rightskip}{0pt plus 5cm}void Draw\+Text\+With\+Shadow (
+\begin{DoxyParamCaption}
+\item[{A\+L\+L\+E\+G\+R\+O\+\_\+\+F\+O\+N\+T $\ast$}]{font, }
+\item[{A\+L\+L\+E\+G\+R\+O\+\_\+\+C\+O\+L\+O\+R}]{color, }
+\item[{float}]{x, }
+\item[{float}]{y, }
+\item[{int}]{flags, }
+\item[{char const $\ast$}]{text}
+\end{DoxyParamCaption}
+)}}\label{utils_8c_afe4abf85153c9b206d2254e4868905bb}
+
+
+Draws text with shadow. 
+
+Draws given text two times\+: once with color (0,0,0,128) and 1px off in both x and y axis, and second time with actual given color and position. \hypertarget{utils_8c_a83e9560a39a8b6beea953f69553dd28b}{\index{utils.\+c@{utils.\+c}!Print\+Console@{Print\+Console}}
+\index{Print\+Console@{Print\+Console}!utils.\+c@{utils.\+c}}
+\subsubsection[{Print\+Console}]{\setlength{\rightskip}{0pt plus 5cm}void Print\+Console (
+\begin{DoxyParamCaption}
+\item[{struct {\bf Game} $\ast$}]{game, }
+\item[{char $\ast$}]{format, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}}\label{utils_8c_a83e9560a39a8b6beea953f69553dd28b}
+
+
+Print some message on game console. 
+
+Draws message on console bitmap, so it'll be displayed when calling Draw\+Console. If game-\/$>$debug is true, then it also prints given message on stdout. It needs to be called in printf style. 

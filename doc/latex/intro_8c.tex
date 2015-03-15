@@ -1,43 +1,63 @@
 \hypertarget{intro_8c}{\section{src/gamestates/intro.c File Reference}
-\label{intro_8c}\index{src/gamestates/intro.\-c@{src/gamestates/intro.\-c}}
+\label{intro_8c}\index{src/gamestates/intro.\+c@{src/gamestates/intro.\+c}}
 }
 
 
-\hyperlink{structIntro}{Intro} view with plot description.  
+Intro view with plot description.  
 
 
-{\ttfamily \#include $<$math.\-h$>$}\\*
-{\ttfamily \#include $<$stdio.\-h$>$}\\*
-{\ttfamily \#include \char`\"{}intro.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}map.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$math.\+h$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$allegro5/allegro\+\_\+ttf.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}../utils.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}intro.\+h\char`\"{}}\\*
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{intro_8c_a9cfc45d27e23a9d2498a43607b09befe}{void {\bfseries Anim\-Page} (struct \hyperlink{structGame}{Game} $\ast$game, int page, A\-L\-L\-E\-G\-R\-O\-\_\-\-C\-O\-L\-O\-R tint)}\label{intro_8c_a9cfc45d27e23a9d2498a43607b09befe}
+\hypertarget{intro_8c_a4630bf6c014c961bec36d94c0f6d940c}{void {\bfseries Anim\+Page} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structIntroResources}{Intro\+Resources} $\ast$data, int page, A\+L\+L\+E\+G\+R\+O\+\_\+\+C\+O\+L\+O\+R tint)}\label{intro_8c_a4630bf6c014c961bec36d94c0f6d940c}
 
 \item 
-\hypertarget{intro_8c_a02098224e5b2a9149f9387f1139f00b6}{void {\bfseries Fill\-Page} (struct \hyperlink{structGame}{Game} $\ast$game, int page)}\label{intro_8c_a02098224e5b2a9149f9387f1139f00b6}
+\hypertarget{intro_8c_ab998c446aaf44120d4c0bd1605f384ec}{void {\bfseries Fill\+Page} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structIntroResources}{Intro\+Resources} $\ast$data, int page)}\label{intro_8c_ab998c446aaf44120d4c0bd1605f384ec}
 
 \item 
-\hypertarget{intro_8c_ad19fc07a2037cc24147c1f31833fb5bc}{void {\bfseries Intro\-\_\-\-Logic} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{intro_8c_ad19fc07a2037cc24147c1f31833fb5bc}
+\hypertarget{intro_8c_a1c19742205912912a102558821861c80}{void {\bfseries Gamestate\+\_\+\+Logic} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structIntroResources}{Intro\+Resources} $\ast$data)}\label{intro_8c_a1c19742205912912a102558821861c80}
 
 \item 
-\hypertarget{intro_8c_a262ebeb3f3519fa38c62119cbb7a0230}{void {\bfseries Intro\-\_\-\-Draw} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{intro_8c_a262ebeb3f3519fa38c62119cbb7a0230}
+\hypertarget{intro_8c_aa20654ead78f7ee79a9cc2813f7d4bb4}{void {\bfseries Gamestate\+\_\+\+Draw} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structIntroResources}{Intro\+Resources} $\ast$data)}\label{intro_8c_aa20654ead78f7ee79a9cc2813f7d4bb4}
 
 \item 
-\hypertarget{intro_8c_a8c025146875ea6883bd9bd59df875067}{void {\bfseries Intro\-\_\-\-Load} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{intro_8c_a8c025146875ea6883bd9bd59df875067}
+\hypertarget{intro_8c_a75be6bdfaeb4fba184274c8e45a99b7b}{void {\bfseries Gamestate\+\_\+\+Start} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structIntroResources}{Intro\+Resources} $\ast$data)}\label{intro_8c_a75be6bdfaeb4fba184274c8e45a99b7b}
 
 \item 
-\hypertarget{intro_8c_a3d7ffe12b0a7bc153dfaf55eed210be8}{int {\bfseries Intro\-\_\-\-Keydown} (struct \hyperlink{structGame}{Game} $\ast$game, A\-L\-L\-E\-G\-R\-O\-\_\-\-E\-V\-E\-N\-T $\ast$ev)}\label{intro_8c_a3d7ffe12b0a7bc153dfaf55eed210be8}
+\hypertarget{intro_8c_a7b7122de33c22c9c18d4a2b279cc106b}{void {\bfseries Gamestate\+\_\+\+Process\+Event} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structIntroResources}{Intro\+Resources} $\ast$data, A\+L\+L\+E\+G\+R\+O\+\_\+\+E\+V\+E\+N\+T $\ast$ev)}\label{intro_8c_a7b7122de33c22c9c18d4a2b279cc106b}
 
 \item 
-\hypertarget{intro_8c_aa1f1bf2975b91433e6585b1ab4a6b8d5}{void {\bfseries Intro\-\_\-\-Preload} (struct \hyperlink{structGame}{Game} $\ast$game, void($\ast$progress)(struct \hyperlink{structGame}{Game} $\ast$, float))}\label{intro_8c_aa1f1bf2975b91433e6585b1ab4a6b8d5}
+\hypertarget{intro_8c_af758fae038c76d6b12bdff0116ba2748}{void $\ast$ {\bfseries Gamestate\+\_\+\+Load} (struct \hyperlink{structGame}{Game} $\ast$game, void($\ast$progress)(struct \hyperlink{structGame}{Game} $\ast$))}\label{intro_8c_af758fae038c76d6b12bdff0116ba2748}
 
 \item 
-\hypertarget{intro_8c_a9be02a074f0f0c28ac38f311219b73c9}{void {\bfseries Intro\-\_\-\-Unload} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{intro_8c_a9be02a074f0f0c28ac38f311219b73c9}
+\hypertarget{intro_8c_a0e4687c5ec3c4cb836a265a5c7488f6e}{void {\bfseries Gamestate\+\_\+\+Unload} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structIntroResources}{Intro\+Resources} $\ast$data)}\label{intro_8c_a0e4687c5ec3c4cb836a265a5c7488f6e}
+
+\item 
+\hypertarget{intro_8c_a57498832b0b79dced119ebe959c208d9}{void {\bfseries Gamestate\+\_\+\+Stop} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structIntroResources}{Intro\+Resources} $\ast$data)}\label{intro_8c_a57498832b0b79dced119ebe959c208d9}
+
+\item 
+\hypertarget{intro_8c_aae2d349886e868749bebc3246d08f6db}{void {\bfseries Gamestate\+\_\+\+Pause} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structIntroResources}{Intro\+Resources} $\ast$data)}\label{intro_8c_aae2d349886e868749bebc3246d08f6db}
+
+\item 
+\hypertarget{intro_8c_a8b1d8bdbf35f2d5978bb087ac874f876}{void {\bfseries Gamestate\+\_\+\+Resume} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structIntroResources}{Intro\+Resources} $\ast$data)}\label{intro_8c_a8b1d8bdbf35f2d5978bb087ac874f876}
+
+\item 
+\hypertarget{intro_8c_a685a78d19f00f380d146973cf6967505}{void {\bfseries Gamestate\+\_\+\+Reload} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structIntroResources}{Intro\+Resources} $\ast$data)}\label{intro_8c_a685a78d19f00f380d146973cf6967505}
+
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{intro_8c_aa41ca88b3d39cbe39bc28897ee08a66f}{int {\bfseries Gamestate\+\_\+\+Progress\+Count} = 11}\label{intro_8c_aa41ca88b3d39cbe39bc28897ee08a66f}
 
 \end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-\hyperlink{structIntro}{Intro} view with plot description. 
+Intro view with plot description. 
+

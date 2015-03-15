@@ -1,4 +1,4 @@
-/*! \file Level2.h
+/*! \file level2.h
  *  \brief Level 2 headers.
  */
 /*

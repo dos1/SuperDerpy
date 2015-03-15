@@ -1,5 +1,5 @@
-/*! \file disclaimer.h
- *  \brief Init animation.
+/*! \file dosowisko.h
+ *  \brief Init animation with dosowisko.net logo.
  */
 /*
  * Copyright (c) Sebastian Krzyszkowiak <dos@dosowisko.net>

@@ -1,0 +1,70 @@
+\hypertarget{structGamestate}{\section{Gamestate Struct Reference}
+\label{structGamestate}\index{Gamestate@{Gamestate}}
+}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structGamestate_afe0dca76ed107e371404ef543fe6c10d}{char $\ast$ {\bfseries name}}\label{structGamestate_afe0dca76ed107e371404ef543fe6c10d}
+
+\item 
+\hypertarget{structGamestate_ad9af1233078e2761905817e5c7d09a86}{void $\ast$ {\bfseries handle}}\label{structGamestate_ad9af1233078e2761905817e5c7d09a86}
+
+\item 
+\hypertarget{structGamestate_ab9901b534dd036ccf36c049c661a1447}{bool {\bfseries loaded}}\label{structGamestate_ab9901b534dd036ccf36c049c661a1447}
+
+\item 
+\hypertarget{structGamestate_ae6097c3f6b7c24b9070d7677529da8e9}{bool {\bfseries pending\+\_\+load}}\label{structGamestate_ae6097c3f6b7c24b9070d7677529da8e9}
+
+\item 
+\hypertarget{structGamestate_a38cee08273dcd8398559db9b02bbd88f}{bool {\bfseries started}}\label{structGamestate_a38cee08273dcd8398559db9b02bbd88f}
+
+\item 
+\hypertarget{structGamestate_af66fd1a4cd78ac906d0042c522577fac}{bool {\bfseries pending\+\_\+start}}\label{structGamestate_af66fd1a4cd78ac906d0042c522577fac}
+
+\item 
+\hypertarget{structGamestate_a7ae9ea1490efd0f014a43f070e432155}{bool {\bfseries show\+Loading}}\label{structGamestate_a7ae9ea1490efd0f014a43f070e432155}
+
+\item 
+\hypertarget{structGamestate_adf037f12489ca725d9497e2c6743062e}{bool {\bfseries paused}}\label{structGamestate_adf037f12489ca725d9497e2c6743062e}
+
+\item 
+\hypertarget{structGamestate_a6fc2be3a512d48586695c49516b1c87d}{bool {\bfseries fade}}\label{structGamestate_a6fc2be3a512d48586695c49516b1c87d}
+
+\item 
+\hypertarget{structGamestate_a7554062999c6bab2b258c9f028890414}{unsigned char {\bfseries fade\+\_\+counter}}\label{structGamestate_a7554062999c6bab2b258c9f028890414}
+
+\item 
+\hypertarget{structGamestate_a3f6bce4d94b33eac1845f7c50706dad1}{char $\ast$$\ast$ {\bfseries after}}\label{structGamestate_a3f6bce4d94b33eac1845f7c50706dad1}
+
+\item 
+\hypertarget{structGamestate_a07c02d69cef37fab93745c86e1486705}{struct \hyperlink{structGamestate}{Gamestate} $\ast$ {\bfseries next}}\label{structGamestate_a07c02d69cef37fab93745c86e1486705}
+
+\item 
+\hypertarget{structGamestate_a71e3b7c6697daf11620ce77a387958bb}{void $\ast$ {\bfseries data}}\label{structGamestate_a71e3b7c6697daf11620ce77a387958bb}
+
+\item 
+\hypertarget{structGamestate_aa6afebe735106cf6c22f7f230dd12991}{\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>void($\ast$ {\bfseries Gamestate\_Draw} )(struct \hyperlink{structGame}{Game} $\ast$game, void $\ast$data)\\
+\>void($\ast$ {\bfseries Gamestate\_Logic} )(struct \hyperlink{structGame}{Game} $\ast$game, void $\ast$data)\\
+\>void $\ast$($\ast$ {\bfseries Gamestate\_Load} )(struct \hyperlink{structGame}{Game} $\ast$game, void($\ast$progress)(struct \\
+\>\>\hyperlink{structGame}{Game} $\ast$game))\\
+\>void($\ast$ {\bfseries Gamestate\_Start} )(struct \hyperlink{structGame}{Game} $\ast$game, void $\ast$data)\\
+\>void($\ast$ {\bfseries Gamestate\_Pause} )(struct \hyperlink{structGame}{Game} $\ast$game, void $\ast$data)\\
+\>void($\ast$ {\bfseries Gamestate\_Resume} )(struct \hyperlink{structGame}{Game} $\ast$game, void $\ast$data)\\
+\>void($\ast$ {\bfseries Gamestate\_Stop} )(struct \hyperlink{structGame}{Game} $\ast$game, void $\ast$data)\\
+\>void($\ast$ {\bfseries Gamestate\_Unload} )(struct \hyperlink{structGame}{Game} $\ast$game, void $\ast$data)\\
+\>void($\ast$ {\bfseries Gamestate\_ProcessEvent} )(struct \hyperlink{structGame}{Game} $\ast$game, void \\
+\>\>$\ast$data, ALLEGRO\_EVENT $\ast$ev)\\
+\>void($\ast$ {\bfseries Gamestate\_Reload} )(struct \hyperlink{structGame}{Game} $\ast$game, void $\ast$data)\\
+\>int $\ast$ {\bfseries Gamestate\_ProgressCount}\\
+\} {\bfseries api}}\label{structGamestate_aa6afebe735106cf6c22f7f230dd12991}
+\\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\hyperlink{gamestate_8h}{gamestate.\+h}\end{DoxyCompactItemize}

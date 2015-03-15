@@ -1,34 +1,55 @@
 \hypertarget{disclaimer_8c}{\section{src/gamestates/disclaimer.c File Reference}
-\label{disclaimer_8c}\index{src/gamestates/disclaimer.\-c@{src/gamestates/disclaimer.\-c}}
+\label{disclaimer_8c}\index{src/gamestates/disclaimer.\+c@{src/gamestates/disclaimer.\+c}}
 }
 
 
 Disclaimer about early release preview.  
 
 
-{\ttfamily \#include $<$stdio.\-h$>$}\\*
-{\ttfamily \#include \char`\"{}intro.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}menu.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}about.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$allegro5/allegro\+\_\+ttf.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}../utils.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}disclaimer.\+h\char`\"{}}\\*
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{disclaimer_8c_a3e5b8c8f82a03a535bd51a8580052a34}{void {\bfseries Disclaimer\-\_\-\-Draw} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{disclaimer_8c_a3e5b8c8f82a03a535bd51a8580052a34}
+\hypertarget{disclaimer_8c_a3036e0c51a44739dff725cd4abd9ce63}{void {\bfseries Gamestate\+\_\+\+Logic} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structDisclaimerResources}{Disclaimer\+Resources} $\ast$data)}\label{disclaimer_8c_a3036e0c51a44739dff725cd4abd9ce63}
 
 \item 
-\hypertarget{disclaimer_8c_a0456806a9c3c0dd97e975ffa11b87a1a}{void {\bfseries Disclaimer\-\_\-\-Load} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{disclaimer_8c_a0456806a9c3c0dd97e975ffa11b87a1a}
+\hypertarget{disclaimer_8c_ad68bfc75bea842c32f06950f79f5965f}{void {\bfseries Gamestate\+\_\+\+Draw} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structDisclaimerResources}{Disclaimer\+Resources} $\ast$data)}\label{disclaimer_8c_ad68bfc75bea842c32f06950f79f5965f}
 
 \item 
-\hypertarget{disclaimer_8c_a8bcc25a28da5dbdd6ae9bbed86ac254a}{int {\bfseries Disclaimer\-\_\-\-Keydown} (struct \hyperlink{structGame}{Game} $\ast$game, A\-L\-L\-E\-G\-R\-O\-\_\-\-E\-V\-E\-N\-T $\ast$ev)}\label{disclaimer_8c_a8bcc25a28da5dbdd6ae9bbed86ac254a}
+\hypertarget{disclaimer_8c_a8ba8335cdf74aa24c3fa73951340dbf5}{void {\bfseries Gamestate\+\_\+\+Start} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structDisclaimerResources}{Disclaimer\+Resources} $\ast$data)}\label{disclaimer_8c_a8ba8335cdf74aa24c3fa73951340dbf5}
 
 \item 
-\hypertarget{disclaimer_8c_aed1a9f1f5d1e3f0a4fb19c6d3099c4bd}{void {\bfseries Disclaimer\-\_\-\-Preload} (struct \hyperlink{structGame}{Game} $\ast$game, void($\ast$progress)(struct \hyperlink{structGame}{Game} $\ast$, float))}\label{disclaimer_8c_aed1a9f1f5d1e3f0a4fb19c6d3099c4bd}
+\hypertarget{disclaimer_8c_adc8b05063fbd4744bd02f3842f51cb8f}{void {\bfseries Gamestate\+\_\+\+Process\+Event} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structDisclaimerResources}{Disclaimer\+Resources} $\ast$data, A\+L\+L\+E\+G\+R\+O\+\_\+\+E\+V\+E\+N\+T $\ast$ev)}\label{disclaimer_8c_adc8b05063fbd4744bd02f3842f51cb8f}
 
 \item 
-\hypertarget{disclaimer_8c_a755e330808ff62c4c02f1a2365c0367d}{void {\bfseries Disclaimer\-\_\-\-Unload} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{disclaimer_8c_a755e330808ff62c4c02f1a2365c0367d}
+\hypertarget{disclaimer_8c_af758fae038c76d6b12bdff0116ba2748}{void $\ast$ {\bfseries Gamestate\+\_\+\+Load} (struct \hyperlink{structGame}{Game} $\ast$game, void($\ast$progress)(struct \hyperlink{structGame}{Game} $\ast$))}\label{disclaimer_8c_af758fae038c76d6b12bdff0116ba2748}
+
+\item 
+\hypertarget{disclaimer_8c_a7de839146ba2a51ef93cf9d698d5be00}{void {\bfseries Gamestate\+\_\+\+Stop} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structDisclaimerResources}{Disclaimer\+Resources} $\ast$data)}\label{disclaimer_8c_a7de839146ba2a51ef93cf9d698d5be00}
+
+\item 
+\hypertarget{disclaimer_8c_a2109fb9bfae21d5f41bc045c28d14e9b}{void {\bfseries Gamestate\+\_\+\+Unload} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structDisclaimerResources}{Disclaimer\+Resources} $\ast$data)}\label{disclaimer_8c_a2109fb9bfae21d5f41bc045c28d14e9b}
+
+\item 
+\hypertarget{disclaimer_8c_a799891be1697a25fdd0800b00b66c525}{void {\bfseries Gamestate\+\_\+\+Reload} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structDisclaimerResources}{Disclaimer\+Resources} $\ast$data)}\label{disclaimer_8c_a799891be1697a25fdd0800b00b66c525}
+
+\item 
+\hypertarget{disclaimer_8c_a76b7f14fd61deaf4b45f69ec0adf2615}{void {\bfseries Gamestate\+\_\+\+Resume} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structDisclaimerResources}{Disclaimer\+Resources} $\ast$data)}\label{disclaimer_8c_a76b7f14fd61deaf4b45f69ec0adf2615}
+
+\item 
+\hypertarget{disclaimer_8c_ae9b2ebe73a418630b0e8e7f7605ae86a}{void {\bfseries Gamestate\+\_\+\+Pause} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structDisclaimerResources}{Disclaimer\+Resources} $\ast$data)}\label{disclaimer_8c_ae9b2ebe73a418630b0e8e7f7605ae86a}
+
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{disclaimer_8c_aa41ca88b3d39cbe39bc28897ee08a66f}{int {\bfseries Gamestate\+\_\+\+Progress\+Count} = 2}\label{disclaimer_8c_aa41ca88b3d39cbe39bc28897ee08a66f}
 
 \end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 Disclaimer about early release preview. 
+

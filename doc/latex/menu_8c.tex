@@ -1,46 +1,64 @@
 \hypertarget{menu_8c}{\section{src/gamestates/menu.c File Reference}
-\label{menu_8c}\index{src/gamestates/menu.\-c@{src/gamestates/menu.\-c}}
+\label{menu_8c}\index{src/gamestates/menu.\+c@{src/gamestates/menu.\+c}}
 }
 
 
-Main \hyperlink{structMenu}{Menu} view.  
+Main Menu view.  
 
 
-{\ttfamily \#include $<$stdio.\-h$>$}\\*
-{\ttfamily \#include $<$math.\-h$>$}\\*
-{\ttfamily \#include \char`\"{}../config.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}menu.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$math.\+h$>$}\\*
+{\ttfamily \#include $<$allegro5/allegro\+\_\+ttf.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}../config.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../utils.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}menu.\+h\char`\"{}}\\*
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{menu_8c_a84404cbdc71bc4b6f40963f5c90bbeac}{void {\bfseries Draw\-Menu\-State} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{menu_8c_a84404cbdc71bc4b6f40963f5c90bbeac}
+\hypertarget{menu_8c_a1fe74a9fb7939b223264fca65c42a991}{void {\bfseries Draw\+Menu\+State} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structMenuResources}{Menu\+Resources} $\ast$data)}\label{menu_8c_a1fe74a9fb7939b223264fca65c42a991}
 
 \item 
-\hypertarget{menu_8c_a4dd8f79221f52b8c898410f4508f203f}{void {\bfseries Menu\-\_\-\-Draw} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{menu_8c_a4dd8f79221f52b8c898410f4508f203f}
+\hypertarget{menu_8c_a4f0d653ae5b56221a3ba04342bb5be20}{void {\bfseries Gamestate\+\_\+\+Draw} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structMenuResources}{Menu\+Resources} $\ast$data)}\label{menu_8c_a4f0d653ae5b56221a3ba04342bb5be20}
 
 \item 
-\hypertarget{menu_8c_a103af02ebf0d63aefe6b382acee271bb}{void {\bfseries Menu\-\_\-\-Logic} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{menu_8c_a103af02ebf0d63aefe6b382acee271bb}
+\hypertarget{menu_8c_a1d89141bedb6d67dd1b128ccae2abe0f}{void {\bfseries Gamestate\+\_\+\+Logic} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structMenuResources}{Menu\+Resources} $\ast$data)}\label{menu_8c_a1d89141bedb6d67dd1b128ccae2abe0f}
 
 \item 
-\hypertarget{menu_8c_a3ce2285ea0fad7b1024b2df0bd356c96}{void {\bfseries Menu\-\_\-\-Preload} (struct \hyperlink{structGame}{Game} $\ast$game, void($\ast$progress)(struct \hyperlink{structGame}{Game} $\ast$, float))}\label{menu_8c_a3ce2285ea0fad7b1024b2df0bd356c96}
+\hypertarget{menu_8c_af758fae038c76d6b12bdff0116ba2748}{void $\ast$ {\bfseries Gamestate\+\_\+\+Load} (struct \hyperlink{structGame}{Game} $\ast$game, void($\ast$progress)(struct \hyperlink{structGame}{Game} $\ast$))}\label{menu_8c_af758fae038c76d6b12bdff0116ba2748}
 
 \item 
-\hypertarget{menu_8c_acd524ce5084251e3d43a49d4ec4912a1}{void {\bfseries Menu\-\_\-\-Stop} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{menu_8c_acd524ce5084251e3d43a49d4ec4912a1}
+\hypertarget{menu_8c_a8c6eab59295e42a9fb27a47185c4e701}{void {\bfseries Gamestate\+\_\+\+Stop} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structMenuResources}{Menu\+Resources} $\ast$data)}\label{menu_8c_a8c6eab59295e42a9fb27a47185c4e701}
 
 \item 
-\hypertarget{menu_8c_ae6c58829e419e50c101726cb7c6217f7}{void {\bfseries Change\-Menu\-State} (struct \hyperlink{structGame}{Game} $\ast$game, enum \hyperlink{main_8h_a5b988954c565e5ff444d61085e367fae}{menustate\-\_\-enum} state)}\label{menu_8c_ae6c58829e419e50c101726cb7c6217f7}
+\hypertarget{menu_8c_a5a43b97920a65664476a77220ea3fa6f}{void {\bfseries Change\+Menu\+State} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structMenuResources}{Menu\+Resources} $\ast$data, enum \hyperlink{menu_8h_a5b988954c565e5ff444d61085e367fae}{menustate\+\_\+enum} state)}\label{menu_8c_a5a43b97920a65664476a77220ea3fa6f}
 
 \item 
-\hypertarget{menu_8c_a16811d0f9a098c585d43d772a9521550}{void {\bfseries Menu\-\_\-\-Unload} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{menu_8c_a16811d0f9a098c585d43d772a9521550}
+\hypertarget{menu_8c_add184274f21dcb6bab4db7d49a2af34b}{void {\bfseries Gamestate\+\_\+\+Unload} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structMenuResources}{Menu\+Resources} $\ast$data)}\label{menu_8c_add184274f21dcb6bab4db7d49a2af34b}
 
 \item 
-\hypertarget{menu_8c_a529806aa6450f7ed33306fe318221dac}{void {\bfseries Menu\-\_\-\-Load} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{menu_8c_a529806aa6450f7ed33306fe318221dac}
+\hypertarget{menu_8c_a6b9ec44921d3893bf493c0f498301615}{void {\bfseries Gamestate\+\_\+\+Start} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structMenuResources}{Menu\+Resources} $\ast$data)}\label{menu_8c_a6b9ec44921d3893bf493c0f498301615}
 
 \item 
-\hypertarget{menu_8c_aa980de7912e052c74aedc1a64d66ae1f}{int {\bfseries Menu\-\_\-\-Keydown} (struct \hyperlink{structGame}{Game} $\ast$game, A\-L\-L\-E\-G\-R\-O\-\_\-\-E\-V\-E\-N\-T $\ast$ev)}\label{menu_8c_aa980de7912e052c74aedc1a64d66ae1f}
+\hypertarget{menu_8c_a0443b16ef1cea036195a9cbf62ddf32f}{void {\bfseries Gamestate\+\_\+\+Process\+Event} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structMenuResources}{Menu\+Resources} $\ast$data, A\+L\+L\+E\+G\+R\+O\+\_\+\+E\+V\+E\+N\+T $\ast$ev)}\label{menu_8c_a0443b16ef1cea036195a9cbf62ddf32f}
+
+\item 
+\hypertarget{menu_8c_a3d6f01b6e1d07b7022c641bdbbb61b2d}{void {\bfseries Gamestate\+\_\+\+Pause} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structMenuResources}{Menu\+Resources} $\ast$data)}\label{menu_8c_a3d6f01b6e1d07b7022c641bdbbb61b2d}
+
+\item 
+\hypertarget{menu_8c_a9230e9443c5dc003e4af7e448d3d2a7f}{void {\bfseries Gamestate\+\_\+\+Resume} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structMenuResources}{Menu\+Resources} $\ast$data)}\label{menu_8c_a9230e9443c5dc003e4af7e448d3d2a7f}
+
+\item 
+\hypertarget{menu_8c_a2a242f8c7df5b4bcf3d69430a5b2a26b}{void {\bfseries Gamestate\+\_\+\+Reload} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structMenuResources}{Menu\+Resources} $\ast$data)}\label{menu_8c_a2a242f8c7df5b4bcf3d69430a5b2a26b}
+
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{menu_8c_aa41ca88b3d39cbe39bc28897ee08a66f}{int {\bfseries Gamestate\+\_\+\+Progress\+Count} = 24}\label{menu_8c_aa41ca88b3d39cbe39bc28897ee08a66f}
 
 \end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-Main \hyperlink{structMenu}{Menu} view. 
+Main Menu view. 
+

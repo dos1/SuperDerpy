@@ -1,5 +1,5 @@
-/*! \file allegro_utils.c
- *  \brief Helper functions for Allegro.
+/*! \file utils.c
+ *  \brief Helper functions.
  */
 /*
  * Copyright (c) Sebastian Krzyszkowiak <dos@dosowisko.net>

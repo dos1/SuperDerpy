@@ -1,57 +1,60 @@
 \hypertarget{dodger_8c}{\section{src/levels/modules/dodger.c File Reference}
-\label{dodger_8c}\index{src/levels/modules/dodger.\-c@{src/levels/modules/dodger.\-c}}
+\label{dodger_8c}\index{src/levels/modules/dodger.\+c@{src/levels/modules/dodger.\+c}}
 }
 
 
-\hyperlink{structDodger}{Dodger} \hyperlink{structLevel}{Level} module code.  
+\hyperlink{structDodger}{Dodger} Level module code.  
 
 
-{\ttfamily \#include $<$stdio.\-h$>$}\\*
-{\ttfamily \#include $<$math.\-h$>$}\\*
-{\ttfamily \#include \char`\"{}../../gamestates/level.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}../actions.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}dodger.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}dodger/actions.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$math.\+h$>$}\\*
+{\ttfamily \#include $<$allegro5/allegro\+\_\+primitives.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}../../gamestates/level.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../../utils.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../actions.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}dodger.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}dodger/actions.\+h\char`\"{}}\\*
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{dodger_8c_a10a120dc1dee6119a0d97cc822b5d78f}{void {\bfseries Dodger\-\_\-\-Logic} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{dodger_8c_a10a120dc1dee6119a0d97cc822b5d78f}
+\hypertarget{dodger_8c_a6ac2de7b97142420edef369789e4bae4}{void {\bfseries Dodger\+\_\+\+Logic} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structDodger}{Dodger} $\ast$data)}\label{dodger_8c_a6ac2de7b97142420edef369789e4bae4}
 
 \item 
-\hypertarget{dodger_8c_a05218b304f666e0819b856a9bfa041e9}{void {\bfseries Dodger\-\_\-\-Draw} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{dodger_8c_a05218b304f666e0819b856a9bfa041e9}
+\hypertarget{dodger_8c_afe00e79d1b157003e6472e8756a161ad}{void {\bfseries Dodger\+\_\+\+Draw} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structDodger}{Dodger} $\ast$data)}\label{dodger_8c_afe00e79d1b157003e6472e8756a161ad}
 
 \item 
-\hypertarget{dodger_8c_a620daf3fab76e61c7b9de82a75eb4612}{void {\bfseries Dodger\-\_\-\-Load} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{dodger_8c_a620daf3fab76e61c7b9de82a75eb4612}
+\hypertarget{dodger_8c_aabc6237677cf6d4c704e82ade3885e0b}{struct \hyperlink{structDodger}{Dodger} $\ast$ {\bfseries Dodger\+\_\+\+Load} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structCharacter}{Character} $\ast$character)}\label{dodger_8c_aabc6237677cf6d4c704e82ade3885e0b}
 
 \item 
-\hypertarget{dodger_8c_a8e49d2c349ec65655957a72d1ce9143e}{void {\bfseries Dodger\-\_\-\-Keydown} (struct \hyperlink{structGame}{Game} $\ast$game, A\-L\-L\-E\-G\-R\-O\-\_\-\-E\-V\-E\-N\-T $\ast$ev)}\label{dodger_8c_a8e49d2c349ec65655957a72d1ce9143e}
+\hypertarget{dodger_8c_aa9f4163c57d951d27557b65636ddf7d6}{void {\bfseries Dodger\+\_\+\+Process\+Event} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structDodger}{Dodger} $\ast$data, A\+L\+L\+E\+G\+R\+O\+\_\+\+E\+V\+E\+N\+T $\ast$ev)}\label{dodger_8c_aa9f4163c57d951d27557b65636ddf7d6}
 
 \item 
-\hypertarget{dodger_8c_aa7cc0bbf416ae2254f42ce2b1e656015}{void {\bfseries Dodger\-\_\-\-Process\-Event} (struct \hyperlink{structGame}{Game} $\ast$game, A\-L\-L\-E\-G\-R\-O\-\_\-\-E\-V\-E\-N\-T $\ast$ev)}\label{dodger_8c_aa7cc0bbf416ae2254f42ce2b1e656015}
+\hypertarget{dodger_8c_a20ae14a119fe66ec2bc6e67adabd306a}{int {\bfseries Dodger\+\_\+\+Preload\+Steps} (void)}\label{dodger_8c_a20ae14a119fe66ec2bc6e67adabd306a}
 
 \item 
-\hypertarget{dodger_8c_a76c65a6c6a8fb9d2f0b9a6998f412216}{int {\bfseries Dodger\-\_\-\-Preload\-Steps} ()}\label{dodger_8c_a76c65a6c6a8fb9d2f0b9a6998f412216}
+\hypertarget{dodger_8c_a3276c643d22b784b863e683369b6dcf7}{void {\bfseries Dodger\+\_\+\+Preload\+Bitmaps} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structDodger}{Dodger} $\ast$data)}\label{dodger_8c_a3276c643d22b784b863e683369b6dcf7}
 
 \item 
-\hypertarget{dodger_8c_a8c0b6503bc1fae773bbfb7b4116c8c8c}{void {\bfseries Dodger\-\_\-\-Preload\-Bitmaps} (struct \hyperlink{structGame}{Game} $\ast$game, void($\ast$progress)(struct \hyperlink{structGame}{Game} $\ast$, float))}\label{dodger_8c_a8c0b6503bc1fae773bbfb7b4116c8c8c}
+\hypertarget{dodger_8c_abfb7e642b4af16ffc0f3af5c666e2f93}{void {\bfseries Dodger\+\_\+\+Unload\+Bitmaps} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structDodger}{Dodger} $\ast$data)}\label{dodger_8c_abfb7e642b4af16ffc0f3af5c666e2f93}
 
 \item 
-\hypertarget{dodger_8c_a2410b3fd5c782d04bff0e61673c69dd4}{void {\bfseries Dodger\-\_\-\-Preload} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{dodger_8c_a2410b3fd5c782d04bff0e61673c69dd4}
+\hypertarget{dodger_8c_a9d34cd8d827b8b6fd6ba7cdb6f6311ea}{void {\bfseries Dodger\+\_\+\+Unload} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structDodger}{Dodger} $\ast$data)}\label{dodger_8c_a9d34cd8d827b8b6fd6ba7cdb6f6311ea}
 
 \item 
-\hypertarget{dodger_8c_a0f7188cc1ccd3158b39c7e6d1b9affeb}{void {\bfseries Dodger\-\_\-\-Unload\-Bitmaps} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{dodger_8c_a0f7188cc1ccd3158b39c7e6d1b9affeb}
+\hypertarget{dodger_8c_ad92fd20ee9c90e898a16a22deeb65be2}{void {\bfseries Dodger\+\_\+\+Resume} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structDodger}{Dodger} $\ast$data)}\label{dodger_8c_ad92fd20ee9c90e898a16a22deeb65be2}
 
 \item 
-\hypertarget{dodger_8c_a6eb766eaa9229fd5453229208659ef95}{void {\bfseries Dodger\-\_\-\-Unload} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{dodger_8c_a6eb766eaa9229fd5453229208659ef95}
+\hypertarget{dodger_8c_a2c7d5d0251af4cfdfb130edfafc88cb8}{void {\bfseries Dodger\+\_\+\+Pause} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structDodger}{Dodger} $\ast$data)}\label{dodger_8c_a2c7d5d0251af4cfdfb130edfafc88cb8}
 
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
 \item 
-\hypertarget{dodger_8c_a17a09414ab657ce2ebbc4c60a7c88683}{void {\bfseries Dodger\-\_\-\-Resume} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{dodger_8c_a17a09414ab657ce2ebbc4c60a7c88683}
-
-\item 
-\hypertarget{dodger_8c_a31782264f846d78a8211eefb92880d8f}{void {\bfseries Dodger\-\_\-\-Pause} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{dodger_8c_a31782264f846d78a8211eefb92880d8f}
+\hypertarget{dodger_8c_a33fdb890ec4bb7daada06f0aecea3ff8}{int {\bfseries Dodger\+\_\+\+Progress\+Count} = 0}\label{dodger_8c_a33fdb890ec4bb7daada06f0aecea3ff8}
 
 \end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-\hyperlink{structDodger}{Dodger} \hyperlink{structLevel}{Level} module code. 
+\hyperlink{structDodger}{Dodger} Level module code. 
+

@@ -1,0 +1,7 @@
+var searchData=
+[
+  ['deinitconfig',['DeinitConfig',['../config_8c.html#a1dddbfd2c817b3c06dfa269be587aa8e',1,'DeinitConfig(struct Game *game):&#160;config.c'],['../config_8h.html#a1dddbfd2c817b3c06dfa269be587aa8e',1,'DeinitConfig(struct Game *game):&#160;config.c']]],
+  ['drawhorizontalgradientrect',['DrawHorizontalGradientRect',['../utils_8c.html#ae047bd348860c608b81ac543c7927213',1,'DrawHorizontalGradientRect(float x, float y, float w, float h, ALLEGRO_COLOR left, ALLEGRO_COLOR right):&#160;utils.c'],['../utils_8h.html#ae047bd348860c608b81ac543c7927213',1,'DrawHorizontalGradientRect(float x, float y, float w, float h, ALLEGRO_COLOR left, ALLEGRO_COLOR right):&#160;utils.c']]],
+  ['drawtextwithshadow',['DrawTextWithShadow',['../utils_8c.html#afe4abf85153c9b206d2254e4868905bb',1,'DrawTextWithShadow(ALLEGRO_FONT *font, ALLEGRO_COLOR color, float x, float y, int flags, char const *text):&#160;utils.c'],['../utils_8h.html#afe4abf85153c9b206d2254e4868905bb',1,'DrawTextWithShadow(ALLEGRO_FONT *font, ALLEGRO_COLOR color, float x, float y, int flags, char const *text):&#160;utils.c']]],
+  ['drawverticalgradientrect',['DrawVerticalGradientRect',['../utils_8c.html#a46fdfd3edf635078a2c1c3b67f2f22de',1,'DrawVerticalGradientRect(float x, float y, float w, float h, ALLEGRO_COLOR top, ALLEGRO_COLOR bottom):&#160;utils.c'],['../utils_8h.html#a46fdfd3edf635078a2c1c3b67f2f22de',1,'DrawVerticalGradientRect(float x, float y, float w, float h, ALLEGRO_COLOR top, ALLEGRO_COLOR bottom):&#160;utils.c']]]
+];

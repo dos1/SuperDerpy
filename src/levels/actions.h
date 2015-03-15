@@ -1,4 +1,4 @@
-/*! \file actions.h
+/*! \file levels/actions.h
  *  \brief Header file with Level actions for Timeline Manager.
  */
 /*

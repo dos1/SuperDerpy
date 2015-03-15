@@ -1,0 +1,73 @@
+\hypertarget{dosowisko_8c}{\section{src/gamestates/dosowisko.c File Reference}
+\label{dosowisko_8c}\index{src/gamestates/dosowisko.\+c@{src/gamestates/dosowisko.\+c}}
+}
+
+
+Init animation with dosowisko.\+net logo.  
+
+
+{\ttfamily \#include $<$allegro5/allegro\+\_\+ttf.\+h$>$}\\*
+{\ttfamily \#include $<$allegro5/allegro\+\_\+primitives.\+h$>$}\\*
+{\ttfamily \#include $<$math.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}../utils.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../timeline.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}dosowisko.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{dosowisko_8c_a2b55190c74aadd3e48b3b094f3d117f5}{bool \hyperlink{dosowisko_8c_a2b55190c74aadd3e48b3b094f3d117f5}{Fade\+In} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structTM__Action}{T\+M\+\_\+\+Action} $\ast$action, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{T\+M\+\_\+\+Action\+State} state)}\label{dosowisko_8c_a2b55190c74aadd3e48b3b094f3d117f5}
+
+\begin{DoxyCompactList}\small\item\em Fade-\/in screen. \end{DoxyCompactList}\item 
+\hypertarget{dosowisko_8c_a54e1fe675a65e73e07084aeedcca2b59}{bool \hyperlink{dosowisko_8c_a54e1fe675a65e73e07084aeedcca2b59}{Fade\+Out} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structTM__Action}{T\+M\+\_\+\+Action} $\ast$action, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{T\+M\+\_\+\+Action\+State} state)}\label{dosowisko_8c_a54e1fe675a65e73e07084aeedcca2b59}
+
+\begin{DoxyCompactList}\small\item\em Fade-\/out screen. \end{DoxyCompactList}\item 
+\hypertarget{dosowisko_8c_afa0ff123ce6cf5898cc769bb5779efc8}{bool {\bfseries End} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structTM__Action}{T\+M\+\_\+\+Action} $\ast$action, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{T\+M\+\_\+\+Action\+State} state)}\label{dosowisko_8c_afa0ff123ce6cf5898cc769bb5779efc8}
+
+\item 
+\hypertarget{dosowisko_8c_a8e162ab32328d68dae52546141d60053}{bool {\bfseries Play} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structTM__Action}{T\+M\+\_\+\+Action} $\ast$action, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{T\+M\+\_\+\+Action\+State} state)}\label{dosowisko_8c_a8e162ab32328d68dae52546141d60053}
+
+\item 
+\hypertarget{dosowisko_8c_aef291579dde56fbd64a2b5f24cee392e}{bool {\bfseries Type} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structTM__Action}{T\+M\+\_\+\+Action} $\ast$action, enum \hyperlink{timeline_8h_a76cf4bbb9006628ae8bcd1a4f3afdf87}{T\+M\+\_\+\+Action\+State} state)}\label{dosowisko_8c_aef291579dde56fbd64a2b5f24cee392e}
+
+\item 
+\hypertarget{dosowisko_8c_a0829c0fe69228dd2863a972a8568e529}{void {\bfseries Gamestate\+\_\+\+Logic} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structdosowiskoResources}{dosowisko\+Resources} $\ast$data)}\label{dosowisko_8c_a0829c0fe69228dd2863a972a8568e529}
+
+\item 
+\hypertarget{dosowisko_8c_afbf6d725f292a39b51c3dd19bfb9a563}{void {\bfseries Gamestate\+\_\+\+Draw} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structdosowiskoResources}{dosowisko\+Resources} $\ast$data)}\label{dosowisko_8c_afbf6d725f292a39b51c3dd19bfb9a563}
+
+\item 
+\hypertarget{dosowisko_8c_a9f9c70ab257fb3c0eff0dbdcf564c5e5}{void {\bfseries Gamestate\+\_\+\+Start} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structdosowiskoResources}{dosowisko\+Resources} $\ast$data)}\label{dosowisko_8c_a9f9c70ab257fb3c0eff0dbdcf564c5e5}
+
+\item 
+\hypertarget{dosowisko_8c_a3e90ec33ba4e0217c1d85b6f6ef52143}{void {\bfseries Gamestate\+\_\+\+Process\+Event} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structdosowiskoResources}{dosowisko\+Resources} $\ast$data, A\+L\+L\+E\+G\+R\+O\+\_\+\+E\+V\+E\+N\+T $\ast$ev)}\label{dosowisko_8c_a3e90ec33ba4e0217c1d85b6f6ef52143}
+
+\item 
+\hypertarget{dosowisko_8c_af758fae038c76d6b12bdff0116ba2748}{void $\ast$ {\bfseries Gamestate\+\_\+\+Load} (struct \hyperlink{structGame}{Game} $\ast$game, void($\ast$progress)(struct \hyperlink{structGame}{Game} $\ast$))}\label{dosowisko_8c_af758fae038c76d6b12bdff0116ba2748}
+
+\item 
+\hypertarget{dosowisko_8c_a74013990701b2ea49df7184010667d7a}{void {\bfseries Gamestate\+\_\+\+Stop} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structdosowiskoResources}{dosowisko\+Resources} $\ast$data)}\label{dosowisko_8c_a74013990701b2ea49df7184010667d7a}
+
+\item 
+\hypertarget{dosowisko_8c_a60e89e8f989aaf15a786c252bba51228}{void {\bfseries Gamestate\+\_\+\+Unload} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structdosowiskoResources}{dosowisko\+Resources} $\ast$data)}\label{dosowisko_8c_a60e89e8f989aaf15a786c252bba51228}
+
+\item 
+\hypertarget{dosowisko_8c_a20e58af84f7671056b91111d18746948}{void {\bfseries Gamestate\+\_\+\+Reload} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structdosowiskoResources}{dosowisko\+Resources} $\ast$data)}\label{dosowisko_8c_a20e58af84f7671056b91111d18746948}
+
+\item 
+\hypertarget{dosowisko_8c_a21555b4269ef3acf86b16305ea63267e}{void {\bfseries Gamestate\+\_\+\+Resume} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structdosowiskoResources}{dosowisko\+Resources} $\ast$data)}\label{dosowisko_8c_a21555b4269ef3acf86b16305ea63267e}
+
+\item 
+\hypertarget{dosowisko_8c_ae974d10b523bc24a22df59127d10f7e4}{void {\bfseries Gamestate\+\_\+\+Pause} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structdosowiskoResources}{dosowisko\+Resources} $\ast$data)}\label{dosowisko_8c_ae974d10b523bc24a22df59127d10f7e4}
+
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{dosowisko_8c_aa41ca88b3d39cbe39bc28897ee08a66f}{int {\bfseries Gamestate\+\_\+\+Progress\+Count} = 3}\label{dosowisko_8c_aa41ca88b3d39cbe39bc28897ee08a66f}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Init animation with dosowisko.\+net logo. 
+

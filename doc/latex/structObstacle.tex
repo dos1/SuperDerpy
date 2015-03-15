@@ -8,12 +8,12 @@ Structure representing obstacles and power-\/ups flying through the level.
 
 
 
-{\ttfamily \#include $<$main.\-h$>$}
+{\ttfamily \#include $<$dodger.\+h$>$}
 
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$$\ast$ \hyperlink{structObstacle_a1f35f88fe8f6d0664da082f82ae4b774}{bitmap}
+A\+L\+L\+E\+G\+R\+O\+\_\+\+B\+I\+T\+M\+A\+P $\ast$$\ast$ \hyperlink{structObstacle_a1f35f88fe8f6d0664da082f82ae4b774}{bitmap}
 \item 
 float \hyperlink{structObstacle_ad9cd25e0032f6692a4f93a057ccdfd85}{x}
 \item 
@@ -35,9 +35,9 @@ int \hyperlink{structObstacle_a5228dff4dc773a66043e822fb4d6d00c}{pos}
 \item 
 int \hyperlink{structObstacle_a862f4038bd63057d91406720bb586a9c}{blanks}
 \item 
-float \hyperlink{structObstacle_afd620c4c3496cd6f84184dcda4ca7611}{tmp\-\_\-pos}
+float \hyperlink{structObstacle_afd620c4c3496cd6f84184dcda4ca7611}{tmp\+\_\+pos}
 \item 
-float \hyperlink{structObstacle_a96a13e4704e4643291989193a112366a}{anim\-\_\-speed}
+float \hyperlink{structObstacle_a96a13e4704e4643291989193a112366a}{anim\+\_\+speed}
 \item 
 void($\ast$ \hyperlink{structObstacle_a21b4ff0edaa2dc5394ff7a6328e48358}{callback} )(struct \hyperlink{structGame}{Game} $\ast$, struct \hyperlink{structObstacle}{Obstacle} $\ast$)
 \item 
@@ -55,57 +55,57 @@ Structure representing obstacles and power-\/ups flying through the level.
 \subsection{Member Data Documentation}
 \hypertarget{structObstacle_a99d85ef4e92f7e899b49ac85b2e1dbdc}{\index{Obstacle@{Obstacle}!angle@{angle}}
 \index{angle@{angle}!Obstacle@{Obstacle}}
-\subsubsection[{angle}]{\setlength{\rightskip}{0pt plus 5cm}float Obstacle\-::angle}}\label{structObstacle_a99d85ef4e92f7e899b49ac85b2e1dbdc}
-Angle of bitmap rotation in radians. \hypertarget{structObstacle_a96a13e4704e4643291989193a112366a}{\index{Obstacle@{Obstacle}!anim\-\_\-speed@{anim\-\_\-speed}}
-\index{anim\-\_\-speed@{anim\-\_\-speed}!Obstacle@{Obstacle}}
-\subsubsection[{anim\-\_\-speed}]{\setlength{\rightskip}{0pt plus 5cm}float Obstacle\-::anim\-\_\-speed}}\label{structObstacle_a96a13e4704e4643291989193a112366a}
+\subsubsection[{angle}]{\setlength{\rightskip}{0pt plus 5cm}float Obstacle\+::angle}}\label{structObstacle_a99d85ef4e92f7e899b49ac85b2e1dbdc}
+Angle of bitmap rotation in radians. \hypertarget{structObstacle_a96a13e4704e4643291989193a112366a}{\index{Obstacle@{Obstacle}!anim\+\_\+speed@{anim\+\_\+speed}}
+\index{anim\+\_\+speed@{anim\+\_\+speed}!Obstacle@{Obstacle}}
+\subsubsection[{anim\+\_\+speed}]{\setlength{\rightskip}{0pt plus 5cm}float Obstacle\+::anim\+\_\+speed}}\label{structObstacle_a96a13e4704e4643291989193a112366a}
 Speed of spritesheet animation. \hypertarget{structObstacle_a1f35f88fe8f6d0664da082f82ae4b774}{\index{Obstacle@{Obstacle}!bitmap@{bitmap}}
 \index{bitmap@{bitmap}!Obstacle@{Obstacle}}
-\subsubsection[{bitmap}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$$\ast$ Obstacle\-::bitmap}}\label{structObstacle_a1f35f88fe8f6d0664da082f82ae4b774}
+\subsubsection[{bitmap}]{\setlength{\rightskip}{0pt plus 5cm}A\+L\+L\+E\+G\+R\+O\+\_\+\+B\+I\+T\+M\+A\+P$\ast$$\ast$ Obstacle\+::bitmap}}\label{structObstacle_a1f35f88fe8f6d0664da082f82ae4b774}
 Pointer to bitmap used by obstacle. \hypertarget{structObstacle_a862f4038bd63057d91406720bb586a9c}{\index{Obstacle@{Obstacle}!blanks@{blanks}}
 \index{blanks@{blanks}!Obstacle@{Obstacle}}
-\subsubsection[{blanks}]{\setlength{\rightskip}{0pt plus 5cm}int Obstacle\-::blanks}}\label{structObstacle_a862f4038bd63057d91406720bb586a9c}
+\subsubsection[{blanks}]{\setlength{\rightskip}{0pt plus 5cm}int Obstacle\+::blanks}}\label{structObstacle_a862f4038bd63057d91406720bb586a9c}
 Number of blank frames at the end of the spritesheet. \hypertarget{structObstacle_a21b4ff0edaa2dc5394ff7a6328e48358}{\index{Obstacle@{Obstacle}!callback@{callback}}
 \index{callback@{callback}!Obstacle@{Obstacle}}
-\subsubsection[{callback}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ Obstacle\-::callback)(struct {\bf Game} $\ast$, struct {\bf Obstacle} $\ast$)}}\label{structObstacle_a21b4ff0edaa2dc5394ff7a6328e48358}
+\subsubsection[{callback}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ Obstacle\+::callback)(struct {\bf Game} $\ast$, struct {\bf Obstacle} $\ast$)}}\label{structObstacle_a21b4ff0edaa2dc5394ff7a6328e48358}
 Pointer to function called to update obstacle position, animate it, etc. \hypertarget{structObstacle_ad51aa07361c732a47e78c80fae2fab7c}{\index{Obstacle@{Obstacle}!cols@{cols}}
 \index{cols@{cols}!Obstacle@{Obstacle}}
-\subsubsection[{cols}]{\setlength{\rightskip}{0pt plus 5cm}int Obstacle\-::cols}}\label{structObstacle_ad51aa07361c732a47e78c80fae2fab7c}
+\subsubsection[{cols}]{\setlength{\rightskip}{0pt plus 5cm}int Obstacle\+::cols}}\label{structObstacle_ad51aa07361c732a47e78c80fae2fab7c}
 Number of columns in spritesheet. \hypertarget{structObstacle_a88728e624cc62993e2bf52aff816cdff}{\index{Obstacle@{Obstacle}!data@{data}}
 \index{data@{data}!Obstacle@{Obstacle}}
-\subsubsection[{data}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ Obstacle\-::data}}\label{structObstacle_a88728e624cc62993e2bf52aff816cdff}
+\subsubsection[{data}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ Obstacle\+::data}}\label{structObstacle_a88728e624cc62993e2bf52aff816cdff}
 Pointer passed to callback function. \hypertarget{structObstacle_ac89d025f4ad7c2f083d262c1bee4e851}{\index{Obstacle@{Obstacle}!hit@{hit}}
 \index{hit@{hit}!Obstacle@{Obstacle}}
-\subsubsection[{hit}]{\setlength{\rightskip}{0pt plus 5cm}bool Obstacle\-::hit}}\label{structObstacle_ac89d025f4ad7c2f083d262c1bee4e851}
+\subsubsection[{hit}]{\setlength{\rightskip}{0pt plus 5cm}bool Obstacle\+::hit}}\label{structObstacle_ac89d025f4ad7c2f083d262c1bee4e851}
 Indicates if this obstacle was already hit by the player or not. \hypertarget{structObstacle_aedbcf65351fa59ca9f18f6fba0287dc1}{\index{Obstacle@{Obstacle}!next@{next}}
 \index{next@{next}!Obstacle@{Obstacle}}
-\subsubsection[{next}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf Obstacle}$\ast$ Obstacle\-::next}}\label{structObstacle_aedbcf65351fa59ca9f18f6fba0287dc1}
+\subsubsection[{next}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf Obstacle}$\ast$ Obstacle\+::next}}\label{structObstacle_aedbcf65351fa59ca9f18f6fba0287dc1}
 Next obstacle on the list. \hypertarget{structObstacle_a38a164a0e4d6f6508fb65c6eff39147f}{\index{Obstacle@{Obstacle}!points@{points}}
 \index{points@{points}!Obstacle@{Obstacle}}
-\subsubsection[{points}]{\setlength{\rightskip}{0pt plus 5cm}int Obstacle\-::points}}\label{structObstacle_a38a164a0e4d6f6508fb65c6eff39147f}
-Number of points given when hit by player. Positive gives H\-P to power, negative takes it. \hypertarget{structObstacle_a5228dff4dc773a66043e822fb4d6d00c}{\index{Obstacle@{Obstacle}!pos@{pos}}
+\subsubsection[{points}]{\setlength{\rightskip}{0pt plus 5cm}int Obstacle\+::points}}\label{structObstacle_a38a164a0e4d6f6508fb65c6eff39147f}
+Number of points given when hit by player. Positive gives H\+P to power, negative takes it. \hypertarget{structObstacle_a5228dff4dc773a66043e822fb4d6d00c}{\index{Obstacle@{Obstacle}!pos@{pos}}
 \index{pos@{pos}!Obstacle@{Obstacle}}
-\subsubsection[{pos}]{\setlength{\rightskip}{0pt plus 5cm}int Obstacle\-::pos}}\label{structObstacle_a5228dff4dc773a66043e822fb4d6d00c}
+\subsubsection[{pos}]{\setlength{\rightskip}{0pt plus 5cm}int Obstacle\+::pos}}\label{structObstacle_a5228dff4dc773a66043e822fb4d6d00c}
 Current position in spritesheet. \hypertarget{structObstacle_a13bc07b730f58d5b1c3db68e8e4aca27}{\index{Obstacle@{Obstacle}!prev@{prev}}
 \index{prev@{prev}!Obstacle@{Obstacle}}
-\subsubsection[{prev}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf Obstacle}$\ast$ Obstacle\-::prev}}\label{structObstacle_a13bc07b730f58d5b1c3db68e8e4aca27}
+\subsubsection[{prev}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf Obstacle}$\ast$ Obstacle\+::prev}}\label{structObstacle_a13bc07b730f58d5b1c3db68e8e4aca27}
 Previous obstacle on the list. \hypertarget{structObstacle_aab33c9d4c0f05d02fda4e77cff7d7e72}{\index{Obstacle@{Obstacle}!rows@{rows}}
 \index{rows@{rows}!Obstacle@{Obstacle}}
-\subsubsection[{rows}]{\setlength{\rightskip}{0pt plus 5cm}int Obstacle\-::rows}}\label{structObstacle_aab33c9d4c0f05d02fda4e77cff7d7e72}
+\subsubsection[{rows}]{\setlength{\rightskip}{0pt plus 5cm}int Obstacle\+::rows}}\label{structObstacle_aab33c9d4c0f05d02fda4e77cff7d7e72}
 Number of rows in spritesheet. \hypertarget{structObstacle_a1e2b46db05325273ce0fcba3550b5b2a}{\index{Obstacle@{Obstacle}!speed@{speed}}
 \index{speed@{speed}!Obstacle@{Obstacle}}
-\subsubsection[{speed}]{\setlength{\rightskip}{0pt plus 5cm}float Obstacle\-::speed}}\label{structObstacle_a1e2b46db05325273ce0fcba3550b5b2a}
-Horizontal speed of obstracle. \hypertarget{structObstacle_afd620c4c3496cd6f84184dcda4ca7611}{\index{Obstacle@{Obstacle}!tmp\-\_\-pos@{tmp\-\_\-pos}}
-\index{tmp\-\_\-pos@{tmp\-\_\-pos}!Obstacle@{Obstacle}}
-\subsubsection[{tmp\-\_\-pos}]{\setlength{\rightskip}{0pt plus 5cm}float Obstacle\-::tmp\-\_\-pos}}\label{structObstacle_afd620c4c3496cd6f84184dcda4ca7611}
+\subsubsection[{speed}]{\setlength{\rightskip}{0pt plus 5cm}float Obstacle\+::speed}}\label{structObstacle_a1e2b46db05325273ce0fcba3550b5b2a}
+Horizontal speed of obstracle. \hypertarget{structObstacle_afd620c4c3496cd6f84184dcda4ca7611}{\index{Obstacle@{Obstacle}!tmp\+\_\+pos@{tmp\+\_\+pos}}
+\index{tmp\+\_\+pos@{tmp\+\_\+pos}!Obstacle@{Obstacle}}
+\subsubsection[{tmp\+\_\+pos}]{\setlength{\rightskip}{0pt plus 5cm}float Obstacle\+::tmp\+\_\+pos}}\label{structObstacle_afd620c4c3496cd6f84184dcda4ca7611}
 Temporary counter used to slow down spritesheet animation. \hypertarget{structObstacle_ad9cd25e0032f6692a4f93a057ccdfd85}{\index{Obstacle@{Obstacle}!x@{x}}
 \index{x@{x}!Obstacle@{Obstacle}}
-\subsubsection[{x}]{\setlength{\rightskip}{0pt plus 5cm}float Obstacle\-::x}}\label{structObstacle_ad9cd25e0032f6692a4f93a057ccdfd85}
+\subsubsection[{x}]{\setlength{\rightskip}{0pt plus 5cm}float Obstacle\+::x}}\label{structObstacle_ad9cd25e0032f6692a4f93a057ccdfd85}
 Horizontal position on the screen, in range 0-\/100. \hypertarget{structObstacle_af4b6f012014e2fa5aef193330f70fdef}{\index{Obstacle@{Obstacle}!y@{y}}
 \index{y@{y}!Obstacle@{Obstacle}}
-\subsubsection[{y}]{\setlength{\rightskip}{0pt plus 5cm}float Obstacle\-::y}}\label{structObstacle_af4b6f012014e2fa5aef193330f70fdef}
+\subsubsection[{y}]{\setlength{\rightskip}{0pt plus 5cm}float Obstacle\+::y}}\label{structObstacle_af4b6f012014e2fa5aef193330f70fdef}
 Vertical position on the screen, in range 0-\/100. 
 
-The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-src/\hyperlink{main_8h}{main.\-h}\end{DoxyCompactItemize}
+src/levels/modules/\hyperlink{dodger_8h}{dodger.\+h}\end{DoxyCompactItemize}

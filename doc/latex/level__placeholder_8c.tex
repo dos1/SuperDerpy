@@ -1,0 +1,83 @@
+\hypertarget{level__placeholder_8c}{\section{src/levels/level\+\_\+placeholder.c File Reference}
+\label{level__placeholder_8c}\index{src/levels/level\+\_\+placeholder.\+c@{src/levels/level\+\_\+placeholder.\+c}}
+}
+
+
+Level placeholder code to be included by level\+X.\+c files.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}allegro5/allegro\+\_\+ttf.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../gamestates/level.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}modules/moonwalk.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../timeline.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}actions.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../utils.\+h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{level__placeholder_8c_ae9cb9efc2593e537c3bdf2df3e7ce7ab}{\#define {\bfseries C\+O\+N\+C\+A\+T\+\_\+\+R\+E\+A\+L}(a, b)~a \#\# b}\label{level__placeholder_8c_ae9cb9efc2593e537c3bdf2df3e7ce7ab}
+
+\item 
+\hypertarget{level__placeholder_8c_ad73d344785a66a7b2f8c57e4567a5d9f}{\#define {\bfseries S\+T\+R\+I\+N\+G\+I\+Z\+E\+\_\+\+R\+E\+A\+L}(A)~\#A}\label{level__placeholder_8c_ad73d344785a66a7b2f8c57e4567a5d9f}
+
+\item 
+\hypertarget{level__placeholder_8c_a88fa737059e67b4b17ec980e5877361e}{\#define {\bfseries C\+O\+N\+C\+A\+T}(a, b)~C\+O\+N\+C\+A\+T\+\_\+\+R\+E\+A\+L(a,b)}\label{level__placeholder_8c_a88fa737059e67b4b17ec980e5877361e}
+
+\item 
+\hypertarget{level__placeholder_8c_a9301916f6c8ae438b0cf7c6769b34128}{\#define {\bfseries S\+T\+R\+I\+N\+G\+I\+Z\+E}(A)~S\+T\+R\+I\+N\+G\+I\+Z\+E\+\_\+\+R\+E\+A\+L(A)}\label{level__placeholder_8c_a9301916f6c8ae438b0cf7c6769b34128}
+
+\item 
+\hypertarget{level__placeholder_8c_aa32cba53a8db11749a61e4d794cbefff}{\#define {\bfseries Level\+X\+Resources}~C\+O\+N\+C\+A\+T(C\+O\+N\+C\+A\+T(Level,L\+E\+V\+E\+L),Resources)}\label{level__placeholder_8c_aa32cba53a8db11749a61e4d794cbefff}
+
+\item 
+\hypertarget{level__placeholder_8c_a41473c5f9c3a42dcae4e5f7039a8e3ea}{\#define {\bfseries levelx}~S\+T\+R\+I\+N\+G\+I\+Z\+E(C\+O\+N\+C\+A\+T(level,L\+E\+V\+E\+L))}\label{level__placeholder_8c_a41473c5f9c3a42dcae4e5f7039a8e3ea}
+
+\item 
+\hypertarget{level__placeholder_8c_ab45d0c30d3ef53eecbd44d851cf3c8d1}{\#define {\bfseries levelxh}~S\+T\+R\+I\+N\+G\+I\+Z\+E(C\+O\+N\+C\+A\+T(level,L\+E\+V\+E\+L).h)}\label{level__placeholder_8c_ab45d0c30d3ef53eecbd44d851cf3c8d1}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{level__placeholder_8c_af758fae038c76d6b12bdff0116ba2748}{void $\ast$ {\bfseries Gamestate\+\_\+\+Load} (struct \hyperlink{structGame}{Game} $\ast$game, void($\ast$progress)(struct \hyperlink{structGame}{Game} $\ast$))}\label{level__placeholder_8c_af758fae038c76d6b12bdff0116ba2748}
+
+\item 
+\hypertarget{level__placeholder_8c_a69c1deb8dd455c029e8596ef66f821c5}{void {\bfseries Gamestate\+\_\+\+Unload} (struct \hyperlink{structGame}{Game} $\ast$game, struct Level\+X\+Resources $\ast$data)}\label{level__placeholder_8c_a69c1deb8dd455c029e8596ef66f821c5}
+
+\item 
+\hypertarget{level__placeholder_8c_a761431b23d99b710378abe16466b1e3f}{void {\bfseries Gamestate\+\_\+\+Start} (struct \hyperlink{structGame}{Game} $\ast$game, struct Level\+X\+Resources $\ast$data)}\label{level__placeholder_8c_a761431b23d99b710378abe16466b1e3f}
+
+\item 
+\hypertarget{level__placeholder_8c_a4eba659b66b5731a339794868da128b9}{void {\bfseries Gamestate\+\_\+\+Stop} (struct \hyperlink{structGame}{Game} $\ast$game, struct Level\+X\+Resources $\ast$data)}\label{level__placeholder_8c_a4eba659b66b5731a339794868da128b9}
+
+\item 
+\hypertarget{level__placeholder_8c_a093df75fd4ec181062d9c401d2a000cb}{void {\bfseries Gamestate\+\_\+\+Draw} (struct \hyperlink{structGame}{Game} $\ast$game, struct Level\+X\+Resources $\ast$data)}\label{level__placeholder_8c_a093df75fd4ec181062d9c401d2a000cb}
+
+\item 
+\hypertarget{level__placeholder_8c_ab44acab9e65e9a6e3fb7648be81aa2ed}{void {\bfseries Gamestate\+\_\+\+Logic} (struct \hyperlink{structGame}{Game} $\ast$game, struct Level\+X\+Resources $\ast$data)}\label{level__placeholder_8c_ab44acab9e65e9a6e3fb7648be81aa2ed}
+
+\item 
+\hypertarget{level__placeholder_8c_a8a9841ffd76934800f144caffa26563b}{void {\bfseries Gamestate\+\_\+\+Process\+Event} (struct \hyperlink{structGame}{Game} $\ast$game, struct Level\+X\+Resources $\ast$data, A\+L\+L\+E\+G\+R\+O\+\_\+\+E\+V\+E\+N\+T $\ast$ev)}\label{level__placeholder_8c_a8a9841ffd76934800f144caffa26563b}
+
+\item 
+\hypertarget{level__placeholder_8c_a6d007659791615c8aee6edfd7277f1ba}{void {\bfseries Gamestate\+\_\+\+Resume} (struct \hyperlink{structGame}{Game} $\ast$game, struct Level\+X\+Resources $\ast$data)}\label{level__placeholder_8c_a6d007659791615c8aee6edfd7277f1ba}
+
+\item 
+\hypertarget{level__placeholder_8c_a22f3b022821cc3ff3c28333f03c545ca}{void {\bfseries Gamestate\+\_\+\+Pause} (struct \hyperlink{structGame}{Game} $\ast$game, struct Level\+X\+Resources $\ast$data)}\label{level__placeholder_8c_a22f3b022821cc3ff3c28333f03c545ca}
+
+\item 
+\hypertarget{level__placeholder_8c_a1fe2bd2bb34bc1391a77040354271aff}{void {\bfseries Gamestate\+\_\+\+Reload} (struct \hyperlink{structGame}{Game} $\ast$game, struct Level\+X\+Resources $\ast$data)}\label{level__placeholder_8c_a1fe2bd2bb34bc1391a77040354271aff}
+
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{level__placeholder_8c_aa41ca88b3d39cbe39bc28897ee08a66f}{int {\bfseries Gamestate\+\_\+\+Progress\+Count} = 3}\label{level__placeholder_8c_aa41ca88b3d39cbe39bc28897ee08a66f}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Level placeholder code to be included by level\+X.\+c files. 
+

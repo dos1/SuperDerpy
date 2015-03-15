@@ -1,56 +1,67 @@
 \hypertarget{level1_8c}{\section{src/levels/level1.c File Reference}
-\label{level1_8c}\index{src/levels/level1.\-c@{src/levels/level1.\-c}}
+\label{level1_8c}\index{src/levels/level1.\+c@{src/levels/level1.\+c}}
 }
 
 
-\hyperlink{structLevel}{Level} 1 code.  
+Level 1 code.  
 
 
-{\ttfamily \#include $<$stdio.\-h$>$}\\*
-{\ttfamily \#include \char`\"{}../gamestates/level.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}actions.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}modules/dodger.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}modules/dodger/actions.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}allegro5/allegro\+\_\+ttf.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../timeline.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../gamestates/level.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}actions.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../utils.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}modules/dodger.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}modules/dodger/actions.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}level1.\+h\char`\"{}}\\*
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{level1_8c_a0a5b68eedd878ffadd0703a4e364d241}{void {\bfseries Level1\-\_\-\-Load} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{level1_8c_a0a5b68eedd878ffadd0703a4e364d241}
+\hypertarget{level1_8c_acf71d08842bac67d1d44d08cf40477a1}{void {\bfseries Gamestate\+\_\+\+Start} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structLevel1Resources}{Level1\+Resources} $\ast$data)}\label{level1_8c_acf71d08842bac67d1d44d08cf40477a1}
 
 \item 
-\hypertarget{level1_8c_af35faf9a2331d8335bd6102506b6b4c6}{void {\bfseries Level1\-\_\-\-Unload} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{level1_8c_af35faf9a2331d8335bd6102506b6b4c6}
+\hypertarget{level1_8c_aca48d8c1ac76817bf38f66bca69606c1}{void {\bfseries Gamestate\+\_\+\+Reload} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structLevel1Resources}{Level1\+Resources} $\ast$data)}\label{level1_8c_aca48d8c1ac76817bf38f66bca69606c1}
 
 \item 
-\hypertarget{level1_8c_a7ae6fc2f803bef741b719994e10050c4}{void {\bfseries Level1\-\_\-\-Unload\-Bitmaps} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{level1_8c_a7ae6fc2f803bef741b719994e10050c4}
+\hypertarget{level1_8c_a5342ed26c82884f537bcf74c29114a0d}{void {\bfseries Gamestate\+\_\+\+Stop} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structLevel1Resources}{Level1\+Resources} $\ast$data)}\label{level1_8c_a5342ed26c82884f537bcf74c29114a0d}
 
 \item 
-\hypertarget{level1_8c_a1ca16cab0ea9bf3cff20f8d6e1a8edb6}{void {\bfseries Level1\-\_\-\-Preload} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{level1_8c_a1ca16cab0ea9bf3cff20f8d6e1a8edb6}
+\hypertarget{level1_8c_a02b22666cbd3eaefa60c756d0df51f25}{void {\bfseries Gamestate\+\_\+\+Unload} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structLevel1Resources}{Level1\+Resources} $\ast$data)}\label{level1_8c_a02b22666cbd3eaefa60c756d0df51f25}
 
 \item 
-\hypertarget{level1_8c_a81f65381594fd831b78455ac3bb5eba9}{int {\bfseries Level1\-\_\-\-Preload\-Steps} ()}\label{level1_8c_a81f65381594fd831b78455ac3bb5eba9}
+\hypertarget{level1_8c_aea05d5a4ac7ce2c7157e7c38dc8620e7}{void {\bfseries Gamestate\+\_\+\+Unload\+Bitmaps} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structLevel1Resources}{Level1\+Resources} $\ast$data)}\label{level1_8c_aea05d5a4ac7ce2c7157e7c38dc8620e7}
 
 \item 
-\hypertarget{level1_8c_a90611c38afe22358b11eb0337becbd1e}{void {\bfseries Level1\-\_\-\-Preload\-Bitmaps} (struct \hyperlink{structGame}{Game} $\ast$game, void($\ast$progress)(struct \hyperlink{structGame}{Game} $\ast$, float))}\label{level1_8c_a90611c38afe22358b11eb0337becbd1e}
+\hypertarget{level1_8c_afcf8a5baa30fa496b1cd70c94af1df4c}{void {\bfseries Gamestate\+\_\+\+Preload\+Bitmaps} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structLevel1Resources}{Level1\+Resources} $\ast$data)}\label{level1_8c_afcf8a5baa30fa496b1cd70c94af1df4c}
 
 \item 
-\hypertarget{level1_8c_ac4677199a3ed62eeb335fd6d7e514f79}{void {\bfseries Level1\-\_\-\-Draw} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{level1_8c_ac4677199a3ed62eeb335fd6d7e514f79}
+\hypertarget{level1_8c_a54b060a1b701d68c16a49912095b5591}{struct \hyperlink{structLevel1Resources}{Level1\+Resources} $\ast$ {\bfseries Gamestate\+\_\+\+Load} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{level1_8c_a54b060a1b701d68c16a49912095b5591}
 
 \item 
-\hypertarget{level1_8c_ab5de6a9519aec6ec2f2818fdac6c9440}{void {\bfseries Level1\-\_\-\-Logic} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{level1_8c_ab5de6a9519aec6ec2f2818fdac6c9440}
+\hypertarget{level1_8c_a4466d4e8cde0b8765821426c72bd1839}{void {\bfseries Gamestate\+\_\+\+Draw} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structLevel1Resources}{Level1\+Resources} $\ast$data)}\label{level1_8c_a4466d4e8cde0b8765821426c72bd1839}
 
 \item 
-\hypertarget{level1_8c_ab8ddc9d00b7bd525718ef650e9a44971}{void {\bfseries Level1\-\_\-\-Keydown} (struct \hyperlink{structGame}{Game} $\ast$game, A\-L\-L\-E\-G\-R\-O\-\_\-\-E\-V\-E\-N\-T $\ast$ev)}\label{level1_8c_ab8ddc9d00b7bd525718ef650e9a44971}
+\hypertarget{level1_8c_a755779f0c771f7f3abfb0e4252d70831}{void {\bfseries Gamestate\+\_\+\+Logic} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structLevel1Resources}{Level1\+Resources} $\ast$data)}\label{level1_8c_a755779f0c771f7f3abfb0e4252d70831}
 
 \item 
-\hypertarget{level1_8c_aab2dc44f8adf4092d110c69ec211b20e}{void {\bfseries Level1\-\_\-\-Process\-Event} (struct \hyperlink{structGame}{Game} $\ast$game, A\-L\-L\-E\-G\-R\-O\-\_\-\-E\-V\-E\-N\-T $\ast$ev)}\label{level1_8c_aab2dc44f8adf4092d110c69ec211b20e}
+\hypertarget{level1_8c_a6d030d925bb760a2d6041784cda7eede}{void {\bfseries Gamestate\+\_\+\+Process\+Event} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structLevel1Resources}{Level1\+Resources} $\ast$data, A\+L\+L\+E\+G\+R\+O\+\_\+\+E\+V\+E\+N\+T $\ast$ev)}\label{level1_8c_a6d030d925bb760a2d6041784cda7eede}
 
 \item 
-\hypertarget{level1_8c_acc665c4ff0bbe5147e1af337ff02f815}{void {\bfseries Level1\-\_\-\-Resume} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{level1_8c_acc665c4ff0bbe5147e1af337ff02f815}
+\hypertarget{level1_8c_ace64642e355b7aaf8181cdedc8c5d8a7}{void {\bfseries Gamestate\+\_\+\+Resume} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structLevel1Resources}{Level1\+Resources} $\ast$data)}\label{level1_8c_ace64642e355b7aaf8181cdedc8c5d8a7}
 
 \item 
-\hypertarget{level1_8c_a1e765d333eff2d72ac2e190991153a9b}{void {\bfseries Level1\-\_\-\-Pause} (struct \hyperlink{structGame}{Game} $\ast$game)}\label{level1_8c_a1e765d333eff2d72ac2e190991153a9b}
+\hypertarget{level1_8c_ab92ab595152dfc1b76cab199a3709496}{void {\bfseries Gamestate\+\_\+\+Pause} (struct \hyperlink{structGame}{Game} $\ast$game, struct \hyperlink{structLevel1Resources}{Level1\+Resources} $\ast$data)}\label{level1_8c_ab92ab595152dfc1b76cab199a3709496}
+
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{level1_8c_aa41ca88b3d39cbe39bc28897ee08a66f}{int {\bfseries Gamestate\+\_\+\+Progress\+Count} = 2}\label{level1_8c_aa41ca88b3d39cbe39bc28897ee08a66f}
 
 \end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-\hyperlink{structLevel}{Level} 1 code. 
+Level 1 code. 
+

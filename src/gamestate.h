@@ -1,5 +1,5 @@
-/*! \file allegro_utils.h
- *  \brief Headers of helper functions for Allegro.
+/*! \file gamestate.h
+ *  \brief Gamestate management.
  */
 /*
  * Copyright (c) Sebastian Krzyszkowiak <dos@dosowisko.net>
