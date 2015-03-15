@@ -136,10 +136,10 @@ void Gamestate_Start(struct Game *game, struct dosowiskoResources* data) {
 	TM_AddQueuedBackgroundAction(Type, TM_AddToArgs(NULL, 1, data), 0, "type");
 	TM_AddDelay(3200);
 	TM_AddAction(Play, TM_AddToArgs(NULL, 1, data->key), "playkey");
+	TM_AddDelay(50);
 	TM_AddAction(FadeOut, TM_AddToArgs(NULL, 1, data), "fadeout");
 	TM_AddDelay(1000);
 	TM_AddAction(End, NULL, "end");
-	FadeGamestate(game, true);
 	al_play_sample_instance(data->sound);
 }
 
@@ -191,7 +191,6 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 }
 
 void Gamestate_Stop(struct Game *game, struct dosowiskoResources* data) {
-	FadeGamestate(game, false);
 	al_stop_sample_instance(data->sound);
 	al_stop_sample_instance(data->kbd);
 	al_stop_sample_instance(data->key);
