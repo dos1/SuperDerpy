@@ -24,9 +24,7 @@ struct dosowiskoResources {
 		ALLEGRO_SAMPLE *sample, *kbd_sample;
 		ALLEGRO_SAMPLE_INSTANCE *sound, *kbd;
 		ALLEGRO_BITMAP *bitmap, *checkerboard;
-		int pos;
-		int fade;
+		int pos, fade, tick, tan;
 		char text[255];
 		bool underscore, fadeout;
-		int tan;
 };

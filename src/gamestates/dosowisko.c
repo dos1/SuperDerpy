@@ -73,15 +73,6 @@ bool PlayKbd(struct Game *game, struct TM_Action *action, enum TM_ActionState st
 	return true;
 }
 
-bool Tick(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
-	struct dosowiskoResources *data = action->arguments->value;
-	if (state == TM_ACTIONSTATE_RUNNING) {
-			data->underscore = !data->underscore;
-			TM_AddBackgroundAction(Tick, TM_AddToArgs(NULL, 1, data), 500, "tick");
-	}
-	return true;
-}
-
 bool Type(struct Game *game, struct TM_Action *action, enum TM_ActionState state) {
 	struct dosowiskoResources *data = action->arguments->value;
 	if (state == TM_ACTIONSTATE_RUNNING) {
@@ -100,6 +91,11 @@ bool Type(struct Game *game, struct TM_Action *action, enum TM_ActionState state
 
 void Gamestate_Logic(struct Game *game, struct dosowiskoResources* data) {
 	TM_Process();
+	data->tick++;
+	if (data->tick == 30) {
+		data->underscore = !data->underscore;
+		data->tick = 0;
+	}
 }
 
 void Gamestate_Draw(struct Game *game, struct dosowiskoResources* data) {
@@ -135,10 +131,10 @@ void Gamestate_Start(struct Game *game, struct dosowiskoResources* data) {
 	data->pos = 1;
 	data->fade = 0;
 	data->tan = 64;
+	data->tick = 0;
 	data->fadeout = false;
 	data->underscore=true;
 	strcpy(data->text, "#");
-	TM_AddBackgroundAction(Tick, TM_AddToArgs(NULL, 1, data), 500, "tick");
 	TM_AddDelay(300);
 	TM_AddQueuedBackgroundAction(FadeIn, TM_AddToArgs(NULL, 1, data), 0, "fadein");
 	TM_AddDelay(1500);
