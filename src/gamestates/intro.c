@@ -147,7 +147,7 @@ void Gamestate_Logic(struct Game *game, struct IntroResources* data) {
 	data->anim += 1.0/20.0;
 	if (data->in_animation) {
 		int old = data->position%game->viewport.width;
-		data->position -= 10;
+		data->position -= game->viewport.width*0.0078125 > 1 ? game->viewport.width*0.0078125 : 1;
 		if (data->position%game->viewport.width>old) {
 			data->in_animation = false;
 			FillPage(game, data, data->page+1);
