@@ -157,12 +157,14 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 	data->checkerboard = al_create_bitmap(game->viewport.width, game->viewport.height);
 
 	al_set_target_bitmap(data->checkerboard);
+	al_lock_bitmap(data->checkerboard, ALLEGRO_PIXEL_FORMAT_ANY, ALLEGRO_LOCK_WRITEONLY);
 	int x, y;
 	for (x = 0; x < al_get_bitmap_width(data->checkerboard); x=x+2) {
 		for (y = 0; y < al_get_bitmap_height(data->checkerboard); y=y+2) {
 			al_put_pixel(x, y, al_map_rgb(0,0,0));
 		}
 	}
+	al_unlock_bitmap(data->checkerboard);
 	al_set_target_backbuffer(game->display);
 	(*progress)(game);
 
