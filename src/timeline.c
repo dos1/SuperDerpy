@@ -290,8 +290,8 @@ void TM_AddDelay(struct Timeline* timeline, int delay) {
 	al_register_event_source(timeline->game->_priv.event_queue, al_get_timer_event_source(tmp->timer));
 }
 
-void TM_Destroy(struct Timeline* timeline) {
-	PrintConsole(timeline->game, "Timeline Manager[%s]: destroy", timeline->name);
+void TM_CleanQueue(struct Timeline* timeline) {
+	PrintConsole(timeline->game, "Timeline Manager[%s]: cleaning queue", timeline->name);
 	struct TM_Action *tmp, *tmp2, *pom = timeline->queue;
 	tmp = NULL;
 	while (pom!=NULL) {
@@ -316,6 +316,11 @@ void TM_Destroy(struct Timeline* timeline) {
 			tmp = tmp2;
 		}
 	}
+}
+
+void TM_CleanBackgroundQueue(struct Timeline* timeline) {
+	PrintConsole(timeline->game, "Timeline Manager[%s]: cleaning background queue", timeline->name);
+	struct TM_Action *tmp, *tmp2, *pom = timeline->queue;
 	tmp = NULL;
 	pom=timeline->background;
 	while (pom!=NULL) {
@@ -340,7 +345,12 @@ void TM_Destroy(struct Timeline* timeline) {
 			tmp = tmp2;
 		}
 	}
-	
+}
+
+void TM_Destroy(struct Timeline* timeline) {
+	TM_CleanQueue(timeline);
+	TM_CleanBackgroundQueue(timeline);
+	PrintConsole(timeline->game, "Timeline Manager[%s]: destroy", timeline->name);
 	free(timeline->name);
 	free(timeline);
 }

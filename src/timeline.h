@@ -84,6 +84,10 @@ struct TM_Action* TM_AddBackgroundAction(struct Timeline*, bool (*func)(struct G
 struct TM_Action* TM_AddQueuedBackgroundAction(struct Timeline*, bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, int delay, char* name);
 /*! \brief Add delay to main queue. */
 void TM_AddDelay(struct Timeline*, int delay);
+/*! \brief Remove all actions from main queue. */
+void TM_CleanQueue(struct Timeline*);
+/*! \brief Remove all actions from background queue. */
+void TM_CleanBackgroundQueue(struct Timeline*);
 /*! \brief Destroy timeline. */
 void TM_Destroy(struct Timeline*);
 /*! \brief Add data to TM_Arguments queue. */
