@@ -71,7 +71,7 @@ bool Type(struct Game *game, struct TM_Action *action, enum TM_ActionState state
 		strncpy(data->text, text, data->pos++);
 		data->text[data->pos] = 0;
 		if (strcmp(data->text, text) != 0) {
-			TM_AddBackgroundAction(Type, TM_AddToArgs(NULL, 1, data), 60 + rand() % 60, "type");
+			TM_AddBackgroundAction(data->timeline, Type, TM_AddToArgs(NULL, 1, data), 60 + rand() % 60, "type");
 		} else{
 			al_stop_sample_instance(data->kbd);
 		}
@@ -82,7 +82,7 @@ bool Type(struct Game *game, struct TM_Action *action, enum TM_ActionState state
 
 
 void Gamestate_Logic(struct Game *game, struct dosowiskoResources* data) {
-	TM_Process();
+	TM_Process(data->timeline);
 	data->tick++;
 	if (data->tick == 30) {
 		data->underscore = !data->underscore;
@@ -129,22 +129,22 @@ void Gamestate_Start(struct Game *game, struct dosowiskoResources* data) {
 	data->fadeout = false;
 	data->underscore=true;
 	strcpy(data->text, "#");
-	TM_AddDelay(300);
-	TM_AddQueuedBackgroundAction(FadeIn, TM_AddToArgs(NULL, 1, data), 0, "fadein");
-	TM_AddDelay(1500);
-	TM_AddAction(Play, TM_AddToArgs(NULL, 1, data->kbd), "playkbd");
-	TM_AddQueuedBackgroundAction(Type, TM_AddToArgs(NULL, 1, data), 0, "type");
-	TM_AddDelay(3200);
-	TM_AddAction(Play, TM_AddToArgs(NULL, 1, data->key), "playkey");
-	TM_AddDelay(50);
-	TM_AddAction(FadeOut, TM_AddToArgs(NULL, 1, data), "fadeout");
-	TM_AddDelay(1000);
-	TM_AddAction(End, NULL, "end");
+	TM_AddDelay(data->timeline, 300);
+	TM_AddQueuedBackgroundAction(data->timeline, FadeIn, TM_AddToArgs(NULL, 1, data), 0, "fadein");
+	TM_AddDelay(data->timeline, 1500);
+	TM_AddAction(data->timeline, Play, TM_AddToArgs(NULL, 1, data->kbd), "playkbd");
+	TM_AddQueuedBackgroundAction(data->timeline, Type, TM_AddToArgs(NULL, 1, data), 0, "type");
+	TM_AddDelay(data->timeline, 3200);
+	TM_AddAction(data->timeline, Play, TM_AddToArgs(NULL, 1, data->key), "playkey");
+	TM_AddDelay(data->timeline, 50);
+	TM_AddAction(data->timeline, FadeOut, TM_AddToArgs(NULL, 1, data), "fadeout");
+	TM_AddDelay(data->timeline, 1000);
+	TM_AddAction(data->timeline, End, NULL, "end");
 	al_play_sample_instance(data->sound);
 }
 
 void Gamestate_ProcessEvent(struct Game *game, struct dosowiskoResources* data, ALLEGRO_EVENT *ev) {
-	TM_HandleEvent(ev);
+	TM_HandleEvent(data->timeline, ev);
 	if ((ev->type==ALLEGRO_EVENT_KEY_DOWN) && (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE)) {
 		SwitchGamestate(game, "dosowisko", "menu");
 	}
@@ -152,7 +152,7 @@ void Gamestate_ProcessEvent(struct Game *game, struct dosowiskoResources* data, 
 
 void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 	struct dosowiskoResources *data = malloc(sizeof(struct dosowiskoResources));
-	TM_Init(game);
+	data->timeline = TM_Init(game, "main");
 	data->bitmap = al_create_bitmap(game->viewport.width, game->viewport.height);
 	data->checkerboard = al_create_bitmap(game->viewport.width, game->viewport.height);
 
@@ -208,8 +208,8 @@ void Gamestate_Unload(struct Game *game, struct dosowiskoResources* data) {
 	al_destroy_sample(data->key_sample);
 	al_destroy_bitmap(data->bitmap);
 	al_destroy_bitmap(data->checkerboard);
+	TM_Destroy(data->timeline);
 	free(data);
-	TM_Destroy();
 }
 
 void Gamestate_Reload(struct Game *game, struct dosowiskoResources* data) {}

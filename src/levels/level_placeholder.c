@@ -46,7 +46,7 @@ void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {
 	(*progress)(game);
 
 	TM_WrapArg(int, level, LEVEL);
-	TM_AddAction(&PassLevel, TM_AddToArgs(NULL, 2, strdup(levelx), level), "passlevel");
+	TM_AddAction(data->moonwalk->timeline, &PassLevel, TM_AddToArgs(NULL, 2, strdup(levelx), level), "passlevel");
 	(*progress)(game);
 
 	data->font = al_load_ttf_font(GetDataFilePath(game, "fonts/ShadowsIntoLight.ttf"),game->viewport.height*0.09,0 );
@@ -81,7 +81,7 @@ void Gamestate_Logic(struct Game *game, struct LevelXResources* data) {
 }
 
 void Gamestate_ProcessEvent(struct Game *game, struct LevelXResources* data, ALLEGRO_EVENT *ev) {
-	TM_HandleEvent(ev);
+	TM_HandleEvent(data->moonwalk->timeline, ev);
 	Moonwalk_ProcessEvent(game, data->moonwalk, ev);
 	if (ev->type == ALLEGRO_EVENT_KEY_DOWN) {
 		if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {

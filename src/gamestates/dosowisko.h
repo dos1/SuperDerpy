@@ -27,4 +27,5 @@ struct dosowiskoResources {
 		int pos, fade, tick, tan;
 		char text[255];
 		bool underscore, fadeout;
+		struct Timeline *timeline;
 };

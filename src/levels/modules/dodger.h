@@ -67,6 +67,8 @@ struct Dodger {
 				ALLEGRO_BITMAP *screwball; /*!< Screwball spritesheet bitmap. */
 			} obst_bmps; /*!< Obstacle bitmaps. */
 
+			struct Timeline *timeline;
+
 };
 
 void Dodger_PreloadBitmaps(struct Game *game, struct Dodger* data);

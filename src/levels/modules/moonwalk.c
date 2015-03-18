@@ -42,7 +42,7 @@ bool DoMoonwalk(struct Game *game, struct TM_Action *action, enum TM_ActionState
 }
 
 void Moonwalk_Logic(struct Game *game, struct Moonwalk *data) {
-	TM_Process();
+	TM_Process(data->timeline);
 }
 
 void Moonwalk_Draw(struct Game *game, struct Moonwalk *data) {
@@ -86,8 +86,8 @@ struct Moonwalk* Moonwalk_Load(struct Game *game, int current_level) {
 	al_attach_sample_instance_to_mixer(data->music, game->audio.music);
 	al_set_sample_instance_playmode(data->music, ALLEGRO_PLAYMODE_LOOP);
 
-	TM_Init(game);
-	TM_AddAction(&DoMoonwalk, TM_AddToArgs(NULL, 1, data->derpy), "moonwalk");
+	data->timeline = TM_Init(game, "main");
+	TM_AddAction(data->timeline, &DoMoonwalk, TM_AddToArgs(NULL, 1, data->derpy), "moonwalk");
 
 	return data;
 }
@@ -100,7 +100,7 @@ void Moonwalk_Unload(struct Game *game, struct Moonwalk *data) {
 	unload_bitmaps(game, data);
 	DestroyCharacter(game, data->derpy);
 	free(data);
-	TM_Destroy();
+	TM_Destroy(data->timeline);
 }
 
 void Moonwalk_ProcessEvent(struct Game *game, struct Moonwalk *data, ALLEGRO_EVENT *ev) {}
@@ -108,13 +108,13 @@ void Moonwalk_ProcessEvent(struct Game *game, struct Moonwalk *data, ALLEGRO_EVE
 void Moonwalk_Pause(struct Game *game, struct Moonwalk *data) {
 	data->music_pos = al_get_sample_instance_position(data->music);
 	al_set_sample_instance_playing(data->music, false);
-	TM_Pause();
+	TM_Pause(data->timeline);
 }
 
 void Moonwalk_Resume(struct Game *game, struct Moonwalk *data) {
 	al_set_sample_instance_position(data->music, data->music_pos);
 	al_set_sample_instance_playing(data->music, true);
-	TM_Resume();
+	TM_Resume(data->timeline);
 }
 
 void Moonwalk_Reload(struct Game *game, struct Moonwalk *data) {

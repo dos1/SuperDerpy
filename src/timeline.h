@@ -37,6 +37,15 @@ enum TM_ActionState {
 	TM_ACTIONSTATE_RESUME
 };
 
+/*! \brief Timeline structure. */
+struct Timeline {
+	struct TM_Action *queue; /*!< Main timeline queue. */
+	struct TM_Action *background; /*!< Background queue. */
+	char* name; /*!< Name of the timeline. */
+	unsigned int lastid; /*!< Last ID given to timeline action. */
+	struct Game* game; /*!< Reference to the game object. */
+};
+
 /*! \brief Arguments for TM_Action. */
 struct TM_Arguments {
 		void *value; /*!< Value of argument. */
@@ -56,32 +65,30 @@ struct TM_Action {
 };
 
 /*! \brief Init timeline. */
-void TM_Init(struct Game* game);
+struct Timeline* TM_Init(struct Game* game, char* name);
 /*! \brief Process current timeline actions. */
-void TM_Process(void);
+void TM_Process(struct Timeline*);
 /*! \brief Ask current timeline actions to draw. */
-void TM_Draw(void);
-/*! \brief Pauses timeline. */
-void TM_Pause(void);
-/*! \brief Resumes timeline. */
-void TM_Resume(void);
+void TM_Draw(struct Timeline*);
+/*! \brief Pauses the timeline. */
+void TM_Pause(struct Timeline*);
+/*! \brief Resumes the timeline. */
+void TM_Resume(struct Timeline*);
 /*! \brief Handle timer events. */
-void TM_HandleEvent(ALLEGRO_EVENT *ev);
+void TM_HandleEvent(struct Timeline*, ALLEGRO_EVENT *ev);
 /*! \brief Add new action to main queue. */
-struct TM_Action* TM_AddAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, char* name);
+struct TM_Action* TM_AddAction(struct Timeline*, bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, char* name);
 /*! \brief Add new action to background queue. */
-struct TM_Action* TM_AddBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, int delay, char* name);
+struct TM_Action* TM_AddBackgroundAction(struct Timeline*, bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, int delay, char* name);
 /*! \brief Add new action to main queue, which adds specified action into background queue. */
-struct TM_Action* TM_AddQueuedBackgroundAction(bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, int delay, char* name);
+struct TM_Action* TM_AddQueuedBackgroundAction(struct Timeline*, bool (*func)(struct Game*, struct TM_Action*, enum TM_ActionState), struct TM_Arguments* args, int delay, char* name);
 /*! \brief Add delay to main queue. */
-void TM_AddDelay(int delay);
+void TM_AddDelay(struct Timeline*, int delay);
 /*! \brief Destroy timeline. */
-void TM_Destroy(void);
+void TM_Destroy(struct Timeline*);
 /*! \brief Add data to TM_Arguments queue. */
 struct TM_Arguments* TM_AddToArgs(struct TM_Arguments* args, int num, ...);
 /*! \brief Destroy TM_Arguments queue. */
 void TM_DestroyArgs(struct TM_Arguments* args);
-/*! \brief Check if timeline is initialised. */
-bool TM_Initialized(void);
 
 #endif

@@ -58,7 +58,7 @@ bool Fly(struct Game *game, struct TM_Action *action, enum TM_ActionState state)
 	if (state == TM_ACTIONSTATE_START) {
 //		SelectDerpySpritesheet(game, "fly");
 //		game->level.derpy_angle = -0.15;
-		TM_AddBackgroundAction(&ShowMeter, NULL, 0, "showmeter");
+//		TM_AddBackgroundAction(&ShowMeter, NULL, 0, "showmeter");
 	}
 	else if (state == TM_ACTIONSTATE_DESTROY) {
 //		game->level.handle_input = true;

@@ -102,7 +102,7 @@ void Dodger_Logic(struct Game *game, struct Dodger* data) {
 					data->failed = true;
 					data->handle_input = false;
 					data->speed_modifier = 1;
-					TM_AddBackgroundAction(&LevelFailed, NULL, 0, "levelfailed");
+					TM_AddBackgroundAction(data->timeline, &LevelFailed, NULL, 0, "levelfailed");
 				}
 			}
 			tmp->x -= data->speed*data->speed_modifier*tmp->speed*100*al_get_display_width(game->display)/(float)game->viewport.width;

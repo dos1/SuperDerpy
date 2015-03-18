@@ -31,29 +31,29 @@
 int Gamestate_ProgressCount = 2;
 
 void Gamestate_Start(struct Game *game, struct Level1Resources* data) {
-	TM_AddBackgroundAction(&FadeIn, NULL, 0, "fadein");
-	TM_AddDelay(1000);
-	TM_AddQueuedBackgroundAction(&Welcome, NULL, 0, "welcome");
-	TM_AddDelay(1000);
-	TM_AddAction(&Walk, NULL, "walk");
-	TM_AddAction(&Move, NULL, "move");
-	TM_AddAction(&Stop, NULL, "stop");
-	TM_AddDelay(1000);
-	TM_AddAction(&Letter, NULL, "letter");
-	TM_AddDelay(200);
-	TM_AddQueuedBackgroundAction(&Accelerate, NULL, 0, "accelerate");
-	TM_AddAction(&Fly, NULL, "fly");
-	TM_AddDelay(500);
+	TM_AddBackgroundAction(data->dodger->timeline, &FadeIn, NULL, 0, "fadein");
+	TM_AddDelay(data->dodger->timeline, 1000);
+	TM_AddQueuedBackgroundAction(data->dodger->timeline, &Welcome, NULL, 0, "welcome");
+	TM_AddDelay(data->dodger->timeline, 1000);
+	TM_AddAction(data->dodger->timeline, &Walk, NULL, "walk");
+	TM_AddAction(data->dodger->timeline, &Move, NULL, "move");
+	TM_AddAction(data->dodger->timeline, &Stop, NULL, "stop");
+	TM_AddDelay(data->dodger->timeline, 1000);
+	TM_AddAction(data->dodger->timeline, &Letter, NULL, "letter");
+	TM_AddDelay(data->dodger->timeline, 200);
+	TM_AddQueuedBackgroundAction(data->dodger->timeline, &Accelerate, NULL, 0, "accelerate");
+	TM_AddAction(data->dodger->timeline, &Fly, NULL, "fly");
+	TM_AddDelay(data->dodger->timeline, 500);
 	/* first part gameplay goes here */
 
 	/* actions for generating obstacles should go here
 	* probably as regular actions. When one ends, harder one
 	* begins. After last one part with muffins starts. */
-	TM_AddAction(&GenerateObstacles, NULL, "obstacles");
-	TM_AddDelay(3*1000);
+	TM_AddAction(data->dodger->timeline, &GenerateObstacles, NULL, "obstacles");
+	TM_AddDelay(data->dodger->timeline, 3*1000);
 	/* wings disappear, deccelerate */
-	TM_AddAction(&Run, NULL, "run");
-	TM_AddDelay(3*1000);
+	TM_AddAction(data->dodger->timeline, &Run, NULL, "run");
+	TM_AddDelay(data->dodger->timeline, 3*1000);
 	/* show Fluttershy's house
 
 	// second part gameplay goes here
@@ -61,7 +61,7 @@ void Gamestate_Start(struct Game *game, struct Level1Resources* data) {
 	// cutscene goes here */
 
 	TM_WrapArg(int, level, 1);
-	TM_AddAction(&PassLevel, TM_AddToArgs(NULL, 2, strdup("level1"), level), "passlevel");
+	TM_AddAction(data->dodger->timeline, &PassLevel, TM_AddToArgs(NULL, 2, strdup("level1"), level), "passlevel");
 
 	// init level specific obstacle (owl) for Dodger module
 	struct Obstacle *obst = malloc(sizeof(struct Obstacle));
@@ -165,9 +165,8 @@ void Gamestate_PreloadBitmaps(struct Game *game, struct Level1Resources* data) {
 }
 
 struct Level1Resources* Gamestate_Load(struct Game *game) {
-	TM_Init(game);
-
 	struct Level1Resources *data = malloc(sizeof(struct Level1Resources));
+
 	struct Character *character = CreateCharacter(game, "derpy");
 	RegisterSpritesheet(game, character, "walk");
 	RegisterSpritesheet(game, character, "stand");
@@ -176,6 +175,7 @@ struct Level1Resources* Gamestate_Load(struct Game *game) {
 	SelectSpritesheet(game, character, "run");
 	SetCharacterPosition(game, character, 0.1, 0.7, 0);
 	data->dodger = Dodger_Load(game, character);
+	data->dodger->timeline = TM_Init(game, "main");
 
 	data->failed=false;
 	data->cl_pos=0;
@@ -196,12 +196,12 @@ void Gamestate_Draw(struct Game *game, struct Level1Resources* data) {
 }
 
 void Gamestate_Logic(struct Game *game, struct Level1Resources* data) {
-	TM_Process();
+	TM_Process(data->dodger->timeline);
 	Dodger_Logic(game, data->dodger);
 }
 
 void Gamestate_ProcessEvent(struct Game *game, struct Level1Resources* data, ALLEGRO_EVENT *ev) {
-	TM_HandleEvent(ev);
+	TM_HandleEvent(data->dodger->timeline, ev);
 	Dodger_ProcessEvent(game, data->dodger, ev);
 	if (ev->type == ALLEGRO_EVENT_KEY_DOWN) {
 		if (ev->keyboard.keycode == ALLEGRO_KEY_ESCAPE) {

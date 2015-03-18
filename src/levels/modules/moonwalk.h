@@ -28,6 +28,7 @@ struct Moonwalk {
 	ALLEGRO_SAMPLE *sample;
 	ALLEGRO_SAMPLE_INSTANCE *music;
 	int music_pos;
+	struct Timeline *timeline;
 };
 
 bool DoMoonwalk(struct Game *game, struct TM_Action *action, enum TM_ActionState state);
