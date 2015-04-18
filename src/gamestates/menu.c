@@ -119,9 +119,7 @@ void Gamestate_Draw(struct Game *game, struct MenuResources* data) {
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 
 	al_clear_to_color(al_map_rgb(183,234,193));
-	float tint = (sin((data->cloud_position-80)/15)+1)/2;
-	if (tint < 0.000004) { PrintConsole(game, "random tint %f", tint); data->mountain_position = (game->viewport.width*(rand()/(float)RAND_MAX)/2)+game->viewport.width/2; }
-	al_draw_tinted_bitmap(data->mountain,al_map_rgba_f(tint,tint,tint,tint),data->mountain_position, 0,0);
+	al_draw_tinted_bitmap(data->mountain,al_map_rgba_f(data->tint,data->tint,data->tint,data->tint),data->mountain_position, 0,0);
 	al_draw_scaled_bitmap(data->cloud,0,0,al_get_bitmap_width(data->cloud), al_get_bitmap_height(data->cloud), game->viewport.width*(sin((data->cloud_position/40)-4.5)-0.3), game->viewport.height*0.35, al_get_bitmap_width(data->cloud)/2, al_get_bitmap_height(data->cloud)/2,0);
 	al_draw_bitmap(data->cloud2,game->viewport.width*(data->cloud2_position/100.0), game->viewport.height-(game->viewport.width*(1240.0/3910.0))*0.7,0);
 	al_draw_bitmap(data->image,0, game->viewport.height-(game->viewport.width*(1240.0/3910.0)),0);
@@ -176,6 +174,8 @@ void Gamestate_Logic(struct Game *game, struct MenuResources* data) {
 	data->cloud2_position-=0.025;
 	if (data->cloud_position<-80) { data->cloud_position=100; PrintConsole(game, "cloud_position"); }
 	if (data->cloud2_position<0) { data->cloud2_position=100; PrintConsole(game, "cloud2_position"); }
+	data->tint = (sin((data->cloud_position-80)/15)+1)/2;
+	if (data->tint < 0.000004) { PrintConsole(game, "random tint %f", data->tint); data->mountain_position = (game->viewport.width*(rand()/(float)RAND_MAX)/2)+game->viewport.width/2; }
 }
 
 void* Gamestate_Load(struct Game *game, void (*progress)(struct Game*)) {

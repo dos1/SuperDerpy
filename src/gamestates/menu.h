@@ -53,6 +53,7 @@ struct MenuResources {
 		float cloud_position; /*!< Position of bigger cloud. */
 		float cloud2_position; /*!< Position of small cloud. */
 		int mountain_position; /*!< Position of flashing mountain. */
+		float tint; /*!< Opacity of flashing mountain. */
 		ALLEGRO_SAMPLE *sample; /*!< Background music sample. */
 		ALLEGRO_SAMPLE *rain_sample; /*!< Rain sound sample. */
 		ALLEGRO_SAMPLE *click_sample; /*!< Click sound sample. */

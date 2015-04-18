@@ -309,7 +309,7 @@ int main(int argc, char **argv){
 
 	char libname[1024] = {};
 	snprintf(libname, 1024, "libsuperderpy-%s-loading.so", "muffinattack");
-	void *handle = dlopen(libname,RTLD_NOW);
+	void *handle = dlopen(libname, RTLD_NOW);
 	if (!handle) {
 		FatalError(&game, true, "Error while initializing loading screen %s", dlerror());
 		exit(1);
