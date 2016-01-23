@@ -107,7 +107,7 @@ bool GenerateObstacles(struct Game *game, struct TM_Action *action, enum TM_Acti
 			obst->prev = NULL;
 			obst->x = 100;
 			obst->y = (rand()%91)-1;
-			obst->speed = 1;
+			obst->speed = 1.05;
 			obst->points = -10;
 			obst->hit = false;
 			obst->rows = 1;
@@ -122,6 +122,7 @@ bool GenerateObstacles(struct Game *game, struct TM_Action *action, enum TM_Acti
 				obst->data = NULL;
 				obst->points = -5;
 				obst->bitmap = &(game->level.dodger.obst_bmps.badmuffin);
+				obst->speed += (rand()%100) / 1000.0 - 0.05;
 			} else if (rand()%100<=12) {
 				obst->callback= &Obst_RotateSin;
 				obst->data = malloc(sizeof(float));
