@@ -171,19 +171,37 @@ void Level_Pause(struct Game *game) {
 }
 
 void Level_Draw(struct Game *game) {
-	al_draw_bitmap(game->level.clouds, (-game->level.cl_pos)*al_get_bitmap_width(game->level.clouds), 0, 0);
-	al_draw_bitmap(game->level.clouds, (1+(-game->level.cl_pos))*al_get_bitmap_width(game->level.clouds), 0, 0);
-	al_draw_bitmap(game->level.background, (-game->level.bg_pos)*al_get_bitmap_width(game->level.background), 0, 0);
-	al_draw_bitmap(game->level.background, (1+(-game->level.bg_pos))*al_get_bitmap_width(game->level.background), 0, 0);
-	al_draw_bitmap(game->level.stage, (-game->level.st_pos)*al_get_bitmap_width(game->level.stage), 0 ,0);
-	al_draw_bitmap(game->level.stage, (1+(-game->level.st_pos))*al_get_bitmap_width(game->level.stage), 0 ,0);
+    al_draw_bitmap(game->level.clouds1, (-game->level.cl_pos)*al_get_bitmap_width(game->level.clouds), 0, 0);
+    al_draw_bitmap(game->level.clouds1, (1+(-game->level.cl_pos))*al_get_bitmap_width(game->level.clouds), 0, 0);
+    al_draw_bitmap(game->level.clouds2, (-game->level.cl_pos)*al_get_bitmap_width(game->level.clouds) + al_get_bitmap_width(game->level.clouds1), 0, 0);
+    al_draw_bitmap(game->level.clouds2, (1+(-game->level.cl_pos))*al_get_bitmap_width(game->level.clouds) + al_get_bitmap_width(game->level.clouds1), 0, 0);
+    al_draw_bitmap(game->level.clouds3, (-game->level.cl_pos)*al_get_bitmap_width(game->level.clouds) + al_get_bitmap_width(game->level.clouds1) * 2, 0, 0);
+    al_draw_bitmap(game->level.clouds3, (1+(-game->level.cl_pos))*al_get_bitmap_width(game->level.clouds) + al_get_bitmap_width(game->level.clouds1) * 2, 0, 0);
+    al_draw_bitmap(game->level.background1, (-game->level.bg_pos)*al_get_bitmap_width(game->level.background), 0, 0);
+    al_draw_bitmap(game->level.background1, (1+(-game->level.bg_pos))*al_get_bitmap_width(game->level.background), 0, 0);
+    al_draw_bitmap(game->level.background2, (-game->level.bg_pos)*al_get_bitmap_width(game->level.background) + al_get_bitmap_width(game->level.background1), 0, 0);
+    al_draw_bitmap(game->level.background2, (1+(-game->level.bg_pos))*al_get_bitmap_width(game->level.background) + al_get_bitmap_width(game->level.background1), 0, 0);
+    al_draw_bitmap(game->level.background3, (-game->level.bg_pos)*al_get_bitmap_width(game->level.background) + al_get_bitmap_width(game->level.background1) * 2, 0, 0);
+    al_draw_bitmap(game->level.background3, (1+(-game->level.bg_pos))*al_get_bitmap_width(game->level.background) + al_get_bitmap_width(game->level.background1) * 2, 0, 0);
+    al_draw_bitmap(game->level.stage1, (-game->level.st_pos)*al_get_bitmap_width(game->level.stage), 0 ,0);
+    al_draw_bitmap(game->level.stage1, (1+(-game->level.st_pos))*al_get_bitmap_width(game->level.stage), 0 ,0);
+    al_draw_bitmap(game->level.stage2, (-game->level.st_pos)*al_get_bitmap_width(game->level.stage) + al_get_bitmap_width(game->level.stage1), 0 ,0);
+    al_draw_bitmap(game->level.stage2, (1+(-game->level.st_pos))*al_get_bitmap_width(game->level.stage) + al_get_bitmap_width(game->level.stage1), 0 ,0);
+    al_draw_bitmap(game->level.stage3, (-game->level.st_pos)*al_get_bitmap_width(game->level.stage) + al_get_bitmap_width(game->level.stage1) * 2, 0 ,0);
+    al_draw_bitmap(game->level.stage3, (1+(-game->level.st_pos))*al_get_bitmap_width(game->level.stage) + al_get_bitmap_width(game->level.stage1) * 2, 0 ,0);
+
 
 	LEVELS(Draw, game);
 
 	if (!game->level.foreground) return;
 
-	al_draw_bitmap(game->level.foreground, (-game->level.fg_pos)*al_get_bitmap_width(game->level.foreground), 0 ,0);
-	al_draw_bitmap(game->level.foreground, (1+(-game->level.fg_pos))*al_get_bitmap_width(game->level.foreground), 0 ,0);
+    al_draw_bitmap(game->level.foreground1, (-game->level.fg_pos)*al_get_bitmap_width(game->level.foreground), 0 ,0);
+    al_draw_bitmap(game->level.foreground1, (1+(-game->level.fg_pos))*al_get_bitmap_width(game->level.foreground), 0 ,0);
+    al_draw_bitmap(game->level.foreground2, (-game->level.fg_pos)*al_get_bitmap_width(game->level.foreground) + al_get_bitmap_width(game->level.foreground1), 0 ,0);
+    al_draw_bitmap(game->level.foreground2, (1+(-game->level.fg_pos))*al_get_bitmap_width(game->level.foreground) + al_get_bitmap_width(game->level.foreground1), 0 ,0);
+    al_draw_bitmap(game->level.foreground3, (-game->level.fg_pos)*al_get_bitmap_width(game->level.foreground) + al_get_bitmap_width(game->level.foreground1) * 2, 0 ,0);
+    al_draw_bitmap(game->level.foreground3, (1+(-game->level.fg_pos))*al_get_bitmap_width(game->level.foreground) + al_get_bitmap_width(game->level.foreground1) * 2, 0 ,0);
+
 
 	al_set_target_bitmap(game->level.meter_bmp);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
@@ -305,7 +323,19 @@ void Level_UnloadBitmaps(struct Game *game) {
 	al_destroy_bitmap(game->level.background);
 	al_destroy_bitmap(game->level.clouds);
 	al_destroy_bitmap(game->level.stage);
-	al_destroy_bitmap(game->level.meter_bmp);
+    al_destroy_bitmap(game->level.foreground1);
+    al_destroy_bitmap(game->level.background1);
+    al_destroy_bitmap(game->level.clouds1);
+    al_destroy_bitmap(game->level.stage1);
+    al_destroy_bitmap(game->level.foreground2);
+    al_destroy_bitmap(game->level.background2);
+    al_destroy_bitmap(game->level.clouds2);
+    al_destroy_bitmap(game->level.stage2);
+    al_destroy_bitmap(game->level.foreground3);
+    al_destroy_bitmap(game->level.background3);
+    al_destroy_bitmap(game->level.clouds3);
+    al_destroy_bitmap(game->level.stage3);
+    al_destroy_bitmap(game->level.meter_bmp);
 	al_destroy_bitmap(game->level.meter_image);
 	al_destroy_bitmap(game->level.welcome);
 	game->level.foreground = NULL;
@@ -353,13 +383,13 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 
 	game->level.derpy = al_create_bitmap(al_get_bitmap_width(*(game->level.derpy_sheet))/game->level.sheet_cols, al_get_bitmap_height(*(game->level.derpy_sheet))/game->level.sheet_rows);
 	
-	game->level.clouds = LoadScaledBitmap(GetLevelFilename(game, "levels/?/clouds.png"), game->viewportHeight*4.73307291666666666667, game->viewportHeight);
+    game->level.clouds = LoadScaledBitmap(GetLevelFilename(game, "levels/?/clouds.png"), game->viewportHeight*4.73307291666666666667, game->viewportHeight);
 	PROGRESS;
-	game->level.foreground = LoadScaledBitmap(GetLevelFilename(game, "levels/?/foreground.png"), game->viewportHeight*4.73307291666666666667, game->viewportHeight);
+    game->level.foreground = LoadScaledBitmap(GetLevelFilename(game, "levels/?/foreground.png"), game->viewportHeight*4.73307291666666666667, game->viewportHeight);
 	PROGRESS;
-	game->level.background = LoadScaledBitmap(GetLevelFilename(game, "levels/?/background.png"), game->viewportHeight*4.73307291666666666667, game->viewportHeight);
+    game->level.background = LoadScaledBitmap(GetLevelFilename(game, "levels/?/background.png"), game->viewportHeight*4.73307291666666666667, game->viewportHeight);
 	PROGRESS;
-	game->level.stage = LoadScaledBitmap(GetLevelFilename(game, "levels/?/stage.png"), game->viewportHeight*4.73307291666666666667, game->viewportHeight);
+    game->level.stage = LoadScaledBitmap(GetLevelFilename(game, "levels/?/stage.png"), game->viewportHeight*4.73307291666666666667, game->viewportHeight);
 	PROGRESS;
 	game->level.meter_image = LoadScaledBitmap("levels/meter.png", game->viewportHeight*1.6*0.075, game->viewportHeight*1.6*0.075*0.96470588235294117647);
 	PROGRESS;
@@ -367,6 +397,47 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 	PROGRESS;
 	game->level.welcome = al_create_bitmap(game->viewportWidth, game->viewportHeight/2);
 	PROGRESS;
+
+    game->level.clouds1 = al_create_bitmap(al_get_bitmap_width(game->level.clouds)/3, al_get_bitmap_height(game->level.clouds));
+    game->level.clouds2 = al_create_bitmap(al_get_bitmap_width(game->level.clouds)/3, al_get_bitmap_height(game->level.clouds));
+    game->level.clouds3 = al_create_bitmap(al_get_bitmap_width(game->level.clouds)/3, al_get_bitmap_height(game->level.clouds));
+    game->level.foreground1 = al_create_bitmap(al_get_bitmap_width(game->level.foreground)/3, al_get_bitmap_height(game->level.foreground));
+    game->level.foreground2 = al_create_bitmap(al_get_bitmap_width(game->level.foreground)/3, al_get_bitmap_height(game->level.foreground));
+    game->level.foreground3 = al_create_bitmap(al_get_bitmap_width(game->level.foreground)/3, al_get_bitmap_height(game->level.foreground));
+    game->level.background1 = al_create_bitmap(al_get_bitmap_width(game->level.background)/3, al_get_bitmap_height(game->level.background));
+    game->level.background2 = al_create_bitmap(al_get_bitmap_width(game->level.background)/3, al_get_bitmap_height(game->level.background));
+    game->level.background3 = al_create_bitmap(al_get_bitmap_width(game->level.background)/3, al_get_bitmap_height(game->level.background));
+    game->level.stage1 = al_create_bitmap(al_get_bitmap_width(game->level.stage)/3, al_get_bitmap_height(game->level.stage));
+    game->level.stage2 = al_create_bitmap(al_get_bitmap_width(game->level.stage)/3, al_get_bitmap_height(game->level.stage));
+    game->level.stage3 = al_create_bitmap(al_get_bitmap_width(game->level.stage)/3, al_get_bitmap_height(game->level.stage));
+
+    al_set_target_bitmap(game->level.clouds1);
+    al_draw_bitmap(game->level.clouds, -al_get_bitmap_width(game->level.clouds)/3*0, 0, 0);
+    al_set_target_bitmap(game->level.clouds2);
+    al_draw_bitmap(game->level.clouds, -al_get_bitmap_width(game->level.clouds)/3*1, 0, 0);
+    al_set_target_bitmap(game->level.clouds3);
+    al_draw_bitmap(game->level.clouds, -al_get_bitmap_width(game->level.clouds)/3*2, 0, 0);
+
+    al_set_target_bitmap(game->level.foreground1);
+    al_draw_bitmap(game->level.foreground, -al_get_bitmap_width(game->level.foreground)/3*0, 0, 0);
+    al_set_target_bitmap(game->level.foreground2);
+    al_draw_bitmap(game->level.foreground, -al_get_bitmap_width(game->level.foreground)/3*1, 0, 0);
+    al_set_target_bitmap(game->level.foreground3);
+    al_draw_bitmap(game->level.foreground, -al_get_bitmap_width(game->level.foreground)/3*2, 0, 0);
+
+    al_set_target_bitmap(game->level.background1);
+    al_draw_bitmap(game->level.background, -al_get_bitmap_width(game->level.background)/3*0, 0, 0);
+    al_set_target_bitmap(game->level.background2);
+    al_draw_bitmap(game->level.background, -al_get_bitmap_width(game->level.background)/3*1, 0, 0);
+    al_set_target_bitmap(game->level.background3);
+    al_draw_bitmap(game->level.background, -al_get_bitmap_width(game->level.background)/3*2, 0, 0);
+
+    al_set_target_bitmap(game->level.stage1);
+    al_draw_bitmap(game->level.stage, -al_get_bitmap_width(game->level.stage)/3*0, 0, 0);
+    al_set_target_bitmap(game->level.stage2);
+    al_draw_bitmap(game->level.stage, -al_get_bitmap_width(game->level.stage)/3*1, 0, 0);
+    al_set_target_bitmap(game->level.stage3);
+    al_draw_bitmap(game->level.stage, -al_get_bitmap_width(game->level.stage)/3*2, 0, 0);
 
 	void ChildProgress(struct Game* game, float p) {
 		if (progress) (*progress)(game, load_p+=1/load_a);

@@ -143,10 +143,10 @@ struct Level {
 		ALLEGRO_SAMPLE *sample; /*!< Sample with background music. */
 		ALLEGRO_SAMPLE_INSTANCE *music; /*!< Sample instance with background music. */
 		unsigned int music_pos; /*!< Position of sample instance. Used when pausing game. */
-		ALLEGRO_BITMAP *background; /*!< Bitmap of the background layer of the scene. */
-		ALLEGRO_BITMAP *stage; /*!< Bitmap of the stage layer of the scene. */
-		ALLEGRO_BITMAP *foreground; /*!< Bitmap of the foreground layer of the scene. */
-		ALLEGRO_BITMAP *clouds; /*!< Bitmap of the clouds layer of the scene. */
+        ALLEGRO_BITMAP *background, *background1, *background2, *background3; /*!< Bitmap of the background layer of the scene. */
+        ALLEGRO_BITMAP *stage, *stage1, *stage2, *stage3; /*!< Bitmap of the stage layer of the scene. */
+        ALLEGRO_BITMAP *foreground, *foreground1, *foreground2, *foreground3; /*!< Bitmap of the foreground layer of the scene. */
+        ALLEGRO_BITMAP *clouds, *clouds1, *clouds2, *clouds3; /*!< Bitmap of the clouds layer of the scene. */
 		ALLEGRO_BITMAP *welcome; /*!< Bitmap of the welcome text (for instance "Level 1: Fluttershy"). */
 		ALLEGRO_BITMAP **derpy_sheet; /*!< Pointer to active Derpy sprite sheet. */
 		ALLEGRO_BITMAP *derpy; /*!< Derpy sprite. */
