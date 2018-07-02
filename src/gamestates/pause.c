@@ -45,6 +45,7 @@ int Pause_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 			SetupViewport(game);
 			Shared_Load(game);
 
+#ifndef __clang__
 			void Progress(struct Game *game, float p) {
 				al_set_target_bitmap(al_get_backbuffer(game->display));
 				al_clear_to_color(al_map_rgb(0,0,0));
@@ -54,13 +55,16 @@ int Pause_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 				al_flip_display();
 			}
 			Progress(game, 0);
+#else
+			void *Progress = NULL;
+#endif
 
 			Loading_Unload(game);
 			Loading_Load(game);
 			Menu_Unload(game);
 			Menu_Preload(game, NULL);
 			Level_UnloadBitmaps(game);
-			Level_PreloadBitmaps(game, &Progress);
+			Level_PreloadBitmaps(game, Progress);
 			Pause_Unload_Real(game);
 			Pause_Preload(game);
 			Pause_Load(game);

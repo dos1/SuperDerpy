@@ -69,6 +69,11 @@ int About_Keydown(struct Game *game, ALLEGRO_EVENT *ev) {
 	return 0;
 }
 
+static void draw_text(struct Game *game, char* text, float* y) {
+	al_draw_text(game->about.font, al_map_rgb(0,0,0), 0, (*y)*al_get_bitmap_height(game->about.text_bitmap), ALLEGRO_ALIGN_LEFT, text);
+	*y += 0.0131;
+}
+
 void About_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	PROGRESS_INIT(5);
 
@@ -97,93 +102,89 @@ void About_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 	al_draw_text(game->about.font, al_map_rgb(0,0,0), 0.5*al_get_bitmap_width(game->about.text_bitmap), 0.015*al_get_bitmap_height(game->about.text_bitmap), ALLEGRO_ALIGN_CENTRE, "Super Derpy: Muffin Attack");
 	al_draw_text(game->about.font, al_map_rgb(0,0,0), 0.5*al_get_bitmap_width(game->about.text_bitmap), 0.035*al_get_bitmap_height(game->about.text_bitmap), ALLEGRO_ALIGN_CENTRE, "Version 0.1a (Development Preview)");
-	
-	float y=0.07;
-	void draw_text(char* text) {
-		al_draw_text(game->about.font, al_map_rgb(0,0,0), 0, y*al_get_bitmap_height(game->about.text_bitmap), ALLEGRO_ALIGN_LEFT, text);
-		y+=0.0131;
-	}
 
-	draw_text("Written by:");
-	draw_text(" - Sebastian Krzyszkowiak");
-	draw_text("   http://dosowisko.net/");
-	draw_text("");
-	draw_text("Animations:");
-	draw_text(" - Yudhaikeledai");
-	draw_text("   http://yudhaikeledai.deviantart.com/");
-	draw_text("");
-	draw_text("Voices:");
-	/*draw_text(" - BaldDumboRat");
-	draw_text("     Derpy Hooves");*/
-	draw_text(" - MEMJ0123");
-	draw_text("   http://www.youtube.com/user/MEMJ0123");
-	draw_text("     Princess Celestia");
-	draw_text(" - Meredith Sims (Emichwan88)");
-	draw_text("   http://www.youtube.com/Emichwan88");
-	draw_text("     Fluttershy");
-	draw_text("     Twilight Sparkle");
-	/*draw_text(" - Hnilmik");
-	draw_text("     Rarity");
-	draw_text(" - Karen VO");
-	draw_text("     Applejack");*/
-	/*	draw_text(" - Erica Mendez");
-	draw_text("     Rainbow Dash");
-	draw_text(" - Emily Fajardo");
-	draw_text("     Pinkie Pie");*/
-	draw_text("");
-	draw_text("Original graphics:");
-	draw_text(" - Ania Karlik");
-	draw_text("   (Eris)");
-	draw_text(" - Agata Kurczewska");
-	draw_text("   http://kiciazkrainyczarow.deviantart.com/");
-	draw_text(" - Wiktor Grześkowiak");
-	draw_text("   http://gl0w.pl/");
-	draw_text("");
-	draw_text("Music:");
-	draw_text(" - Claire Anne Carr");
-	draw_text("   http://claireannecarr.bandcamp.com/");
-	draw_text(" - Dr Dissonance");
-	draw_text("   http://dr-dissonance.tumblr.com/");
-	draw_text(" - Dan O'Connor");
-	draw_text("   http://www.danosongs.com/");
-	draw_text(" - Kevin MacLeod");
-	draw_text("   http://incompetech.com/");
-	draw_text("");
-	draw_text("Sounds:");
-	draw_text(" - Sound Jay");
-	draw_text("   http://www.soundjay.com/");
-	draw_text("");
-	draw_text("Other graphics:");
-	draw_text(" - CptOfTheFriendship");
-	draw_text("   http://cptofthefriendship.deviantart.com/");
-	draw_text(" - hombre0");
-	draw_text("   http://hombre0.deviantart.com/");
-	draw_text(" - Siobhan Brewer");
-	draw_text("   http://boxdrink.deviantart.com/");
-	draw_text("");
-	draw_text("Super Derpy: Muffin Attack comes");
-	draw_text("with ABSOLUTELY NO WARRANTY.");
-	draw_text("You may redistribute copies of this");
-	draw_text("game under the terms of");
-	draw_text("GNU General Public License.");
-	draw_text("For more information, see the file");
-	draw_text("named COPYING.");
-	draw_text("");
-	draw_text("Super Derpy: Muffin Attack is");
-	draw_text("a fan-made game with no profit");
-	draw_text("intended. Its author is unpaid");
-	draw_text("volunteer and doesn't receive");
-	draw_text("any economical profit from it.");
-	draw_text("");
-	draw_text("My Little Pony: Friendship is Magic");
-	draw_text("is copyrighted trademark owned");
-	draw_text("by Hasbro.");
-	draw_text("");
-	draw_text("Author of Super Derpy is not");
-	draw_text("affiliated to Hasbro, The Hub");
-	draw_text("or its associates.");
-	draw_text("");
-	draw_text("http://www.superderpy.com/");
+	float y=0.07;
+
+	draw_text(game, "Written by:", &y);
+	draw_text(game, " - Sebastian Krzyszkowiak", &y);
+	draw_text(game, "   http://dosowisko.net/", &y);
+	draw_text(game, "", &y);
+	draw_text(game, "Animations:", &y);
+	draw_text(game, " - Yudhaikeledai", &y);
+	draw_text(game, "   http://yudhaikeledai.deviantart.com/", &y);
+	draw_text(game, "", &y);
+	draw_text(game, "Voices:", &y);
+	/*draw_text(game, " - BaldDumboRat", &y);
+	draw_text(game, "     Derpy Hooves", &y);*/
+	draw_text(game, " - MEMJ0123", &y);
+	draw_text(game, "   http://www.youtube.com/user/MEMJ0123", &y);
+	draw_text(game, "     Princess Celestia", &y);
+	draw_text(game, " - Meredith Sims (Emichwan88)", &y);
+	draw_text(game, "   http://www.youtube.com/Emichwan88", &y);
+	draw_text(game, "     Fluttershy", &y);
+	draw_text(game, "     Twilight Sparkle", &y);
+	/*draw_text(game, " - Hnilmik", &y);
+	draw_text(game, "     Rarity", &y);
+	draw_text(game, " - Karen VO", &y);
+	draw_text(game, "     Applejack", &y);*/
+	/*	draw_text(game, " - Erica Mendez", &y);
+	draw_text(game, "     Rainbow Dash", &y);
+	draw_text(game, " - Emily Fajardo", &y);
+	draw_text(game, "     Pinkie Pie", &y);*/
+	draw_text(game, "", &y);
+	draw_text(game, "Original graphics:", &y);
+	draw_text(game, " - Ania Karlik", &y);
+	draw_text(game, "   (Eris)", &y);
+	draw_text(game, " - Agata Kurczewska", &y);
+	draw_text(game, "   http://kiciazkrainyczarow.deviantart.com/", &y);
+	draw_text(game, " - Wiktor Grześkowiak", &y);
+	draw_text(game, "   http://gl0w.pl/", &y);
+	draw_text(game, "", &y);
+	draw_text(game, "Music:", &y);
+	draw_text(game, " - Claire Anne Carr", &y);
+	draw_text(game, "   http://claireannecarr.bandcamp.com/", &y);
+	draw_text(game, " - Dr Dissonance", &y);
+	draw_text(game, "   http://dr-dissonance.tumblr.com/", &y);
+	draw_text(game, " - Dan O'Connor", &y);
+	draw_text(game, "   http://www.danosongs.com/", &y);
+	draw_text(game, " - Kevin MacLeod", &y);
+	draw_text(game, "   http://incompetech.com/", &y);
+	draw_text(game, "", &y);
+	draw_text(game, "Sounds:", &y);
+	draw_text(game, " - Sound Jay", &y);
+	draw_text(game, "   http://www.soundjay.com/", &y);
+	draw_text(game, "", &y);
+	draw_text(game, "Other graphics:", &y);
+	draw_text(game, " - CptOfTheFriendship", &y);
+	draw_text(game, "   http://cptofthefriendship.deviantart.com/", &y);
+	draw_text(game, " - hombre0", &y);
+	draw_text(game, "   http://hombre0.deviantart.com/", &y);
+	draw_text(game, " - Siobhan Brewer", &y);
+	draw_text(game, "   http://boxdrink.deviantart.com/", &y);
+	draw_text(game, "", &y);
+	draw_text(game, "Super Derpy: Muffin Attack comes", &y);
+	draw_text(game, "with ABSOLUTELY NO WARRANTY.", &y);
+	draw_text(game, "You may redistribute copies of this", &y);
+	draw_text(game, "game under the terms of", &y);
+	draw_text(game, "GNU General Public License.", &y);
+	draw_text(game, "For more information, see the file", &y);
+	draw_text(game, "named COPYING.", &y);
+	draw_text(game, "", &y);
+	draw_text(game, "Super Derpy: Muffin Attack is", &y);
+	draw_text(game, "a fan-made game with no profit", &y);
+	draw_text(game, "intended. Its author is unpaid", &y);
+	draw_text(game, "volunteer and doesn't receive", &y);
+	draw_text(game, "any economical profit from it.", &y);
+	draw_text(game, "", &y);
+	draw_text(game, "My Little Pony: Friendship is Magic", &y);
+	draw_text(game, "is copyrighted trademark owned", &y);
+	draw_text(game, "by Hasbro.", &y);
+	draw_text(game, "", &y);
+	draw_text(game, "Author of Super Derpy is not", &y);
+	draw_text(game, "affiliated to Hasbro, The Hub", &y);
+	draw_text(game, "or its associates.", &y);
+	draw_text(game, "", &y);
+	draw_text(game, "http://www.superderpy.com/", &y);
 	PROGRESS;
 }
 

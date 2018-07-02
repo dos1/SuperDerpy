@@ -45,6 +45,80 @@ void AnimPage(struct Game *game, int page, ALLEGRO_COLOR tint) {
 	if (page<5) al_draw_tinted_bitmap_region(game->intro.animsprites[page],tint,game->viewportHeight*1.6*0.3125*(int)fmod(anim,amount1),game->viewportHeight*0.63*(((int)(anim/amount1))%amount2),game->viewportHeight*1.6*0.3125, game->viewportHeight*0.63,offset+game->viewportWidth*1.09, game->viewportHeight*0.18,0);
 }
 
+static void draw_text(struct Game *game, float *oldx, float *y, int page, char* text) {
+	float x = 0.45;
+	if (page!=*oldx) { *y=0.2; *oldx=page; }
+	al_draw_text_with_shadow(game->intro.font, al_map_rgb(255,255,255), game->viewportWidth*x, game->viewportHeight*(*y), ALLEGRO_ALIGN_LEFT, text);
+	*y+=0.07;
+}
+
+static void DrawPage(struct Game *game, float *oldx, float *y, int p) {
+	switch (p) {
+		case 1:
+			al_hold_bitmap_drawing(true);
+			al_draw_bitmap(game->intro.table_bitmap, 0, 0, 0);
+			al_hold_bitmap_drawing(true);
+			draw_text(game, oldx, y, 1, "Ever since Twilight Sparkle and her");
+			draw_text(game, oldx, y, 1, "friends imprisoned Discord in stone,");
+			draw_text(game, oldx, y, 1, "Equestria had been peaceful for");
+			draw_text(game, oldx, y, 1, "a long time.");
+			al_hold_bitmap_drawing(false);
+			break;
+		case 2:
+			al_draw_bitmap_region(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), game->viewportWidth*0, 0, 0);
+			al_draw_bitmap_region(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), game->viewportWidth*0.5, 0, 0);
+			al_hold_bitmap_drawing(false);
+			al_hold_bitmap_drawing(true);
+			draw_text(game, oldx, y, 2, "Until one day a reckless pony caused");
+			draw_text(game, oldx, y, 2, "a tiny bit of chaos near Discord’s");
+			draw_text(game, oldx, y, 2, "statue.");
+			al_hold_bitmap_drawing(false);
+			break;
+		case 3:
+			al_hold_bitmap_drawing(true);
+			al_draw_bitmap_region(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), game->viewportWidth*0, 0, 0);
+			al_draw_bitmap_region(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), game->viewportWidth*0.5, 0, 0);
+			al_hold_bitmap_drawing(false);
+			al_hold_bitmap_drawing(true);
+			draw_text(game, oldx, y, 3, "This small amount of chaos was not");
+			draw_text(game, oldx, y, 3, "enough to free Discord, but enough");
+			draw_text(game, oldx, y, 3, "to turn discarded muffins into");
+			draw_text(game, oldx, y, 3, "vicious muffinzombies, with aim to");
+			draw_text(game, oldx, y, 3, "destroy all harmony in Equestria.");
+			al_hold_bitmap_drawing(false);
+			break;
+		case 4:
+			al_hold_bitmap_drawing(true);
+			al_draw_bitmap_region(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), game->viewportWidth*0, 0, 0);
+			al_draw_bitmap_region(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), game->viewportWidth*0.5, 0, 0);
+			al_hold_bitmap_drawing(false);
+			al_hold_bitmap_drawing(true);
+			draw_text(game, oldx, y, 4, "Discord, learning from his last failure,");
+			draw_text(game, oldx, y, 4, "turned his muffinzombies against Twilight");
+			draw_text(game, oldx, y, 4, "and her friends, trapping them in their");
+			draw_text(game, oldx, y, 4, "own homes. With the bearers of the");
+			draw_text(game, oldx, y, 4, "Elements out of the way, he now waits");
+			draw_text(game, oldx, y, 4, "until chaos takes hold of the world,");
+			draw_text(game, oldx, y, 4, "so he can rule Equestria once again.");
+			al_hold_bitmap_drawing(false);
+			break;
+		case 5:
+			al_hold_bitmap_drawing(true);
+			al_draw_bitmap_region(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), game->viewportWidth*0, 0, 0);
+			al_draw_bitmap_region(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), game->viewportWidth*0.5, 0, 0);
+			al_hold_bitmap_drawing(false);
+			al_hold_bitmap_drawing(true);
+			draw_text(game, oldx, y, 5, "Who can defeat Discord without");
+			draw_text(game, oldx, y, 5, "the Elements of Harmony?");
+			draw_text(game, oldx, y, 5, "");
+			draw_text(game, oldx, y, 5, "Well... There is somepony who knows");
+			draw_text(game, oldx, y, 5, "all about muffins...");
+			al_hold_bitmap_drawing(false);
+			break;
+	}
+}
+
+
 void FillPage(struct Game *game, int page) {
 	char filename[30] = { };
 	sprintf(filename, "intro/%d.flac", page);
@@ -57,83 +131,11 @@ void FillPage(struct Game *game, int page) {
 	al_set_target_bitmap(game->intro.table);
 	float y = 0.2;
 	float oldx = -1;
-	void draw_text(int page, char* text) {
-		float x = 0.45;
-		if (page!=oldx) { y=0.2; oldx=page; }
-		al_draw_text_with_shadow(game->intro.font, al_map_rgb(255,255,255), game->viewportWidth*x, game->viewportHeight*y, ALLEGRO_ALIGN_LEFT, text);
-		y+=0.07;
-	}
-	
-	void DrawPage(int p) {
-		switch (p) {
-			case 1:
-				al_hold_bitmap_drawing(true);
-				al_draw_bitmap(game->intro.table_bitmap, 0, 0, 0);
-				al_hold_bitmap_drawing(true);
-				draw_text(1, "Ever since Twilight Sparkle and her");
-				draw_text(1, "friends imprisoned Discord in stone,");
-				draw_text(1, "Equestria had been peaceful for");
-				draw_text(1, "a long time.");
-				al_hold_bitmap_drawing(false);
-				break;
-			case 2:
-				al_draw_bitmap_region(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), game->viewportWidth*0, 0, 0);
-				al_draw_bitmap_region(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), game->viewportWidth*0.5, 0, 0);
-				al_hold_bitmap_drawing(false);
-				al_hold_bitmap_drawing(true);
-				draw_text(2, "Until one day a reckless pony caused");
-				draw_text(2, "a tiny bit of chaos near Discord’s");
-				draw_text(2, "statue.");
-				al_hold_bitmap_drawing(false);
-				break;
-			case 3:
-				al_hold_bitmap_drawing(true);
-				al_draw_bitmap_region(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), game->viewportWidth*0, 0, 0);
-				al_draw_bitmap_region(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), game->viewportWidth*0.5, 0, 0);
-				al_hold_bitmap_drawing(false);
-				al_hold_bitmap_drawing(true);
-				draw_text(3, "This small amount of chaos was not");
-				draw_text(3, "enough to free Discord, but enough");
-				draw_text(3, "to turn discarded muffins into");
-				draw_text(3, "vicious muffinzombies, with aim to");
-				draw_text(3, "destroy all harmony in Equestria.");
-				al_hold_bitmap_drawing(false);
-				break;
-			case 4:
-				al_hold_bitmap_drawing(true);
-				al_draw_bitmap_region(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), game->viewportWidth*0, 0, 0);
-				al_draw_bitmap_region(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), game->viewportWidth*0.5, 0, 0);
-				al_hold_bitmap_drawing(false);
-				al_hold_bitmap_drawing(true);
-				draw_text(4, "Discord, learning from his last failure,");
-				draw_text(4, "turned his muffinzombies against Twilight");
-				draw_text(4, "and her friends, trapping them in their");
-				draw_text(4, "own homes. With the bearers of the");
-				draw_text(4, "Elements out of the way, he now waits");
-				draw_text(4, "until chaos takes hold of the world,");
-				draw_text(4, "so he can rule Equestria once again.");
-				al_hold_bitmap_drawing(false);
-				break;
-			case 5:
-				al_hold_bitmap_drawing(true);
-				al_draw_bitmap_region(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), game->viewportWidth*0, 0, 0);
-				al_draw_bitmap_region(game->intro.table_bitmap, al_get_bitmap_width(game->intro.table_bitmap)/2, 0, al_get_bitmap_width(game->intro.table_bitmap)/2, al_get_bitmap_height(game->intro.table_bitmap), game->viewportWidth*0.5, 0, 0);
-				al_hold_bitmap_drawing(false);
-				al_hold_bitmap_drawing(true);
-				draw_text(5, "Who can defeat Discord without");
-				draw_text(5, "the Elements of Harmony?");
-				draw_text(5, "");
-				draw_text(5, "Well... There is somepony who knows");
-				draw_text(5, "all about muffins...");
-				al_hold_bitmap_drawing(false);
-				break;
-		}
-	}
 
-	DrawPage(page);
+	DrawPage(game, &oldx, &y, page);
 	ALLEGRO_BITMAP* second = al_create_bitmap(game->viewportWidth, game->viewportHeight);
 	al_set_target_bitmap(second);
-	DrawPage(page+1);
+	DrawPage(game, &oldx, &y, page+1);
 	al_set_target_bitmap(game->intro.table);
 	al_draw_bitmap(second, game->viewportWidth, 0, 0);
 	al_set_target_bitmap(al_get_backbuffer(game->display));
@@ -250,10 +252,14 @@ void Intro_Preload(struct Game *game, void (*progress)(struct Game*, float)) {
 	al_set_target_bitmap(al_get_backbuffer(game->display));
 	PrintConsole(game, "Chainpreloading GAMESTATE_MAP...");
 	PROGRESS;
+#ifndef __clang__
 	void MapProgress(struct Game* game, float p) {
 		if (progress) (*progress)(game, load_p+=1/load_a);
 	}
 	Map_Preload(game, &MapProgress);
+#else
+	Map_Preload(game, NULL);
+#endif
 }
 
 void Intro_Unload(struct Game *game) {

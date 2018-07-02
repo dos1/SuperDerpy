@@ -352,7 +352,7 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 	if (!game->level.derpy) SelectDerpySpritesheet(game, "stand");
 
 	game->level.derpy = al_create_bitmap(al_get_bitmap_width(*(game->level.derpy_sheet))/game->level.sheet_cols, al_get_bitmap_height(*(game->level.derpy_sheet))/game->level.sheet_rows);
-	
+
 	game->level.clouds = LoadScaledBitmap(GetLevelFilename(game, "levels/?/clouds.png"), game->viewportHeight*4.73307291666666666667, game->viewportHeight);
 	PROGRESS;
 	game->level.foreground = LoadScaledBitmap(GetLevelFilename(game, "levels/?/foreground.png"), game->viewportHeight*4.73307291666666666667, game->viewportHeight);
@@ -368,8 +368,12 @@ void Level_PreloadBitmaps(struct Game *game, void (*progress)(struct Game*, floa
 	game->level.welcome = al_create_bitmap(game->viewportWidth, game->viewportHeight/2);
 	PROGRESS;
 
+#ifndef __clang__
 	void ChildProgress(struct Game* game, float p) {
 		if (progress) (*progress)(game, load_p+=1/load_a);
 	}
 	LEVELS(PreloadBitmaps, game, &ChildProgress);
+#else
+	LEVELS(PreloadBitmaps, game, NULL);
+#endif
 }

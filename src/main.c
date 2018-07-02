@@ -70,6 +70,21 @@
 #define RESUME_STATE(state, name) case state:\
 	PrintConsole(game, "Resume %s...", #state); name ## _Resume(game); break;
 
+static void TestPath(char* filename, char* subpath, char** result) {
+	ALLEGRO_PATH *tail = al_create_path(filename);
+	ALLEGRO_PATH *path = al_get_standard_path(ALLEGRO_RESOURCES_PATH);
+	ALLEGRO_PATH *data = al_create_path(subpath);
+	al_join_paths(path, data);
+	al_join_paths(path, tail);
+	//printf("Testing for %s\n", al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
+	if (al_filename_exists(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP))) {
+		*result = strdup(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
+	}
+	al_destroy_path(tail);
+	al_destroy_path(data);
+	al_destroy_path(path);
+}
+
 char* GetDataFilePath(char* filename) {
 
 	char *result = 0;
@@ -85,24 +100,10 @@ char* GetDataFilePath(char* filename) {
 		return strdup(origfn);
 	}
 
-	void TestPath(char* subpath) {
-		ALLEGRO_PATH *tail = al_create_path(filename);
-		ALLEGRO_PATH *path = al_get_standard_path(ALLEGRO_RESOURCES_PATH);
-		ALLEGRO_PATH *data = al_create_path(subpath);
-		al_join_paths(path, data);
-		al_join_paths(path, tail);
-		//printf("Testing for %s\n", al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
-		if (al_filename_exists(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP))) {
-			result = strdup(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
-		}
-		al_destroy_path(tail);
-		al_destroy_path(data);
-		al_destroy_path(path);
-	}
-	TestPath("../share/superderpy/data/");
-	TestPath("../data/");
-	TestPath("../Resources/data/");
-	TestPath("data/");
+	TestPath(filename, "../share/superderpy/data/", &result);
+	TestPath(filename, "../data/", &result);
+	TestPath(filename, "../Resources/data/", &result);
+	TestPath(filename, "data/", &result);
 
 	if (!result) {
 		printf("FATAL: Could not find data file: %s!\n", filename);
@@ -301,6 +302,15 @@ void FadeGameState(struct Game *game, bool in) {
 	}
 }
 
+/* linear filtering code written by SiegeLord */
+
+static ALLEGRO_COLOR interpolate(ALLEGRO_COLOR c1, ALLEGRO_COLOR c2, float frac) {
+	return al_map_rgba_f(c1.r + frac * (c2.r - c1.r),
+											 c1.g + frac * (c2.g - c1.g),
+											 c1.b + frac * (c2.b - c1.b),
+											 c1.a + frac * (c2.a - c1.a));
+}
+
 /*! \brief Scales bitmap using software linear filtering method to current target. */
 void ScaleBitmap(ALLEGRO_BITMAP* source, int width, int height) {
 	if ((al_get_bitmap_width(source)==width) && (al_get_bitmap_height(source)==height)) {
@@ -310,15 +320,6 @@ void ScaleBitmap(ALLEGRO_BITMAP* source, int width, int height) {
 	int x, y;
 	al_lock_bitmap(al_get_target_bitmap(), ALLEGRO_PIXEL_FORMAT_ANY, ALLEGRO_LOCK_WRITEONLY);
 	al_lock_bitmap(source, ALLEGRO_PIXEL_FORMAT_ANY, ALLEGRO_LOCK_READONLY);
-
-	/* linear filtering code written by SiegeLord */
-
-	ALLEGRO_COLOR interpolate(ALLEGRO_COLOR c1, ALLEGRO_COLOR c2, float frac) {
-		return al_map_rgba_f(c1.r + frac * (c2.r - c1.r),
-												 c1.g + frac * (c2.g - c1.g),
-												 c1.b + frac * (c2.b - c1.b),
-												 c1.a + frac * (c2.a - c1.a));
-	}
 
 	for (y = 0; y < height; y++) {
 		float pixy = ((float)y / height) * ((float)al_get_bitmap_height(source) - 1);
@@ -343,33 +344,35 @@ void ScaleBitmap(ALLEGRO_BITMAP* source, int width, int height) {
 	al_unlock_bitmap(source);
 }
 
+static void GenerateBitmap(bool memoryscale, char* origfn, ALLEGRO_BITMAP *source, int width, int height) {
+	if (memoryscale) al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
+
+	source = al_load_bitmap( origfn );
+	if (memoryscale) {
+		al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR | ALLEGRO_MAG_LINEAR);
+		ScaleBitmap(source, width, height);
+	}
+	else {
+		al_draw_scaled_bitmap(source, 0, 0, al_get_bitmap_width(source), al_get_bitmap_height(source), 0, 0, width, height, 0);
+	}
+	/*al_save_bitmap(cachefn, target);
+	PrintConsole(game, "Cache bitmap %s generated.", filename);*/
+	al_destroy_bitmap(source);
+}
+
+
 ALLEGRO_BITMAP* LoadScaledBitmap(char* filename, int width, int height) {
 	bool memoryscale = !atoi(GetConfigOptionDefault("SuperDerpy", "GPU_scaling", "1"));
 	ALLEGRO_BITMAP *source, *target = al_create_bitmap(width, height);
 	al_set_target_bitmap(target);
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 	char* origfn = GetDataFilePath(filename);
-	void GenerateBitmap() {
-		if (memoryscale) al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
-
-		source = al_load_bitmap( origfn );
-		if (memoryscale) {
-			al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR | ALLEGRO_MAG_LINEAR);
-			ScaleBitmap(source, width, height);
-		}
-		else {
-			al_draw_scaled_bitmap(source, 0, 0, al_get_bitmap_width(source), al_get_bitmap_height(source), 0, 0, width, height, 0);
-		}
-		/*al_save_bitmap(cachefn, target);
-		PrintConsole(game, "Cache bitmap %s generated.", filename);*/
-		al_destroy_bitmap(source);
-	}
 
 	/*source = al_load_bitmap( cachefn );
 	if (source) {
 		if ((al_get_bitmap_width(source)!=width) || (al_get_bitmap_height(source)!=height)) {
 			al_destroy_bitmap(source);*/
-	GenerateBitmap();
+	GenerateBitmap(memoryscale, origfn, source, width, height);
 	free(origfn);
 	return target;
 	/*	}
@@ -500,7 +503,7 @@ int main(int argc, char **argv){
 		fprintf(stderr, "failed to initialize primitives!\n");
 		return -1;
 	}
-	
+
 	/*	if (!al_reserve_samples(10)){
 		fprintf(stderr, "failed to reserve samples!\n");
 		return -1;
